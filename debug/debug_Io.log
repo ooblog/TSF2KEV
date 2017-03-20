@@ -1,0 +1,6 @@
+TSF_Tab-Separated-Forth:
+	UTF-8	:TSF_encoding	0	:TSF_fin.
+TSF_argvs:
+	TSFpy_Io.py
+TSF_py:
+	Python2.7.6	linux2	UTF-8

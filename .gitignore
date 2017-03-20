@@ -101,3 +101,4 @@ ENV/
 # git merge 20170320M093700
 # git branch -d 20170320M093700
 # git push github:ooblog/TSF2KEV.git :20170320M093700
+cardsize/
