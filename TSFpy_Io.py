@@ -51,6 +51,7 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="UTF-8"):    #TSFdoc:TSF_pathからTSF
 
 TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
 def TSF_Io_printlog(TSF_text,TSF_log=None):    #TSFdoc:TSF_textをターミナル(stdout)に表示する。TSF_logに追記もできる。
+    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n'])
     TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
     if TSF_text.endswith('\n'):
         TSF_libc.printf(b"%s",TSF_Io_printf)
@@ -60,7 +61,7 @@ def TSF_Io_printlog(TSF_text,TSF_log=None):    #TSFdoc:TSF_textをターミナ�
         TSF_log="".join([TSF_log,TSF_text,'\n']) if TSF_log != None else ""
     return TSF_log
 
-def TSF_Io_argvs():
+def TSF_Io_argvs(TSF_argvobj=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。
     TSF_argvs=[]
     if sys.version_info.major == 2:
         for TSF_argv in sys.argv:
@@ -183,7 +184,7 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
 
 if __name__=="__main__":
     print("")
-    TSF_argvs=TSF_Io_argvs()
+    TSF_argvs=TSF_Io_argvs(sys.argv)
     print("--- {0} ---".format(TSF_argvs[0]))
     TSF_debug_savefilename="debug/debug_Io.log"
     TSF_debug_log=TSF_Io_debug()

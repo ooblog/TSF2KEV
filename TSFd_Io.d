@@ -9,16 +9,7 @@ import std.array;
 import std.file;
 import core.vararg;
 
-void main(){
-//    writeln("Hello, world!");
-    TSF_Io_printlog("Hello, world!はろーわーるど\n");
-    TSF_Io_printlog("Hello, world!はろーわーるど");
-    string TSF_log="test\n";
-    TSF_log=TSF_Io_printlog("Hello, world!はろーわーるど",TSF_log);
-    TSF_Io_printlog(TSF_log);
-}
-
-string TSF_Io_printlog(string TSF_text, ...){    //TSFdoc:SF_textをターミナル(stdout)に表示する。TSF_logに追記もできる。
+string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:SF_textをターミナル(stdout)に表示する。TSF_logに追記もできる。
  //   writefln("%d arguments",_arguments.length);
     string TSF_log="";
     if(_arguments.length>0){
@@ -37,5 +28,29 @@ string TSF_Io_printlog(string TSF_text, ...){    //TSFdoc:SF_textをターミナ
     return TSF_log;
 }
 
-unittest{
+string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド引数の文字コード対策。
+    string[] TSF_argvs; TSF_argvs.length=TSF_argvobj.length;
+    version(linux){
+        for(int i=0;i<TSF_argvobj.length;i++){
+            TSF_argvs[i]=TSF_argvobj[i];
+        }
+    }
+    version(Windows){
+        for(int i=0;i<TSF_argvobj.length;i++){
+            TSF_argvs[i]=TSF_argvobj[i];
+//            TSF_argvs[i]=fromMBSz(toStringz(cast(char[])TSF_argvobj[i]));
+        }
+    }
+    return TSF_argvs;
+}
+
+
+void main(string[] TSF_argvobj){
+//    writeln("Hello, world!");
+    TSF_Io_printlog("Hello, world!はろーわーるど");
+    string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
+    string TSF_log="test";
+    for(int i=0;i<TSF_argvs.length;i++){
+        TSF_log=TSF_Io_printlog(TSF_argvs[i],TSF_log);
+    }
 }
