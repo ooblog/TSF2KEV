@@ -37,8 +37,11 @@ if sys.platform.startswith("win"):
 if sys.platform.startswith("linux"):
     TSF_libc=ctypes.CDLL("libc.so.6")
 
-def TSF_Io_loadtext(TSF_path,TSF_encoding="UTF-8"):    #TSFdoc:TSF_pathからTSF_textを読み込む。初期文字コードは「UTF-8」なのでいわゆるシフトJISを読み込む場合は「cp932」を指定する。
+def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:TSF_pathからTSF_textを読み込む。初期文字コードは「UTF-8」なのでいわゆるシフトJISを読み込む場合は「cp932」を指定する。
     TSF_text=""
+    TSF_encoding=TSF_encoding.lower()
+    if TSF_encoding in ["utf-8","utf_8","u8","utf","utf8"]: TSF_encoding="utf-8"
+    if TSF_encoding in ["cp932","932","mskanji","ms-kanji","sjis","shiftjis","shift-jis","shift_jis"]: TSF_encoding="cp932"
     if os.path.isfile(TSF_path):
         if sys.version_info.major == 2:
             with open(TSF_path,"r") as TSF_Io_fileobj:
