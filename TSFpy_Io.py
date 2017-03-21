@@ -51,7 +51,7 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="UTF-8"):    #TSFdoc:TSF_pathからTSF
 
 TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
 def TSF_Io_printlog(TSF_text,TSF_log=None):    #TSFdoc:TSF_textをターミナル(stdout)に表示する。TSF_logに追記もできる。
-    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n'])
+    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n']) if len(TSF_log) else ""
     TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
     if TSF_text.endswith('\n'):
         TSF_libc.printf(b"%s",TSF_Io_printf)
@@ -186,7 +186,7 @@ if __name__=="__main__":
     print("")
     TSF_argvs=TSF_Io_argvs(sys.argv)
     print("--- {0} ---".format(TSF_argvs[0]))
-    TSF_debug_savefilename="debug/debug_Io.log"
+    TSF_debug_savefilename="debug/debug_pyIo.log"
     TSF_debug_log=TSF_Io_debug()
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     print("")
