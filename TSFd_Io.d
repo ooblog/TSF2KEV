@@ -9,7 +9,7 @@ import std.array;
 import std.file;
 import core.vararg;
 
-string TSF_Io_printlog(string TSF_text, ...){
+string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
 //   writefln("%d arguments",_arguments.length);
     string TSF_log="";
     if( _arguments.length>0 ){
@@ -33,7 +33,7 @@ string TSF_Io_printlog(string TSF_text, ...){
     return TSF_log;
 }
 
-string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド引数の文字コード対策。
+string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
     string[] TSF_argvs; TSF_argvs.length=TSF_argvobj.length;
     {    //OSversions
         version(linux){
@@ -56,7 +56,7 @@ string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド�
     return TSF_argvs;
 }
 
-string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:TSF_pathからTSF_textを読み込む。初期文字コードは「UTF-8」なのでいわゆるシフトJISを読み込む場合は「cp932」を指定する。
+string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテキストを読み込む。通常「UTF-8」を扱う。(TSFAPI)
     string TSF_text="";
     string TSF_encoding="utf-8";
     if( _arguments.length>0 ){
@@ -73,13 +73,59 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:TSF_pathからTSF_tex
     }
     if( exists(TSF_path) ){
         TSF_text=readText(TSF_path);
+        if( TSF_encoding=="cp932" ){
+            version(Windows){
+                TSF_text=fromMBSz(toStringz(cast(char[])TSF_text));
+            }
+        }
     }
     return TSF_text;
 }
 
+long TSF_Io_intstr0x(string TSF_Io_codestr){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
+    long TSF_Io_codeint=0;
+    {
+        try{
+            TSF_Io_codeint=to!(int)(TSF_Io_codestr);
+        }
+        catch(ConvException e){
+            TSF_Io_codeint=0;
+        }
+    }
+    foreach(string TSF_Io_hexstr;["0x","U+","$"]){
+        if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
+            try{
+                TSF_Io_codeint=to!(int)(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
+            }
+            catch(ConvException e){
+                TSF_Io_codeint=0;
+            }
+        }
+    }
+    return TSF_Io_codeint;
+}
+
+real TSF_Io_floatstrND(string TSF_Io_codestr){        //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
+    real TSF_Io_codefloat=0.0;
+    return TSF_Io_codefloat;
+}
+//def TSF_Forth_popintthe(TSF_that):    #TSF_doc:スタックから数値として積み下ろす(TSFAPI)。
+//    TSF_calcQ=TSF_Forth_popthat()
+//    if '|' in TSF_calcQ:
+//        TSF_calcN,TSF_calcD=TSF_calcQ.replace('m','-').replace('p','').split('|')
+//        TSF_calcN,TSF_calcD=TSF_io_intstr0x(TSF_calcN),TSF_io_intstr0x(TSF_calcD)
+ //       TSF_popdata=TSF_calcN//TSF_calcD if TSF_calcD != 0 else 0 
+//    else:
+//        TSF_calcN=TSF_calcQ.replace('m','-').replace('p','')
+//        TSF_popdata=TSF_io_intstr0x(TSF_calcN)
+//    return TSF_popdata
+
+
 void main(string[] TSF_argvobj){
 //    writeln("Hello, world!");
     TSF_Io_printlog("Hello, world!はろーわーるど");
+    TSF_Io_printlog(text(TSF_Io_intstr0x("U+128")));
+    TSF_Io_printlog(text(256));
     string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
     string TSF_log="test";
     foreach(string TSF_argv;TSF_argvobj){

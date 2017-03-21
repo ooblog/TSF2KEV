@@ -37,7 +37,29 @@ if sys.platform.startswith("win"):
 if sys.platform.startswith("linux"):
     TSF_libc=ctypes.CDLL("libc.so.6")
 
-def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:TSF_pathからTSF_textを読み込む。初期文字コードは「UTF-8」なのでいわゆるシフトJISを読み込む場合は「cp932」を指定する。
+TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
+def TSF_Io_printlog(TSF_text,TSF_log=None):    ##TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
+    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n']) if len(TSF_log) else ""
+    TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
+    if TSF_text.endswith('\n'):
+        TSF_libc.printf(b"%s",TSF_Io_printf)
+        TSF_log="".join([TSF_log,TSF_text]) if TSF_log != None else ""
+    else:
+        TSF_libc.printf(b"%s\n",TSF_Io_printf)
+        TSF_log="".join([TSF_log,TSF_text,'\n']) if TSF_log != None else ""
+    return TSF_log
+
+def TSF_Io_argvs(TSF_argvobj=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
+    TSF_argvs=[]
+    if sys.version_info.major == 2:
+        for TSF_argv in sys.argv:
+            TSF_argvs.append(TSF_argv.decode(TSF_Io_stdout))
+    if sys.version_info.major == 3:
+        for TSF_argv in sys.argv:
+            TSF_argvs.append(TSF_argv)
+    return TSF_argvs
+
+def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:ファイルからテキストを読み込む。通常「UTF-8」を扱う。(TSFAPI)
     TSF_text=""
     TSF_encoding=TSF_encoding.lower()
     if TSF_encoding in ["utf-8","utf_8","u8","utf","utf8"]: TSF_encoding="utf-8"
@@ -52,29 +74,7 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:TSF_pathからTSF
                 TSF_text=TSF_Io_fileobj.read()
     return TSF_text
 
-TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
-def TSF_Io_printlog(TSF_text,TSF_log=None):    #TSFdoc:TSF_textをターミナル(stdout)に表示する。TSF_logに追記もできる。
-    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n']) if len(TSF_log) else ""
-    TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
-    if TSF_text.endswith('\n'):
-        TSF_libc.printf(b"%s",TSF_Io_printf)
-        TSF_log="".join([TSF_log,TSF_text]) if TSF_log != None else ""
-    else:
-        TSF_libc.printf(b"%s\n",TSF_Io_printf)
-        TSF_log="".join([TSF_log,TSF_text,'\n']) if TSF_log != None else ""
-    return TSF_log
-
-def TSF_Io_argvs(TSF_argvobj=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。
-    TSF_argvs=[]
-    if sys.version_info.major == 2:
-        for TSF_argv in sys.argv:
-            TSF_argvs.append(TSF_argv.decode(TSF_Io_stdout))
-    if sys.version_info.major == 3:
-        for TSF_argv in sys.argv:
-            TSF_argvs.append(TSF_argv)
-    return TSF_argvs
-
-def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換する(整数10進か16進数)。
+def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
     TSF_Io_codestr="{0}".format(TSF_Io_codestr)
     TSF_Io_codeint=0
     try:
@@ -90,7 +90,7 @@ def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換�
             break
     return TSF_Io_codeint
 
-def TSF_Io_floatstr(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換する。
+def TSF_Io_floatstrND(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
     TSF_Io_codestr="{0}".format(TSF_Io_codestr)
     TSF_Io_codefloat=0.0
     try:
@@ -98,6 +98,16 @@ def TSF_Io_floatstr(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換�
     except ValueError:
         pass
     return TSF_Io_codefloat
+#def TSF_Forth_popintthe(TSF_that):    #TSF_doc:スタックから数値として積み下ろす(TSFAPI)。
+#    TSF_calcQ=TSF_Forth_popthat()
+#    if '|' in TSF_calcQ:
+#        TSF_calcN,TSF_calcD=TSF_calcQ.replace('m','-').replace('p','').split('|')
+#        TSF_calcN,TSF_calcD=TSF_io_intstr0x(TSF_calcN),TSF_io_intstr0x(TSF_calcD)
+#        TSF_popdata=TSF_calcN//TSF_calcD if TSF_calcD != 0 else 0 
+#    else:
+#        TSF_calcN=TSF_calcQ.replace('m','-').replace('p','')
+#        TSF_popdata=TSF_io_intstr0x(TSF_calcN)
+#    return TSF_popdata
 
 def TSF_Io_ESCencode(TSF_text):
     TSF_text=TSF_text.replace('&',"&amp;").replace('\t',"&tab;")
