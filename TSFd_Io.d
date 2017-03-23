@@ -108,23 +108,19 @@ long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整�
 real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
     string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
     real TSF_Io_codefloat=0.0;
+    string TSF_Io_calcN,TSF_Io_calcD;
     if( count(TSF_Io_codestr,"/") ){
-        try{
-            string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
-            string TSF_Io_calcN=TSF_Io_codesplit[0],TSF_Io_calcD=TSF_Io_codesplit[$-1];
-            TSF_Io_codefloat=to!(real)(TSF_Io_calcN)/to!(real)(TSF_Io_calcD);
-        }
-        catch(ConvException e){
-            TSF_Io_codefloat=0.0;
-        }
+        string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
+        TSF_Io_calcN=TSF_Io_codesplit[0]; TSF_Io_calcD=TSF_Io_codesplit[$-1];
     }
     else{
-        try{
-            TSF_Io_codefloat=to!(real)(TSF_Io_codestr);
-        }
-        catch(ConvException e){
-            TSF_Io_codefloat=0.0;
-        }
+        TSF_Io_calcN=TSF_Io_codestr; TSF_Io_calcD="1";
+    }
+    try{
+        TSF_Io_codefloat=to!(real)(TSF_Io_calcN)/to!(real)(TSF_Io_calcD);
+    }
+    catch(ConvException e){
+        TSF_Io_codefloat=0.0;
     }
     return TSF_Io_codefloat;
 }
@@ -152,6 +148,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"));
     TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")));
     TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")));
+    TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")));
     TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")));
     TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")));
     return TSF_debug_log;
