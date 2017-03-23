@@ -135,6 +135,13 @@ string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」�
     return TSF_text;
 }
 
+long TSF_Io_readlinedeno(string TSF_text){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
+    long TSF_linedeno=0;
+    if( TSF_text.length ){
+        TSF_linedeno=TSF_text.back=='\n'?count(TSF_text,"\n"):count(TSF_text,"\n")+1;
+    }
+    return TSF_linedeno;
+}
 
 string TSF_Io_debug(string[] TSF_argvs){
     string TSF_debug_log="";
@@ -145,12 +152,13 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D%s.%s",version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_debug_log);
-    TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"));
-    TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")));
-    TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")));
-    TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")));
-    TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")));
-    TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")));
+    TSF_debug_log=TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_readlinedeno(TSF_debug_log)),TSF_debug_log);
     return TSF_debug_log;
 }
 
