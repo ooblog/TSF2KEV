@@ -202,14 +202,7 @@ if __name__=="__main__":
     TSF_debug_savefilename="debug/debug_pyIo.log"
     TSF_debug_log=TSF_Io_debug()
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
-    print("")
-    try:
-        print("--- {0} ---\n{1}".format(TSF_debug_savefilename,TSF_debug_log))
-    except:
-        print("can't 'print(TSF_debug_savefilename,TSF_debug_log)'")
-    finally:
-        pass
-    sys.exit()
+    print("--- fin. ---")
 
 
 # Copyright (c) 2017 ooblog
