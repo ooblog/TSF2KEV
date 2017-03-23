@@ -105,7 +105,7 @@ long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整�
     return TSF_Io_codeint;
 }
 
-real TSF_Io_floatstrND(string TSF_Io_codestrobj){        //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
+real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
     string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
     real TSF_Io_codefloat=0.0;
     if( count(TSF_Io_codestr,"/") ){
@@ -129,6 +129,17 @@ real TSF_Io_floatstrND(string TSF_Io_codestrobj){        //#TSFdoc:テキスト�
     return TSF_Io_codefloat;
 }
 
+string TSF_Io_ESCencode(string TSF_textobj){    //#TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
+    string TSF_text=replace(replace(TSF_textobj,"&","&amp;"),"\t","&tab;");
+    return TSF_text;
+}
+
+string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
+    string TSF_text=replace(replace(TSF_textobj,"&tab;","\t"),"&amp;","&");
+    return TSF_text;
+}
+
+
 string TSF_Io_debug(string[] TSF_argvs){
     string TSF_debug_log="";
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);
@@ -138,9 +149,11 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D%s.%s",version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_debug_log);
-    TSF_Io_printlog(format("\t%s","helloワールド\x5496\x55B1"));
+    TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"));
     TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")));
     TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")));
+    TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")));
+    TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")));
     return TSF_debug_log;
 }
 

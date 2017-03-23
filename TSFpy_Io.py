@@ -103,11 +103,11 @@ def TSF_Io_floatstrND(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換
             TSF_Io_codefloat=0.0
     return TSF_Io_codefloat
 
-def TSF_Io_ESCencode(TSF_text):
+def TSF_Io_ESCencode(TSF_text):    #TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
     TSF_text=TSF_text.replace('&',"&amp;").replace('\t',"&tab;")
     return TSF_text
 
-def TSF_Io_ESCdecode(TSF_text):
+def TSF_Io_ESCdecode(TSF_text):    #TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
     TSF_text=TSF_text.replace("&tab;",'\t').replace("&amp;",'&')
     return TSF_text
 
@@ -191,6 +191,8 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("helloワールド\u5496\u55B1"),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_intstr0x("U+p128")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("1.414|3")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 
