@@ -89,16 +89,9 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
     return TSF_text;
 }
 
-long TSF_Io_intstr0x(string TSF_Io_codestr){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
-    long TSF_Io_codeint=0;
-    {
-        try{
-            TSF_Io_codeint=to!(int)(TSF_Io_codestr);
-        }
-        catch(ConvException e){
-            TSF_Io_codeint=0;
-        }
-    }
+long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
+    string TSF_Io_codestr=replace(replace(TSF_Io_codestrobj,"p",""),"m","-");
+    long TSF_Io_codeint=to!(int)(TSF_Io_floatstrND(TSF_Io_codestr));
     foreach(string TSF_Io_hexstr;["0x","U+","$"]){
         if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
             try{
@@ -112,34 +105,29 @@ long TSF_Io_intstr0x(string TSF_Io_codestr){    //#TSFdoc:テキストを整数�
     return TSF_Io_codeint;
 }
 
-real TSF_Io_floatstrND(string TSF_Io_codestr){        //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-//real TSF_Io_floatstrND(string TSF_Io_codeobj){        //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-    real TSF_Io_codefloatN=0.0, TSF_Io_codefloatD=0.0;
-//    string TSF_Io_codestr=replace(TSF_Io_codeobj,"p",""); TSF_Io_codestr=replace(TSF_Io_codestr,"m","-"); TSF_Io_codestr=replace(TSF_Io_codestr,"|","/")
-    {
+real TSF_Io_floatstrND(string TSF_Io_codestrobj){        //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
+    string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
+    real TSF_Io_codefloat=0.0;
+    if( count(TSF_Io_codestr,"/") ){
         try{
-            TSF_Io_codefloatN=to!(real)(TSF_Io_codestr);
+            string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
+            string TSF_Io_calcN=TSF_Io_codesplit[0],TSF_Io_calcD=TSF_Io_codesplit[$-1];
+            TSF_Io_codefloat=to!(real)(TSF_Io_calcN)/to!(real)(TSF_Io_calcD);
         }
         catch(ConvException e){
-            TSF_Io_codefloatN=0.0;
+            TSF_Io_codefloat=0.0;
         }
     }
-    foreach(string TSF_Io_fractionstr;["/"]){
-        if( count(TSF_Io_codestr,TSF_Io_fractionstr) ){
+    else{
+        try{
+            TSF_Io_codefloat=to!(real)(TSF_Io_codestr);
+        }
+        catch(ConvException e){
+            TSF_Io_codefloat=0.0;
         }
     }
-    return TSF_Io_codefloatN;
+    return TSF_Io_codefloat;
 }
-//def TSF_Forth_popintthe(TSF_that):    #TSF_doc:スタックから数値として積み下ろす(TSFAPI)。
-//    TSF_calcQ=TSF_Forth_popthat()
-//    if '|' in TSF_calcQ:
-//        TSF_calcN,TSF_calcD=TSF_calcQ.replace('m','-').replace('p','').split('|')
-//        TSF_calcN,TSF_calcD=TSF_io_intstr0x(TSF_calcN),TSF_io_intstr0x(TSF_calcD)
- //       TSF_popdata=TSF_calcN//TSF_calcD if TSF_calcD != 0 else 0 
-//    else:
-//        TSF_calcN=TSF_calcQ.replace('m','-').replace('p','')
-//        TSF_popdata=TSF_io_intstr0x(TSF_calcN)
-//    return TSF_popdata
 
 string TSF_Io_debug(string[] TSF_argvs){
     string TSF_debug_log="";
@@ -149,24 +137,14 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join(TSF_argvs,"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D%s.%s",version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_debug_log);
+    TSF_Io_printlog(format("\t%s","helloワールド\x5496\x55B1"));
+    TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")));
+    TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")));
     return TSF_debug_log;
 }
 
 void main(string[] TSF_argvobj){
-//    writeln("Hello, world!");
-//    TSF_Io_printlog("Hello, world!はろーわーるど");
-//    TSF_Io_printlog(text(TSF_Io_intstr0x("U+128")));
-//    TSF_Io_printlog(text(256));
-//    TSF_Io_printlog(text(TSF_Io_floatstrND("1.414|3")));
-//    TSF_Io_printlog(text(3.14));
-//    string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
-//    string TSF_log="test";
-//    foreach(string TSF_argv;TSF_argvobj){
-//        TSF_log=TSF_Io_printlog(TSF_argv,TSF_log);
-//    }
-//    if( TSF_argvs.length>1 ){
-//        TSF_Io_printlog(TSF_Io_loadtext(TSF_argvs[1]));
-//    }
     string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
     writeln(format("--- %s ---",TSF_argvs[0]));
     string TSF_debug_savefilename="debug/debug_dIo.log";

@@ -4,3 +4,7 @@ TSF_argvs:
 	TSFpy_Io.py
 TSF_py:
 	Python2.7.6	linux2	UTF-8
+TSF_debug:
+	helloワールド咖喱
+	296
+	0.471333333333

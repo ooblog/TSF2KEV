@@ -75,12 +75,8 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:ファイルか�
     return TSF_text
 
 def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
-    TSF_Io_codestr="{0}".format(TSF_Io_codestr)
-    TSF_Io_codeint=0
-    try:
-        TSF_Io_codeint=int(float(TSF_Io_codestr))
-    except ValueError:
-        pass
+    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','')
+    TSF_Io_codeint=int(TSF_Io_floatstrND(TSF_Io_codestr))
     for TSF_Io_hexstr in ["0x","U+","$"]:
         if TSF_Io_hexstr in TSF_Io_codestr:
             try:
@@ -91,23 +87,21 @@ def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換�
     return TSF_Io_codeint
 
 def TSF_Io_floatstrND(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-    TSF_Io_codestr="{0}".format(TSF_Io_codestr)
+    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','').replace('|','/')
     TSF_Io_codefloat=0.0
-    try:
-        TSF_Io_codefloat=float(TSF_Io_codestr)
-    except ValueError:
-        pass
+    if '/' in TSF_Io_codestr:
+        TSF_Io_codesplit=TSF_Io_codestr.split('/')
+        TSF_Io_calcN,TSF_Io_calcD=TSF_Io_codesplit[0],TSF_Io_codesplit[-1]
+        try:
+            TSF_Io_codefloat=float(TSF_Io_calcN)/float(TSF_Io_calcD)
+        except ValueError:
+            TSF_Io_codefloat=0.0
+    else:
+        try:
+            TSF_Io_codefloat=float(TSF_Io_codestr)
+        except ValueError:
+            TSF_Io_codefloat=0.0
     return TSF_Io_codefloat
-#def TSF_Forth_popintthe(TSF_that):    #TSF_doc:スタックから数値として積み下ろす(TSFAPI)。
-#    TSF_calcQ=TSF_Forth_popthat()
-#    if '|' in TSF_calcQ:
-#        TSF_calcN,TSF_calcD=TSF_calcQ.replace('m','-').replace('p','').split('|')
-#        TSF_calcN,TSF_calcD=TSF_io_intstr0x(TSF_calcN),TSF_io_intstr0x(TSF_calcD)
-#        TSF_popdata=TSF_calcN//TSF_calcD if TSF_calcD != 0 else 0 
-#    else:
-#        TSF_calcN=TSF_calcQ.replace('m','-').replace('p','')
-#        TSF_popdata=TSF_io_intstr0x(TSF_calcN)
-#    return TSF_popdata
 
 def TSF_Io_ESCencode(TSF_text):
     TSF_text=TSF_text.replace('&',"&amp;").replace('\t',"&tab;")
@@ -193,7 +187,12 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(TSF_argvs)),TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_py:",TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python{0.major}.{0.minor}.{0.micro}".format(sys.version_info),sys.platform,TSF_Io_stdout])),TSF_log=TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_log=TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format("helloワールド\u5496\u55B1"),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_intstr0x("U+p128")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("1.414|3")),TSF_debug_log)
     return TSF_debug_log
+#helloワールド\u5496\u55B1
 
 if __name__=="__main__":
     print("")
