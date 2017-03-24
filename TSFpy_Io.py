@@ -108,53 +108,32 @@ def TSF_Io_ESCdecode(TSF_text):    #TSFdoc:「&tab;」を「\t」に戻す。(TS
     TSF_text=TSF_text.replace("&tab;",'\t').replace("&amp;",'&')
     return TSF_text
 
-def TSF_Io_splitlen(TSF_text,TSF_split):    #TSFdoc:テキストの行数を取得。(TSFAPI)
-    TSF_splitlen=TSF_text.count(TSF_split)
-    if len(TSF_text) > 0:
-        if not TSF_text.endswith(TSF_split): TSF_splitlen+=1
+def TSF_Io_splitlen(TSF_text,TSF_split):    #TSFdoc:テキストの行数などを取得。(TSFAPI)
+    TSF_separate=TSF_text.split(TSF_split)
+    TSF_splitlen=TSF_Io_separatelen(TSF_separate)
     return TSF_splitlen
-
-def TSF_Io_splitpeekN(TSF_text,TSF_split):
-    pass
-def TSF_Io_splitpokeN(TSF_text,TSF_split):
-    pass
-def TSF_Io_splitpullN(TSF_text,TSF_split):
-    pass
-def TSF_Io_splitpushN(TSF_text,TSF_split):
-    pass
+def TSF_Io_separatelen(TSF_separate):    #TSFdoc:リストの数を取得。(TSFAPI)
+    TSF_separatelen=len(TSF_separate)
+    return TSF_separatelen
 
 
+#def TSF_Io_splitpeekN(TSF_text,TSF_split,TSF_peek):
+#    pass
+#def TSF_Io_splitpokeN(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpullN(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpushN(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpeekL(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpokeL(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpullL(TSF_text,TSF_split):
+#    pass
+#def TSF_Io_splitpushL(TSF_text,TSF_split):
+#    pass
 
-def TSF_Io_readlinedeno(TSF_text):    #TSFdoc:テキストの行数を取得。(TSFAPI)
-    TSF_linedeno=0
-    if len(TSF_text) > 0:
-        TSF_linedeno=TSF_text.count('\n') if TSF_text.endswith('\n') else TSF_text.count('\n')+1
-    return TSF_linedeno
-
-def TSF_Io_readlinenum(TSF_text,TSF_linenum):    #TSFdoc:TSF_textから1行取得。
-    TSF_line=""
-    if 0 <= TSF_linenum < TSF_Io_readlinedeno(TSF_text):
-        TSF_line=TSF_text.split('\n')[TSF_linenum]
-    return TSF_line
-
-def TSF_Io_overlinenum(TSF_text,TSF_linenum,TSF_line=None):    #TSFdoc:TSF_textの1行上書。LTsv_line=Noneの時は1行削除。
-    TSF_splits=TSF_text.rstrip('\n').split('\n')
-    if LTsv_linenum < 0:
-        if TSF_line != None:
-            TSF_text = '\n'.join(TSF_line.rstrip('\n').split('\n')+TSF_splits)
-    elif len(TSF_splits) <= LTsv_linenum:
-        if TSF_line != None:
-            TSF_text = '\n'.join(TSF_splits+TSF_line.rstrip('\n').split('\n'))
-    else:
-        if TSF_line != None:
-            if TSF_linenum == int(TSF_linenum):
-                LTsv_text = '\n'.join(TSF_splits[:TSF_linenum]+LTsv_line.rstrip('\n').split('\n')+TSF_splits[TSF_linenum+1:])
-            else:
-                LTsv_text = '\n'.join(TSF_splits[:math.floor(TSF_linenum)]+LTsv_line.rstrip('\n').split('\n')+TSF_splits[math.ceil(TSF_linenum):])
-        else:
-            if type(LTsv_linenum) in (int, long):
-                TSF_splits.pop(LTsv_linenum); TSF_text = '\n'.join(TSF_splits)
-    return LTsv_text
 
 def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダ1個を作成する。
     TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))

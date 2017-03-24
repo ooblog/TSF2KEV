@@ -7,6 +7,7 @@ import std.conv;
 import std.windows.charset;
 import std.array;
 import std.file;
+import std.path;
 import core.vararg;
 import std.compiler;
 import std.system;
@@ -31,7 +32,7 @@ string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdout
             puts(toStringz( TSF_text ));
         }
         version(Windows){
-            puts(toStringz( to!(string)(toMBSz(TSF_text)) ));
+            puts(toStringz( to!string(toMBSz(TSF_text)) ));
         }
     }
     if( TSF_text.length>0 ){
@@ -56,7 +57,7 @@ string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド�
         version(Windows){
             foreach(int i,string TSF_argv;TSF_argvobj){
                 TSF_argvs[i]=TSF_argv;
-//                TSF_argvs[i]=fromMBSz(toStringz(cast(char[])TSF_argv));
+//                TSF_argvs[i]=fromMBSz(toStringz(to!char[](TSF_argv)));
             }
         }
     }
@@ -82,7 +83,7 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
         TSF_text=readText(TSF_path);
         if( TSF_encoding=="cp932" ){
             version(Windows){
-                TSF_text=fromMBSz(toStringz(cast(char[])TSF_text));
+                TSF_text=fromMBSz(toStringz(to!char[](TSF_text)));
             }
         }
     }
@@ -91,11 +92,11 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
 
 long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
     string TSF_Io_codestr=replace(replace(TSF_Io_codestrobj,"p",""),"m","-");
-    long TSF_Io_codeint=to!(int)(TSF_Io_floatstrND(TSF_Io_codestr));
+    long TSF_Io_codeint=to!int(TSF_Io_floatstrND(TSF_Io_codestr));
     foreach(string TSF_Io_hexstr;["0x","U+","$"]){
         if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
             try{
-                TSF_Io_codeint=to!(int)(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
+                TSF_Io_codeint=to!int(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
             }
             catch(ConvException e){
                 TSF_Io_codeint=0;
@@ -117,7 +118,7 @@ real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを�
         TSF_Io_calcN=TSF_Io_codestr; TSF_Io_calcD="1";
     }
     try{
-        TSF_Io_codefloat=to!(real)(TSF_Io_calcN)/to!(real)(TSF_Io_calcD);
+        TSF_Io_codefloat=to!real(TSF_Io_calcN)/to!real(TSF_Io_calcD);
     }
     catch(ConvException e){
         TSF_Io_codefloat=0.0;
@@ -135,44 +136,73 @@ string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」�
     return TSF_text;
 }
 
-long TSF_Io_splitlen(string TSF_text,string TSF_split){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
-    long TSF_splitlen=count(TSF_text,TSF_split);
-    if( TSF_text.length ){
-        if( text(TSF_text.back)!=TSF_split ){ TSF_splitlen++; }
-    }
+long TSF_Io_splitlen(string TSF_text,string TSF_split){    //#TSFdoc:テキストの行数などを取得。(TSFAPI)
+    string[] TSF_separate=TSF_text.split(TSF_split);
+    long TSF_splitlen=TSF_Io_separatelen(TSF_separate);
     return TSF_splitlen;
 }
-
-//def TSF_Io_splitlen(TSF_text,TSF_split):
-//    TSF_splitlen=TSF_text.count(TSF_split)
-//    if len(TSF_text) > 0:
-//        if not TSF_text.endswith(TSF_split): TSF_splitlen+=1
-//    return TSF_splitlen
-
-//def TSF_Io_splitpeekN(TSF_text,TSF_split):
-//    pass
-//def TSF_Io_splitpokeN(TSF_text,TSF_split):
-//    pass
-//def TSF_Io_splitpullN(TSF_text,TSF_split):
-//    pass
-//def TSF_Io_splitpushN(TSF_text,TSF_split):
-//    pass
-
-long TSF_Io_readlinedeno(string TSF_text){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
-    long TSF_linedeno=0;
-    if( TSF_text.length ){
-        TSF_linedeno=TSF_text.back=='\n'?count(TSF_text,"\n"):count(TSF_text,"\n")+1;
-    }
-    return TSF_linedeno;
+long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を取得。(TSFAPI)
+    long TSF_separatelen=TSF_separate.length;
+    return TSF_separatelen;
 }
 
-string TSF_Io_readlinenum(string TSF_text,long TSF_linenum){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
-    string  TSF_line="";
-    if( 0<=TSF_linenum && TSF_linenum<TSF_Io_readlinedeno(TSF_text) ){
-        TSF_line=split(TSF_text,"\n")[to!(int)(TSF_linenum)];
-    }
-    return TSF_line;
+//#def TSF_Io_splitpeekN(TSF_text,TSF_split,TSF_peek):
+//#    pass
+//#def TSF_Io_splitpokeN(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpullN(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpushN(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpeekL(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpokeL(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpullL(TSF_text,TSF_split):
+//#    pass
+//#def TSF_Io_splitpushL(TSF_text,TSF_split):
+//#    pass
+
+void TSF_Io_savedir(string[] TSF_path){    //#TSFdoc:リストの数を取得。(TSFAPI)
+    string TSF_Io_workdir="";
 }
+
+
+//def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダ1個を作成する。
+//    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
+//    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.mkdir(TSF_Io_workdir)
+//
+//def TSF_Io_savedirs(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。
+//    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
+//    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
+//
+//def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。空のファイルを作る場合はTSF_textに文字列長さ0の文字列変数を用意する。
+//    if TSF_text != None:
+//        TSF_Io_savedir(TSF_path)
+//        if not TSF_text.endswith('\n'):
+//            TSF_text+='\n'
+//        if sys.version_info.major == 2:
+//            with open(TSF_path,'wb') as TSF_Io_fileobj:
+//                TSF_Io_fileobj.write(TSF_text.encode("UTF-8"))
+//        if sys.version_info.major == 3:
+//            with open(TSF_path,mode="w",encoding="UTF-8",errors="xmlcharrefreplace",newline='\n') as TSF_Io_fileobj:
+//                TSF_Io_fileobj.write(TSF_text)
+//    else:
+//        os.remove(TSF_text)
+//
+//def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記する。
+//    if TSF_text != None:
+//        TSF_Io_savedir(TSF_path)
+//        if not TSF_text.endswith('\n'):
+//            TSF_text+='\n'
+//        if sys.version_info.major == 2:
+//            with open(TSF_path,'ab') as TSF_Io_fileobj:
+//                TSF_Io_fileobj.write(TSF_text.encode("UTF-8"))
+//        if sys.version_info.major == 3:
+//            with open(TSF_path,mode="a",encoding="UTF-8",errors="xmlcharrefreplace",newline='\n') as TSF_Io_fileobj:
+//                TSF_Io_fileobj.write(TSF_text)
+
+
 
 
 string TSF_Io_debug(string[] TSF_argvs){
