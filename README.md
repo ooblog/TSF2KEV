@@ -91,7 +91,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 
 ## 動作環境。
 
-「Tahrpup6.0.5,Python2.7.6,vim.gtk7.4.52&#40;vim-gtk&#41;」および「Wine1.7.18,Python3.4.4,gvim8.0.134&#40;KaoriYa&#41;」で開発中。  
+「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52&#40;vim-gtk&#41;」および「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134&#40;KaoriYa&#41;」で開発中。  
 
 
 ## ライセンス・著作権など。

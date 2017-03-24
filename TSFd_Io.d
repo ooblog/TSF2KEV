@@ -163,9 +163,14 @@ long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を�
 //#def TSF_Io_splitpushL(TSF_text,TSF_split):
 //#    pass
 
-void TSF_Io_savedir(string[] TSF_path){    //#TSFdoc:リストの数を取得。(TSFAPI)
-    string TSF_Io_workdir="";
+void TSF_Io_savedir(string TSF_path){    //#TSFdoc:リストの数を取得。(TSFAPI)
+    string TSF_Io_workdir=dirName(absolutePath(TSF_path));
+    writeln(format("TSF_Io_workdir=%s",TSF_Io_workdir));
 }
+//auto dirName(R)(R path)
+//Char[] dirname(Char)(Char[] fullname);
+//string rel2abs(string path); 
+//pure @safe string absolutePath(string path, lazy string base = getcwd()); 
 
 
 //def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダ1個を作成する。
@@ -229,6 +234,7 @@ void main(string[] TSF_argvobj){
     writeln(format("--- %s ---",TSF_argvs[0]));
     string TSF_debug_savefilename="debug/debug_dIo.log";
     string TSF_debug_log=TSF_Io_debug(TSF_argvs);
+    TSF_Io_savedir(TSF_debug_savefilename);
 //    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     writeln("--- fin. ---");
 }
