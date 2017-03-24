@@ -135,13 +135,14 @@ def TSF_Io_separatelen(TSF_separate):    #TSFdoc:リストの数を取得。(TSF
 #    pass
 
 
-def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダ1個を作成する。
+def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
-    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.mkdir(TSF_Io_workdir)
+    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir):
+        os.mkdir(TSF_Io_workdir)
 
-def TSF_Io_savedirs(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。
-    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
-    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
+#def TSF_Io_savedirs(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。
+#    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
+#    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
 
 def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。空のファイルを作る場合はTSF_textに文字列長さ0の文字列変数を用意する。
     if TSF_text != None:

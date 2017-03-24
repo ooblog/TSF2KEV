@@ -163,38 +163,36 @@ long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を�
 //#def TSF_Io_splitpushL(TSF_text,TSF_split):
 //#    pass
 
-void TSF_Io_savedir(string TSF_path){    //#TSFdoc:リストの数を取得。(TSFAPI)
+void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     string TSF_Io_workdir=dirName(absolutePath(TSF_path));
-    writeln(format("TSF_Io_workdir=%s",TSF_Io_workdir));
+    if( exists(TSF_Io_workdir)==false && TSF_Io_workdir.length>0 ){
+        mkdir(TSF_Io_workdir);
+    }
 }
-//auto dirName(R)(R path)
-//Char[] dirname(Char)(Char[] fullname);
-//string rel2abs(string path); 
-//pure @safe string absolutePath(string path, lazy string base = getcwd()); 
 
+void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:リストの数を取得。(TSFAPI)
+    string TSF_text="";  bool TSF_remove=true;
+    if( _arguments.length>0 ){
+        if( _arguments[0]==typeid(string) ){
+            TSF_text=va_arg!(string)(_argptr); TSF_remove=false;
+            TSF_Io_savedir(TSF_path);
+        }
+    }
+    if( TSF_text.length>0 ){
+        TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';
+    }
+//    writef("TSF_path=%s,%s\n",TSF_path,TSF_remove);
+    if( TSF_remove ){
+        if( exists(TSF_path) ){
+            remove(TSF_path);
+        }
+    }
+    else{
+        std.file.write(TSF_path,TSF_text);
+//        writeln(TSF_path);
+    }
+}
 
-//def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダ1個を作成する。
-//    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
-//    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.mkdir(TSF_Io_workdir)
-//
-//def TSF_Io_savedirs(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。
-//    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
-//    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
-//
-//def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。空のファイルを作る場合はTSF_textに文字列長さ0の文字列変数を用意する。
-//    if TSF_text != None:
-//        TSF_Io_savedir(TSF_path)
-//        if not TSF_text.endswith('\n'):
-//            TSF_text+='\n'
-//        if sys.version_info.major == 2:
-//            with open(TSF_path,'wb') as TSF_Io_fileobj:
-//                TSF_Io_fileobj.write(TSF_text.encode("UTF-8"))
-//        if sys.version_info.major == 3:
-//            with open(TSF_path,mode="w",encoding="UTF-8",errors="xmlcharrefreplace",newline='\n') as TSF_Io_fileobj:
-//                TSF_Io_fileobj.write(TSF_text)
-//    else:
-//        os.remove(TSF_text)
-//
 //def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記する。
 //    if TSF_text != None:
 //        TSF_Io_savedir(TSF_path)
@@ -231,11 +229,11 @@ string TSF_Io_debug(string[] TSF_argvs){
 
 void main(string[] TSF_argvobj){
     string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
-    writeln(format("--- %s ---",TSF_argvs[0]));
+    writef("--- %s ---\n",TSF_argvs[0]);
     string TSF_debug_savefilename="debug/debug_dIo.log";
     string TSF_debug_log=TSF_Io_debug(TSF_argvs);
-    TSF_Io_savedir(TSF_debug_savefilename);
-//    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
+//    TSF_Io_savedir(TSF_debug_savefilename);
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
     writeln("--- fin. ---");
 }
 
