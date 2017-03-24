@@ -135,6 +135,29 @@ string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」�
     return TSF_text;
 }
 
+long TSF_Io_splitlen(string TSF_text,string TSF_split){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
+    long TSF_splitlen=count(TSF_text,TSF_split);
+    if( TSF_text.length ){
+        if( text(TSF_text.back)!=TSF_split ){ TSF_splitlen++; }
+    }
+    return TSF_splitlen;
+}
+
+//def TSF_Io_splitlen(TSF_text,TSF_split):
+//    TSF_splitlen=TSF_text.count(TSF_split)
+//    if len(TSF_text) > 0:
+//        if not TSF_text.endswith(TSF_split): TSF_splitlen+=1
+//    return TSF_splitlen
+
+//def TSF_Io_splitpeekN(TSF_text,TSF_split):
+//    pass
+//def TSF_Io_splitpokeN(TSF_text,TSF_split):
+//    pass
+//def TSF_Io_splitpullN(TSF_text,TSF_split):
+//    pass
+//def TSF_Io_splitpushN(TSF_text,TSF_split):
+//    pass
+
 long TSF_Io_readlinedeno(string TSF_text){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
     long TSF_linedeno=0;
     if( TSF_text.length ){
@@ -167,8 +190,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_readlinedeno(TSF_debug_log)),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_readlinenum(TSF_debug_log,6)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen(TSF_debug_log,"\n")),TSF_debug_log);
     return TSF_debug_log;
 }
 
