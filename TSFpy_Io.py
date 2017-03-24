@@ -116,9 +116,8 @@ def TSF_Io_readlinedeno(TSF_text):    #TSFdoc:テキストの行数を取得。(
 
 def TSF_Io_readlinenum(TSF_text,TSF_linenum):    #TSFdoc:TSF_textから1行取得。
     TSF_line=""
-    TSF_splits=TSF_text.rstrip('\n').split('\n')
-    if 0 <= LTsv_linenum < len(TSF_splits):
-        TSF_line=TSF_splits[LTsv_linenum]
+    if 0 <= TSF_linenum < TSF_Io_readlinedeno(TSF_text):
+        TSF_line=TSF_text.split('\n')[TSF_linenum]
     return TSF_line
 
 def TSF_Io_overlinenum(TSF_text,TSF_linenum,TSF_line=None):    #TSFdoc:TSF_textの1行上書。LTsv_line=Noneの時は1行削除。
@@ -191,6 +190,7 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_readlinedeno(TSF_debug_log)),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_readlinenum(TSF_debug_log,6)),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 

@@ -143,6 +143,15 @@ long TSF_Io_readlinedeno(string TSF_text){    //#TSFdoc:テキストの行数を
     return TSF_linedeno;
 }
 
+string TSF_Io_readlinenum(string TSF_text,long TSF_linenum){    //#TSFdoc:テキストの行数を取得。(TSFAPI)
+    string  TSF_line="";
+    if( 0<=TSF_linenum && TSF_linenum<TSF_Io_readlinedeno(TSF_text) ){
+        TSF_line=split(TSF_text,"\n")[to!(int)(TSF_linenum)];
+    }
+    return TSF_line;
+}
+
+
 string TSF_Io_debug(string[] TSF_argvs){
     string TSF_debug_log="";
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);
@@ -159,6 +168,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_readlinedeno(TSF_debug_log)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_readlinenum(TSF_debug_log,6)),TSF_debug_log);
     return TSF_debug_log;
 }
 
