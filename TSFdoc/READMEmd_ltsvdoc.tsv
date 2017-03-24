@@ -56,7 +56,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     main1:
     	aboutTSF:	#TSF_echothe	main2:	#TSF_this
     main2:
-    	#-- 分岐の材料、電卓その他数値取得のテスト --	 	2	#TSF_echoN	calcFXtesカードゲームt:	#TSF_this	calcDCtest:	#TSF_this	calcKNテスト:	#TSF_this	calenderテスト:	#TSF_this	matchテスト:	#TSF_this	shuffleテスト:	#TSF_this	 	#-- (小数の桁数が異なる理由は分数電卓を用いない計算は有効桁数が短いため) --	2	#TSF_echoN	main3:	#TSF_this
+    	#-- 分岐の材料、電卓その他数値取得のテスト --	 	2	#TSF_echoN	calcFXtest:	#TSF_this	calcDCtest:	#TSF_this	calcKNテスト:	#TSF_this	calenderテスト:	#TSF_this	matchテスト:	#TSF_this	shuffleテスト:	#TSF_this	 	#-- (小数の桁数が異なる理由は分数電卓を用いない計算は有効桁数が短いため) --	2	#TSF_echoN	main3:	#TSF_this
     main3:
     	aboutCalc:	#TSF_echothe
     aboutTSF:
