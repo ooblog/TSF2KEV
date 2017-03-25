@@ -119,7 +119,9 @@ def TSF_Io_splitpeekN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数
     TSF_splitpeek=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek)
     return TSF_splitpeek
 def TSF_Io_separatepeekN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で読込。(TSFAPI)
-    TSF_separatepeek=TSF_separate[TSF_peek]
+    TSF_separatepeek=""
+    if 0 <= TSF_peek < len(TSF_separate):
+        TSF_separatepeek=TSF_separate[TSF_peek]
     return TSF_separatepeek
 def TSF_Io_splitpeekL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
     TSF_splitpeek=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label)

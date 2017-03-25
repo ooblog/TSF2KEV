@@ -149,7 +149,10 @@ string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#T
     return TSF_splitpeek;
 }
 string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから読込。(TSFAPI)
-    string TSF_separatepeek=TSF_separate[to!int(TSF_peek)];
+    string TSF_separatepeek="";
+    if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
+        TSF_separatepeek=TSF_separate[to!int(TSF_peek)];
+    }
     return TSF_separatepeek;
 }
 string TSF_Io_splitpeekL(string TSF_tsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
