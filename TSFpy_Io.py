@@ -116,23 +116,23 @@ def TSF_Io_separatelen(TSF_separate):    #TSFdoc:リストの数を取得。(TSF
     return TSF_separatelen
 
 def TSF_Io_splitpeekN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で読込。(TSFAPI)
-    TSF_splitpeek=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek)
-    return TSF_splitpeek
+    TSF_pull=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek)
+    return TSF_pull
 def TSF_Io_separatepeekN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で読込。(TSFAPI)
-    TSF_separatepeek=""
+    TSF_pull=""
     if 0 <= TSF_peek < len(TSF_separate):
-        TSF_separatepeek=TSF_separate[TSF_peek]
-    return TSF_separatepeek
+        TSF_pull=TSF_separate[TSF_peek]
+    return TSF_pull
 def TSF_Io_splitpeekL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
-    TSF_splitpeek=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label)
-    return TSF_splitpeek
+    TSF_pull=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label)
+    return TSF_pull
 def TSF_Io_separatepeekL(TSF_separate,TSF_label):    #TSFdoc:リストからベル指定で読込。(TSFAPI)
-    TSF_separatepeek=""
+    TSF_pull=""
     if len(TSF_label) > 0:
         for TSF_separated in TSF_separate:
             if TSF_separated.find(TSF_label) == 0:
-                TSF_separatepeek=TSF_separated[len(TSF_label):]
-    return TSF_separatepeek
+                TSF_pull=TSF_separated[len(TSF_label):]
+    return TSF_pull
 
 def TSF_Io_splitpokeN(TSF_tsv,TSF_split,TSF_peek,TSF_poke):    #TSFdoc:TSVなどから数値指定で書込。(TSFAPI)
     TSF_splitpoked=TSF_Io_separatepokeN(TSF_tsv.split(TSF_split),TSF_peek,TSF_poke)
@@ -151,20 +151,26 @@ def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リスト�
                 TSF_separate[TSF_peek]=TSF_label+TSF_poke
     return TSF_separate
 
+def TSF_Io_splitpullN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
+    TSF_pull,TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek)
+    return TSF_pull,TSF_split.join(TSF_separated)
+def TSF_Io_separatepullN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で引抜。(TSFAPI)
+    if 0 <= TSF_peek < len(TSF_separate):
+        TSF_pull=TSF_separate[TSF_peek]
+    return TSF_pull,TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
+#def TSF_Io_splitpullL(TSF_ltsv,TSF_split,TSF_label,TSF_pull):    #TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
+#    TSF_splitpulld=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label,TSF_pull)
+#    return TSF_split.join(TSF_splitpulld)
+#def TSF_Io_separatepullL(TSF_separate,TSF_label,TSF_pull):    #TSFdoc:リストからベル指定で引抜。(TSFAPI)
+#    if len(TSF_label) > 0:
+#        for TSF_peek,TSF_separated in enumerate(TSF_separate):
+#            if TSF_separated.find(TSF_label) == 0:
+#                TSF_separate[TSF_peek]=TSF_label+TSF_pull
+#    return TSF_separate
 
-#def TSF_Io_splitpokeN(TSF_text,TSF_split):
-#    pass
 #def TSF_Io_splitpullN(TSF_text,TSF_split):
 #    pass
 #def TSF_Io_splitpushN(TSF_text,TSF_split):
-#    pass
-#def TSF_Io_splitpeekL(TSF_text,TSF_split):
-#    pass
-#def TSF_Io_splitpokeL(TSF_text,TSF_split):
-#    pass
-#def TSF_Io_splitpullL(TSF_text,TSF_split):
-#    pass
-#def TSF_Io_splitpushL(TSF_text,TSF_split):
 #    pass
 
 
@@ -226,6 +232,8 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpeekL(TSF_debug_PPPP,'\t',"this:")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeN(TSF_debug_PPPP,'\t',1,"poked")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeL(TSF_debug_PPPP,'\t',"that:","poked")),TSF_debug_log)
+    TSF_debug_pull,TSF_debu_separated=TSF_Io_splitpullN(TSF_debug_PPPP,'\t',2)
+    TSF_debug_log=TSF_Io_printlog("\t{0}\t,\t{1}".format(TSF_debug_pull,TSF_debu_separated),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 

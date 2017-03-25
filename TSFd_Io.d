@@ -11,6 +11,7 @@ import std.path;
 import core.vararg;
 import std.compiler;
 import std.system;
+import std.typecons;
 
 
 string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
@@ -145,30 +146,30 @@ long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を�
 }
 
 string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから読込。(TSFAPI)
-    string TSF_splitpeek=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek);
-    return TSF_splitpeek;
+    string TSF_pull=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek);
+    return TSF_pull;
 }
 string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから読込。(TSFAPI)
-    string TSF_separatepeek="";
+    string TSF_pull="";
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_separatepeek=TSF_separate[to!int(TSF_peek)];
+        TSF_pull=TSF_separate[to!int(TSF_peek)];
     }
-    return TSF_separatepeek;
+    return TSF_pull;
 }
 string TSF_Io_splitpeekL(string TSF_ltsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
-    string TSF_splitpeek=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label);
-    return TSF_splitpeek;
+    string TSF_pull=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label);
+    return TSF_pull;
 }
 string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからベル指定で読込。(TSFAPI)
-    string TSF_separatepeek="";
+    string TSF_pull="";
     if( TSF_label.length>0 ){
         foreach(string TSF_separated;TSF_separate){
             if( indexOf(TSF_separated,TSF_label)==0 ){
-                TSF_separatepeek=TSF_separated[TSF_label.length..$];
+                TSF_pull=TSF_separated[TSF_label.length..$];
             }
         }
     }
-    return TSF_separatepeek;
+    return TSF_pull;
 }
 
 string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_poke){    //#TSFdoc:TSVなどから書込。(TSFAPI)
@@ -198,18 +199,35 @@ string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_
     return TSF_separatepoke;
 }
 
+auto TSF_Io_splitpullN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから書込。(TSFAPI)
+    auto TSF_pulled=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek);
+    string TSF_pull=TSF_pulled[0];
+    string TSF_separated=join(TSF_pulled[1],TSF_split);
+    return tuple(TSF_pull,TSF_separated);
+}
+auto TSF_Io_separatepullN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから書込。(TSFAPI)
+    string TSF_pull="";
+    if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
+        TSF_pull=TSF_separate[to!int(TSF_peek)];
+    }
+    string[] TSF_separated=TSF_separate[0..to!int(TSF_peek)]~TSF_separate[to!int(TSF_peek)+1..$];
+    auto TSF_pulled=tuple(TSF_pull,TSF_separated);
+    return TSF_pulled;
+}
+
+//def TSF_Io_splitpullN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
+//    TSF_pull,TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek)
+//    return TSF_pull,TSF_split.join(TSF_separated)
+//def TSF_Io_separatepullN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で引抜。(TSFAPI)
+//    if 0 <= TSF_peek < len(TSF_separate):
+//        TSF_pull=TSF_separate[TSF_peek]
+//    return TSF_pull,TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
+
 //#def TSF_Io_splitpullN(TSF_text,TSF_split):
 //#    pass
 //#def TSF_Io_splitpushN(TSF_text,TSF_split):
 //#    pass
-//#def TSF_Io_splitpeekL(TSF_text,TSF_split):
-//#    pass
-//#def TSF_Io_splitpokeL(TSF_text,TSF_split):
-//#    pass
-//#def TSF_Io_splitpullL(TSF_text,TSF_split):
-//#    pass
-//#def TSF_Io_splitpushL(TSF_text,TSF_split):
-//#    pass
+
 
 void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     string TSF_Io_workdir=dirName(absolutePath(TSF_path));
@@ -282,8 +300,12 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekL(TSF_debug_PPPP,"\t","this:")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeN(TSF_debug_PPPP,"\t",1,"poked")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","that:","poked")),TSF_debug_log);
+    auto TSF_debug_pulled=TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2);
+    string TSF_debug_pull=TSF_debug_pulled[0]; string TSF_debu_separated=TSF_debug_pulled[1];
+    TSF_debug_log=TSF_Io_printlog(format("\t%s\t,\t%s",TSF_debug_pull,TSF_debu_separated),TSF_debug_log);
     return TSF_debug_log;
 }
+
 
 void main(string[] TSF_argvobj){
     string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
