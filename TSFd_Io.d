@@ -170,7 +170,14 @@ void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイ�
     }
 }
 
-void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:リストの数を取得。(TSFAPI)
+void TSF_Io_savedirs(string TSF_path){    //一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。(TSFAPI)
+    string TSF_Io_workdir=dirName(absolutePath(TSF_path));
+    if( exists(TSF_Io_workdir)==false && TSF_Io_workdir.length>0 ){
+        mkdirRecurse(TSF_Io_workdir);
+    }
+}
+
+void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。(TSFAPI)
     string TSF_text="";  bool TSF_remove=true;
     if( _arguments.length>0 ){
         if( _arguments[0]==typeid(string) ){
@@ -181,7 +188,6 @@ void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:リストの数を取�
     if( TSF_text.length>0 ){
         TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';
     }
-//    writef("TSF_path=%s,%s\n",TSF_path,TSF_remove);
     if( TSF_remove ){
         if( exists(TSF_path) ){
             remove(TSF_path);
@@ -189,23 +195,21 @@ void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:リストの数を取�
     }
     else{
         std.file.write(TSF_path,TSF_text);
-//        writeln(TSF_path);
     }
 }
 
-//def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記する。
-//    if TSF_text != None:
-//        TSF_Io_savedir(TSF_path)
-//        if not TSF_text.endswith('\n'):
-//            TSF_text+='\n'
-//        if sys.version_info.major == 2:
-//            with open(TSF_path,'ab') as TSF_Io_fileobj:
-//                TSF_Io_fileobj.write(TSF_text.encode("UTF-8"))
-//        if sys.version_info.major == 3:
-//            with open(TSF_path,mode="a",encoding="UTF-8",errors="xmlcharrefreplace",newline='\n') as TSF_Io_fileobj:
-//                TSF_Io_fileobj.write(TSF_text)
-
-
+void TSF_Io_writetext(string TSF_path,string TSF_text){    //#TSFdoc:TSF_pathにTSF_textを追記する。(TSFAPI)
+    if( TSF_text.length>0 ){
+        TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';
+    }
+    TSF_Io_savedir(TSF_path);
+    if( exists(TSF_path) ){
+        std.file.append(TSF_path,TSF_text);
+    }
+    else{
+        std.file.write(TSF_path,TSF_text);
+    }
+}
 
 
 string TSF_Io_debug(string[] TSF_argvs){
@@ -234,6 +238,7 @@ void main(string[] TSF_argvobj){
     string TSF_debug_log=TSF_Io_debug(TSF_argvs);
 //    TSF_Io_savedir(TSF_debug_savefilename);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
+//    TSF_Io_writetext(TSF_debug_savefilename,TSF_debug_log);
     writeln("--- fin. ---");
 }
 

@@ -140,11 +140,11 @@ def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル�
     if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir):
         os.mkdir(TSF_Io_workdir)
 
-#def TSF_Io_savedirs(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。
-#    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
-#    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
+def TSF_Io_savedirs(TSF_path):    #TSFdoc:一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。(TSFAPI)
+    TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
+    if not os.path.exists(TSF_Io_workdir) and not os.path.isdir(TSF_Io_workdir) and len(TSF_Io_workdir): os.makedirs(TSF_Io_workdir)
 
-def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。空のファイルを作る場合はTSF_textに文字列長さ0の文字列変数を用意する。
+def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。(TSFAPI)
     if TSF_text != None:
         TSF_Io_savedir(TSF_path)
         if not TSF_text.endswith('\n'):
@@ -158,7 +158,7 @@ def TSF_Io_savetext(TSF_path,TSF_text=None):    #TSFdoc:TSF_pathにTSF_textを�
     else:
         os.remove(TSF_text)
 
-def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記する。
+def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記する。(TSFAPI)
     if TSF_text != None:
         TSF_Io_savedir(TSF_path)
         if not TSF_text.endswith('\n'):
@@ -196,7 +196,9 @@ if __name__=="__main__":
     print("--- {0} ---".format(TSF_argvs[0]))
     TSF_debug_savefilename="debug/debug_pyIo.log"
     TSF_debug_log=TSF_Io_debug()
+#    TSF_Io_savedir(TSF_debug_savefilename)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
+#    TSF_Io_writetext(TSF_debug_savefilename,TSF_debug_log)
     print("--- fin. ---")
 
 
