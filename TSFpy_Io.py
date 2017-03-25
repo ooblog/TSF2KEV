@@ -109,16 +109,31 @@ def TSF_Io_ESCdecode(TSF_text):    #TSFdoc:「&tab;」を「\t」に戻す。(TS
     return TSF_text
 
 def TSF_Io_splitlen(TSF_text,TSF_split):    #TSFdoc:テキストの行数などを取得。(TSFAPI)
-    TSF_separate=TSF_text.split(TSF_split)
-    TSF_splitlen=TSF_Io_separatelen(TSF_separate)
+    TSF_splitlen=TSF_Io_separatelen(TSF_text.split(TSF_split))
     return TSF_splitlen
 def TSF_Io_separatelen(TSF_separate):    #TSFdoc:リストの数を取得。(TSFAPI)
     TSF_separatelen=len(TSF_separate)
     return TSF_separatelen
 
+def TSF_Io_splitpeekN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で読込。(TSFAPI)
+    TSF_splitpeek=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek)
+    return TSF_splitpeek
+def TSF_Io_separatepeekN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で読込。(TSFAPI)
+    TSF_separatepeek=TSF_separate[TSF_peek]
+    return TSF_separatepeek
+def TSF_Io_splitpeekL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
+    TSF_splitpeek=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label)
+    return TSF_splitpeek
+def TSF_Io_separatepeekL(TSF_separate,TSF_label):    #TSFdoc:リストからベル指定で読込。(TSFAPI)
+    TSF_separatepeek=""
+    if len(TSF_label) > 0:
+        for TSF_separated in TSF_separate:
+            if TSF_separated.find(TSF_label) == 0:
+                TSF_separatepeek=TSF_separated[len(TSF_label):]
+    return TSF_separatepeek
 
-#def TSF_Io_splitpeekN(TSF_text,TSF_split,TSF_peek):
-#    pass
+
+
 #def TSF_Io_splitpokeN(TSF_text,TSF_split):
 #    pass
 #def TSF_Io_splitpullN(TSF_text,TSF_split):
@@ -178,15 +193,19 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(TSF_argvs)),TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_py:",TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python{0.major}.{0.minor}.{0.micro}".format(sys.version_info),sys.platform,TSF_Io_stdout])),TSF_log=TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python({0}){1.major}.{1.minor}.{1.micro}".format(sys.copyright.split('\n')[0],sys.version_info),sys.platform,TSF_Io_stdout])),TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("helloワールド\u5496\u55B1"),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_intstr0x("U+p128")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("1.414|3")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("3.14")),TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitlen(TSF_debug_log,'\n')),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitlen("csv\ttsv\tLTSV\tL:Tsv\tTSF",'\t')),TSF_debug_log)
+    TSF_debug_PPPP="this:Peek\tthat:Poke\tthe:Pull\tthey:Push"
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpeekN(TSF_debug_PPPP,'\t',0)),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpeekL(TSF_debug_PPPP,'\t',"this:")),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 

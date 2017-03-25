@@ -3,12 +3,15 @@ TSF_Tab-Separated-Forth:
 TSF_argvs:
 	TSFpy_Io.py
 TSF_py:
-	Python2.7.6	linux2	UTF-8
+	Python(Copyright (c) 2001-2014 Python Software Foundation.)2.7.6	linux2	UTF-8
 TSF_debug:
 	helloワールド咖喱
 	296
 	0.471333333333
 	3.14
-	tsv&tab;L:Tsv
-	tsv	L:Tsv
+	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF
+	csv	tsv	LTSV	L:Tsv	TSF
 	14
+	5
+	this:Peek
+	Peek

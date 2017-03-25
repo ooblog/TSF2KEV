@@ -3,12 +3,15 @@ TSF_Tab-Separated-Forth:
 TSF_argvs:
 	/tmp/.rdmd-0/rdmd-TSFd_Io.d-AAE3062CF671D7D76DDC4932C50B7E1A/TSFd_Io
 TSF_d:
-	D2.73	linux	UTF-8
+	D(digitalMars)2.73	linux	UTF-8
 TSF_debug:
 	helloワールド咖喱
 	296
 	0.471333
 	3.14
-	tsv&tab;L:Tsv
-	tsv	L:Tsv
+	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF
+	csv	tsv	LTSV	L:Tsv	TSF
 	14
+	5
+	this:Peek
+	Peek

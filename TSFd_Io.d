@@ -14,7 +14,6 @@ import std.system;
 
 
 string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
-//   writefln("%d arguments",_arguments.length);
     string TSF_log="";
     if( _arguments.length>0 ){
         if( _arguments[0]==typeid(string) ){
@@ -137,8 +136,7 @@ string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」�
 }
 
 long TSF_Io_splitlen(string TSF_text,string TSF_split){    //#TSFdoc:テキストの行数などを取得。(TSFAPI)
-    string[] TSF_separate=TSF_text.split(TSF_split);
-    long TSF_splitlen=TSF_Io_separatelen(TSF_separate);
+    long TSF_splitlen=TSF_Io_separatelen(TSF_text.split(TSF_split));
     return TSF_splitlen;
 }
 long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を取得。(TSFAPI)
@@ -146,8 +144,30 @@ long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を�
     return TSF_separatelen;
 }
 
-//#def TSF_Io_splitpeekN(TSF_text,TSF_split,TSF_peek):
-//#    pass
+string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから読込。(TSFAPI)
+    string TSF_splitpeek=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek);
+    return TSF_splitpeek;
+}
+string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから読込。(TSFAPI)
+    string TSF_separatepeek=TSF_separate[to!int(TSF_peek)];
+    return TSF_separatepeek;
+}
+string TSF_Io_splitpeekL(string TSF_tsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
+    string TSF_splitpeek=TSF_Io_separatepeekL(TSF_tsv.split(TSF_split),TSF_label);
+    return TSF_splitpeek;
+}
+string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからベル指定で読込。(TSFAPI)
+    string TSF_separatepeek="";
+    if( TSF_label.length>0 ){
+        foreach(string TSF_separated;TSF_separate){
+            if( indexOf(TSF_separated,TSF_label)==0 ){
+                TSF_separatepeek=TSF_separated[TSF_label.length..$];
+            }
+        }
+    }
+    return TSF_separatepeek;
+}
+
 //#def TSF_Io_splitpokeN(TSF_text,TSF_split):
 //#    pass
 //#def TSF_Io_splitpullN(TSF_text,TSF_split):
@@ -219,27 +239,31 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join(TSF_argvs,"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D%s.%s",version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D(%s)%s.%s",vendor,version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("tsv\tL:Tsv")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("tsv&tab;L:Tsv")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen(TSF_debug_log,"\n")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen("csv\ttsv\tLTSV\tL:Tsv\tTSF","\t")),TSF_debug_log);
+    string TSF_debug_PPPP="this:Peek\tthat:Poke\tthe:Pull\tthey:Push";
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekN(TSF_debug_PPPP,"\t",0)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekL(TSF_debug_PPPP,"\t","this:")),TSF_debug_log);
     return TSF_debug_log;
 }
 
 void main(string[] TSF_argvobj){
     string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
-    writef("--- %s ---\n",TSF_argvs[0]);
+    std.stdio.writef("--- %s ---\n",TSF_argvs[0]);
     string TSF_debug_savefilename="debug/debug_dIo.log";
     string TSF_debug_log=TSF_Io_debug(TSF_argvs);
 //    TSF_Io_savedir(TSF_debug_savefilename);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 //    TSF_Io_writetext(TSF_debug_savefilename,TSF_debug_log);
-    writeln("--- fin. ---");
+    std.stdio.writeln("--- fin. ---");
 }
 
 
