@@ -15,3 +15,5 @@ TSF_debug:
 	5
 	this:Peek
 	Peek
+	this:Peek	poked	the:Pull	they:Push
+	this:Peek	that:poked	the:Pull	they:Push
