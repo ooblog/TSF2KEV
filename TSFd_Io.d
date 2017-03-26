@@ -270,12 +270,95 @@ string[] TSF_Io_separatepushL(string[] TSF_separate,string TSF_label,string TSF_
 //    return TSF_Io_codefloat;
 //}
 
-string TSF_Io_RPN(string TSF_RPNseq){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
-    string TSF_RPN="";
+string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
+    string TSF_RPNanswer="";
+    string TSF_RPNnum="";  int TSF_RPNminus=0;
+    real[] TSF_RPNstack=[];
+    string TSF_RPNseq=replace(replace(TSF_RPN,"U+","$"),"0x","$")~" ";
+    real TSF_RPNstackL,TSF_RPNstackR;
     foreach(char TSF_RPNope;TSF_RPNseq){
-        TSF_RPN~=TSF_RPNope;
+        if( count("0123456789.pm$|",TSF_RPNope) ){
+            TSF_RPNnum~=TSF_RPNope;
+        }
+        else{
+            if( TSF_RPNnum.length>0 ){
+                TSF_RPNminus=count(TSF_RPNnum,"-");  TSF_RPNnum=replace(replace(TSF_RPN,"p",""),"m","");
+                real TSF_RPNcalcN,TSF_RPNcalcD;
+                writef("TSF_RPNnum:%s\n",TSF_RPNnum);
+                if( count(TSF_RPNnum,"$") ){
+                    try{
+                        TSF_RPNcalcN=to!int(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
+                    }
+                    catch(ConvException e){
+                        TSF_RPNanswer="n|0";
+                        break;
+                    }
+                }
+                else if( count(TSF_RPNnum,"|") ){
+                    try{
+                        string[] TSF_RPNcalcND=TSF_RPNnum.split("|");
+                        TSF_RPNcalcN=to!real(TSF_RPNcalcND[0]);  TSF_RPNcalcD=to!real(TSF_RPNcalcND[$]);
+                    }
+                    catch(ConvException e){
+                        TSF_RPNanswer="n|0";
+                        break;
+                    }
+                }
+                else{
+                    try{
+                        TSF_RPNcalcN=to!real(TSF_RPNnum);  TSF_RPNcalcD=1.0;
+                    }
+                    catch(ConvException e){
+                        TSF_RPNanswer="n|0";
+                        break;
+                    }
+                }
+                if( TSF_RPNminus%2 ){
+                    TSF_RPNcalcN=-TSF_RPNcalcN;
+                }
+                try{
+                    TSF_RPNstack~=TSF_RPNcalcN/TSF_RPNcalcD;
+                }
+                catch(Error e){
+                    TSF_RPNanswer="n|0";
+                    break;
+                }
+                TSF_RPNnum="";
+            }
+            if( count("+=*/",TSF_RPNope) ){
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackR=0.0;
+                }
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackL=0.0;
+                }
+                writef("TSF_RPNstackL,TSF_RPNstackR",TSF_RPNstackL,TSF_RPNstackR);
+                switch( TSF_RPNope ){
+                    case '+':  TSF_RPNstack~=TSF_RPNstackL+TSF_RPNstackR;  break;
+                    case '-':  TSF_RPNstack~=TSF_RPNstackL-TSF_RPNstackR;  break;
+                    case '*':  TSF_RPNstack~=TSF_RPNstackL*TSF_RPNstackR;  break;
+                    case '/':  TSF_RPNstack~=TSF_RPNstackL/TSF_RPNstackR;  break;
+                    default:  break;
+                }
+            }
+        }
     }
-    return TSF_RPN;
+    if( TSF_RPNstack.length ){
+        TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
+    }
+    else{
+        TSF_RPNstackL=0.0;
+    }
+    if( TSF_RPNanswer != "n|0" ){
+        TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
+    }
+   return TSF_RPNanswer;
 }
 
 void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)

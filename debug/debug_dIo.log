@@ -23,9 +23,9 @@ TSF_debug_tsv:
 	this:Peek	that:Poke	the:Pull	they:pushed
 	this:Peek	that:Poke	the:Pull	they:Push	cards:pushed
 TSF_debug_rpn:
-	2,3+	2,3+
-	2,m3+	2,m3+
-	2,3-	2,3-
-	2,m3-	2,m3-
-	2,3*	2,3*
-	2,3/	2,3/
+	2,3+	n|0
+	2,m3+	n|0
+	2,3-	n|0
+	2,m3-	n|0
+	2,3*	n|0
+	2,3/	n|0
