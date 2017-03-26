@@ -4,14 +4,11 @@ TSF_argvs:
 	TSFpy_Io.py
 TSF_py:
 	Python(Copyright (c) 2001-2014 Python Software Foundation.)2.7.6	linux2	UTF-8
-TSF_debug:
+TSF_debug_tsv:
 	helloワールド咖喱
-	296
-	0.471333333333
-	3.14
 	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF
 	csv	tsv	LTSV	L:Tsv	TSF
-	14
+	11
 	5
 	this:Peek
 	Peek
@@ -24,4 +21,15 @@ TSF_debug:
 	this:Peek	that:Poke	the:Pull	pushed	they:Push
 	this:Peek	that:Poke	the:Pull	they:Push	pushed
 	this:Peek	that:Poke	the:Pull	they:pushed
-	this:Peek	that:Poke	the:Pull	they:Push
+	this:Peek	that:Poke	the:Pull	they:Push	cards:pushed
+TSF_debug_rpn:
+	U+p128	296
+	1.414|3	0.471333333333
+	2,3+	5
+	2,m3+	-1
+	2,3-	-1
+	2,m3-	5
+	2,3*	6
+	2,3/	0.666666666667
+	0|0	n|0
+	0/0	n|0

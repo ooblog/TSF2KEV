@@ -74,32 +74,6 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:ファイルか�
                 TSF_text=TSF_Io_fileobj.read()
     return TSF_text
 
-def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
-    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','')
-    TSF_Io_codeint=int(TSF_Io_floatstrND(TSF_Io_codestr))
-    for TSF_Io_hexstr in ["0x","U+","$"]:
-        if TSF_Io_hexstr in TSF_Io_codestr:
-            try:
-                TSF_Io_codeint=int(TSF_Io_codestr.replace(TSF_Io_hexstr,""),16)
-            except ValueError:
-                pass
-            break
-    return TSF_Io_codeint
-
-def TSF_Io_floatstrND(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','').replace('|','/')
-    TSF_Io_codefloat=0.0
-    if '/' in TSF_Io_codestr:
-        TSF_Io_codesplit=TSF_Io_codestr.split('/')
-        TSF_Io_calcN,TSF_Io_calcD=TSF_Io_codesplit[0],TSF_Io_codesplit[-1]
-    else:
-        TSF_Io_calcN,TSF_Io_calcD=TSF_Io_codestr,"1"
-    try:
-        TSF_Io_codefloat=float(TSF_Io_calcN)/float(TSF_Io_calcD)
-    except ValueError:
-        TSF_Io_codefloat=0.0
-    return TSF_Io_codefloat
-
 def TSF_Io_ESCencode(TSF_text):    #TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
     TSF_text=TSF_text.replace('&',"&amp;").replace('\t',"&tab;")
     return TSF_text
@@ -199,6 +173,92 @@ def TSF_Io_separatepushL(TSF_separate,TSF_label,TSF_push):    #TSFdoc:リスト�
         TSF_joined=TSF_separate
     return TSF_joined
 
+#def TSF_Io_intstr0x(TSF_Io_codestr):    #TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
+#    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','')
+#    TSF_Io_codeint=int(TSF_Io_floatstrND(TSF_Io_codestr))
+#    for TSF_Io_hexstr in ["0x","U+","$"]:
+#        if TSF_Io_hexstr in TSF_Io_codestr:
+#            try:
+#                TSF_Io_codeint=int(TSF_Io_codestr.replace(TSF_Io_hexstr,""),16)
+#            except ValueError:
+#                pass
+#            break
+#    return TSF_Io_codeint
+#
+#def TSF_Io_floatstrND(TSF_Io_codestr):    #TSFdoc:テキストを小数に変換する。分数は小数処理で簡易的に扱う。ゼロ除算はゼロ。(TSFAPI)
+#    TSF_Io_codestr="{0}".format(TSF_Io_codestr).replace('m','-').replace('p','').replace('|','/')
+#    TSF_Io_codeminus=TSF_Io_codestr.count('m');  TSF_Io_codestr=TSF_Io_codestr.replace('m','-')
+#    TSF_Io_codefloat=0.0
+#    if '/' in TSF_Io_codestr:
+#        TSF_Io_codesplit=TSF_Io_codestr.split('/')
+#        TSF_Io_calcN,TSF_Io_calcD=TSF_Io_codesplit[0],TSF_Io_codesplit[-1]
+#    else:
+#        TSF_Io_calcN,TSF_Io_calcD=TSF_Io_codestr,"1"
+#    try:
+#        TSF_Io_codefloat=float(TSF_Io_calcN)/float(TSF_Io_calcD)
+#        TSF_Io_codefloat=-TSF_Io_codefloat if TSF_Io_codeminus%2 else TSF_Io_codefloat
+#    except ValueError:
+#        TSF_Io_codefloat=0.0
+#    return TSF_Io_codefloat
+
+def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。一応ゼロ除算を「n|0」と返せる。(TSFAPI)
+    TSF_RPNfloat=""
+    TSF_RPNnum,TSF_RPNminus="",0
+    TSF_RPNstack=deque([])
+    TSF_RPNseq=TSF_RPN.replace("U+","$").replace("0x","$")
+    TSF_RPNseq=TSF_RPNseq+" "
+    for TSF_RPNope in TSF_RPNseq:
+        if TSF_RPNope in ["0","1","2","3","4","5","6","7","8","9",".","p","m","$","|"]:
+            TSF_RPNnum+=TSF_RPNope
+        else:
+            if len(TSF_RPNnum) > 0:
+                TSF_RPNminus=TSF_RPNnum.count('m');  TSF_RPNnum=TSF_RPNnum.replace('p','').replace('m','')
+                if "$" in TSF_RPNnum:
+                    try:
+                        TSF_RPNcalcN,TSF_RPNcalcD=int(TSF_RPNnum.replace("$",""),16),1.0
+                    except ValueError:
+                        TSF_RPNfloat="n|0"
+                        break;
+                elif "|" in TSF_RPNnum:
+                    try:
+                        TSF_RPNcalcND=TSF_RPNnum.split("|")
+                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
+                    except ValueError:
+                        TSF_RPNfloat="n|0"
+                        break;
+                else:
+                    try:
+                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
+                    except ValueError:
+                        TSF_RPNfloat="n|0"
+                        break;
+                if TSF_RPNminus%2:
+                    TSF_RPNcalcN=-TSF_RPNcalcN
+                try:
+                    TSF_RPNstack.append(TSF_RPNcalcN/TSF_RPNcalcD)
+                except ZeroDivisionError:
+                    TSF_RPNfloat="n|0"
+                    break;
+                TSF_RPNnum=""
+            if TSF_RPNope in ["+","-","*","/"]:
+                TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
+                TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
+                if TSF_RPNope == "+":
+                    TSF_RPNstack.append(TSF_RPNstackL+TSF_RPNstackR)
+                elif TSF_RPNope == "-":
+                    TSF_RPNstack.append(TSF_RPNstackL-TSF_RPNstackR)
+                elif TSF_RPNope == "*":
+                    TSF_RPNstack.append(TSF_RPNstackL*TSF_RPNstackR)
+                elif TSF_RPNope == "/":
+                    try:
+                        TSF_RPNstack.append(TSF_RPNstackL/TSF_RPNstackR)
+                    except ZeroDivisionError:
+                        TSF_RPNfloat="n|0"
+                        break;
+    TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
+    if TSF_RPNfloat != "n|0":
+        TSF_RPNfloat=str(TSF_RPNstackL) if TSF_RPNstackL != TSF_RPNstackL//1 else str(int(TSF_RPNstackL))
+    return TSF_RPNfloat
 
 def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     TSF_Io_workdir=os.path.dirname(os.path.normpath(TSF_path))
@@ -244,11 +304,8 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(TSF_argvs)),TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_py:",TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python({0}){1.major}.{1.minor}.{1.micro}".format(sys.copyright.split('\n')[0],sys.version_info),sys.platform,TSF_Io_stdout])),TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_log=TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_debug_tsv:",TSF_log=TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("helloワールド\u5496\u55B1"),TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_intstr0x("U+p128")),TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("1.414|3")),TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_floatstrND("3.14")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitlen(TSF_debug_log,'\n')),TSF_debug_log)
@@ -268,6 +325,9 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',10,"pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"they:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
+    for debug_rpn in ["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0/0"]:
+        TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 

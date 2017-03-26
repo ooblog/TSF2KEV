@@ -90,42 +90,6 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
     return TSF_text;
 }
 
-long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
-    string TSF_Io_codestr=replace(replace(TSF_Io_codestrobj,"p",""),"m","-");
-    long TSF_Io_codeint=to!int(TSF_Io_floatstrND(TSF_Io_codestr));
-    foreach(string TSF_Io_hexstr;["0x","U+","$"]){
-        if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
-            try{
-                TSF_Io_codeint=to!int(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
-            }
-            catch(ConvException e){
-                TSF_Io_codeint=0;
-            }
-        }
-    }
-    return TSF_Io_codeint;
-}
-
-real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-    string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
-    real TSF_Io_codefloat=0.0;
-    string TSF_Io_calcN,TSF_Io_calcD;
-    if( count(TSF_Io_codestr,"/") ){
-        string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
-        TSF_Io_calcN=TSF_Io_codesplit[0]; TSF_Io_calcD=TSF_Io_codesplit[$-1];
-    }
-    else{
-        TSF_Io_calcN=TSF_Io_codestr; TSF_Io_calcD="1";
-    }
-    try{
-        TSF_Io_codefloat=to!real(TSF_Io_calcN)/to!real(TSF_Io_calcD);
-    }
-    catch(ConvException e){
-        TSF_Io_codefloat=0.0;
-    }
-    return TSF_Io_codefloat;
-}
-
 string TSF_Io_ESCencode(string TSF_textobj){    //#TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
     string TSF_text=replace(replace(TSF_textobj,"&","&amp;"),"\t","&tab;");
     return TSF_text;
@@ -270,6 +234,49 @@ string[] TSF_Io_separatepushL(string[] TSF_separate,string TSF_label,string TSF_
     return TSF_joined;
 }
 
+//long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
+//    string TSF_Io_codestr=replace(replace(TSF_Io_codestrobj,"p",""),"m","-");
+//    long TSF_Io_codeint=to!int(TSF_Io_floatstrND(TSF_Io_codestr));
+//    foreach(string TSF_Io_hexstr;["0x","U+","$"]){
+//        if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
+//            try{
+//                TSF_Io_codeint=to!int(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
+//            }
+//            catch(ConvException e){
+//                TSF_Io_codeint=0;
+//            }
+//        }
+//    }
+//    return TSF_Io_codeint;
+//}
+
+//real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
+//    string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
+//    real TSF_Io_codefloat=0.0;
+//    string TSF_Io_calcN,TSF_Io_calcD;
+//    if( count(TSF_Io_codestr,"/") ){
+ //       string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
+//        TSF_Io_calcN=TSF_Io_codesplit[0]; TSF_Io_calcD=TSF_Io_codesplit[$-1];
+//    }
+//    else{
+//        TSF_Io_calcN=TSF_Io_codestr; TSF_Io_calcD="1";
+//    }
+//    try{
+//        TSF_Io_codefloat=to!real(TSF_Io_calcN)/to!real(TSF_Io_calcD);
+//    }
+//    catch(ConvException e){
+//        TSF_Io_codefloat=0.0;
+//    }
+//    return TSF_Io_codefloat;
+//}
+
+string TSF_Io_RPN(string TSF_RPNseq){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
+    string TSF_RPN="";
+    foreach(char TSF_RPNope;TSF_RPNseq){
+        TSF_RPN~=TSF_RPNope;
+    }
+    return TSF_RPN;
+}
 
 void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     string TSF_Io_workdir=dirName(absolutePath(TSF_path));
@@ -328,11 +335,8 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join(TSF_argvs,"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D(%s)%s.%s",vendor,version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog("TSF_debug:",TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("TSF_debug_tsv:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_intstr0x("U+p128")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("1.414|3")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_floatstrND("3.14")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen(TSF_debug_log,"\n")),TSF_debug_log);
@@ -354,6 +358,10 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_debug_log);
+    foreach(string debug_rpn;["2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/"]){
+        TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
+    }
     return TSF_debug_log;
 }
 
