@@ -126,7 +126,7 @@ def TSF_Io_separatepeekN(TSF_separate,TSF_peek):    #TSFdoc:リストから数�
 def TSF_Io_splitpeekL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で読込。(TSFAPI)
     TSF_pull=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label)
     return TSF_pull
-def TSF_Io_separatepeekL(TSF_separate,TSF_label):    #TSFdoc:リストからベル指定で読込。(TSFAPI)
+def TSF_Io_separatepeekL(TSF_separate,TSF_label):    #TSFdoc:リストからラベル指定で読込。(TSFAPI)
     TSF_pull=""
     if len(TSF_label) > 0:
         for TSF_separated in TSF_separate:
@@ -144,7 +144,7 @@ def TSF_Io_separatepokeN(TSF_separate,TSF_peek,TSF_poke):    #TSFdoc:リスト�
 def TSF_Io_splitpokeL(TSF_ltsv,TSF_split,TSF_label,TSF_poke):    #TSFdoc:LTSVからラベル指定で書込。(TSFAPI)
     TSF_splitpoked=TSF_Io_separatepokeL(TSF_ltsv.split(TSF_split),TSF_label,TSF_poke)
     return TSF_split.join(TSF_splitpoked)
-def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リストからベル指定で書込。(TSFAPI)
+def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リストからラベル指定で書込。(TSFAPI)
     if len(TSF_label) > 0:
         for TSF_peek,TSF_separated in enumerate(TSF_separate):
             if TSF_separated.find(TSF_label) == 0:
@@ -163,7 +163,7 @@ def TSF_Io_separatepullN(TSF_separate,TSF_peek):    #TSFdoc:リストから数�
 def TSF_Io_splitpullL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
     TSF_pull,TSF_separated=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label)
     return TSF_pull,TSF_split.join(TSF_separated)
-def TSF_Io_separatepullL(TSF_separate,TSF_label):    #TSFdoc:リストからベル指定で引抜。(TSFAPI)
+def TSF_Io_separatepullL(TSF_separate,TSF_label):    #TSFdoc:リストからラベル指定で引抜。(TSFAPI)
     TSF_pull,TSF_joined="",TSF_separate
     if len(TSF_label) > 0:
         for TSF_peek,TSF_separated in enumerate(TSF_separate):
@@ -184,17 +184,20 @@ def TSF_Io_separatepushN(TSF_separate,TSF_peek,TSF_push):    #TSFdoc:リスト�
     elif len(TSF_separate) <= TSF_peek:
         TSF_joined=TSF_separate+[TSF_push]
     return TSF_joined
-#def TSF_Io_splitpushL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で差込。(TSFAPI)
-#    TSF_push,TSF_separated=TSF_Io_separatepushL(TSF_ltsv.split(TSF_split),TSF_label)
-#    return TSF_push,TSF_split.join(TSF_separated)
-#def TSF_Io_separatepushL(TSF_separate,TSF_label):    #TSFdoc:リストからベル指定で差込。(TSFAPI)
-#    TSF_push,TSF_joined="",TSF_separate
-#    if len(TSF_label) > 0:
-#        for TSF_peek,TSF_separated in enumerate(TSF_separate):
-#            if TSF_separated.find(TSF_label) == 0:
-#                TSF_push=TSF_separated[len(TSF_label):]
-#                TSF_joined=TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
-#    return TSF_push,TSF_joined
+def TSF_Io_splitpushL(TSF_ltsv,TSF_split,TSF_label,TSF_push):    #TSFdoc:LTSVからラベル指定で差込。(TSFAPI)
+    TSF_separated=TSF_Io_separatepushL(TSF_ltsv.split(TSF_split),TSF_label,TSF_push)
+    return TSF_split.join(TSF_separated)
+def TSF_Io_separatepushL(TSF_separate,TSF_label,TSF_push):    #TSFdoc:リストからラベル指定で差込。(TSFAPI)
+    TSF_joined=[]
+    if len(TSF_label) > 0:
+        for TSF_peek,TSF_separated in enumerate(TSF_separate):
+            if TSF_separated.find(TSF_label) == 0:
+                TSF_joined=TSF_separate; TSF_joined[TSF_peek]=TSF_label+TSF_push; 
+        if len(TSF_joined) == 0:
+            TSF_joined=TSF_separate+[TSF_label+TSF_push]
+    else:
+        TSF_joined=TSF_separate
+    return TSF_joined
 
 
 def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
@@ -255,6 +258,7 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpeekL(TSF_debug_PPPP,'\t',"this:")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeN(TSF_debug_PPPP,'\t',1,"poked")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeL(TSF_debug_PPPP,'\t',"that:","poked")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeL(TSF_debug_PPPP,'\t',"cards:","poked")),TSF_debug_log)
     TSF_debug_pull,TSF_debu_separated=TSF_Io_splitpullN(TSF_debug_PPPP,'\t',2)
     TSF_debug_log=TSF_Io_printlog("\t{0}\t,\t{1}".format(TSF_debug_pull,TSF_debu_separated),TSF_debug_log)
     TSF_debug_pull,TSF_debu_separated=TSF_Io_splitpullL(TSF_debug_PPPP,'\t',"the:")
@@ -262,6 +266,8 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',-1,"pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',3,"pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',10,"pushed")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"they:","pushed")),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 

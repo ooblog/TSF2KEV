@@ -160,7 +160,7 @@ string TSF_Io_splitpeekL(string TSF_ltsv,string TSF_split,string TSF_label){    
     string TSF_pull=TSF_Io_separatepeekL(TSF_ltsv.split(TSF_split),TSF_label);
     return TSF_pull;
 }
-string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからベル指定で読込。(TSFAPI)
+string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからラベル指定で読込。(TSFAPI)
     string TSF_pull="";
     if( TSF_label.length>0 ){
         foreach(string TSF_separated;TSF_separate){
@@ -187,7 +187,7 @@ string TSF_Io_splitpokeL(string TSF_ltsv,string TSF_split,string TSF_label,strin
     string[] TSF_splitpoked=TSF_Io_separatepokeL(TSF_ltsv.split(TSF_split),TSF_label,TSF_poke);
     return join(TSF_splitpoked,TSF_split);
 }
-string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_poke){    //#TSFdoc:リストからベル指定で書込。(TSFAPI)
+string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_poke){    //#TSFdoc:リストからラベル指定で書込。(TSFAPI)
     string[] TSF_separatepoke=TSF_separate;
     if( TSF_label.length>0 ){
         foreach(int TSF_peek,string TSF_separated;TSF_separate){
@@ -218,7 +218,7 @@ auto TSF_Io_splitpullL(string TSF_ltsv,string TSF_split,string TSF_label){    //
     string TSF_pull=TSF_pulled[0];  string TSF_separated=join(TSF_pulled[1],TSF_split);
     return tuple(TSF_pull,TSF_separated);
 }
-auto TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
+auto TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからラベル指定で引抜。(TSFAPI)
     string TSF_pull="";  string[] TSF_joined=TSF_separate;
     if( TSF_label.length>0 ){
         foreach(int TSF_peek,string TSF_separated;TSF_separate){
@@ -248,10 +248,27 @@ string[] TSF_Io_separatepushN(string[] TSF_separate,long TSF_peek,string TSF_pus
     }
     return TSF_joined;
 }
-
-
-//#def TSF_Io_splitpushL(TSF_text,TSF_split):
-//#    pass
+string TSF_Io_splitpushL(string TSF_tsv,string TSF_split,string TSF_label,string TSF_push){    //#TSFdoc:TSVなどから数値指定で差込。(TSFAPI)
+    string[] TSF_separated=TSF_Io_separatepushL(TSF_tsv.split(TSF_split),TSF_label,TSF_push);
+    return join(TSF_separated,TSF_split);
+}
+string[] TSF_Io_separatepushL(string[] TSF_separate,string TSF_label,string TSF_push){    //#TSFdoc:リストから数値指定で差込。(TSFAPI)
+    string[] TSF_joined=[];
+    if( TSF_label.length>0 ){
+        foreach(int TSF_peek,string TSF_separated;TSF_separate){
+            if( indexOf(TSF_separated,TSF_label)==0 ){
+                TSF_joined=TSF_separate; TSF_joined[TSF_peek]=TSF_label~TSF_push; 
+            }
+        }
+        if( TSF_joined.length==0 ){
+            TSF_joined=TSF_separate~[TSF_label~TSF_push];
+        }
+    }
+    else{
+        TSF_joined=TSF_separate;
+    }
+    return TSF_joined;
+}
 
 
 void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
@@ -325,6 +342,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekL(TSF_debug_PPPP,"\t","this:")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeN(TSF_debug_PPPP,"\t",1,"poked")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","that:","poked")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","cards:","poked")),TSF_debug_log);
     auto TSF_debug_pulled=TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2);
     string TSF_debug_pull=TSF_debug_pulled[0];  string TSF_debu_separated=TSF_debug_pulled[1];
     TSF_debug_log=TSF_Io_printlog(format("\t%s\t,\t%s",TSF_debug_pull,TSF_debu_separated),TSF_debug_log);
@@ -334,6 +352,8 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",-1,"pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",3,"pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
     return TSF_debug_log;
 }
 
