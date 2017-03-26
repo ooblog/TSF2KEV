@@ -145,11 +145,11 @@ long TSF_Io_separatelen(string[] TSF_separate){    //#TSFdoc:リストの数を�
     return TSF_separatelen;
 }
 
-string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから読込。(TSFAPI)
+string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから数値指定で読込。(TSFAPI)
     string TSF_pull=TSF_Io_separatepeekN(TSF_tsv.split(TSF_split),TSF_peek);
     return TSF_pull;
 }
-string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから読込。(TSFAPI)
+string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから数値指定で読込。(TSFAPI)
     string TSF_pull="";
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
         TSF_pull=TSF_separate[to!int(TSF_peek)];
@@ -172,11 +172,11 @@ string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdo
     return TSF_pull;
 }
 
-string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_poke){    //#TSFdoc:TSVなどから書込。(TSFAPI)
+string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_poke){    //#TSFdoc:TSVなどから数値指定で書込。(TSFAPI)
     string[] TSF_splitpoked=TSF_Io_separatepokeN(TSF_tsv.split(TSF_split),TSF_peek,TSF_poke);
     return join(TSF_splitpoked,TSF_split);
 }
-string[] TSF_Io_separatepokeN(string[] TSF_separate,long TSF_peek,string TSF_poke){    //#TSFdoc:リストから書込。(TSFAPI)
+string[] TSF_Io_separatepokeN(string[] TSF_separate,long TSF_peek,string TSF_poke){    //#TSFdoc:リストから数値指定で書込。(TSFAPI)
     string[] TSF_separatepoke=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
         TSF_separatepoke[to!int(TSF_peek)]=TSF_poke;
@@ -231,9 +231,26 @@ auto TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:
     return tuple(TSF_pull,TSF_joined);
 }
 
-//#def TSF_Io_splitpullL(TSF_text,TSF_split):
-//#    pass
-//#def TSF_Io_splitpushN(TSF_text,TSF_split):
+string TSF_Io_splitpushN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_push){    //#TSFdoc:TSVなどから数値指定で差込。(TSFAPI)
+    string[] TSF_separated=TSF_Io_separatepushN(TSF_tsv.split(TSF_split),TSF_peek,TSF_push);
+    return join(TSF_separated,TSF_split);
+}
+string[] TSF_Io_separatepushN(string[] TSF_separate,long TSF_peek,string TSF_push){    //#TSFdoc:リストから数値指定で差込。(TSFAPI)
+    string[] TSF_joined=TSF_separate;
+    if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
+        TSF_joined=TSF_separate[0..to!int(TSF_peek)]~[TSF_push]~TSF_separate[to!int(TSF_peek)..$];
+    }
+    else if( TSF_peek<0 ){
+        TSF_joined=[TSF_push]~TSF_separate;
+    }
+    else if( TSF_separate.length<=TSF_peek ){
+        TSF_joined=TSF_separate~[TSF_push];
+    }
+    return TSF_joined;
+}
+
+
+//#def TSF_Io_splitpushL(TSF_text,TSF_split):
 //#    pass
 
 
@@ -314,6 +331,9 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_pulled=TSF_Io_splitpullL(TSF_debug_PPPP,"\t","the:");
     TSF_debug_pull=TSF_debug_pulled[0];  TSF_debu_separated=TSF_debug_pulled[1];
     TSF_debug_log=TSF_Io_printlog(format("\t%s\t,\t%s",TSF_debug_pull,TSF_debu_separated),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",-1,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",3,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);
     return TSF_debug_log;
 }
 
