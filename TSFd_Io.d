@@ -234,58 +234,22 @@ string[] TSF_Io_separatepushL(string[] TSF_separate,string TSF_label,string TSF_
     return TSF_joined;
 }
 
-//long TSF_Io_intstr0x(string TSF_Io_codestrobj){    //#TSFdoc:テキストを整数に変換する。10進と16進数も扱う。(TSFAPI)
-//    string TSF_Io_codestr=replace(replace(TSF_Io_codestrobj,"p",""),"m","-");
-//    long TSF_Io_codeint=to!int(TSF_Io_floatstrND(TSF_Io_codestr));
-//    foreach(string TSF_Io_hexstr;["0x","U+","$"]){
-//        if( count(TSF_Io_codestr,TSF_Io_hexstr) ){
-//            try{
-//                TSF_Io_codeint=to!int(replace(TSF_Io_codestr,TSF_Io_hexstr,""),16);
-//            }
-//            catch(ConvException e){
-//                TSF_Io_codeint=0;
-//            }
-//        }
-//    }
-//    return TSF_Io_codeint;
-//}
-
-//real TSF_Io_floatstrND(string TSF_Io_codestrobj){    //#TSFdoc:テキストを小数に変換する。分数も扱う。(TSFAPI)
-//    string TSF_Io_codestr=replace(replace(replace(TSF_Io_codestrobj,"p",""),"m","-"),"|","/");
-//    real TSF_Io_codefloat=0.0;
-//    string TSF_Io_calcN,TSF_Io_calcD;
-//    if( count(TSF_Io_codestr,"/") ){
- //       string[] TSF_Io_codesplit=split(TSF_Io_codestr,"/");
-//        TSF_Io_calcN=TSF_Io_codesplit[0]; TSF_Io_calcD=TSF_Io_codesplit[$-1];
-//    }
-//    else{
-//        TSF_Io_calcN=TSF_Io_codestr; TSF_Io_calcD="1";
-//    }
-//    try{
-//        TSF_Io_codefloat=to!real(TSF_Io_calcN)/to!real(TSF_Io_calcD);
-//    }
-//    catch(ConvException e){
-//        TSF_Io_codefloat=0.0;
-//    }
-//    return TSF_Io_codefloat;
-//}
-
 string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
     string TSF_RPNanswer="";
     string TSF_RPNnum="";  int TSF_RPNminus=0;
     real[] TSF_RPNstack=[];
     string TSF_RPNseq=replace(replace(TSF_RPN,"U+","$"),"0x","$")~" ";
     real TSF_RPNstackL,TSF_RPNstackR;
-    foreach(char TSF_RPNope;TSF_RPNseq){
+    string[] TSF_RPNcalcND;
+    opeexit: foreach(char TSF_RPNope;TSF_RPNseq){
         if( count("0123456789.pm$|",TSF_RPNope) ){
             TSF_RPNnum~=TSF_RPNope;
         }
         else{
             if( TSF_RPNnum.length>0 ){
-                TSF_RPNminus=count(TSF_RPNnum,"-");  TSF_RPNnum=replace(replace(TSF_RPN,"p",""),"m","");
+                TSF_RPNminus=count(TSF_RPNnum,'m');  TSF_RPNnum=replace(replace(TSF_RPNnum,"p",""),"m","");
                 real TSF_RPNcalcN,TSF_RPNcalcD;
-                writef("TSF_RPNnum:%s\n",TSF_RPNnum);
-                if( count(TSF_RPNnum,"$") ){
+                if( count(TSF_RPNnum,'$') ){
                     try{
                         TSF_RPNcalcN=to!int(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
                     }
@@ -294,10 +258,10 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                         break;
                     }
                 }
-                else if( count(TSF_RPNnum,"|") ){
+                else if( count(TSF_RPNnum,'|') ){
                     try{
-                        string[] TSF_RPNcalcND=TSF_RPNnum.split("|");
-                        TSF_RPNcalcN=to!real(TSF_RPNcalcND[0]);  TSF_RPNcalcD=to!real(TSF_RPNcalcND[$]);
+                        TSF_RPNcalcND=TSF_RPNnum.split("|");
+                        TSF_RPNcalcN=to!real(TSF_RPNcalcND[0]);  TSF_RPNcalcD=to!real(TSF_RPNcalcND[1]);
                     }
                     catch(ConvException e){
                         TSF_RPNanswer="n|0";
@@ -316,21 +280,21 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                 if( TSF_RPNminus%2 ){
                     TSF_RPNcalcN=-TSF_RPNcalcN;
                 }
-                try{
+                if( TSF_RPNcalcD!=0.0 ){
                     TSF_RPNstack~=TSF_RPNcalcN/TSF_RPNcalcD;
                 }
-                catch(Error e){
+                else{
                     TSF_RPNanswer="n|0";
                     break;
                 }
                 TSF_RPNnum="";
             }
-            if( count("+=*/",TSF_RPNope) ){
+            if( count("+-*/",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
                 else{
-                    TSF_RPNstackR=0.0;
+                    TSF_RPNstackL=0.0;
                 }
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
@@ -338,12 +302,19 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                 else{
                     TSF_RPNstackL=0.0;
                 }
-                writef("TSF_RPNstackL,TSF_RPNstackR",TSF_RPNstackL,TSF_RPNstackR);
                 switch( TSF_RPNope ){
                     case '+':  TSF_RPNstack~=TSF_RPNstackL+TSF_RPNstackR;  break;
                     case '-':  TSF_RPNstack~=TSF_RPNstackL-TSF_RPNstackR;  break;
                     case '*':  TSF_RPNstack~=TSF_RPNstackL*TSF_RPNstackR;  break;
-                    case '/':  TSF_RPNstack~=TSF_RPNstackL/TSF_RPNstackR;  break;
+                    case '/':
+                        if( TSF_RPNstackR!=0.0 ){
+                            TSF_RPNstack~=TSF_RPNstackL/TSF_RPNstackR;
+                        }
+                        else{
+                            TSF_RPNanswer="n|0";
+                            break opeexit;
+                        }
+                    break;
                     default:  break;
                 }
             }
@@ -358,7 +329,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
     if( TSF_RPNanswer != "n|0" ){
         TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
     }
-   return TSF_RPNanswer;
+    return TSF_RPNanswer;
 }
 
 void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
@@ -442,7 +413,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_debug_log);
-    foreach(string debug_rpn;["2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/"]){
+    foreach(string debug_rpn;["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/"]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
     return TSF_debug_log;
@@ -460,4 +431,8 @@ void main(string[] TSF_argvobj){
     std.stdio.writeln("--- fin. ---");
 }
 
+
+// Copyright (c) 2017 ooblog
+// License: MIT
+// https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
 

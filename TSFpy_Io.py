@@ -211,7 +211,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNanswer="n|0"
                     break;
                 TSF_RPNnum=""
-            if TSF_RPNope in ["+","-","*","/"]:
+            if TSF_RPNope in "+-*/":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "+":
@@ -297,7 +297,7 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"they:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
-    for debug_rpn in ["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0/0"]:
+    for debug_rpn in ["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/"]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
@@ -316,4 +316,4 @@ if __name__=="__main__":
 
 # Copyright (c) 2017 ooblog
 # License: MIT
-# https://github.com/ooblog/TSF1KEV/blob/master/LICENSE
+# https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
