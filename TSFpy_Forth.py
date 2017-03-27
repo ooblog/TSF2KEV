@@ -11,32 +11,42 @@ def TSF_Forth_1ststack():    #TSF_doc:TSF_初期化に使う最初のスタッ�
 def TSF_Forth_version():    #TSF_doc:TSF_初期化に使うバージョン(ブランチ)名(TSFAPI)。
     return "20170327M153945"
 
-def TSF_Forth_Initcards(TSF_cards):    #TSF_doc:ワードを初期化する(TSFAPI)。
+def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
 #    TSF_cards["#TSF_fin."]=TSF_Forth_fin; TSF_cards["#TSFを終了。"]=TSF_Forth_fin
 #    TSF_cards["#TSF_viewthey"]=TSF_Forth_viewthey; TSF_cards["#スタック一覧を表示"]=TSF_Forth_viewthey
 #    TSF_cards["#TSF_RPN"]=TSF_Forth_RPN; TSF_cards["#逆ポーランド電卓で計算"]=TSF_Forth_RPN
-    return TSF_cards
+#    TSF_cardsD["#(debug)TSF_version"]=TSF_Forth_version; TSF_cardsO.append("#(debug)TSF_version")
+    TSF_Forth_cards={"#(debug)TSF_version":TSF_Forth_version }
+    for cardkey,cardfunc in TSF_Forth_cards.items():
+        TSF_cardsD[cardkey]=cardfunc
+        if not cardkey in TSF_cardsO: TSF_cardsO.append(cardkey)
+    return TSF_cardsD,TSF_cardsO
 
 
 TSF_Initcalls=[]
-TSF_stacks,TSF_styles,TSF_callptrs,TSF_cards=OrderedDict(),OrderedDict(),OrderedDict(),OrderedDict()
-TSF_stackthis,TSF_stackthat,TSF_stackcount=TSF_Forth_1ststack(),TSF_Forth_1ststack(),0
-def TSF_Forth_init(TSF_argvs=[],TSF_addcalls=[]):    #TSF_doc:TSF_stacks,TSF_styles,TSF_callptrs,TSF_wordsなどをまとめて初期化する(TSFAPI)。
-    global TSF_stacks,TSF_styles,TSF_callptrs,TSF_cards,TSF_Initcalls,TSF_stackthat,TSF_stackthis,TSF_stackcount,TSF_stackargvs
-    TSF_stacks,TSF_styles,TSF_callptrs,TSF_words=OrderedDict(),OrderedDict(),OrderedDict(),OrderedDict()
-    TSF_stackthis,TSF_stackthat,TSF_stackcount=TSF_Forth_1ststack(),TSF_Forth_1ststack(),0
-    TSF_stacks[TSF_stackthis]=["0","#TSF_fin."]; #TSF_Forth_addfin(TSF_argvs)
-    TSF_stackargvs=deque(TSF_argvs); TSF_stackargvs.popleft()
-    TSF_Initcalls=[TSF_Forth_Initcards]+TSF_addcalls
+TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardD={},{},{},{}
+TSF_stackO,TSF_styleO,TSF_callptrO,TSF_cardO=[],[],[],[]
+TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
+TSF_stackcount=0
+def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSF_doc:TSF_stacks,TSF_styles,TSF_callptrs,TSF_wordsなどをまとめて初期化する(TSFAPI)。
+    global TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardD,TSF_stackO,TSF_styleO,TSF_callptrO,TSF_cardO
+    global TSF_stackthis,TSF_stackthat,TSF_stackcount
+    TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardD={},{},{},{}
+    TSF_stackO,TSF_styleO,TSF_callptrO,TSF_cardO=[],[],[],[]
+    TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
+    TSF_stackcount=0
+    TSF_Initcalls=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcalls:
-        TSF_words=TSF_Initcall(TSF_words)
+        TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
+    print(TSF_cardD,TSF_cardO)
 
 
 
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
-    TSF_Forth_init([TSF_Forth_Initcards])
+#    TSF_Forth_init([TSF_Forth_Initcards])
+    TSF_Forth_init([TSF_Forth_Initcards],[TSF_Forth_Initcards])
  #   TSF_Forth_init(TSF_argvs,[TSF_Forth_Initwords])
  #   TSF_Forth_setTSF(TSF_Forth_1ststack(),"\t".join(["UTF-8","#TSF_encoding","0","#TSF_fin."]))
 #    TSF_Forth_setTSF("TSF_Forth.py:","\t".join(["Python{0.major}.{0.minor}.{0.micro}".format(sys.version_info),sys.platform,TSF_io_stdout]))

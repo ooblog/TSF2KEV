@@ -3,6 +3,7 @@
 import std.stdio;
 import std.string;
 import std.conv;
+import std.typecons;
 
 import TSFd_Io;
 
@@ -15,14 +16,24 @@ string TSF_Forth_version(){    //TSF_doc:TSF_初期化に使うバージョン(�
     return "20170327M153945";
 }
 
-string function()[] TSF_Forth_Initcards(string function()[] TSF_cardsobj){
-//    auto TSF_cards=TSF_cardsobj;
-//    TSF_cards["TSF_Forth_version"]=TSF_Forth_version;
-    return TSF_cardsobj;
+void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){
+    string function()[string] TSF_Forth_cards=["#(debug)TSF_version":&TSF_Forth_version ];
+    TSF_cardsD["#(debug)TSF_version"]=TSF_Forth_cards["#(debug)TSF_version"];
+//    TSF_cardsO[0]="#test";
+//    TSF_cardsD["#test"]=&TSF_Forth_version;
 }
 
-string function()[] function(string function()[])[] TSF_Initcalls=[&TSF_Forth_Initcards];
-void TSF_Forth_init(string[] TSF_argvs,string delegate()[] TSF_addcalls){
+void function(ref string function()[string],ref string[])[]  TSF_Initcalls=[&TSF_Forth_Initcards];
+string[] TSF_stackD=[],TSF_styleD=[],TSF_callptrD=[],TSF_cardD=[];
+string[] TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[],TSF_cardO=[];
+string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
+long TSF_stackcount=0;
+void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){
+    TSF_stackD=[],TSF_styleD=[],TSF_callptrD=[],TSF_cardD=[];
+    TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[],TSF_cardO=[];
+    TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
+    TSF_stackcount=0;
+    TSF_Initcalls=[&TSF_Forth_Initcards]~TSF_addcalls;
 }
 
 

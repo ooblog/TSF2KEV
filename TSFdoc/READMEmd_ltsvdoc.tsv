@@ -49,6 +49,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・スタック代名詞はthis,that,the,theyの4つのth。TSF2KEVでは4つのpも追加、peek,poke,pull,pushをセットにする事でスタック操作文法を覚えやすくしたい。<？BR>
 ・peekなどは更にcycle,limit,randomの派生が存在する←派生はTSF_shuffle管轄。<？BR>
 ・theyはスタック名一覧である事を強化するため「#TSF_delthe」系を圧縮して「#TSF_pullthey」の様に置き換える。<？BR>
+・スタック名一覧にもスタック操作同様の挙動が求められるので、スタックのOrderedDict実装を廃して連想配列と連想配列のキーの順序を別の変数で管理。<？BR>
 <？/P>
 
 <？LTsv_MD_H2:TSF1about>
@@ -156,7 +157,7 @@ License: MIT<？BR>
 
 [<？LTsv_MD_H2:TSF2change>*<？LTsv_MD_H2:TSF1keep>*<？LTsv_MD_H2:TSF1about>*<？LTsv_MD_H2:environment>*<？LTsv_MD_H2:LICENSE>|
 :<＄LTsv_MD_H2:0>	TSF2KEVで仕様変更したい点(予定)。
-:<＄LTsv_MD_H2:1>	TSF1KEVから引き継ぐ点(予定)。
+:<＄LTsv_MD_H2:1>	TSF1KEVから引き継ぐ点、および仕様強化したい点(予定)。
 :<＄LTsv_MD_H2:2>	参考用TSF1KEVの「TSF.py --about」抜粋。
 :<＄LTsv_MD_H2:3>	動作環境。
 :<＄LTsv_MD_H2:4>	ライセンス・著作権など。

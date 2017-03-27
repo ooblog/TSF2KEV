@@ -41,21 +41,21 @@ string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdout
     return TSF_log;
 }
 
-string[] TSF_Io_argvs(string[] TSF_argvobj){    //#TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
-    string[] TSF_argvs; TSF_argvs.length=TSF_argvobj.length;
+string[] TSF_Io_argvs(string[] TSF_argvdup){    //#TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
+    string[] TSF_argvs; TSF_argvs.length=TSF_argvdup.length;
     {    //OSversions
         version(linux){
-            foreach(int i,string TSF_argv;TSF_argvobj){
+            foreach(int i,string TSF_argv;TSF_argvdup){
                 TSF_argvs[i]=TSF_argv;
             }
         }
         version(OSX){
-            foreach(int i,string TSF_argv;TSF_argvobj){
+            foreach(int i,string TSF_argv;TSF_argvdup){
                 TSF_argvs[i]=TSF_argv;
             }
         }
         version(Windows){
-            foreach(int i,string TSF_argv;TSF_argvobj){
+            foreach(int i,string TSF_argv;TSF_argvdup){
                 TSF_argvs[i]=TSF_argv;
 //                TSF_argvs[i]=fromMBSz(toStringz(to!char[](TSF_argv)));
             }
@@ -90,13 +90,13 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
     return TSF_text;
 }
 
-string TSF_Io_ESCencode(string TSF_textobj){    //#TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
-    string TSF_text=replace(replace(TSF_textobj,"&","&amp;"),"\t","&tab;");
+string TSF_Io_ESCencode(string TSF_textdup){    //#TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
+    string TSF_text=replace(replace(TSF_textdup,"&","&amp;"),"\t","&tab;");
     return TSF_text;
 }
 
-string TSF_Io_ESCdecode(string TSF_textobj){   //#TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
-    string TSF_text=replace(replace(TSF_textobj,"&tab;","\t"),"&amp;","&");
+string TSF_Io_ESCdecode(string TSF_textdup){   //#TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
+    string TSF_text=replace(replace(TSF_textdup,"&tab;","\t"),"&amp;","&");
     return TSF_text;
 }
 
