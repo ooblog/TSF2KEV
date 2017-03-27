@@ -382,7 +382,8 @@ void TSF_Io_writetext(string TSF_path,string TSF_text){    //#TSFdoc:TSF_pathに
 
 
 string TSF_Io_debug(string[] TSF_argvs){
-    string TSF_debug_log="";
+    string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dIo.log";
+    std.stdio.writeln(format("--- %s ---",__MODULE__));
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join(["UTF-8",":TSF_encoding","0",":TSF_fin."],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_debug_log);
@@ -416,19 +417,14 @@ string TSF_Io_debug(string[] TSF_argvs){
     foreach(string debug_rpn;["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/"]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
+    std.stdio.writeln(format("--- fin. > %s ---",TSF_debug_savefilename));
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
     return TSF_debug_log;
 }
 
 
 void main(string[] TSF_argvobj){
-    string[] TSF_argvs=TSF_Io_argvs(TSF_argvobj);
-    std.stdio.writef("--- %s ---\n",TSF_argvs[0]);
-    string TSF_debug_savefilename="debug/debug_dIo.log";
-    string TSF_debug_log=TSF_Io_debug(TSF_argvs);
-//    TSF_Io_savedir(TSF_debug_savefilename);
-    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
-//    TSF_Io_writetext(TSF_debug_savefilename,TSF_debug_log);
-    std.stdio.writeln("--- fin. ---");
+    TSF_Io_debug(TSF_Io_argvs(TSF_argvobj));
 }
 
 

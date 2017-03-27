@@ -267,15 +267,16 @@ def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記
                 TSF_Io_fileobj.write(TSF_text)
 
 
-def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
-    TSF_debug_log=""
-    TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["UTF-8",":TSF_encoding","0",":TSF_fin."])),TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(TSF_argvs)),TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("TSF_py:",TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python({0}){1.major}.{1.minor}.{1.micro}".format(sys.copyright.split('\n')[0],sys.version_info),sys.platform,TSF_Io_stdout])),TSF_log=TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("TSF_debug_tsv:",TSF_log=TSF_debug_log)
+def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
+    TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyIo.log";
+    print("--- {0} ---".format(__file__))
+    TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["0",":TSF_fin."])),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(TSF_argvs)),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_py:",TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["Python({0}){1.major}.{1.minor}.{1.micro}".format(sys.copyright.split('\n')[0],sys.version_info),sys.platform,TSF_Io_stdout])),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("TSF_debug_tsv:",TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("helloワールド\u5496\u55B1"),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log)
@@ -299,19 +300,13 @@ def TSF_Io_debug():    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
     for debug_rpn in ["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/"]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
+    print("--- fin. > {0} ---".format(TSF_debug_savefilename))
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     return TSF_debug_log
 #helloワールド\u5496\u55B1
 
 if __name__=="__main__":
-    print("")
-    TSF_argvs=TSF_Io_argvs(sys.argv)
-    print("--- {0} ---".format(TSF_argvs[0]))
-    TSF_debug_savefilename="debug/debug_pyIo.log"
-    TSF_debug_log=TSF_Io_debug()
-#    TSF_Io_savedir(TSF_debug_savefilename)
-    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
-#    TSF_Io_writetext(TSF_debug_savefilename,TSF_debug_log)
-    print("--- fin. ---")
+    TSF_Io_debug(TSF_Io_argvs(sys.argv))
 
 
 # Copyright (c) 2017 ooblog
