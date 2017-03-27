@@ -41,6 +41,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・Pythonだと速度に限界の予感なのでD言語版も試しに作ってる最中。<？BR>
 ・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。"UTF-8\t#TSF_encoding"は省略。<？BR>
 ・「TSFpy_Io.py」でテキストの数値変換自体がRPN電卓になるので、正確性を求めるcalc分数電卓と高速だが不正確なRPN小数電卓を状況に合わせて選べるようにする。<？BR>
+・ardvsを直接「TSF_Tab-Separated-Forth:」に追加するのではなく「#TSF_cloneargvs」などの命令で任意のスタックを選べるようにする。<？BR>
 <？/P>
 
 <？LTsv_MD_H2:TSF1keep>

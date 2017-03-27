@@ -163,36 +163,62 @@ string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_
     return TSF_separatepoke;
 }
 
-auto TSF_Io_splitpullN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
-    auto TSF_pulled=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek);
-    string TSF_pull=TSF_pulled[0];  string TSF_separated=join(TSF_pulled[1],TSF_split);
-    return tuple(TSF_pull,TSF_separated);
+//auto TSF_Io_splitpullN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
+//    auto TSF_pulled=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek);
+//    string TSF_pull=TSF_pulled[0];  string TSF_separated=join(TSF_pulled[1],TSF_split);
+//    return tuple(TSF_pull,TSF_separated);
+//}
+//auto TSF_Io_separatepullN(string[] TSF_separate,long TSF_peek){    //TSFdoc:リストから数値指定で引抜。(TSFAPI)
+//    string TSF_pull="";  string[] TSF_joined=TSF_separate;
+//    if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
+//        TSF_pull=TSF_separate[to!int(TSF_peek)];
+//        TSF_joined=TSF_separate[0..to!int(TSF_peek)]~TSF_separate[to!int(TSF_peek)+1..$];
+//    }
+//    auto TSF_pulled=tuple(TSF_pull,TSF_joined);
+//    return TSF_pulled;
+//}
+//auto TSF_Io_splitpullL(string TSF_ltsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
+//    auto TSF_pulled=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label);
+//    string TSF_pull=TSF_pulled[0];  string TSF_separated=join(TSF_pulled[1],TSF_split);
+//    return tuple(TSF_pull,TSF_separated);
+//}
+//auto TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからラベル指定で引抜。(TSFAPI)
+//    string TSF_pull="";  string[] TSF_joined=TSF_separate;
+//    if( TSF_label.length>0 ){
+//        foreach(int TSF_peek,string TSF_separated;TSF_separate){
+//            if( indexOf(TSF_separated,TSF_label)==0 ){
+//                TSF_pull=TSF_separated[TSF_label.length..$];
+//                TSF_joined=TSF_separate[0..TSF_peek]~TSF_separate[TSF_peek+1..$];
+//            }
+//        }
+//    }
+//    return tuple(TSF_pull,TSF_joined);
+//}
+string TSF_Io_splitpullN(string TSF_tsv,string TSF_split,long TSF_peek){    //#TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
+    string[] TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek);
+    return join(TSF_separated,TSF_split);
 }
-auto TSF_Io_separatepullN(string[] TSF_separate,long TSF_peek){    //TSFdoc:リストから数値指定で引抜。(TSFAPI)
-    string TSF_pull="";  string[] TSF_joined=TSF_separate;
+string[] TSF_Io_separatepullN(string[] TSF_separate,long TSF_peek){    //TSFdoc:リストから数値指定で引抜。(TSFAPI)
+    string[] TSF_joined=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_pull=TSF_separate[to!int(TSF_peek)];
         TSF_joined=TSF_separate[0..to!int(TSF_peek)]~TSF_separate[to!int(TSF_peek)+1..$];
     }
-    auto TSF_pulled=tuple(TSF_pull,TSF_joined);
-    return TSF_pulled;
+    return TSF_joined;
 }
-auto TSF_Io_splitpullL(string TSF_ltsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
-    auto TSF_pulled=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label);
-    string TSF_pull=TSF_pulled[0];  string TSF_separated=join(TSF_pulled[1],TSF_split);
-    return tuple(TSF_pull,TSF_separated);
+string TSF_Io_splitpullL(string TSF_ltsv,string TSF_split,string TSF_label){    //#TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
+    string[] TSF_separated=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label);
+    return join(TSF_separated,TSF_split);
 }
-auto TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからラベル指定で引抜。(TSFAPI)
-    string TSF_pull="";  string[] TSF_joined=TSF_separate;
+string[] TSF_Io_separatepullL(string[] TSF_separate,string TSF_label){    //#TSFdoc:リストからラベル指定で引抜。(TSFAPI)
+    string[] TSF_joined=TSF_separate;
     if( TSF_label.length>0 ){
         foreach(int TSF_peek,string TSF_separated;TSF_separate){
             if( indexOf(TSF_separated,TSF_label)==0 ){
-                TSF_pull=TSF_separated[TSF_label.length..$];
                 TSF_joined=TSF_separate[0..TSF_peek]~TSF_separate[TSF_peek+1..$];
             }
         }
     }
-    return tuple(TSF_pull,TSF_joined);
+    return TSF_joined;
 }
 
 string TSF_Io_splitpushN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_push){    //#TSFdoc:TSVなどから数値指定で差込。(TSFAPI)
@@ -402,12 +428,8 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeN(TSF_debug_PPPP,"\t",1,"poked")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","that:","poked")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","cards:","poked")),TSF_debug_log);
-    auto TSF_debug_pulled=TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2);
-    string TSF_debug_pull=TSF_debug_pulled[0];  string TSF_debu_separated=TSF_debug_pulled[1];
-    TSF_debug_log=TSF_Io_printlog(format("\t%s\t,\t%s",TSF_debug_pull,TSF_debu_separated),TSF_debug_log);
-    TSF_debug_pulled=TSF_Io_splitpullL(TSF_debug_PPPP,"\t","the:");
-    TSF_debug_pull=TSF_debug_pulled[0];  TSF_debu_separated=TSF_debug_pulled[1];
-    TSF_debug_log=TSF_Io_printlog(format("\t%s\t,\t%s",TSF_debug_pull,TSF_debu_separated),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpullL(TSF_debug_PPPP,"\t","the:")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",-1,"pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",3,"pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);

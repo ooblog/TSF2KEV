@@ -15,8 +15,8 @@ TSF_debug_tsv:
 	this:Peek	poked	the:Pull	they:Push
 	this:Peek	that:poked	the:Pull	they:Push
 	this:Peek	that:Poke	the:Pull	they:Push
-	the:Pull	,	this:Peek	that:Poke	they:Push
-	Pull	,	this:Peek	that:Poke	they:Push
+	this:Peek	that:Poke	they:Push
+	this:Peek	that:Poke	they:Push
 	pushed	this:Peek	that:Poke	the:Pull	they:Push
 	this:Peek	that:Poke	the:Pull	pushed	they:Push
 	this:Peek	that:Poke	the:Pull	they:Push	pushed

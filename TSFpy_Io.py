@@ -125,26 +125,44 @@ def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リスト�
                 TSF_separate[TSF_peek]=TSF_label+TSF_poke
     return TSF_separate
 
+#def TSF_Io_splitpullN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
+#    TSF_pull,TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek)
+#    return TSF_pull,TSF_split.join(TSF_separated)
+#def TSF_Io_separatepullN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で引抜。(TSFAPI)
+#    TSF_pull,TSF_joined="",TSF_separate
+#    if 0 <= TSF_peek < len(TSF_separate):
+#        TSF_pull=TSF_separate[TSF_peek]
+#        TSF_joined=TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
+#    return TSF_pull,TSF_joined
+#def TSF_Io_splitpullL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
+#    TSF_pull,TSF_separated=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label)
+#    return TSF_pull,TSF_split.join(TSF_separated)
+#def TSF_Io_separatepullL(TSF_separate,TSF_label):    #TSFdoc:リストからラベル指定で引抜。(TSFAPI)
+#    TSF_pull,TSF_joined="",TSF_separate
+#    if len(TSF_label) > 0:
+#        for TSF_peek,TSF_separated in enumerate(TSF_separate):
+#            if TSF_separated.find(TSF_label) == 0:
+#                TSF_pull=TSF_separated[len(TSF_label):]
+#                TSF_joined=TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
+#    return TSF_pull,TSF_joined
 def TSF_Io_splitpullN(TSF_tsv,TSF_split,TSF_peek):    #TSFdoc:TSVなどから数値指定で引抜。(TSFAPI)
-    TSF_pull,TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek)
-    return TSF_pull,TSF_split.join(TSF_separated)
+    TSF_separated=TSF_Io_separatepullN(TSF_tsv.split(TSF_split),TSF_peek)
+    return TSF_split.join(TSF_separated)
 def TSF_Io_separatepullN(TSF_separate,TSF_peek):    #TSFdoc:リストから数値指定で引抜。(TSFAPI)
-    TSF_pull,TSF_joined="",TSF_separate
+    TSF_joined="",TSF_separate
     if 0 <= TSF_peek < len(TSF_separate):
-        TSF_pull=TSF_separate[TSF_peek]
         TSF_joined=TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
-    return TSF_pull,TSF_joined
+    return TSF_joined
 def TSF_Io_splitpullL(TSF_ltsv,TSF_split,TSF_label):    #TSFdoc:LTSVからラベル指定で引抜。(TSFAPI)
-    TSF_pull,TSF_separated=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label)
-    return TSF_pull,TSF_split.join(TSF_separated)
+    TSF_separated=TSF_Io_separatepullL(TSF_ltsv.split(TSF_split),TSF_label)
+    return TSF_split.join(TSF_separated)
 def TSF_Io_separatepullL(TSF_separate,TSF_label):    #TSFdoc:リストからラベル指定で引抜。(TSFAPI)
-    TSF_pull,TSF_joined="",TSF_separate
+    TSF_joined="",TSF_separate
     if len(TSF_label) > 0:
         for TSF_peek,TSF_separated in enumerate(TSF_separate):
             if TSF_separated.find(TSF_label) == 0:
-                TSF_pull=TSF_separated[len(TSF_label):]
                 TSF_joined=TSF_separate[:TSF_peek]+TSF_separate[TSF_peek+1:]
-    return TSF_pull,TSF_joined
+    return TSF_joined
 
 def TSF_Io_splitpushN(TSF_tsv,TSF_split,TSF_peek,TSF_push):    #TSFdoc:TSVなどから数値指定で差込。(TSFAPI)
     TSF_separated=TSF_Io_separatepushN(TSF_tsv.split(TSF_split),TSF_peek,TSF_push)
@@ -288,10 +306,8 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeN(TSF_debug_PPPP,'\t',1,"poked")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeL(TSF_debug_PPPP,'\t',"that:","poked")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpokeL(TSF_debug_PPPP,'\t',"cards:","poked")),TSF_debug_log)
-    TSF_debug_pull,TSF_debu_separated=TSF_Io_splitpullN(TSF_debug_PPPP,'\t',2)
-    TSF_debug_log=TSF_Io_printlog("\t{0}\t,\t{1}".format(TSF_debug_pull,TSF_debu_separated),TSF_debug_log)
-    TSF_debug_pull,TSF_debu_separated=TSF_Io_splitpullL(TSF_debug_PPPP,'\t',"the:")
-    TSF_debug_log=TSF_Io_printlog("\t{0}\t,\t{1}".format(TSF_debug_pull,TSF_debu_separated),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpullN(TSF_debug_PPPP,'\t',2)),TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpullL(TSF_debug_PPPP,'\t',"the:")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',-1,"pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',3,"pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushN(TSF_debug_PPPP,'\t',10,"pushed")),TSF_debug_log)

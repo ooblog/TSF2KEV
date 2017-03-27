@@ -15,12 +15,23 @@ string TSF_Forth_version(){    //TSF_doc:TSF_初期化に使うバージョン(�
     return "20170327M153945";
 }
 
+//int[] delegate(int) TSF_Forth_Initcards(int[] delegate(int) TSF_cardsobj){
+//    auto TSF_cards=TSF_cardsobj;
+//    TSF_cards["TSF_Forth_version"]=TSF_Forth_version;
+    return TSF_cardsobj;
+}
+
+int[] delegate(int) TSF_Initcalls=[];
+void TSF_Forth_init(string[] TSF_argvs,int[] delegate(int) TSF_addcalls){
+
+}
+
 
 string TSF_Forth_debug(string[] TSF_argvs){
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     std.stdio.writeln(format("--- %s ---",__MODULE__));
     std.stdio.writeln(format("--- fin. > %s ---",TSF_debug_savefilename));
-//    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
     return TSF_debug_log;
 }
 
