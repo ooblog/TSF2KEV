@@ -423,17 +423,8 @@ string TSF_Io_debug(string[] TSF_argvs){
 }
 
 
-//void main(string[] TSF_argvobj){
-//    TSF_Io_debug(TSF_Io_argvs(TSF_argvobj));
-//}
-
-//static if( __MODULE__=="TSFpy_Io" ){
-//mixin('bool TSF_mainmoz(){ return true;}');
-//mixin(`string TSF_mainmoz(){ return text(__MODULE__);}`);
-//pragma(msg,TSF_mainmoz());
-mixin(`bool TSF_mainmoz(){ return text(__MODULE__)=="TSFd_Io";}`);
-static if( TSF_mainmoz() ){
-    mixin(`void main(string[] TSF_argvobj){ TSF_Io_debug(TSF_Io_argvs(TSF_argvobj)); }`);
+unittest {
+    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 

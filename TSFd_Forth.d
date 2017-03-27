@@ -1,7 +1,11 @@
 #! /usr/bin/env rdmd
-//import TSFd_Io;
+
 import std.stdio;
 import std.string;
+import std.conv;
+
+import TSFd_Io;
+
 
 string TSF_Forth_1ststack(){    //TSF_doc:TSF_初期化に使う最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:";
@@ -12,7 +16,7 @@ string TSF_Forth_version(){    //TSF_doc:TSF_初期化に使うバージョン(�
 }
 
 
-string TSF_Io_debug(string[] TSF_argvs){
+string TSF_Forth_debug(string[] TSF_argvs){
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     std.stdio.writeln(format("--- %s ---",__MODULE__));
     std.stdio.writeln(format("--- fin. > %s ---",TSF_debug_savefilename));
@@ -20,12 +24,9 @@ string TSF_Io_debug(string[] TSF_argvs){
     return TSF_debug_log;
 }
 
-//void main(string[] TSF_argvobj){
-//    TSF_Io_debug(TSF_Io_argvs(TSF_argvobj));
-//mixin(`writeln("Hello, World!");`);
-//}
-static if(1){
-    mixin(`void main(){writeln("Hello, World!");}`);
+
+unittest {
+    TSF_Forth_debug(TSF_Io_argvs(["TSFd_Forth.d"]));
 }
 
 
