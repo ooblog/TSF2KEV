@@ -91,14 +91,14 @@ ENV/
 # git clone github:ooblog/TSF2KEV.git
 # git status
 # git push github:ooblog/TSF2KEV.git master
-# git push github:ooblog/TSF2KEV.git 20170320M093700
+# git push github:ooblog/TSF2KEV.git 20170327M153945
 # git log
 # git ls-files
 # git commit -a -m ""
 # git branch
 # git checkout master
-# git checkout 20170320M093700
-# git merge 20170320M093700
-# git branch -d 20170320M093700
-# git push github:ooblog/TSF2KEV.git :20170320M093700
+# git checkout 20170327M153945
+# git merge 20170327M153945
+# git branch -d 20170327M153945
+# git push github:ooblog/TSF2KEV.git :20170327M153945
 cardsize/
