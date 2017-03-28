@@ -13,7 +13,8 @@ def TSF_Forth_version():    #TSF_doc:TSF_初期化に使うバージョン(ブ�
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
-        "#(debug)TSF_version":TSF_Forth_version 
+        "#(debug)TSF_1ststack":TSF_Forth_1ststack,
+        "#(debug)TSF_version":TSF_Forth_version,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -36,18 +37,17 @@ def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSF_doc:TSF_stacks,TSF_sty
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
-    print("TSF_cardO",TSF_cardO)
-    print("TSF_cardD",TSF_cardD)
+#    print("TSF_cardO",TSF_cardO)
+#    print("TSF_cardD",TSF_cardD)
+#    print("TSF_cardD",TSF_cardD["#(debug)TSF_version"]())
 
 
-
+TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
-#    TSF_Forth_init([TSF_Forth_Initcards])
-    TSF_Forth_init(TSF_argvs,[TSF_Forth_Initcards])
- #   TSF_Forth_init(TSF_argvs,[TSF_Forth_Initwords])
- #   TSF_Forth_setTSF(TSF_Forth_1ststack(),"\t".join(["UTF-8","#TSF_encoding","0","#TSF_fin."]))
+    TSF_Forth_init(TSF_argvs,TSF_Initcalldebug)
+#    TSF_Forth_setTSF(TSF_Forth_1ststack(),"\t".join(["UTF-8","#TSF_encoding","0","#TSF_fin."]))
 #    TSF_Forth_setTSF("TSF_Forth.py:","\t".join(["Python{0.major}.{0.minor}.{0.micro}".format(sys.version_info),sys.platform,TSF_io_stdout]))
 #    TSF_Forth_setTSF("TSF_words:","\t".join(TSF_words.keys()))
 #    TSF_Forth_addfin(TSF_argvs)
