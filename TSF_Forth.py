@@ -13,13 +13,32 @@ def TSF_Forth_version():    #TSF_doc:TSF_初期化に使うバージョン(ブ�
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
-        "#(debug)TSF_1ststack":TSF_Forth_1ststack,
-        "#(debug)TSF_version":TSF_Forth_version,
+        "#TSF_viewthe":TSF_Forth_viewthe,
+        "#TSF_viewthis":TSF_Forth_viewthis,
+        "#TSF_viewthat":TSF_Forth_viewthat,
+        "#TSF_viewthey":TSF_Forth_viewthey,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
+
+def TSF_Forth_viewthe():    #TSF_doc:[stack]指定したスタックを表示する。1スタック積み下ろし。
+#    TSF_Forth_view(TSF_Forth_popthat())
+    return ""
+
+def TSF_Forth_viewthis():    #TSF_doc:[]実行中スタックを表示する。0スタック積み下ろし。
+    TSF_Forth_view(TSF_stackthis)
+    return ""
+
+def TSF_Forth_viewthat():    #TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+    TSF_Forth_view(TSF_stackthat)
+    return ""
+
+def TSF_Forth_viewthey():    #TSF_doc:[]スタック一覧を表示する。0スタック積み下ろし。
+    for TSF_the in TSF_stackO:
+        TSF_Forth_view(TSF_the,True)
+    return ""
 
 
 TSF_Initcards=[]

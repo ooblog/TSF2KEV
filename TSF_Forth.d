@@ -19,8 +19,10 @@ string TSF_Forth_version(){    //TSF_doc:TSF_初期化に使うバージョン(�
 
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){
     string function()[string] TSF_Forth_cards=[
-        "#(debug)TSF_1ststack":&TSF_Forth_1ststack,
-        "#(debug)TSF_version":&TSF_Forth_version
+        "#TSF_viewthe":&TSF_Forth_viewthe,
+        "#TSF_viewthis":&TSF_Forth_viewthis,
+        "#TSF_viewthat":&TSF_Forth_viewthat,
+        "#TSF_viewthey":&TSF_Forth_viewthey,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -28,6 +30,30 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         }
     } 
 }
+
+string TSF_Forth_viewthe(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+//    string TSF_debug_log=TSF_Forth_view(TSF_stackthe(),true);
+    return "";
+}
+
+string TSF_Forth_viewthis(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+    string TSF_debug_log=TSF_Forth_view(TSF_stackthis,true);
+    return "";
+}
+
+string TSF_Forth_viewthat(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+    string TSF_debug_log=TSF_Forth_view(TSF_stackthat,true);
+    return "";
+}
+
+string TSF_Forth_viewthey(){    //#TSF_doc:[]スタック一覧を表示する。0スタック積み下ろし。
+    string TSF_debug_log="";
+    foreach(string TSF_the;TSF_stackO){
+        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
+    }
+    return "";
+}
+
 
 void function(ref string function()[string],ref string[])[] TSF_Initcards=[&TSF_Forth_Initcards];
 string function()[string] TSF_cardD=null;
@@ -77,6 +103,7 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){
     }
     return TSF_view_log;
 }
+
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 string TSF_Forth_debug(string[] TSF_argvs){
