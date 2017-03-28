@@ -49,15 +49,14 @@ def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSF_doc:TSF_stacks,TSF_sty
 
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSF_doc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
-    if TSF_the in TSF_stackO:
-        TSF_cards=[TSF_Io_ESCdecode(TSF_card) for TSF_card in TSF_stackD[TSF_the]]
+    if TSF_the in TSF_stackD:
         TSF_style=TSF_styleD.get(TSF_the,"T")
         if TSF_style == "O":
-            TSF_view_logline="{0}\t{1}\n".format(TSF_the,"\t".join(TSF_cards))
+            TSF_view_logline="{0}\t{1}\n".format(TSF_the,"\t".join(TSF_stackD[TSF_the]))
         elif TSF_style == "T":
-            TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\t".join(TSF_cards))
+            TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\t".join(TSF_stackD[TSF_the]))
         else:  # TSF_style == "N":
-            TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\n\t".join(TSF_cards))
+            TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\n\t".join(TSF_stackD[TSF_the]))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
 

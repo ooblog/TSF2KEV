@@ -284,7 +284,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                 }
                 TSF_RPNnum="";
             }
-            if( count("+-*/",TSF_RPNope) ){
+            if( count("+-*/\\#",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -306,8 +306,23 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                             TSF_RPNstack~=TSF_RPNstackL/TSF_RPNstackR;
                         }
                         else{
-                            TSF_RPNanswer="n|0";
-                            break opeexit;
+                            TSF_RPNanswer="n|0";  break opeexit;
+                        }
+                    break;
+                    case '\\':
+                        if( TSF_RPNstackR!=0.0 ){
+                            TSF_RPNstack~=to!real(to!int(TSF_RPNstackL/TSF_RPNstackR));
+                        }
+                        else{
+                            TSF_RPNanswer="n|0";  break opeexit;
+                        }
+                    break;
+                    case '#':
+                        if( TSF_RPNstackR!=0.0 ){
+                            TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
+                        }
+                        else{
+                            TSF_RPNanswer="n|0";  break opeexit;
                         }
                     break;
                     default:  break;
@@ -405,7 +420,7 @@ string TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_debug_log);
-    foreach(string debug_rpn;["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/"]){
+    foreach(string debug_rpn;["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#"]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
     std.stdio.writeln(format("--- fin. > %s ---",TSF_debug_savefilename));

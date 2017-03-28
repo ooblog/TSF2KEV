@@ -4,6 +4,7 @@ import std.stdio;
 import std.string;
 import std.conv;
 import std.typecons;
+import core.vararg;
 
 import TSF_Io;
 
@@ -55,6 +56,13 @@ void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[strin
 
 string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){
     string TSF_view_log="";
+    if( _arguments.length>0 ){
+        if( _arguments[0]==typeid(string) ){
+            TSF_view_log=va_arg!(string)(_argptr);
+        }
+    }
+    if(TSF_the in TSF_stackD){
+    }
     return TSF_view_log;
 }
 
