@@ -29,13 +29,19 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
 }
 
 void function(ref string function()[string],ref string[])[] TSF_Initcards=[&TSF_Forth_Initcards];
-string function()[string] TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
-string[] TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[],TSF_cardO=[];
+string function()[string] TSF_cardD=null;
+string[string] TSF_stackD=null,TSF_styleD=null;
+long[string] TSF_callptrD=null;
+string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
 string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
 long TSF_stackcount=0;
 void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){
-    TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
-    TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[],TSF_cardO=[];
+//    TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
+    TSF_cardD=null;
+    TSF_stackD=null,TSF_styleD=null;
+    TSF_callptrD=null;
+    TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
+    TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_stackcount=0;
@@ -45,6 +51,11 @@ void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[strin
 //    writef("TSF_callptrD:");  foreach(string function() cardD;TSF_callptrD){  writef("%p ",cardD);  }  writeln("");
 //    writef("TSF_cardO:");  foreach(string cardO;TSF_cardO){  writef("%s ",cardO);  }  writeln("");
 //    writef("TSF_cardD:%s\n",TSF_cardD["#(debug)TSF_version"]());
+}
+
+string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){
+    string TSF_view_log="";
+    return TSF_view_log;
 }
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];

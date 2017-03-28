@@ -1,32 +1,34 @@
 # プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonで。  
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonで、できればD言語も。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
 開発途中のものでもいいから動くTSFをお探しの方は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」を参考。  
 
 
 ## TSF2KEVで仕様変更したい点(予定)。
 
-・Forthに習って命令文をワードと呼称してたけど、カードに変更したい。  
-・カードと呼称することで、thatに一時的に積む数枚のカードとカードの束であるスタックと、スタックの集合であるデッキを明確に区別できる。  
+・Forthに習って命令文や関数の類をワードと呼称してたけど、TSFではカードと呼称したい。  
+・カードと呼称することで、thatに一時的に積む数枚のカードと、カードの束であるスタックと、スタックの集合であるデッキを明確に区別できる。  
+・デッキ呼称で、TSFファイルがデータなのかプログラムなのかでムダに揉めたくない場合に「デッキ」と抽象化できる。PythonやD言語に出力したソースコードとTSFデータ(デッキ)の区別もできる。
 ・calcを高速化するため、日本語処理ルーチンはcalcKN(かな)から「#TSF_calcJA」のように言語のロケールIDを明記して分離。  
 ・「#TSF_calcJA」を使った場合小数点の代わりに「円」を表示する。  
 ・「厘」を100分の1ではなく通貨の補助単位の1000分の1に合わせる(小数を表す日本語は野球打率「割」のような表記ぶれが存在する)。「割」「分」のズレは「銭」で吸収。  
 ・小数(通過表現ではない方)は演算子の中に押し込め、「(p1|3D)」のような「D」演算子の導入で「0.3333333」のような表記。  
 ・calcに演算をしない「T」演算子を追加することで「([2],[1],[0]T)」のように「#TSF_joinN」や「#TSF_betweenN」よりも柔軟な表現もできるように。「#TSF_brackets」は圧縮で。  
-・peek等で数値の代わりにLTsvの時のようにラベル呼び出しもできるようにしたい。縦ラベルの表現変更も必要。  
-・Pythonだと速度に限界の予感なのでD言語版も試しに作ってる最中。  
-・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。"UTF-8\t#TSF_encoding"は省略。  
-・「TSFpy_Io.py」でテキストの数値変換自体がRPN電卓になるので、正確性を求めるcalc分数電卓と高速だが不正確なRPN小数電卓を状況に合わせて選べるようにする。  
-・ardvsを直接「TSF_Tab-Separated-Forth:」に追加するのではなく「#TSF_cloneargvs」などの命令で任意のスタックを選べるようにする。  
+・peek等で数値の代わりにLTsvの時のようにラベル呼び出しもできるようにしたい←「TSFpy_Io」モジュールは準備。  
+・calc分数電卓とは別にRPN小数電卓が存在する。「#TSF_echoN」の行数など単純なテキスト数値変換はRPN。分数を用いない高速演算で「#TSF_RPN」カードによる直接呼び出しも許可。  
+・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。"UTF-8\t#TSF_encoding"は圧縮。  
+・D言語の仕様上、各カードを実装する関数の返り値はPythonのようにNoneを返せない→必ず返り値は文字列を返す→thisスタックを操作しない関数は文字列0に変更→親スタックに戻る場合は存在しないスタックを指定と仕様で明記する必要→存在しえないスタックの定義も必要→「#」で始まるスタックは作れないものとする→スタックを抜ける場合「#exit #TSF_this」の仕様昇格(「#exit」そのものが強制されるわけではない)。  
+・「#argvs」「#version」「#random」「#trash」といった機能性スタックの可能性←Forthの文法上スタック名とカード名を同じ呼称にできないのでナシ。例えば「#argvs」スタックを読むのではなく、カード「#TSF_argvs」実行でthatにargvsが積まれるというのがアリ。  
 
 
 ## TSF1KEVから引き継ぐ点、および仕様強化したい点(予定)。
 
 ・スタック代名詞はthis,that,the,theyの4つのth。TSF2KEVでは4つのpも追加、peek,poke,pull,pushをセットにする事でスタック操作文法を覚えやすくしたい。  
-・peekなどは更にcycle,limit,reverse,randomなど派生も用意する？←派生はTSF_shuffle管轄←RPN電卓の演算処理で圧縮できそう。  
-・theyはスタック名一覧である事を強化するため「#TSF_delthe」系を圧縮して「#TSF_pullthey」の様に置き換える。  
+・peekなどは更にcycle,limit,reverse,randomなど派生も用意する？←派生はTSF_shuffle管轄←RPN電卓で圧縮できそう。  
+・theyはスタック名一覧である事を強化するため「#TSF_delthe」系を圧縮して「#trash stackname #TSF_pulltheyL #TSF_pushthe」の様に置き換える。  
 ・スタック名一覧にもスタック操作同様の挙動が求められるので、スタックのOrderedDict実装を廃して連想配列と連想配列のキーの順序を別の変数で管理。  
+・「#」で始まるスタック無効の厳格化をどこまでやるか問題。「#exit」とかを可能にするには安易な「#」排除が逆に許されない。  
 
 
 ## 参考用TSF1KEVの「TSF.py --about」抜粋。
