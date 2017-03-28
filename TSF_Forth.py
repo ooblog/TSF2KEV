@@ -25,21 +25,20 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
-#    global TSF_callptrs
-#    TSF_Forth_exitcode(TSF_Forth_popthat())
-#    TSF_callptrs=OrderedDict()
+    global TSF_callptrs
+    TSF_callptrD={}
     return "#exit"
 
 def TSF_Forth_viewthe():    #TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
-#    TSF_Forth_view(TSF_Forth_popthat())
+    TSF_Forth_view(TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_viewthis():    #TSFdoc:実行中スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_stackthis)
+    TSF_Forth_view(TSF_Forth_drawthis())
     return ""
 
 def TSF_Forth_viewthat():    #TSFdoc:積込先スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_stackthat)
+    TSF_Forth_view(TSF_Forth_drawthat())
     return ""
 
 def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ドロー。
@@ -88,12 +87,32 @@ def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタ�
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
 
+def TSF_Forth_draw(TSF_the):    #TSFdoc:スタックから1枚ドロー。(TSFAPI)
+    global TSF_stacks
+    TSF_draw=""
+    if len(TSF_stackD[TSF_the]) and len(TSF_the) and TSF_the in TSF_stackD:
+        TSF_draw=TSF_stackD[TSF_the].pop()
+    return TSF_draw
+
+def TSF_Forth_drawthe():    #TSFdoc:theスタックの取得(thatから1枚ドロー)。(TSFAPI)
+    return TSF_Forth_draw(TSF_stackthat)
+
+def TSF_Forth_drawthis():    #TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    return TSF_stackthis
+
+def TSF_Forth_drawthat():    #TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    return TSF_stackthat
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
     TSF_Forth_init(TSF_argvs,TSF_Initcalldebug)
+    for TSF_the in TSF_stackO:
+        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
+    print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())
+    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
+    print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))
