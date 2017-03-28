@@ -9,11 +9,11 @@ import core.vararg;
 import TSF_Io;
 
 
-string TSF_Forth_1ststack(){    //TSF_doc:TSF_初期化に使う最初のスタック名(TSFAPI)。
+string TSF_Forth_1ststack(){    //TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:";
 }
 
-string TSF_Forth_version(){    //TSF_doc:TSF_初期化に使うバージョン(ブランチ)名(TSFAPI)。
+string TSF_Forth_version(){    //TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
     return "20170327M153945";
 }
 
@@ -31,22 +31,26 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_Forth_viewthe(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+string TSF_Forth_fin(){    //TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
+    return "";
+}
+
+string TSF_Forth_viewthe(){    //#TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
 //    string TSF_debug_log=TSF_Forth_view(TSF_stackthe(),true);
     return "";
 }
 
-string TSF_Forth_viewthis(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+string TSF_Forth_viewthis(){    //#TSFdoc:実行中スタックを表示する。0枚ドロー。
     string TSF_debug_log=TSF_Forth_view(TSF_stackthis,true);
     return "";
 }
 
-string TSF_Forth_viewthat(){    //#TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+string TSF_Forth_viewthat(){    //#TSFdoc:積込先スタックを表示する。0枚ドロー。
     string TSF_debug_log=TSF_Forth_view(TSF_stackthat,true);
     return "";
 }
 
-string TSF_Forth_viewthey(){    //#TSF_doc:[]スタック一覧を表示する。0スタック積み下ろし。
+string TSF_Forth_viewthey(){    //#TSFdoc:スタック一覧を表示する。0枚ドロー。
     string TSF_debug_log="";
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
@@ -63,7 +67,7 @@ long[string] TSF_callptrD=null;
 string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
 string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
 long TSF_stackcount=0;
-void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){
+void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
 //    TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
     TSF_cardD=null;
     TSF_stackD=null;
@@ -83,7 +87,7 @@ void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[strin
 //    writef("TSF_cardD:%s\n",TSF_cardD["#(debug)TSF_version"]());
 }
 
-string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){
+string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     string TSF_view_log="";
     if( _arguments.length>0 ){
         if( _arguments[0]==typeid(string) ){
@@ -106,7 +110,7 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){
 
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
-string TSF_Forth_debug(string[] TSF_argvs){
+string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     std.stdio.writeln(format("--- %s ---",__MODULE__));
     TSF_Forth_init(TSF_argvs,TSF_Initcalldebug);

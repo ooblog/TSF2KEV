@@ -5,14 +5,15 @@ import random
 import re
 from TSF_Io import *
 
-def TSF_Forth_1ststack():    #TSF_doc:TSF_初期化に使う最初のスタック名(TSFAPI)。
+def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:"
 
-def TSF_Forth_version():    #TSF_doc:TSF_初期化に使うバージョン(ブランチ)名(TSFAPI)。
+def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
     return "20170327M153945"
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
+        "#TSF_fin.":TSF_Forth_fin,
         "#TSF_viewthe":TSF_Forth_viewthe,
         "#TSF_viewthis":TSF_Forth_viewthis,
         "#TSF_viewthat":TSF_Forth_viewthat,
@@ -23,19 +24,25 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-def TSF_Forth_viewthe():    #TSF_doc:[stack]指定したスタックを表示する。1スタック積み下ろし。
+def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
+#    global TSF_callptrs
+#    TSF_Forth_exitcode(TSF_Forth_popthat())
+#    TSF_callptrs=OrderedDict()
+    return "#exit"
+
+def TSF_Forth_viewthe():    #TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
 #    TSF_Forth_view(TSF_Forth_popthat())
     return ""
 
-def TSF_Forth_viewthis():    #TSF_doc:[]実行中スタックを表示する。0スタック積み下ろし。
+def TSF_Forth_viewthis():    #TSFdoc:実行中スタックを表示する。0枚ドロー。
     TSF_Forth_view(TSF_stackthis)
     return ""
 
-def TSF_Forth_viewthat():    #TSF_doc:[]積込先スタックを表示する。0スタック積み下ろし。
+def TSF_Forth_viewthat():    #TSFdoc:積込先スタックを表示する。0枚ドロー。
     TSF_Forth_view(TSF_stackthat)
     return ""
 
-def TSF_Forth_viewthey():    #TSF_doc:[]スタック一覧を表示する。0スタック積み下ろし。
+def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ドロー。
     for TSF_the in TSF_stackO:
         TSF_Forth_view(TSF_the,True)
     return ""
@@ -49,7 +56,7 @@ TSF_callptrD={}
 TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
 TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
 TSF_stackcount=0
-def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSF_doc:TSF_stacks,TSF_styles,TSF_callptrs,TSF_wordsなどをまとめて初期化する(TSFAPI)。
+def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
     global TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardD,TSF_stackO,TSF_styleO,TSF_callptrO,TSF_cardO
     global TSF_stackthis,TSF_stackthat,TSF_stackcount
     TSF_cardD={}
@@ -68,7 +75,7 @@ def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSF_doc:TSF_stacks,TSF_sty
 #    print("TSF_cardD",TSF_cardD)
 #    print("TSF_cardD",TSF_cardD["#(debug)TSF_version"]())
 
-def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSF_doc:スタックの内容をテキスト表示(TSFAPI)。
+def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
     if TSF_the in TSF_stackD:
         TSF_style=TSF_styleD.get(TSF_the,"T")
@@ -83,7 +90,7 @@ def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSF_doc:スタ
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
-def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
+def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
     TSF_Forth_init(TSF_argvs,TSF_Initcalldebug)
