@@ -24,7 +24,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ## TSF1KEVから引き継ぐ点、および仕様強化したい点(予定)。
 
 ・スタック代名詞はthis,that,the,theyの4つのth。TSF2KEVでは4つのpも追加、peek,poke,pull,pushをセットにする事でスタック操作文法を覚えやすくしたい。  
-・peekなどは更にcycle,limit,randomの派生が存在する←派生はTSF_shuffle管轄。  
+・peekなどは更にcycle,limit,reverse,randomなど派生も用意する？←派生はTSF_shuffle管轄←RPN電卓の演算処理で圧縮できそう。  
 ・theyはスタック名一覧である事を強化するため「#TSF_delthe」系を圧縮して「#TSF_pullthey」の様に置き換える。  
 ・スタック名一覧にもスタック操作同様の挙動が求められるので、スタックのOrderedDict実装を廃して連想配列と連想配列のキーの順序を別の変数で管理。  
 
