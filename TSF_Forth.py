@@ -3,7 +3,7 @@
 from __future__ import division,print_function,absolute_import,unicode_literals
 import random
 import re
-from TSFpy_Io import *
+from TSF_Io import *
 
 def TSF_Forth_1ststack():    #TSF_doc:TSF_初期化に使う最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:"

@@ -1,9 +1,9 @@
 TSF_Tab-Separated-Forth:
 	0	:TSF_fin.
 TSF_argvs:
-	TSFpy_Io.py
+	TSF_Io.py
 TSF_py:
-	Python(Copyright (c) 2001-2014 Python Software Foundation.)2.7.6	linux2	UTF-8
+	Python(Copyright (c) 2001-2015 Python Software Foundation.)3.4.4	win32	cp932
 TSF_debug_tsv:
 	helloワールド咖喱
 	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF
@@ -24,12 +24,12 @@ TSF_debug_tsv:
 	this:Peek	that:Poke	the:Pull	they:Push	cards:pushed
 TSF_debug_rpn:
 	U+p128	296
-	1.414|3	0.471333333333
+	1.414|3	0.4713333333333333
 	2,3+	5
 	2,m3+	-1
 	2,3-	-1
 	2,m3-	5
 	2,3*	6
-	2,3/	0.666666666667
+	2,3/	0.6666666666666666
 	0|0	n|0
 	0,0/	n|0

@@ -3,7 +3,7 @@ TSF_Tab-Separated-Forth:
 TSF_argvs:
 	TSFd_Io.d
 TSF_d:
-	D(digitalMars)2.73	linux	UTF-8
+	D(digitalMars)2.73	win32	UTF-8
 TSF_debug_tsv:
 	helloワールド咖喱
 	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF

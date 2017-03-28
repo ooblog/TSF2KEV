@@ -5,7 +5,7 @@ import std.string;
 import std.conv;
 import std.typecons;
 
-import TSFd_Io;
+import TSF_Io;
 
 
 string TSF_Forth_1ststack(){    //TSF_doc:TSF_初期化に使う最初のスタック名(TSFAPI)。

@@ -81,11 +81,11 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
     }
     if( exists(TSF_path) ){
         TSF_text=readText(TSF_path);
-        if( TSF_encoding=="cp932" ){
-            version(Windows){
-                TSF_text=fromMBSz(toStringz(to!char[](TSF_text)));
-            }
-        }
+//        if( TSF_encoding=="cp932" ){
+//            version(Windows){
+//                TSF_text=fromMBSz(toStringz(to!char[](TSF_text)));
+//            }
+//        }
     }
     return TSF_text;
 }
