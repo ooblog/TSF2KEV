@@ -55,8 +55,8 @@ TSF_callptrD={}
 TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
 TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
 TSF_stackcount=0
-def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-    global TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardD,TSF_stackO,TSF_styleO,TSF_callptrO,TSF_cardO
+def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
+    global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_stackcount
     TSF_cardD={}
     TSF_stackD={}
@@ -65,14 +65,55 @@ def TSF_Forth_init(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカ�
     TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_stackcount=0
-    TSF_stackD[TSF_stackthis]=["0","#TSF_fin."]; TSF_stackO.append(TSF_stackthis)
-#    TSF_stackD["#TSF_argvs"]=TSF_argvs[1:]; TSF_stackO.append("#TSF_argvs")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
-#    print("TSF_cardO",TSF_cardO)
-#    print("TSF_cardD",TSF_cardD)
-#    print("TSF_cardD",TSF_cardD["#(debug)TSF_version"]())
+
+def TSF_Forth_setTSF(TSF_the,TSF_text="",TSF_style="T"):    #TSFdoc:TSFの外からスタックにカードを積む。(TSFAPI)
+    global TSF_stackD,TSF_styleD,TSF_stackO,TSF_styleO
+    if TSF_text != None:
+        if not TSF_the in TSF_stackD:
+            TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
+        TSF_stackD[TSF_the]=TSF_text.rstrip('\n').replace('\t','\n').split('\n')
+        TSF_styleD[TSF_the]=TSF_style
+    else:
+        pass
+
+
+def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
+    pass
+
+#def TSF_Forth_run():    #TSF_doc:TSF_stacks,TSF_styles,TSF_callptrs,TSF_wordsなどをまとめて初期化する(TSFAPI)。
+#    global TSF_stacks,TSF_styles,TSF_callptrs,TSF_words,TSF_Initcalls,TSF_stackthat,TSF_stackthis,TSF_stackcount
+#    while True:
+#        while TSF_stackcount < len(TSF_stacks[TSF_stackthis]):
+#            TSF_stacknow,TSF_stacknext=TSF_stacks[TSF_stackthis][TSF_stackcount],None
+#            if TSF_stacknow in TSF_words:
+#                TSF_stacknext=TSF_words[TSF_stacknow]()
+#            else:
+#                TSF_Forth_pushthat(TSF_stacknow)
+#            TSF_stackcount+=1
+#            if TSF_stacknext != None:
+#                if TSF_stacknext == "":
+#                    if len(TSF_callptrs) > 0:
+#                        TSF_stackthis,TSF_stackcount=TSF_callptrs.popitem(True)
+#                    else:
+#                        break
+#                elif TSF_stacknext in TSF_stacks:
+#                    if TSF_stacknext in TSF_callptrs:
+#                        while TSF_stacknext in TSF_callptrs:
+#                           TSF_callptrs.popitem(True)
+#                    TSF_callptrs[TSF_stackthis]=TSF_stackcount
+#                    TSF_stackthis=TSF_stacknext
+#                    TSF_stackcount=0
+#                else:
+#                    break
+#        if len(TSF_callptrs) > 0:
+#            TSF_stackthis,TSF_stackcount=TSF_callptrs.popitem(True)
+#        else:
+#            break
+
 
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
@@ -107,7 +148,7 @@ TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
-    TSF_Forth_init(TSF_argvs,TSF_Initcalldebug)
+    TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug)
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())

@@ -1,4 +1,10 @@
 TSF_Tab-Separated-Forth:
 	0	#TSF_fin.
+#settest
+	0
+#TSF_fin.
 TSF_Tab-Separated-Forth:
 	0
+#settest
+	0
+#TSF_fin.

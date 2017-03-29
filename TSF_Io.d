@@ -16,24 +16,20 @@ import std.typecons;
 
 string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
     string TSF_log="";
-    if( _arguments.length>0 ){
-        if( _arguments[0]==typeid(string) ){
-            TSF_log=va_arg!(string)(_argptr);
-            if( TSF_log.length>0 ){
-                TSF_log=TSF_log.back=='\n'?TSF_log:TSF_log~'\n';
-            }
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_log=va_arg!(string)(_argptr);
+        if( TSF_log.length>0 ){
+            TSF_log=TSF_log.back=='\n'?TSF_log:TSF_log~'\n';
         }
     }
-    {    //OSversions
-        version(linux){
-            puts(toStringz( TSF_text ));
-        }
-        version(OSX){
-            puts(toStringz( TSF_text ));
-        }
-        version(Windows){
-            puts(toStringz( to!string(toMBSz(TSF_text)) ));
-        }
+    version(linux){
+        puts(toStringz( TSF_text ));
+    }
+    version(OSX){
+        puts(toStringz( TSF_text ));
+    }
+    version(Windows){
+        puts(toStringz( to!string(toMBSz(TSF_text)) ));
     }
     if( TSF_text.length>0 ){
         TSF_log=TSF_text.back=='\n'?TSF_log~TSF_text:TSF_log~TSF_text~'\n';
@@ -67,10 +63,8 @@ string[] TSF_Io_argvs(string[] TSF_argvdup){    //#TSFdoc:TSF起動コマンド�
 string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテキストを読み込む。通常「UTF-8」を扱う。(TSFAPI)
     string TSF_text="";
     string TSF_encoding="utf-8";
-    if( _arguments.length>0 ){
-        if( _arguments[0]==typeid(string) ){
-            TSF_encoding=va_arg!(string)(_argptr);
-        }
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_encoding=va_arg!(string)(_argptr);
     }
     TSF_encoding=toLower(TSF_encoding);
     foreach(string TSF_utf8;["utf-8","utf_8","u8","utf","utf8"]){
@@ -358,11 +352,9 @@ void TSF_Io_savedirs(string TSF_path){    //一気に深い階層のフォルダ
 
 void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:TSF_pathにTSF_textを保存する。TSF_textを省略した場合ファイルを削除する。(TSFAPI)
     string TSF_text="";  bool TSF_remove=true;
-    if( _arguments.length>0 ){
-        if( _arguments[0]==typeid(string) ){
-            TSF_text=va_arg!(string)(_argptr); TSF_remove=false;
-            TSF_Io_savedir(TSF_path);
-        }
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_text=va_arg!(string)(_argptr); TSF_remove=false;
+        TSF_Io_savedir(TSF_path);
     }
     if( TSF_text.length>0 ){
         TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';

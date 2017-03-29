@@ -68,7 +68,7 @@ long[string] TSF_callptrD=null;
 string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
 string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
 long TSF_stackcount=0;
-void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
+void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
 //    TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
     TSF_cardD=null;
     TSF_stackD=null;
@@ -77,23 +77,39 @@ void TSF_Forth_init(string[] TSF_argvs,void function(ref string function()[strin
     TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_stackD[TSF_stackthis]=["0","#TSF_fin."]; TSF_stackO~=[TSF_stackthis];
+//    TSF_Forth_setTSF("#settest","0\t#TSF_fin.","T");
+    TSF_Forth_setTSF("#settest","0\t#TSF_fin.");
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_stackcount=0;
     foreach(void function(ref string function()[string],ref string[]) TSF_Initcard;TSF_Initcards){
         TSF_Initcard(TSF_cardD,TSF_cardO);
     }
-//    writef("TSF_callptrD:");  foreach(string function() cardD;TSF_callptrD){  writef("%p ",cardD);  }  writeln("");
-//    writef("TSF_cardO:");  foreach(string cardO;TSF_cardO){  writef("%s ",cardO);  }  writeln("");
-//    writef("TSF_cardD:%s\n",TSF_cardD["#(debug)TSF_version"]());
+}
+
+void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
+    string TSF_text="",TSF_style="T"; 
+    if( _arguments.length>0 ){
+        if( _arguments[0]==typeid(string) ){
+            TSF_text=va_arg!(string)(_argptr);
+        }
+        if( _arguments.length>1 && _arguments[1]==typeid(string) ){
+            TSF_style=va_arg!(string)(_argptr);
+        }
+        if( TSF_the !in TSF_stackD ){
+            TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
+        }
+        TSF_stackD[TSF_the]=replace(stripRight(TSF_text),"\t","\n").split("\t");
+        TSF_styleD[TSF_the]=TSF_style;
+    }
+    else{
+    }
 }
 
 string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     string TSF_view_log="";
-    if( _arguments.length>0 ){
-        if( _arguments[0]==typeid(string) ){
-            TSF_view_log=va_arg!(string)(_argptr);
-        }
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_view_log=va_arg!(string)(_argptr);
     }
     if( TSF_the in TSF_stackD ){
         string TSF_style=TSF_styleD.get(TSF_the,"T");
@@ -132,7 +148,7 @@ void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&
 string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     std.stdio.writeln(format("--- %s ---",__MODULE__));
-    TSF_Forth_init(TSF_argvs,TSF_Initcalldebug);
+    TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug);
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
