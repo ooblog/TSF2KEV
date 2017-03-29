@@ -66,19 +66,24 @@ def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックや�
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_stackcount=0
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
+    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push","T")
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
 
-def TSF_Forth_setTSF(TSF_the,TSF_text="",TSF_style="T"):    #TSFdoc:TSFの外からスタックにカードを積む。(TSFAPI)
+def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外からスタックにカードを積む。(TSFAPI)
     global TSF_stackD,TSF_styleD,TSF_stackO,TSF_styleO
+    if TSF_style == None: TSF_style="T"
     if TSF_text != None:
         if not TSF_the in TSF_stackD:
             TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
         TSF_stackD[TSF_the]=TSF_text.rstrip('\n').replace('\t','\n').split('\n')
         TSF_styleD[TSF_the]=TSF_style
     else:
-        pass
+        if TSF_the in TSF_stackD:  del TSF_stackD[TSF_the]
+        if TSF_the in TSF_styleD:  del TSF_styleD[TSF_the]
+        if TSF_the in TSF_stackO: TSF_stackO.pop(TSF_stackO.index(TSF_the))
+        if TSF_the in TSF_styleO: TSF_styleO.pop(TSF_styleO.index(TSF_the))
 
 
 def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
@@ -154,6 +159,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
     print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())
     print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
     print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
+    TSF_Forth_setTSF("set(del)test")
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))

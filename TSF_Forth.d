@@ -5,6 +5,7 @@ import std.string;
 import std.conv;
 import std.typecons;
 import core.vararg;
+import std.algorithm;
 
 import TSF_Io;
 
@@ -76,9 +77,9 @@ void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[st
     TSF_callptrD=null;
     TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
-    TSF_stackD[TSF_stackthis]=["0","#TSF_fin."]; TSF_stackO~=[TSF_stackthis];
-//    TSF_Forth_setTSF("#settest","0\t#TSF_fin.","T");
-    TSF_Forth_setTSF("#settest","0\t#TSF_fin.");
+//    TSF_stackD[TSF_stackthis]=["0","#TSF_fin."]; TSF_stackO~=[TSF_stackthis];
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T");
+    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push","T");
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_stackcount=0;
@@ -88,7 +89,7 @@ void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[st
 }
 
 void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-    string TSF_text="",TSF_style="T"; 
+    string TSF_text="",TSF_style="T";
     if( _arguments.length>0 ){
         if( _arguments[0]==typeid(string) ){
             TSF_text=va_arg!(string)(_argptr);
@@ -99,10 +100,14 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
-        TSF_stackD[TSF_the]=replace(stripRight(TSF_text),"\t","\n").split("\t");
+        TSF_stackD[TSF_the]=replace(stripRight(TSF_text),"\t","\n").split("\n");
         TSF_styleD[TSF_the]=TSF_style;
     }
     else{
+        if( TSF_the !in TSF_stackD ){ TSF_stackD.remove(TSF_the); }
+        if( TSF_the !in TSF_styleD ){ TSF_styleD.remove(TSF_the); }
+        if( count(TSF_stackO,TSF_the) ){ TSF_stackO=remove!((TSF_stackO){return TSF_stackO==TSF_the;})(TSF_stackO); }
+        if( count(TSF_styleO,TSF_the) ){ TSF_styleO=remove!((TSF_styleO){return TSF_styleO==TSF_the;})(TSF_styleO); }
     }
 }
 
@@ -155,6 +160,7 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
     std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
     std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
     std.stdio.writeln(format("TSF_Forth_drawthat:%s",TSF_Forth_drawthat()));
+    TSF_Forth_setTSF("set(del)test");
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
