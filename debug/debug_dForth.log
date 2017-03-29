@@ -1,8 +1,8 @@
 TSF_Tab-Separated-Forth:
-	0	#TSF_fin.
+	set(del)test	#TSF_this	0	#TSF_fin.
 set(del)test
 	this:Peek	that:Poke	the:Pull	they:Push
 TSF_Tab-Separated-Forth:
-	0	#TSF_fin.
+	set(del)test	#TSF_this	0	#TSF_fin.	this:Peek	that:Poke	the:Pull	they:Push
 set(del)test
 	this:Peek	that:Poke	the:Pull	they:Push

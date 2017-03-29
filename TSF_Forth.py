@@ -115,11 +115,11 @@ def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
                 else:
                     while TSF_stacknext in TSF_callptrO:
                         TSF_callptrD.pop(TSF_callptrO.pop())
-                    TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis)
+                    TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
                     TSF_stackthis=TSF_stacknext
                     TSF_cardscount=0
         if len(TSF_callptrO) > 0:
-            TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]]
+            TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]];
             TSF_callptrD.pop(TSF_callptrO.pop())
         else:
             break
@@ -161,9 +161,10 @@ def TSF_Forth_drawthat(TSF_the=None):    #TSFdoc:thatスタックの取得(that�
     return TSF_stackthat
 
 def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リターン。(TSFAPI)
-    TSF_stackD[TSF_the].append(TSF_card)
     if not TSF_the in TSF_stackD:
         TSF_stackO.append(TSF_the)
+    TSF_stackD[TSF_the].append(TSF_card)
+
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
@@ -176,6 +177,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
 #    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
 #    print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
 #    TSF_Forth_setTSF("set(del)test")
+    print("--- run ---")
     TSF_Forth_run()
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
