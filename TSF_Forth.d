@@ -32,23 +32,34 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_Forth_fin(){    //TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
-    TSF_callptrD=null;
+string TSF_fincode="0";
+string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
+    TSF_callptrD=null; TSF_callptrO=[];
+    TSF_fincode=TSF_Forth_drawthe();
     return "";
 }
 
+string TSF_Forth_that(){    //#TSF_doc:thatスタックの変更。1枚[that]ドロー。
+    TSF_Forth_drawthat(TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_this(){    //#TSF_doc:thisスタックの変更。1枚[this]ドロー。
+    return TSF_Forth_drawthe();
+}
+
 string TSF_Forth_viewthe(){    //#TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
-//    string TSF_debug_log=TSF_Forth_view(TSF_stackthe(),true);
+    string TSF_debug_log=TSF_Forth_view(TSF_Forth_drawthe(),true);
     return "";
 }
 
 string TSF_Forth_viewthis(){    //#TSFdoc:実行中スタックを表示する。0枚ドロー。
-    string TSF_debug_log=TSF_Forth_view(TSF_stackthis,true);
+    string TSF_debug_log=TSF_Forth_view(TSF_Forth_drawthis(),true);
     return "";
 }
 
 string TSF_Forth_viewthat(){    //#TSFdoc:積込先スタックを表示する。0枚ドロー。
-    string TSF_debug_log=TSF_Forth_view(TSF_stackthat,true);
+    string TSF_debug_log=TSF_Forth_view(TSF_Forth_drawthat(),true);
     return "";
 }
 
@@ -68,7 +79,7 @@ string [string] TSF_styleD=null;
 long[string] TSF_callptrD=null;
 string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
 string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
-long TSF_stackcount=0;
+long TSF_cardscount=0;
 void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
 //    TSF_stackD=null,TSF_styleD=null,TSF_callptrD=null,TSF_cardD=null;
     TSF_cardD=null;
@@ -77,12 +88,10 @@ void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[st
     TSF_callptrD=null;
     TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
-//    TSF_stackD[TSF_stackthis]=["0","#TSF_fin."]; TSF_stackO~=[TSF_stackthis];
+    TSF_cardscount=0;
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T");
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push","T");
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards];
-    TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
-    TSF_stackcount=0;
     foreach(void function(ref string function()[string],ref string[]) TSF_Initcard;TSF_Initcards){
         TSF_Initcard(TSF_cardD,TSF_cardO);
     }
@@ -109,6 +118,10 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( count(TSF_stackO,TSF_the) ){ TSF_stackO=remove!((TSF_stackO){return TSF_stackO==TSF_the;})(TSF_stackO); }
         if( count(TSF_styleO,TSF_the) ){ TSF_styleO=remove!((TSF_styleO){return TSF_styleO==TSF_the;})(TSF_styleO); }
     }
+}
+
+string TSF_Forth_view(){
+    return TSF_fincode;
 }
 
 string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
@@ -141,11 +154,17 @@ string TSF_Forth_drawthe(){    //#TSFdoc:theスタックの取得(thatから1枚
     return TSF_Forth_draw(TSF_stackthat);
 }
 
-string TSF_Forth_drawthis(){    //#TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+string TSF_Forth_drawthis(...){    //#TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_stackthis=va_arg!(string)(_argptr);
+    }
     return TSF_stackthis;
 }
 
-string TSF_Forth_drawthat(){    //TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+string TSF_Forth_drawthat(...){    //TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_stackthat=va_arg!(string)(_argptr);
+    }
     return TSF_stackthat;
 }
 
@@ -157,6 +176,7 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
+    writeln("debug");
     std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
     std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
     std.stdio.writeln(format("TSF_Forth_drawthat:%s",TSF_Forth_drawthat()));

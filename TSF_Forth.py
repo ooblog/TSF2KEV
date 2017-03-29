@@ -24,10 +24,20 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
+TSF_fincode="0"
 def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
-    global TSF_callptrs
-    TSF_callptrD={}
+    global TSF_fincode
+    global TSF_callptrD,TSF_callptrO
+    TSF_callptrD={};  TSF_callptrO=[];
+    TSF_fincode=TSF_Forth_drawthat()
     return "#exit"
+
+def TSF_Forth_that():    #TSF_doc:thatスタックの変更。1枚[that]ドロー。
+    TSF_Forth_drawthat(TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_this():    #TSF_doc:thisスタックの変更。1枚[this]ドロー。
+    return TSF_Forth_drawthe()
 
 def TSF_Forth_viewthe():    #TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
     TSF_Forth_view(TSF_Forth_drawthe())
@@ -54,17 +64,17 @@ TSF_styleD={}
 TSF_callptrD={}
 TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
 TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
-TSF_stackcount=0
+TSF_cardscount=0
 def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
-    global TSF_stackthis,TSF_stackthat,TSF_stackcount
+    global TSF_stackthis,TSF_stackthat,TSF_cardscount
     TSF_cardD={}
     TSF_stackD={}
     TSF_styleD={}
     TSF_callptrD={}
     TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
-    TSF_stackcount=0
+    TSF_cardscount=0
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push","T")
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
@@ -85,40 +95,32 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
         if TSF_the in TSF_stackO: TSF_stackO.pop(TSF_stackO.index(TSF_the))
         if TSF_the in TSF_styleO: TSF_styleO.pop(TSF_styleO.index(TSF_the))
 
-
 def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
-    pass
-
-#def TSF_Forth_run():    #TSF_doc:TSF_stacks,TSF_styles,TSF_callptrs,TSF_wordsなどをまとめて初期化する(TSFAPI)。
-#    global TSF_stacks,TSF_styles,TSF_callptrs,TSF_words,TSF_Initcalls,TSF_stackthat,TSF_stackthis,TSF_stackcount
-#    while True:
-#        while TSF_stackcount < len(TSF_stacks[TSF_stackthis]):
-#            TSF_stacknow,TSF_stacknext=TSF_stacks[TSF_stackthis][TSF_stackcount],None
-#            if TSF_stacknow in TSF_words:
-#                TSF_stacknext=TSF_words[TSF_stacknow]()
-#            else:
-#                TSF_Forth_pushthat(TSF_stacknow)
-#            TSF_stackcount+=1
-#            if TSF_stacknext != None:
-#                if TSF_stacknext == "":
-#                    if len(TSF_callptrs) > 0:
-#                        TSF_stackthis,TSF_stackcount=TSF_callptrs.popitem(True)
-#                    else:
-#                        break
-#                elif TSF_stacknext in TSF_stacks:
-#                    if TSF_stacknext in TSF_callptrs:
-#                        while TSF_stacknext in TSF_callptrs:
-#                           TSF_callptrs.popitem(True)
-#                    TSF_callptrs[TSF_stackthis]=TSF_stackcount
-#                    TSF_stackthis=TSF_stacknext
-#                    TSF_stackcount=0
-#                else:
-#                    break
-#        if len(TSF_callptrs) > 0:
-#            TSF_stackthis,TSF_stackcount=TSF_callptrs.popitem(True)
-#        else:
-#            break
-
+    global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
+    global TSF_stackthis,TSF_stackthat,TSF_cardscount
+    while True:
+        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]):
+            TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount]
+            if not TSF_cardnow in TSF_words:
+                TSF_Forth_return(TSF_cardnow)
+            else:
+                TSF_stacknext=TSF_cardD[TSF_stacknow]()
+                if TSF_stacknext == "":
+                    continue
+                elif not TSF_stacknext in TSF_stackD:
+                    break
+                else:
+                    while TSF_stacknext in TSF_callptrO:
+                        TSF_callptrD.pop(TSF_callptrO.pop())
+                    TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stacknext)
+                    TSF_stackthis=TSF_stacknext
+                    TSF_cardscount=0
+        if len(TSF_callptrO) > 0:
+            TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]]
+            TSF_callptrD.pop(TSF_callptrO.pop())
+        else:
+            break
+    return TSF_fincode
 
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
@@ -134,7 +136,7 @@ def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタ�
     return TSF_view_log
 
 def TSF_Forth_draw(TSF_the):    #TSFdoc:スタックから1枚ドロー。(TSFAPI)
-    global TSF_stacks
+    global TSF_stackD,TSF_stackO
     TSF_draw=""
     if len(TSF_stackD[TSF_the]) and len(TSF_the) and TSF_the in TSF_stackD:
         TSF_draw=TSF_stackD[TSF_the].pop()
@@ -143,11 +145,20 @@ def TSF_Forth_draw(TSF_the):    #TSFdoc:スタックから1枚ドロー。(TSFAP
 def TSF_Forth_drawthe():    #TSFdoc:theスタックの取得(thatから1枚ドロー)。(TSFAPI)
     return TSF_Forth_draw(TSF_stackthat)
 
-def TSF_Forth_drawthis():    #TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+def TSF_Forth_drawthis(TSF_the=None):    #TSFdoc:thisスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    global TSF_stackthis
+    if TSF_the != None:
+        TSF_stackthis=TSF_the
     return TSF_stackthis
 
-def TSF_Forth_drawthat():    #TSFdoc:theスタックの取得(thatから0枚ドロー)。(TSFAPI)
+def TSF_Forth_drawthat(TSF_the=None):    #TSFdoc:thatスタックの取得(thatから0枚ドロー)。(TSFAPI)
+    global TSF_stackthat
+    if TSF_the != None:
+        TSF_stackthat=TSF_the
     return TSF_stackthat
+
+def TSF_Forth_return(TSF_the):    #TSFdoc:theスタックに1枚リターン。(TSFAPI)
+    pass
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
