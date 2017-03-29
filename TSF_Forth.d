@@ -39,13 +39,13 @@ string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定す�
     return "";
 }
 
+string TSF_Forth_this(){    //#TSF_doc:thisスタックの変更。1枚[this]ドロー。
+    return TSF_Forth_drawthe();
+}
+
 string TSF_Forth_that(){    //#TSF_doc:thatスタックの変更。1枚[that]ドロー。
     TSF_Forth_drawthat(TSF_Forth_drawthe());
     return "";
-}
-
-string TSF_Forth_this(){    //#TSF_doc:thisスタックの変更。1枚[this]ドロー。
-    return TSF_Forth_drawthe();
 }
 
 string TSF_Forth_viewthe(){    //#TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
@@ -120,7 +120,7 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
     }
 }
 
-string TSF_Forth_view(){
+string TSF_Forth_run(){
     return TSF_fincode;
 }
 
@@ -176,11 +176,10 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
-    writeln("debug");
-    std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
-    std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
-    std.stdio.writeln(format("TSF_Forth_drawthat:%s",TSF_Forth_drawthat()));
-    TSF_Forth_setTSF("set(del)test");
+//    std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
+//    std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
+//    std.stdio.writeln(format("TSF_Forth_drawthat:%s",TSF_Forth_drawthat()));
+//    TSF_Forth_setTSF("set(del)test");
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }

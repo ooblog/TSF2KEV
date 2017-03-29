@@ -3,4 +3,6 @@ TSF_Tab-Separated-Forth:
 set(del)test
 	this:Peek	that:Poke	the:Pull	they:Push
 TSF_Tab-Separated-Forth:
-	0
+	0	#TSF_fin.
+set(del)test
+	this:Peek	that:Poke	the:Pull	they:Push
