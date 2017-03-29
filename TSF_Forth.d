@@ -3,6 +3,7 @@
 import std.stdio;
 import std.string;
 import std.conv;
+import std.array;
 import std.typecons;
 import core.vararg;
 import std.algorithm;
@@ -43,7 +44,9 @@ string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定す�
 }
 
 string TSF_Forth_this(){    //#TSF_doc:thisスタックの変更。1枚[this]ドロー。
-    return TSF_Forth_drawthe();
+    string TSF_card=TSF_Forth_drawthe();
+    if( TSF_card.length==0 || ( TSF_card.length>0 && TSF_card.front=='#' ) ){ TSF_card="#exit"; }
+    return TSF_card;
 }
 
 string TSF_Forth_that(){    //#TSF_doc:thatスタックの変更。1枚[that]ドロー。
@@ -206,10 +209,12 @@ string TSF_Forth_drawthat(...){    //#TSFdoc:thatスタックの取得(thatか�
 }
 
 void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタックに1枚リターン。(TSFAPI)
-    if( TSF_the !in TSF_stackD ){
-        TSF_stackO~=[TSF_the];
+    if( TSF_card.length>0 && TSF_card.front!='#' ){
+        if( TSF_the !in TSF_stackD ){
+            TSF_stackO~=[TSF_the];
+        }
+        TSF_stackD[TSF_the]~=[TSF_card];
     }
-    TSF_stackD[TSF_the]~=[TSF_card];
 }
 
 

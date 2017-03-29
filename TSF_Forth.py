@@ -35,7 +35,9 @@ def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。
     return "#exit"
 
 def TSF_Forth_this():    #TSF_doc:thisスタックの変更。1枚[this]ドロー。
-    return TSF_Forth_drawthe()
+    TSF_card=TSF_Forth_drawthe();
+    if len(TSF_card) == 0 or TSF_card.startswith('#'):  TSF_cardnow="#exit"
+    return TSF_card
 
 def TSF_Forth_that():    #TSF_doc:thatスタックの変更。1枚[that]ドロー。
     TSF_Forth_drawthat(TSF_Forth_drawthe())
@@ -161,9 +163,10 @@ def TSF_Forth_drawthat(TSF_the=None):    #TSFdoc:thatスタックの取得(that�
     return TSF_stackthat
 
 def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リターン。(TSFAPI)
-    if not TSF_the in TSF_stackD:
-        TSF_stackO.append(TSF_the)
-    TSF_stackD[TSF_the].append(TSF_card)
+    if len(TSF_card) > 0 and not TSF_card.startswith('#'):
+        if not TSF_the in TSF_stackD:
+            TSF_stackO.append(TSF_the)
+        TSF_stackD[TSF_the].append(TSF_card)
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
