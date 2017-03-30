@@ -20,6 +20,9 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_viewthis":TSF_Forth_viewthis,
         "#TSF_viewthat":TSF_Forth_viewthat,
         "#TSF_viewthey":TSF_Forth_viewthey,
+        "#TSF_RPN":TSF_Forth_RPN,
+        "#TSF_echo":TSF_Forth_echo,
+        "#TSF_echoN":TSF_Forth_echoN,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -60,6 +63,21 @@ def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ド
         TSF_Forth_view(TSF_the,True)
     return ""
 
+def TSF_Forth_RPN():    #TSF_doc:RPN電卓。1枚[rpn]ドロー。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_RPN(TSF_Forth_drawthe()))
+    return ""
+
+def TSF_Forth_echo():    #TSF_doc:カードの表示。1枚[echo]ドロー。
+    TSF_Io_printlog(TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…echoA,N]ドロー。
+    TSF_echoRPN=max(int(TSF_Io_RPN(TSF_Forth_drawthe())),0)
+    if TSF_echoRPN > 0:
+        for TSF_count in range(TSF_echoRPN):
+            TSF_Io_printlog(TSF_Forth_drawthe())
+    return ""
+
 
 TSF_Initcards=[]
 TSF_cardD={}
@@ -79,9 +97,7 @@ def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックや�
     TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_cardscount=0
-#    TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t0\t#TSF_fin.","T")
-    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
@@ -180,11 +196,15 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
 #    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
 #    print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
 #    TSF_Forth_setTSF("set(del)test")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t0\t#TSF_fin.","T")
+#    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t#TSF_echo","T")
+    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T")
     print("--- run ---")
     TSF_Forth_run()
+    print("--- fin. ---")
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
-    print("--- fin. > {0} ---".format(TSF_debug_savefilename))
+    print("--- {0} > {1} ---".format(__file__,TSF_debug_savefilename))
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     return TSF_debug_log
 

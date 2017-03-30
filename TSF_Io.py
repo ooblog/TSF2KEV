@@ -11,8 +11,8 @@ import zipfile
 import base64
 import datetime
 import math
-from collections import OrderedDict
-from collections import deque
+#from collections import OrderedDict
+#from collections import deque
 
 
 TSF_Io_name2codepoint,TSF_Io_urlliburlretrieve=None,None
@@ -174,7 +174,7 @@ def TSF_Io_separatepushL(TSF_separate,TSF_label,TSF_push):    #TSFdoc:リスト�
 def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。一応ゼロ除算を「n|0」と返せる。(TSFAPI)
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
-    TSF_RPNstack=deque([])
+    TSF_RPNstack=[]
     TSF_RPNseq=TSF_RPN.replace("U+","$").replace("0x","$")+" "
     for TSF_RPNope in TSF_RPNseq:
         if TSF_RPNope in "0123456789.pm$|":

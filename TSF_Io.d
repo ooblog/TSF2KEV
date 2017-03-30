@@ -41,14 +41,10 @@ string[] TSF_Io_argvs(string[] TSF_argvdup){    //#TSFdoc:TSF起動コマンド�
     string[] TSF_argvs; TSF_argvs.length=TSF_argvdup.length;
     {    //OSversions
         version(linux){
-            foreach(int i,string TSF_argv;TSF_argvdup){
-                TSF_argvs[i]=TSF_argv;
-            }
+            foreach(int i,string TSF_argv;TSF_argvdup){ TSF_argvs[i]=TSF_argv; }
         }
         version(OSX){
-            foreach(int i,string TSF_argv;TSF_argvdup){
-                TSF_argvs[i]=TSF_argv;
-            }
+            foreach(int i,string TSF_argv;TSF_argvdup){ TSF_argvs[i]=TSF_argv; }
         }
         version(Windows){
             foreach(int i,string TSF_argv;TSF_argvdup){
