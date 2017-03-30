@@ -13,7 +13,7 @@ from TSF_Forth import *
 def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
         "\t".join(["Hello world","#TSF_echo"]),TSF_style="T")
-    TSF_sample_run("TSF_sample_Helloworld","#TSF_fin.")
+    TSF_sample_run("TSF_sample_Helloworld")
 
 def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプログラム実行。
     if TSF_sample_sepalete != None:
@@ -24,9 +24,8 @@ def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプロ�
 
 
 TSF_argvs=TSF_Io_argvs(sys.argv)
-TSF_Forth_initTSF(TSF_argvs,[])
 TSF_bootcommand="" if len(TSF_argvs) < 2 else TSF_argvs[1]
-TSF_exitcode="0"
+TSF_Forth_initTSF(TSF_argvs,[])
 if os.path.isfile(TSF_bootcommand):
     pass
 #    if len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
@@ -40,7 +39,6 @@ elif TSF_bootcommand in ["--hello","--helloworld","--Helloworld"]:
 else:  #TSF_mergefile in ["--help"]:
 #    TSF_sample_help()
     TSF_sample_Helloworld()
-#sys.exit(0 if TSF_exitcode in ["0","0|1","0.0"] else TSF_exitcode)
 sys.exit(0)
 
 
