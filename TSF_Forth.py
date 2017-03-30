@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 from __future__ import division,print_function,absolute_import,unicode_literals
-import random
-import re
+#import random
+#import re
 from TSF_Io import *
 
 def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
@@ -29,12 +29,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-TSF_fincode="0"
 def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
     global TSF_fincode
     global TSF_callptrD,TSF_callptrO
     TSF_callptrD={};  TSF_callptrO=[];
-    TSF_fincode=TSF_Forth_drawthe()
     return "#exit"
 
 def TSF_Forth_this():    #TSF_doc:thisスタックの変更。1枚[this]ドロー。
@@ -97,7 +95,7 @@ def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックや�
     TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_cardscount=0
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"0\t#TSF_fin.","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.","T")
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
@@ -119,6 +117,8 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
 def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
+    if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
+        TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
     while True:
         while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) < 16:
             TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount];  TSF_cardscount+=1;
@@ -141,7 +141,6 @@ def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
             TSF_callptrD.pop(TSF_callptrO.pop())
         else:
             break
-    return TSF_fincode
 
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
@@ -179,10 +178,9 @@ def TSF_Forth_drawthat(TSF_the=None):    #TSFdoc:thatスタックの取得(that�
     return TSF_stackthat
 
 def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リターン。(TSFAPI)
-    if len(TSF_card) > 0 and not TSF_card.startswith('#'):
-        if not TSF_the in TSF_stackD:
-            TSF_stackO.append(TSF_the)
-        TSF_stackD[TSF_the].append(TSF_card)
+    if not TSF_the in TSF_stackD:
+        TSF_stackO.append(TSF_the)
+    TSF_stackD[TSF_the].append(TSF_card)
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
@@ -190,15 +188,15 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     print("--- {0} ---".format(__file__))
     TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug)
-    for TSF_the in TSF_stackO:
-        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
 #    print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())
 #    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
 #    print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
 #    TSF_Forth_setTSF("set(del)test")
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t0\t#TSF_fin.","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t#TSF_fin.","T")
 #    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t#TSF_echo","T")
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T")
+    for TSF_the in TSF_stackO:
+        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     print("--- run ---")
     TSF_Forth_run()
     print("--- fin. ---")
