@@ -1,8 +1,20 @@
+--- TSF_Forth.d ---
 TSF_Tab-Separated-Forth:
 	set(del)test	#TSF_this	#TSF_fin.
 set(del)test
 	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
+--- run ---
+--- fin. ---
 TSF_Tab-Separated-Forth:
-	set(del)test	#TSF_this	#TSF_fin.	#TSF_fin.	this:Peek	that:Poke	the:Pull
+	set(del)test	#TSF_this	#TSF_fin.	this:Peek	that:Poke
 set(del)test
 	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
+--- hello ---
+TSF_Tab-Separated-Forth:
+	set(del)test	#TSF_this	#TSF_fin.	this:Peek	that:Poke
+set(del)test
+	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
+helloworld:
+	TSF_Tab-Separated-Forth:
+	&tab;Hello world&tab;#TSF_echo
+--- TSF_Forth.d > debug/debug_dForth.log ---

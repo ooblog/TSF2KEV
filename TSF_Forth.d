@@ -21,16 +21,16 @@ string TSF_Forth_version(){    //TSFdoc:TSFバージョン(ブランチ)名(TSFA
 
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){
     string function()[string] TSF_Forth_cards=[
-        "#TSF_fin.":&TSF_Forth_fin,
-        "#TSF_this":&TSF_Forth_this,
-        "#TSF_that":&TSF_Forth_that,
-        "#TSF_viewthe":&TSF_Forth_viewthe,
-        "#TSF_viewthis":&TSF_Forth_viewthis,
-        "#TSF_viewthat":&TSF_Forth_viewthat,
-        "#TSF_viewthey":&TSF_Forth_viewthey,
-        "#TSF_RPN":&TSF_Forth_RPN,
-        "#TSF_echo":&TSF_Forth_echo,
-        "#TSF_echoN":&TSF_Forth_echoN,
+        "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
+        "#TSF_this":&TSF_Forth_this, "#スタックを実行":&TSF_Forth_this,
+        "#TSF_that":&TSF_Forth_that, "#スタックに積込":&TSF_Forth_that,
+        "#TSF_viewthe":&TSF_Forth_viewthe, "#スタック表示":&TSF_Forth_viewthe,
+        "#TSF_viewthis":&TSF_Forth_viewthis, "#実行中スタックを表示":&TSF_Forth_viewthis,
+        "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタックを表示":&TSF_Forth_viewthat,
+        "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧を表示":&TSF_Forth_viewthey,
+        "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
+        "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
+        "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -91,7 +91,7 @@ string TSF_Forth_echo(){    //#TSF_doc:カードの表示。1枚[echo]ドロー�
 string TSF_Forth_echoN(){    //#TSF_doc:カードの表示。RPN枚[echoN…echoA,N]ドロー。
     long TSF_echoRPN=to!long(TSF_Io_RPN(TSF_Forth_drawthe()));
     if( TSF_echoRPN>0 ){
-        foreach(long TSF_count;1..TSF_echoRPN){
+        foreach(long TSF_count;0..TSF_echoRPN){
             TSF_Io_printlog(TSF_Forth_drawthe());
         }
     }
@@ -146,9 +146,16 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
     }
 }
 
+string TSF_Forth_loadtext(string TSF_the,string TSF_path){
+    string TSF_text=TSF_Io_loadtext(TSF_path);
+    TSF_text=TSF_Io_ESCencode(TSF_text);
+    TSF_Forth_setTSF(TSF_the,TSF_text,"N");
+    return TSF_text;
+}
+
 void TSF_Forth_run(){
     string TSF_cardnow=""; string TSF_stacknext="";
-    if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." ) ){
+    if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." )==0 ){
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
     }
     while(true){
@@ -167,7 +174,8 @@ void TSF_Forth_run(){
                 }
                 else{
                     while( count(TSF_callptrO,TSF_stacknext) ){
-                        TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.length--;
+//                        TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.length--;
+                        TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
                     }
                     TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO~=[TSF_stackthis];
                     TSF_stackthis=TSF_stacknext;
@@ -177,7 +185,8 @@ void TSF_Forth_run(){
         }
         if( TSF_callptrO.length>0 ){
             TSF_stackthis=TSF_callptrO[$-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[$-1]];
-            TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.length--;
+//            TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.length--;
+            TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
         }
         else{
             break;
@@ -205,8 +214,10 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
 
 string TSF_Forth_draw(string TSF_the){    //#TSFdoc:スタックから1枚ドロー。(TSFAPI)
     string TSF_draw="";
+//    writeln(format("*TSF_Forth_draw:%s,%s",TSF_stackD[TSF_the].length,TSF_the.length));
     if( TSF_stackD[TSF_the].length>0 && TSF_the.length>0 && TSF_the in TSF_stackD ){
-        TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].length--;
+//        TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].length--;
+        TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].popBack();
     }
     return TSF_draw;
 }
@@ -240,7 +251,7 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
-    std.stdio.writeln(format("--- %s ---",__FILE__));
+    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug);
 //    std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
 //    std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
@@ -252,13 +263,18 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
-    std.stdio.writeln("--- run ---");
+    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log);
     TSF_Forth_run();
-    std.stdio.writeln("--- fin. ---");
+    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log);
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
-    std.stdio.writeln(format("--- %s > %s ---",__FILE__,TSF_debug_savefilename));
+    TSF_debug_log=TSF_Io_printlog("--- hello ---",TSF_debug_log);
+    TSF_Forth_loadtext("helloworld:","sample/sample_helloworld.tsf");
+    foreach(string TSF_the;TSF_stackO){
+        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
+    }
+    TSF_debug_log=TSF_Io_printlog(format("--- %s > %s ---",__FILE__,TSF_debug_savefilename),TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
     return TSF_debug_log;
 }

@@ -13,17 +13,24 @@ def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)�
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
-        "#TSF_fin.":TSF_Forth_fin,
-        "#TSF_this":TSF_Forth_this,
-        "#TSF_that":TSF_Forth_that,
-        "#TSF_viewthe":TSF_Forth_viewthe,
-        "#TSF_viewthis":TSF_Forth_viewthis,
-        "#TSF_viewthat":TSF_Forth_viewthat,
-        "#TSF_viewthey":TSF_Forth_viewthey,
-        "#TSF_RPN":TSF_Forth_RPN,
-        "#TSF_echo":TSF_Forth_echo,
-        "#TSF_echoN":TSF_Forth_echoN,
+        "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
+        "#TSF_this":TSF_Forth_this, "#スタックを実行":TSF_Forth_this,
+        "#TSF_that":TSF_Forth_that, "#スタックに積込":TSF_Forth_that,
+        "#TSF_viewthe":TSF_Forth_viewthe, "#スタック表示":TSF_Forth_viewthe,
+        "#TSF_viewthis":TSF_Forth_viewthis, "#実行中スタックを表示":TSF_Forth_viewthis,
+        "#TSF_viewthat":TSF_Forth_viewthat, "#積込先スタックを表示":TSF_Forth_viewthat,
+        "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧を表示":TSF_Forth_viewthey,
+        "#TSF_RPN":TSF_Forth_RPN, "#逆ポーランド電卓で計算":TSF_Forth_RPN, "#小数計算":TSF_Forth_RPN,
+        "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
+        "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN
     }
+#    TSF_words["#TSF_stylethe"]=TSF_Forth_stylethe; TSF_words["#スタックにスタイル指定"]=TSF_Forth_stylethe
+#    TSF_words["#TSF_readtext"]=TSF_Forth_readtext; TSF_words["#テキストファイルを読込"]=TSF_Forth_readtext
+#    TSF_words["#TSF_mergethe"]=TSF_Forth_mergethe; TSF_words["#TSFに合成"]=TSF_Forth_mergethe
+#    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
+#    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
+#    TSF_words["#TSF_savetext"]=TSF_Forth_savetext; TSF_words["#テキストファイルに上書"]=TSF_Forth_savetext
+#    TSF_words["#TSF_writetext"]=TSF_Forth_writetext; TSF_words["#テキストファイルに追記"]=TSF_Forth_writetext
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
@@ -114,6 +121,12 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
         if TSF_the in TSF_stackO: TSF_stackO.pop(TSF_stackO.index(TSF_the))
         if TSF_the in TSF_styleO: TSF_styleO.pop(TSF_styleO.index(TSF_the))
 
+def TSF_Forth_loadtext(TSF_the,TSF_path):    #TSF_doc:スタックにテキストファイルを読み込む。(TSFAPI)
+    TSF_text=TSF_Io_loadtext(TSF_path)
+    TSF_text=TSF_Io_ESCencode(TSF_text)
+    TSF_Forth_setTSF(TSF_the,TSF_text,"N")
+    return TSF_text
+
 def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
@@ -186,7 +199,7 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
-    print("--- {0} ---".format(__file__))
+    TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug)
 #    print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())
 #    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
@@ -197,12 +210,16 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T")
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
-    print("--- run ---")
+    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log)
     TSF_Forth_run()
-    print("--- fin. ---")
+    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log)
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
-    print("--- {0} > {1} ---".format(__file__,TSF_debug_savefilename))
+    TSF_debug_log=TSF_Io_printlog("--- hello ---",TSF_debug_log)
+    TSF_Forth_loadtext("helloworld:","sample/sample_helloworld.tsf")
+    for TSF_the in TSF_stackO:
+        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
+    TSF_debug_log=TSF_Io_printlog("--- {0} > {1} ---".format(__file__,TSF_debug_savefilename),TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     return TSF_debug_log
 

@@ -40,7 +40,8 @@ TSF_argvs=TSF_Io_argvs(sys.argv)
 TSF_bootcommand="" if len(TSF_argvs) < 2 else TSF_argvs[1]
 TSF_Forth_initTSF(TSF_argvs,[])
 if os.path.isfile(TSF_bootcommand):
-    pass
+    TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)
+    TSF_Forth_viewthey()
 #    if len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
 #        TSF_Forth_merge(TSF_bootcommand,[])
 #        TSF_Forth_mainfile(TSF_mergefile)

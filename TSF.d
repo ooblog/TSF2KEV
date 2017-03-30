@@ -51,6 +51,8 @@ void main(string[] sys_argvs){
     string TSF_bootcommand=TSF_argvs.length<2?"":TSF_argvs[1];
     TSF_Forth_initTSF(TSF_argvs,null);
     if( exists(TSF_bootcommand) ){
+        TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand);
+        TSF_Forth_viewthey();
     }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
         TSF_sample_help();
