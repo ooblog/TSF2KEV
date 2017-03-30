@@ -14,11 +14,13 @@ def TSF_sample_help():    #TSF_doc:Helloworldサンプル(「Hello world」を�
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
         "\t".join(["help:","#TSF_this","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:",
-        "\t".join(["usage: ./TSF.py [command|file.tsf] [argv] ...",
-        "commands:",
-        "  --help        this commands view",
+        "\t".join([
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
+        "  --help        this commands view",
+        "commands:",
+        "usage: ./TSF.py [command|file.tsf] [argv] ...",
 #        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        "4","#TSF_echoN",
         ]),"N")
     TSF_sample_run("TSF_sample_help")
 

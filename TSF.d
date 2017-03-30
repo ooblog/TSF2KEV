@@ -17,11 +17,13 @@ void TSF_sample_help(){
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
         join(["help:","#TSF_this","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",
-        join(["usage: ./TSF.py [command|file.tsf] [argv] ...",
-        "commands:",
-        "  --help        this commands view",
+        join([
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
-//        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        "  --help        this commands view",
+        "commands:",
+        "usage: ./TSF.py [command|file.tsf] [argv] ...",
+//#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        "4","#TSF_echoN",
         ],"\t"),"N");
     TSF_sample_run("TSF_sample_help");
 }
