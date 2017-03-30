@@ -10,10 +10,17 @@ from TSF_Io import *
 from TSF_Forth import *
 
 
-def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
+def TSF_sample_help():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        "\t".join(["Hello world","#TSF_echo"]),TSF_style="T")
-    TSF_sample_run("TSF_sample_Helloworld")
+        "\t".join(["help:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("help:",
+        "\t".join(["usage: ./TSF.py [command|file.tsf] [argv] ...",
+        "commands:",
+        "  --help        this commands view",
+        "  --helloworld  \"Hello world  #TSF_echo\" sample",
+#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        ]),"N")
+    TSF_sample_run("TSF_sample_help")
 
 def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプログラム実行。
     if TSF_sample_sepalete != None:
@@ -22,6 +29,10 @@ def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプロ�
         TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
     TSF_Forth_run()
 
+def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+        "\t".join(["Hello world","#TSF_echo"]),TSF_style="T")
+    TSF_sample_run("TSF_sample_Helloworld")
 
 TSF_argvs=TSF_Io_argvs(sys.argv)
 TSF_bootcommand="" if len(TSF_argvs) < 2 else TSF_argvs[1]
@@ -32,13 +43,14 @@ if os.path.isfile(TSF_bootcommand):
 #        TSF_Forth_merge(TSF_bootcommand,[])
 #        TSF_Forth_mainfile(TSF_mergefile)
 #        TSF_sample_run()
+elif TSF_bootcommand in ["--help","--commands"]:
+    TSF_sample_help()
 elif TSF_bootcommand in ["--hello","--helloworld","--Helloworld"]:
     TSF_sample_Helloworld()
-#elif TSF_mergefile in ["--about"]:
-#    TSF_sample_about()
-else:  #TSF_mergefile in ["--help"]:
-#    TSF_sample_help()
+elif TSF_bootcommand in ["--RPN","--rpn"]:
     TSF_sample_Helloworld()
+else:
+    TSF_sample_help()
 sys.exit(0)
 
 

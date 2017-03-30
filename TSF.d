@@ -13,10 +13,17 @@ import TSF_Io;
 import TSF_Forth;
 
 
-void TSF_sample_Helloworld(){
+void TSF_sample_help(){
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["Hello world","#TSF_echo"],"\t"),"T");
-    TSF_sample_run("TSF_sample_Helloworld");
+        join(["help:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("help:",
+        join(["usage: ./TSF.py [command|file.tsf] [argv] ...",
+        "commands:",
+        "  --help        this commands view",
+        "  --helloworld  \"Hello world  #TSF_echo\" sample",
+//        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        ],"\t"),"N");
+    TSF_sample_run("TSF_sample_help");
 }
 
 void TSF_sample_run(...){
@@ -29,6 +36,13 @@ void TSF_sample_run(...){
     TSF_Forth_run();
 }
 
+void TSF_sample_Helloworld(){
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+        join(["Hello world","#TSF_echo"],"\t"),"T");
+    TSF_sample_run("TSF_sample_Helloworld");
+}
+
+
 
 void main(string[] sys_argvs){
     string[] TSF_argvs=TSF_Io_argvs(sys_argvs);
@@ -36,11 +50,17 @@ void main(string[] sys_argvs){
     TSF_Forth_initTSF(TSF_argvs,null);
     if( exists(TSF_bootcommand) ){
     }
+    else if( count(["--help","--commands"],TSF_bootcommand) ){
+        TSF_sample_help();
+    }
     else if( count(["--hello","--helloworld","--Helloworld"],TSF_bootcommand) ){
         TSF_sample_Helloworld();
     }
-    else{  // if( count(["--help" )
-        TSF_sample_Helloworld();
+    else if( count(["--RPN","--rpn"],TSF_bootcommand) ){
+        TSF_sample_help();
+    }
+    else{
+        TSF_sample_help();
     }
 }
 
