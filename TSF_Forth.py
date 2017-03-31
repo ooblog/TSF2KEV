@@ -16,7 +16,11 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
         "#TSF_this":TSF_Forth_this, "#スタックを実行":TSF_Forth_this,
         "#TSF_that":TSF_Forth_that, "#スタックに積込":TSF_Forth_that,
-        "#TSF_viewthe":TSF_Forth_viewthe, "#スタック表示":TSF_Forth_viewthe,
+        "#TSF_stylethe":TSF_Forth_stylethe, "#指定スタックにスタイル指定":TSF_Forth_stylethe,
+        "#TSF_stylethis":TSF_Forth_stylethis, "#実行中スタックにスタイル指定":TSF_Forth_stylethis,
+        "#TSF_stylethat":TSF_Forth_stylethat, "#積込先スタックにスタイル指定":TSF_Forth_stylethat,
+        "#TSF_stylethey":TSF_Forth_stylethey, "#全スタックにスタイル指定":TSF_Forth_stylethey,
+        "#TSF_viewthe":TSF_Forth_viewthe, "#指定スタック表示":TSF_Forth_viewthe,
         "#TSF_viewthis":TSF_Forth_viewthis, "#実行中スタックを表示":TSF_Forth_viewthis,
         "#TSF_viewthat":TSF_Forth_viewthat, "#積込先スタックを表示":TSF_Forth_viewthat,
         "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧を表示":TSF_Forth_viewthey,
@@ -24,7 +28,6 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN
     }
-#    TSF_words["#TSF_stylethe"]=TSF_Forth_stylethe; TSF_words["#スタックにスタイル指定"]=TSF_Forth_stylethe
 #    TSF_words["#TSF_readtext"]=TSF_Forth_readtext; TSF_words["#テキストファイルを読込"]=TSF_Forth_readtext
 #    TSF_words["#TSF_mergethe"]=TSF_Forth_mergethe; TSF_words["#TSFに合成"]=TSF_Forth_mergethe
 #    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
@@ -51,6 +54,25 @@ def TSF_Forth_that():    #TSF_doc:thatスタックの変更。1枚[that]ドロ�
     TSF_Forth_drawthat(TSF_Forth_drawthe())
     return ""
 
+def TSF_Forth_stylethe():    #TSFdoc:指定したスタックの表示方法を指定する。2枚[style,the]ドロー。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_style(TSF_the,TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_stylethis():    #TSFdoc:実行中スタックの表示方法を指定する。1枚[style]ドロー。
+    TSF_Forth_style(TSF_Forth_drawthis(),TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_stylethat():    #TSFdoc:積込先スタックの表示方法を指定する。1枚[style]ドロー。
+    TSF_Forth_style(TSF_Forth_drawthat(),TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_stylethey():    #TSFdoc:全スタックの表示方法を一括指定。1枚[style]ドロー。
+    TSF_style=TSF_Forth_drawthe()
+    for TSF_the in TSF_stackO:
+        TSF_Forth_style(TSF_the,TSF_style)
+    return ""
+
 def TSF_Forth_viewthe():    #TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
     TSF_Forth_view(TSF_Forth_drawthe())
     return ""
@@ -65,7 +87,7 @@ def TSF_Forth_viewthat():    #TSFdoc:積込先スタックを表示する。0枚
 
 def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ドロー。
     for TSF_the in TSF_stackO:
-        TSF_Forth_view(TSF_the,True)
+        TSF_Forth_view(TSF_the)
     return ""
 
 def TSF_Forth_RPN():    #TSF_doc:RPN電卓。1枚[rpn]ドロー。
@@ -106,6 +128,16 @@ def TSF_Forth_initTSF(TSF_argvs=[],TSF_addcards=[]):    #TSFdoc:スタックや�
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
+
+def TSF_Forth_style(TSF_the,TSF_style=None):    #TSF_doc:スタックの表示スタイルを指定する(TSFAPI)。
+    global TSF_styles
+    if TSF_the in TSF_stackD:
+        if TSF_style != None:
+            TSF_styleD[TSF_the]=TSF_style
+        TSF_style=TSF_styleD[TSF_the]
+    else:
+        TSF_style=""
+    return TSF_style
 
 def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外からスタックにカードを積む。(TSFAPI)
     global TSF_stackD,TSF_styleD,TSF_stackO,TSF_styleO
