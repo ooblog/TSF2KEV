@@ -41,10 +41,9 @@ TSF_Forth_initTSF(TSF_sysargvs[1:],[])
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand):
     TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)
-    TSF_Forth_viewthey()
-#    if len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
-#        TSF_Forth_merge(TSF_bootcommand,[])
-#        TSF_Forth_mainfile(TSF_mergefile)
+    if len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
+        TSF_Forth_merge(TSF_bootcommand,[])
+        TSF_Forth_viewthey()
 #        TSF_sample_run()
 elif TSF_bootcommand in ["--help","--commands"]:
     TSF_sample_help()

@@ -29,8 +29,8 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
         "#TSF_argvs":TSF_Forth_argvs, "#コマンド読込":TSF_Forth_argvs,
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
+        "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
     }
-#    TSF_words["#TSF_mergethe"]=TSF_Forth_mergethe; TSF_words["#TSFに合成"]=TSF_Forth_mergethe
 #    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
 #    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
 #    TSF_words["#TSF_savetext"]=TSF_Forth_savetext; TSF_words["#テキストファイルに上書"]=TSF_Forth_savetext
@@ -122,6 +122,15 @@ def TSF_Forth_readtext():   #TSF_doc:ファイル名のスタックにテキス�
     TSF_Forth_loadtext(TSF_path,TSF_path)
     return ""
 
+def TSF_Forth_mergethe():   #TSF_doc:テキストをTSFとして読み込む。1枚[merge]ドロー。。
+    TSF_Forth_merge(TSF_Forth_popthat(),[TSF_Forth_1ststack()])
+    return None
+
+#    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
+#    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
+#    TSF_words["#TSF_savetext"]=TSF_Forth_savetext; TSF_words["#テキストファイルに上書"]=TSF_Forth_savetext
+#    TSF_words["#TSF_writetext"]=TSF_Forth_writetext; TSF_words["#テキストファイルに追記"]=TSF_Forth_writetext
+
 
 TSF_mainandargvs=[]
 TSF_cardD={}
@@ -158,7 +167,7 @@ def TSF_Forth_style(TSF_the,TSF_style=None):    #TSF_doc:スタックの表示�
         TSF_style=""
     return TSF_style
 
-def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外からスタックにカードを積む。(TSFAPI)
+def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外からスタックにカードを積む/無を積むと削除。(TSFAPI)
     global TSF_stackD,TSF_styleD,TSF_stackO,TSF_styleO
     if TSF_style == None: TSF_style="T"
     if TSF_text != None:
@@ -177,6 +186,34 @@ def TSF_Forth_loadtext(TSF_the,TSF_path):    #TSF_doc:スタックにテキス�
     TSF_text=TSF_Io_ESCencode(TSF_text)
     TSF_Forth_setTSF(TSF_the,TSF_text,"N")
     return TSF_text
+
+def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=None):    #TSF_doc:スタック内のテキストをTSFとして読み込む。(TSFAPI)。
+    global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
+    global TSF_stackthis,TSF_stackthat,TSF_cardscount
+    if TSF_path in TSF_stackD:
+        TSF_the=TSF_Forth_1ststack()
+        for TSF_card in TSF_stackD[TSF_path]:
+            if len(TSF_card) == 0 or TSF_card.startswith("#"): continue;
+            TSF_line=TSF_Io_ESCdecode(TSF_card)
+            if not TSF_line.startswith('\t'):
+                TSF_lineL=TSF_line.lstrip('\t').split('\t')
+                if not TSF_lineL[0] in TSF_ESCstack:
+                    TSF_the=TSF_lineL[0]
+                    if not TSF_the in TSF_stackD:
+                        TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
+                    TSF_stackD[TSF_the]=[]
+                    TSF_styleD[TSF_the]="O" if len(TSF_lineL) >= 2 else ""
+            if not TSF_the in TSF_ESCstack:
+                TSF_lineL=TSF_line.split('\t')[1:]
+                if not TSF_the in TSF_stackD:
+                    TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
+                TSF_stackD[TSF_the].extend(TSF_lineL)
+                if TSF_styleD[TSF_the] != "O":
+                    TSF_styleD[TSF_the]="T" if len(TSF_lineL) >= 2 else "N"
+        if TSF_mergedel:
+             TSF_Forth_setTSF(TSF_path)
+        TSF_Forth_setTSF(TSF_path)
+
 
 TSF_echo,TSF_echo_log=False,""
 def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
