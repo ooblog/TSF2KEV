@@ -95,14 +95,18 @@ def TSF_Forth_RPN():    #TSF_doc:RPN電卓。1枚[rpn]ドロー。
     return ""
 
 def TSF_Forth_echo():    #TSF_doc:カードの表示。1枚[echo]ドロー。
-    TSF_Io_printlog(TSF_Forth_drawthe())
+    global TSF_echo_log
+    if TSF_echo:
+        TSF_echo_log=TSF_Io_printlog(TSF_Forth_drawthe(),TSF_echo_log)
+    else:
+        TSF_Io_printlog(TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…echoA,N]ドロー。
     TSF_echoRPN=max(int(TSF_Io_RPN(TSF_Forth_drawthe())),0)
     if TSF_echoRPN > 0:
         for TSF_count in range(TSF_echoRPN):
-            TSF_Io_printlog(TSF_Forth_drawthe())
+            TSF_Forth_echo()
     return ""
 
 
@@ -159,9 +163,15 @@ def TSF_Forth_loadtext(TSF_the,TSF_path):    #TSF_doc:スタックにテキス�
     TSF_Forth_setTSF(TSF_the,TSF_text,"N")
     return TSF_text
 
-def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
+TSF_echo,TSF_echo_log=False,""
+def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
+    global TSF_echo,TSF_echo_log
+    if TSF_run_log != None:
+        TSF_echo,TSF_echo_log=True,TSF_run_log
+    else:
+        TSF_echo,TSF_echo_log=False,""
     if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
     while True:
@@ -186,6 +196,7 @@ def TSF_Forth_run():    #TSFdoc:TSFデッキを走らせる。
             TSF_callptrD.pop(TSF_callptrO.pop())
         else:
             break
+    return TSF_echo_log
 
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
@@ -243,7 +254,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log)
-    TSF_Forth_run()
+    TSF_debug_log=TSF_Forth_run(TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log)
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)

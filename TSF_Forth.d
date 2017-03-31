@@ -111,7 +111,12 @@ string TSF_Forth_RPN(){    //#TSF_doc:RPN電卓。1枚[rpn]ドロー。
 }
 
 string TSF_Forth_echo(){    //#TSF_doc:カードの表示。1枚[echo]ドロー。
-    TSF_Io_printlog(TSF_Forth_drawthe());
+    if( TSF_echo ){
+        TSF_echo_log=TSF_Io_printlog(TSF_Forth_drawthe(),TSF_echo_log);
+    }
+    else{
+        TSF_Io_printlog(TSF_Forth_drawthe());
+    }
     return "";
 }
 
@@ -119,7 +124,7 @@ string TSF_Forth_echoN(){    //#TSF_doc:カードの表示。RPN枚[echoN…echo
     long TSF_echoRPN=to!long(TSF_Io_RPN(TSF_Forth_drawthe()));
     if( TSF_echoRPN>0 ){
         foreach(long TSF_count;0..TSF_echoRPN){
-            TSF_Io_printlog(TSF_Forth_drawthe());
+            TSF_Forth_echo();
         }
     }
     return "";
@@ -190,8 +195,15 @@ string TSF_Forth_loadtext(string TSF_the,string TSF_path){
     return TSF_text;
 }
 
-void TSF_Forth_run(){
+bool TSF_echo=false;  string TSF_echo_log="";
+string TSF_Forth_run(...){
     string TSF_cardnow=""; string TSF_stacknext="";
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_echo=true; TSF_echo_log~=va_arg!(string)(_argptr);
+    }
+    else{
+        TSF_echo=false; TSF_echo_log="";
+    }
     if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." )==0 ){
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
     }
@@ -227,6 +239,7 @@ void TSF_Forth_run(){
             break;
         }
     }
+    return TSF_echo_log;
 }
 
 string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
@@ -297,7 +310,7 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
     TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log);
-    TSF_Forth_run();
+    TSF_debug_log=TSF_Forth_run(TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log);
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
