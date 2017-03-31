@@ -1,6 +1,6 @@
 # プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonで、できればD言語も。  
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
 開発途中のものでもいいから動くTSFをお探しの方は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」を参考。  
 
@@ -18,10 +18,9 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・calcに演算をしない「T」演算子を追加することで「([2],[1],[0]T)」のように「#TSF_joinN」や「#TSF_betweenN」よりも柔軟な表現もできるように。「#TSF_brackets」は圧縮で。  
 ・peek等で数値の代わりにLTsvの時のようにラベル呼び出しもできるようにしたい←「TSFpy_Io」モジュールは準備。  
 ・calc分数電卓とは別にRPN小数電卓が存在する。「#TSF_echoN」の行数など単純なテキスト数値変換はRPN。分数を用いない高速演算で「#TSF_RPN」カードによる直接呼び出しも許可。  
-・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。"UTF-8\t#TSF_encoding"は圧縮。  
+・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。「UTF-8\t#TSF_encoding」は圧縮。「#TSF_fin.」の終了コードを圧縮。helloworldは「Hello world\t#TSF_echo」までコンパクトに。  
 ・D言語の仕様上、各カードを実装する関数の返り値はPythonのようにNoneを返せない→必ず返り値は文字列を返す→thisスタックを操作しない関数は文字列0に変更→親スタックに戻る場合は存在しないスタックを指定と仕様で明記する必要→存在しえないスタックの定義も必要→「#」で始まるスタックは作れないものとする→スタックを抜ける場合「#exit #TSF_this」の仕様昇格(「#exit」そのものが強制されるわけではない)。  
 ・「#argvs」「#version」「#random」「#trash」といった機能性スタックの可能性←Forthの文法上スタック名とカード名を同じ呼称にできないのでナシ。例えば「#argvs」スタックを読むのではなく、カード「#TSF_argvs」実行でthatにargvsが積まれるというのがアリ。  
-・「#TSF_fin.」の終了コードを圧縮。  
 
 
 ## TSF1KEVから引き継ぐ点、および仕様強化したい点(予定)。

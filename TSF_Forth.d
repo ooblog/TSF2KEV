@@ -34,7 +34,8 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧を表示":&TSF_Forth_viewthey,
         "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
         "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
-        "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN
+        "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
+        "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -127,6 +128,12 @@ string TSF_Forth_echoN(){    //#TSF_doc:カードの表示。RPN枚[echoN…echo
             TSF_Forth_echo();
         }
     }
+    return "";
+}
+
+string TSF_Forth_readtext(){    //#TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
+    string TSF_path=TSF_Forth_drawthe();
+    TSF_Forth_loadtext(TSF_path,TSF_path);
     return "";
 }
 
@@ -299,12 +306,7 @@ string TSF_Forth_debug(string[] TSF_argvs){    //#TSFdoc:「TSF_Forth」単体�
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug);
-//    std.stdio.writeln(format("TSF_Forth_drawthe:%s",TSF_Forth_drawthe()));
-//    std.stdio.writeln(format("TSF_Forth_drawthis:%s",TSF_Forth_drawthis()));
-//    std.stdio.writeln(format("TSF_Forth_drawthat:%s",TSF_Forth_drawthat()));
-//    TSF_Forth_setTSF("set(del)test");
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t#TSF_fin.","T");
-//    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t#TSF_echo","T");
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T");
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);

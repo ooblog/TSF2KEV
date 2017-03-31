@@ -23,7 +23,7 @@ LTsvver	<＠L:TsvLTsvver>
 [<＠TSF2KEV/README.md>|
 <？LTsv_MD_header><？LTsv_MD_H1:TSF2KEV>
 <？P>
-目標は「<？https/LTsv10>」の「<？https/kanedit.vim>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonで、できればD言語も。<？BR>
+目標は「<？https/LTsv10>」の「<？https/kanedit.vim>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<？BR>
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「<？https/LTsv10>」をお使いください。<？BR>
 開発途中のものでもいいから動くTSFをお探しの方は「<？https/TSF1KEV>」を参考。<？BR>
 <？/P>
@@ -41,10 +41,9 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・calcに演算をしない「T」演算子を追加することで「([2],[1],[0]T)」のように「#TSF_joinN」や「#TSF_betweenN」よりも柔軟な表現もできるように。「#TSF_brackets」は圧縮で。<？BR>
 ・peek等で数値の代わりにLTsvの時のようにラベル呼び出しもできるようにしたい←「TSFpy_Io」モジュールは準備。<？BR>
 ・calc分数電卓とは別にRPN小数電卓が存在する。「#TSF_echoN」の行数など単純なテキスト数値変換はRPN。分数を用いない高速演算で「#TSF_RPN」カードによる直接呼び出しも許可。<？BR>
-・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。"UTF-8\t#TSF_encoding"は圧縮。<？BR>
+・D言語に合わせて、文字コードは「UTF-8」改行は「LF」と固定する。「UTF-8\t#TSF_encoding」は圧縮。「#TSF_fin.」の終了コードを圧縮。helloworldは「Hello world\t#TSF_echo」までコンパクトに。<？BR>
 ・D言語の仕様上、各カードを実装する関数の返り値はPythonのようにNoneを返せない→必ず返り値は文字列を返す→thisスタックを操作しない関数は文字列0に変更→親スタックに戻る場合は存在しないスタックを指定と仕様で明記する必要→存在しえないスタックの定義も必要→「#」で始まるスタックは作れないものとする→スタックを抜ける場合「#exit #TSF_this」の仕様昇格(「#exit」そのものが強制されるわけではない)。<？BR>
 ・「#argvs」「#version」「#random」「#trash」といった機能性スタックの可能性←Forthの文法上スタック名とカード名を同じ呼称にできないのでナシ。例えば「#argvs」スタックを読むのではなく、カード「#TSF_argvs」実行でthatにargvsが積まれるというのがアリ。<？BR>
-・「#TSF_fin.」の終了コードを圧縮。<？BR>
 <？/P>
 
 <？LTsv_MD_H2:TSF1keep>
@@ -53,6 +52,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・peekなどは更にcycle,limit,reverse,randomなど派生も用意する？←派生はTSF_shuffle管轄←RPN電卓で圧縮できそう。<？BR>
 ・theyはスタック名一覧である事を強化するため「#TSF_delthe」系を圧縮して「#trash stackname #TSF_pulltheyL #TSF_pushthe」の様に置き換える。<？BR>
 ・スタック名一覧にもスタック操作同様の挙動が求められるので、スタックのOrderedDict実装を廃して連想配列と連想配列のキーの順序を別の変数で管理。<？BR>
+・「TSF_Tab-Separated-Forth:」スタックに「#TSF_fin.」カード自動付加は「TSF_Forth_run()」の方に内蔵。<？BR>
 ・「#」で始まるスタック無効の厳格化をどこまでやるか問題。「#exit」とかを可能にするには安易な「#」排除が逆に許されない。<？BR>
 <？/P>
 
@@ -230,7 +230,7 @@ License: MIT<？BR>
 
 [<？https/TSF2KEV>|
 :<＄href/htmldoc-0>	https://github.com/ooblog/TSF2KEV
-:<＄title/htmldoc-0>	ooblog/TSF2KEV: プログラミング言語「TSF_Tab-Separated-Forth」開発中。目標は「LTsv10kanedit」の「kanedit.vim」などを「TSF」だけで動かす事。実装はとりあえずPythonで。 
+:<＄title/htmldoc-0>	ooblog/TSF2KEV: プログラミング言語「TSF_Tab-Separated-Forth」開発中。目標は「LTsv10kanedit」の「kanedit.vim」などを「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
 :<＄txt/htmldoc-0>	TSF2KEV
 .+\.html?	<a href="<＄href/htmldoc-@c>" title="<＄title/htmldoc-@c>"><＄txt/htmldoc-@c></a>
 .+\.md	[<＄txt/htmldoc-@c>](<＄href/htmldoc-@c> "<＄title/htmldoc-@c>")

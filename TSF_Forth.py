@@ -26,9 +26,9 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧を表示":TSF_Forth_viewthey,
         "#TSF_RPN":TSF_Forth_RPN, "#逆ポーランド電卓で計算":TSF_Forth_RPN, "#小数計算":TSF_Forth_RPN,
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
-        "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN
+        "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
+        "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
     }
-#    TSF_words["#TSF_readtext"]=TSF_Forth_readtext; TSF_words["#テキストファイルを読込"]=TSF_Forth_readtext
 #    TSF_words["#TSF_mergethe"]=TSF_Forth_mergethe; TSF_words["#TSFに合成"]=TSF_Forth_mergethe
 #    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
 #    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
@@ -107,6 +107,11 @@ def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…
     if TSF_echoRPN > 0:
         for TSF_count in range(TSF_echoRPN):
             TSF_Forth_echo()
+    return ""
+
+def TSF_Forth_readtext():   #TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
+    TSF_path=TSF_Forth_drawthe()
+    TSF_Forth_loadtext(TSF_path,TSF_path)
     return ""
 
 
@@ -244,12 +249,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF_Forth」単体テスト風デバ�
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_argvs,TSF_Initcalldebug)
-#    print("TSF_Forth_drawthe:{0}",TSF_Forth_drawthe())
-#    print("TSF_Forth_drawthis:{0}",TSF_Forth_drawthis())
-#    print("TSF_Forth_drawthat:{0}",TSF_Forth_drawthat())
-#    TSF_Forth_setTSF("set(del)test")
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\t#TSF_fin.","T")
-#    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t#TSF_echo","T")
     TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T")
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
