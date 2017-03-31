@@ -36,9 +36,9 @@ def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world�
         "\t".join(["Hello world","#TSF_echo"]),TSF_style="T")
     TSF_sample_run("TSF_sample_Helloworld")
 
-TSF_argvs=TSF_Io_argvs(sys.argv)
-TSF_bootcommand="" if len(TSF_argvs) < 2 else TSF_argvs[1]
-TSF_Forth_initTSF(TSF_argvs,[])
+TSF_sysargvs=TSF_Io_argvs(sys.argv)
+TSF_Forth_initTSF(TSF_sysargvs[1:],[])
+TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand):
     TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)
     TSF_Forth_viewthey()

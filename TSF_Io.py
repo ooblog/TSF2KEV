@@ -49,13 +49,13 @@ def TSF_Io_printlog(TSF_text,TSF_log=None):    ##TSFdoc:テキストをstdoutに
         TSF_log="".join([TSF_log,TSF_text,'\n']) if TSF_log != None else ""
     return TSF_log
 
-def TSF_Io_argvs(TSF_argvobj=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
+def TSF_Io_argvs(TSF_argvdup=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)
     TSF_argvs=[]
     if sys.version_info.major == 2:
-        for TSF_argv in sys.argv:
+        for TSF_argv in TSF_argvdup:
             TSF_argvs.append(TSF_argv.decode(TSF_Io_stdout))
     if sys.version_info.major == 3:
-        for TSF_argv in sys.argv:
+        for TSF_argv in TSF_argvdup:
             TSF_argvs.append(TSF_argv)
     return TSF_argvs
 
