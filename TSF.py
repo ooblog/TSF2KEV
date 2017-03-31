@@ -39,12 +39,10 @@ def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world�
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Forth_initTSF(TSF_sysargvs[1:],[])
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
-if os.path.isfile(TSF_bootcommand):
-    TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)
-    if len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
-        TSF_Forth_merge(TSF_bootcommand,[])
-        TSF_Forth_viewthey()
-#        TSF_sample_run()
+if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
+    TSF_Forth_merge(TSF_bootcommand,[],True)
+#    TSF_Forth_viewthey()
+    TSF_sample_run()
 elif TSF_bootcommand in ["--help","--commands"]:
     TSF_sample_help()
 elif TSF_bootcommand in ["--hello","--helloworld","--Helloworld"]:

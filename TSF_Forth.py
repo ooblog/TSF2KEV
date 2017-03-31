@@ -187,7 +187,7 @@ def TSF_Forth_loadtext(TSF_the,TSF_path):    #TSF_doc:スタックにテキス�
     TSF_Forth_setTSF(TSF_the,TSF_text,"N")
     return TSF_text
 
-def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=None):    #TSF_doc:スタック内のテキストをTSFとして読み込む。(TSFAPI)。
+def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSF_doc:スタック内のテキストをTSFとして読み込む。(TSFAPI)
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     if TSF_path in TSF_stackD:
@@ -196,7 +196,7 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=None):    #TSF_doc:ス
             if len(TSF_card) == 0 or TSF_card.startswith("#"): continue;
             TSF_line=TSF_Io_ESCdecode(TSF_card)
             if not TSF_line.startswith('\t'):
-                TSF_lineL=TSF_line.lstrip('\t').split('\t')
+                TSF_lineL=TSF_line.split('\t')
                 if not TSF_lineL[0] in TSF_ESCstack:
                     TSF_the=TSF_lineL[0]
                     if not TSF_the in TSF_stackD:
@@ -212,7 +212,6 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=None):    #TSF_doc:ス
                     TSF_styleD[TSF_the]="T" if len(TSF_lineL) >= 2 else "N"
         if TSF_mergedel:
              TSF_Forth_setTSF(TSF_path)
-        TSF_Forth_setTSF(TSF_path)
 
 
 TSF_echo,TSF_echo_log=False,""

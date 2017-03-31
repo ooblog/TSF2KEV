@@ -174,12 +174,6 @@ void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()
     }
 }
 
-//void TSF_Forth_initTSF(string[] TSF_argvs,void function(ref string function()[string],ref string[])[] TSF_addcalls){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-//TSF_argvs=""
-//def TSF_Forth_argvs(TSF_argvs=[]):    #TSF_doc:コマンド実行とファイル実行とでズレるargvsの調整。(TSFAPI)
-//    if TSF_Forth_mainfile != None:
-//        TSF_argvs=TSF_argvs
-
 string TSF_Forth_style(string TSF_the, ...){    //#TSF_doc:スタックの表示スタイルを指定する(TSFAPI)。
     string TSF_style="";
     if( TSF_the !in TSF_stackD ){
@@ -214,15 +208,52 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
     }
 }
 
-string TSF_Forth_loadtext(string TSF_the,string TSF_path){
+string TSF_Forth_loadtext(string TSF_the,string TSF_path){    //#TSF_doc:スタックにテキストファイルを読み込む。(TSFAPI)
     string TSF_text=TSF_Io_loadtext(TSF_path);
     TSF_text=TSF_Io_ESCencode(TSF_text);
     TSF_Forth_setTSF(TSF_the,TSF_text,"N");
     return TSF_text;
 }
 
+void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSF_doc:スタック内のテキストをTSFとして読み込む。(TSFAPI)
+    bool TSF_mergedel=false;
+    if( _arguments.length>0 && _arguments[0]==typeid(bool) ){
+        TSF_mergedel=va_arg!(bool)(_argptr);
+    }
+    if( TSF_path in TSF_stackD ){
+        string TSF_the=TSF_Forth_1ststack(); string TSF_line="";  string[] TSF_lineL=null;
+        foreach(string TSF_card;TSF_stackD[TSF_path]){
+            if( TSF_card.length==0 || TSF_card.front=='#' ){ continue; }
+            TSF_line=TSF_Io_ESCdecode(TSF_card);
+            if( TSF_line.front!='\t' ){
+                TSF_lineL=TSF_line.split("\t");
+                if( count(TSF_ESCstack,TSF_lineL[0])==0 ){
+                    if( TSF_the !in TSF_stackD ){
+                        TSF_stackO~=[TSF_the]; TSF_styleO~=[TSF_the];
+                    }
+                    TSF_stackD[TSF_the]=null;
+                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?"O":"";
+                }
+            }
+            if( count(TSF_ESCstack,TSF_the)==0 ){
+                TSF_lineL=TSF_line.split("\t")[1..$];
+                if( TSF_the !in TSF_stackD ){
+                    TSF_stackO~=[TSF_the]; TSF_styleO~=[TSF_the];
+                }
+                TSF_stackD[TSF_the]~=TSF_lineL;
+                if( TSF_styleD[TSF_the]!="O" ){
+                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?"T":"N";
+                }
+            }
+        }
+        if( TSF_mergedel ){
+            TSF_Forth_setTSF(TSF_path);
+        }
+    }
+}
+
 bool TSF_echo=false;  string TSF_echo_log="";
-string TSF_Forth_run(...){
+string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
     string TSF_cardnow=""; string TSF_stacknext="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_echo=true; TSF_echo_log~=va_arg!(string)(_argptr);

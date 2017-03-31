@@ -45,14 +45,14 @@ void TSF_sample_Helloworld(){
 }
 
 
-
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
     string TSF_bootcommand=TSF_sysargvs.length<2?"":TSF_sysargvs[1];
     TSF_Forth_initTSF(TSF_sysargvs[1..$],null);
-    if( exists(TSF_bootcommand) ){
-        TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand);
-        TSF_Forth_viewthey();
+    if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
+        TSF_Forth_merge(TSF_bootcommand,null,true);
+//        TSF_Forth_viewthey();
+        TSF_sample_run();
     }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
         TSF_sample_help();
