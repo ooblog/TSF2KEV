@@ -37,6 +37,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
+        "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -148,6 +149,17 @@ string TSF_Forth_readtext(){    //#TSF_doc:ファイル名のスタックにテ�
     TSF_Forth_loadtext(TSF_path,TSF_path);
     return "";
 }
+
+string TSF_Forth_mergethe(){    //#TSF_doc:テキストをTSFとして読み込む。1枚[merge]ドロー。
+    TSF_Forth_merge(TSF_Forth_drawthe(),[TSF_Forth_1ststack()]);
+    return "";
+}
+
+
+//#def TSF_Forth_publishthe():   #TSF_doc:スタックをテキスト化。2枚[filename,stack]ドロー。
+//#    TSF_publish_log=TSF_Forth_view(TSF_Forth_popthat(),False,"")
+//#    TSF_Forth_setTSF(TSF_Forth_popthat(),TSF_txt_ESCencode(TSF_publish_log),TSF_style="N")
+//#    return None
 
 
 string[] TSF_mainandargvs=null;
@@ -266,7 +278,7 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
     }
     while(true){
         while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<16 ){
-            TSF_cardnow=TSF_stackD[TSF_stackthis][to!int(TSF_cardscount)];  TSF_cardscount++;
+            TSF_cardnow=TSF_stackD[TSF_stackthis][to!size_t(TSF_cardscount)];  TSF_cardscount++;
             if( TSF_cardnow !in TSF_cardD ){
                 TSF_Forth_return(TSF_stackthat,TSF_cardnow);
             }

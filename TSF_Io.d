@@ -106,7 +106,7 @@ string TSF_Io_splitpeekN(string TSF_tsv,string TSF_split,long TSF_peek){    //#T
 string TSF_Io_separatepeekN(string[] TSF_separate,long TSF_peek){    //#TSFdoc:リストから数値指定で読込。(TSFAPI)
     string TSF_pull="";
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_pull=TSF_separate[to!int(TSF_peek)];
+        TSF_pull=TSF_separate[to!size_t(TSF_peek)];
     }
     return TSF_pull;
 }
@@ -133,7 +133,7 @@ string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TS
 string[] TSF_Io_separatepokeN(string[] TSF_separate,long TSF_peek,string TSF_poke){    //#TSFdoc:リストから数値指定で書込。(TSFAPI)
     string[] TSF_separatepoke=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_separatepoke[to!int(TSF_peek)]=TSF_poke;
+        TSF_separatepoke[to!size_t(TSF_peek)]=TSF_poke;
     }
     return TSF_separatepoke;
 }
@@ -160,7 +160,7 @@ string TSF_Io_splitpullN(string TSF_tsv,string TSF_split,long TSF_peek){    //#T
 string[] TSF_Io_separatepullN(string[] TSF_separate,long TSF_peek){    //TSFdoc:リストから数値指定で引抜。(TSFAPI)
     string[] TSF_joined=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_joined=TSF_separate[0..to!int(TSF_peek)]~TSF_separate[to!int(TSF_peek)+1..$];
+        TSF_joined=TSF_separate[0..to!size_t(TSF_peek)]~TSF_separate[to!size_t(TSF_peek)+1..$];
     }
     return TSF_joined;
 }
@@ -187,7 +187,7 @@ string TSF_Io_splitpushN(string TSF_tsv,string TSF_split,long TSF_peek,string TS
 string[] TSF_Io_separatepushN(string[] TSF_separate,long TSF_peek,string TSF_push){    //#TSFdoc:リストから数値指定で差込。(TSFAPI)
     string[] TSF_joined=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
-        TSF_joined=TSF_separate[0..to!int(TSF_peek)]~[TSF_push]~TSF_separate[to!int(TSF_peek)..$];
+        TSF_joined=TSF_separate[0..to!size_t(TSF_peek)]~[TSF_push]~TSF_separate[to!size_t(TSF_peek)..$];
     }
     else if( TSF_peek<0 ){
         TSF_joined=[TSF_push]~TSF_separate;
@@ -236,7 +236,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                 real TSF_RPNcalcN,TSF_RPNcalcD;
                 if( count(TSF_RPNnum,'$') ){
                     try{
-                        TSF_RPNcalcN=to!int(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
+                        TSF_RPNcalcN=to!long(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
                     }
                     catch(ConvException e){
                         TSF_RPNanswer="n|0";
@@ -301,7 +301,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
                     break;
                     case '\\':
                         if( TSF_RPNstackR!=0.0 ){
-                            TSF_RPNstack~=to!real(to!int(TSF_RPNstackL/TSF_RPNstackR));
+                            TSF_RPNstack~=to!real(to!long(TSF_RPNstackL/TSF_RPNstackR));
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit;
@@ -418,7 +418,7 @@ string TSF_Io_debug(string[] TSF_argvs){
 
 
 unittest {
-//    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
+    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 

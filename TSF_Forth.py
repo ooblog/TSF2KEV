@@ -122,9 +122,15 @@ def TSF_Forth_readtext():   #TSF_doc:ファイル名のスタックにテキス�
     TSF_Forth_loadtext(TSF_path,TSF_path)
     return ""
 
-def TSF_Forth_mergethe():   #TSF_doc:テキストをTSFとして読み込む。1枚[merge]ドロー。。
-    TSF_Forth_merge(TSF_Forth_popthat(),[TSF_Forth_1ststack()])
+def TSF_Forth_mergethe():   #TSF_doc:テキストをTSFとして読み込む。1枚[merge]ドロー。
+    TSF_Forth_merge(TSF_Forth_drawthe(),[TSF_Forth_1ststack()])
+    return ""
+
+def TSF_Forth_publishthe():   #TSF_doc:スタックをテキスト化。2枚[filename,stack]ドロー。
+#    TSF_publish_log=TSF_Forth_view(TSF_Forth_popthat(),False,"")
+#    TSF_Forth_setTSF(TSF_Forth_popthat(),TSF_txt_ESCencode(TSF_publish_log),TSF_style="N")
     return None
+
 
 #    TSF_words["#TSF_publishthe"]=TSF_Forth_publishthe; TSF_words["#スタックをテキスト化"]=TSF_Forth_publishthe
 #    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
