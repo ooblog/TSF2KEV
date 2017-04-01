@@ -1,26 +1,16 @@
 --- TSF_Forth.py ---
 TSF_Tab-Separated-Forth:
-	set(del)test	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.
-set(del)test
+	PPPP	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.
+PPPP
 	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
 --- run ---
 they:Push
 the:Pull
 --- fin. ---
 TSF_Tab-Separated-Forth:
-	set(del)test	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
-set(del)test
+	PPPP	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
+PPPP
 	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
 TSF_argvs:
 	TSF_Forth.py	1
---- hello ---
-TSF_Tab-Separated-Forth:
-	set(del)test	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
-set(del)test
-	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
-TSF_argvs:
-	TSF_Forth.py	1
-helloworld:
-	TSF_Tab-Separated-Forth:
-	&tab;Hello world&tab;#TSF_echo
 --- TSF_Forth.py > debug/debug_pyForth.log ---

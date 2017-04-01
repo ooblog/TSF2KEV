@@ -38,6 +38,8 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
+        "#TSF_publishthis":&TSF_Forth_publishthis, "#実行中スタックをテキスト化":&TSF_Forth_publishthis,
+        "#TSF_publishthat":&TSF_Forth_publishthat, "#積込先スタックをテキスト化":&TSF_Forth_publishthat,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -155,11 +157,24 @@ string TSF_Forth_mergethe(){    //#TSF_doc:テキストをTSFとして読み込�
     return "";
 }
 
+string TSF_Forth_publishthe(){    //#TSF_doc:指定スタックをテキスト化。2枚[path,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    string TSF_publish_log=TSF_Forth_view(TSF_the,false,"");
+    TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_the]);
+    return "";
+}
 
-//#def TSF_Forth_publishthe():   #TSF_doc:スタックをテキスト化。2枚[filename,stack]ドロー。
-//#    TSF_publish_log=TSF_Forth_view(TSF_Forth_popthat(),False,"")
-//#    TSF_Forth_setTSF(TSF_Forth_popthat(),TSF_txt_ESCencode(TSF_publish_log),TSF_style="N")
-//#    return None
+string TSF_Forth_publishthis(){    //#TSF_doc:実行中スタックをテキスト化。1枚[path]ドロー。
+    string TSF_publish_log=TSF_Forth_view(TSF_Forth_drawthis(),false,"");
+    TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthis()]);
+    return "";
+}
+
+string TSF_Forth_publishthat(){    //#TSF_doc:実行中スタックをテキスト化。1枚[path]ドロー。
+    string TSF_publish_log=TSF_Forth_view(TSF_Forth_drawthat(),false,"");
+    TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthat()]);
+    return "";
+}
 
 
 string[] TSF_mainandargvs=null;
@@ -369,19 +384,14 @@ string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単�
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"set(del)test\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");
-    TSF_Forth_setTSF("set(del)test","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T");
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");
+    TSF_Forth_setTSF("PPPP","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T");
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
     TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log);
     TSF_debug_log=TSF_Forth_run(TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log);
-    foreach(string TSF_the;TSF_stackO){
-        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
-    }
-    TSF_debug_log=TSF_Io_printlog("--- hello ---",TSF_debug_log);
-    TSF_Forth_loadtext("helloworld:","sample/sample_helloworld.tsf");
     foreach(string TSF_the;TSF_stackO){
         TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
     }
