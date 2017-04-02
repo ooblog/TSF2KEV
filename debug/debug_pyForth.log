@@ -1,16 +1,20 @@
 --- TSF_Forth.py ---
 TSF_Tab-Separated-Forth:
-	PPPP	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.
-PPPP
-	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
+	PPPP:	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.
+PPPP:
+	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN	len:	#TSF_this
+len:
+	len:	#TSF_that	len:	#TSF_lenthe	#TSF_lenthis	#TSF_lenthat	#TSF_lenthey	#exit	#TSF_this
 --- run ---
 they:Push
 the:Pull
 --- fin. ---
 TSF_Tab-Separated-Forth:
-	PPPP	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
-PPPP
-	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN
+	PPPP:	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
+PPPP:
+	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN	len:	#TSF_this
+len:
+	len:	#TSF_that	len:	#TSF_lenthe	#TSF_lenthis	#TSF_lenthat	#TSF_lenthey	#exit	#TSF_this	9	10	11	3
 TSF_argvs:
 	TSF_Forth.py	1
 --- TSF_Forth.py > debug/debug_pyForth.log ---

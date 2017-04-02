@@ -14,6 +14,7 @@ def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)�
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
+#        "#TSF_countmax.":TSF_Forth_countmax, "#カード数え上げ上限。":TSF_Forth_countmax,
         "#TSF_this":TSF_Forth_this, "#スタックを実行":TSF_Forth_this,
         "#TSF_that":TSF_Forth_that, "#スタックに積込":TSF_Forth_that,
         "#TSF_stylethe":TSF_Forth_stylethe, "#指定スタックにスタイル指定":TSF_Forth_stylethe,
@@ -28,6 +29,8 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
         "#TSF_argvs":TSF_Forth_argvs, "#コマンド読込":TSF_Forth_argvs,
+#_#TSF_argvsthe,#TSF_argvsthis,#TSF_argvsthat,#TSF_argvsthey
+#    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
         "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
@@ -36,7 +39,43 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_remove":TSF_Forth_remove, "#ファイルを削除する":TSF_Forth_remove,
         "#TSF_savetext":TSF_Forth_savetext, "#テキストファイルに上書":TSF_Forth_savetext,
         "#TSF_writetext":TSF_Forth_writetext, "#テキストファイルに追記":TSF_Forth_writetext,
-    }
+        "#TSF_lenthe":TSF_Forth_lenthe, "#指定スタック枚数":TSF_Forth_lenthe,
+        "#TSF_lenthis":TSF_Forth_lenthis, "#実行中スタック枚数":TSF_Forth_lenthis,
+        "#TSF_lenthat":TSF_Forth_lenthat, "#積込先スタック枚数":TSF_Forth_lenthat,
+        "#TSF_lenthey":TSF_Forth_lenthey, "#スタック一覧枚数":TSF_Forth_lenthey,
+#        "#TSF_peekNthe":TSF_Forth_peekNthe, "#指定スタック読込":TSF_Forth_peekNthe,
+#        "#TSF_peekNthis":TSF_Forth_peekNthis, "#実行中スタック読込":TSF_Forth_peekNthis,
+#        "#TSF_peekNthat":TSF_Forth_peekNthat, "#積込先スタック読込":TSF_Forth_peekNthat,
+#        "#TSF_peekNthey":TSF_Forth_peekNthey, "#スタック一覧読込":TSF_Forth_peekNthey,
+#        "#TSF_peekLthe":TSF_Forth_peekLthe, "#指定スタック読込":TSF_Forth_peekLthe,
+#        "#TSF_peekLthis":TSF_Forth_peekLthis, "#実行中スタック読込":TSF_Forth_peekLthis,
+#        "#TSF_peekLthat":TSF_Forth_peekLthat, "#積込先スタック読込":TSF_Forth_peekLthat,
+#        "#TSF_peekLthey":TSF_Forth_peekLthey, "#スタック一覧読込":TSF_Forth_peekLthey,
+#        "#TSF_pokeNthe":TSF_Forth_pokeNthe, "#指定スタック上書":TSF_Forth_pokeNthe,
+#        "#TSF_pokeNthis":TSF_Forth_pokeNthis, "#実行中スタック上書":TSF_Forth_pokeNthis,
+#        "#TSF_pokeNthat":TSF_Forth_pokeNthat, "#積込先スタック上書":TSF_Forth_pokeNthat,
+#        "#TSF_pokeNthey":TSF_Forth_pokeNthey, "#スタック一覧上書":TSF_Forth_pokeNthey,
+#        "#TSF_pokeLthe":TSF_Forth_pokeLthe, "#指定スタック上書":TSF_Forth_pokeLthe,
+#        "#TSF_pokeLthis":TSF_Forth_pokeLthis, "#実行中スタック上書":TSF_Forth_pokeLthis,
+#        "#TSF_pokeLthat":TSF_Forth_pokeLthat, "#積込先スタック上書":TSF_Forth_pokeLthat,
+#        "#TSF_pokeLthey":TSF_Forth_pokeLthey, "#スタック一覧上書":TSF_Forth_pokeLthey,
+#        "#TSF_pullNthe":TSF_Forth_pullNthe, "#指定スタック引抜":TSF_Forth_pullNthe,
+#        "#TSF_pulltNhis":TSF_Forth_pullNthis, "#実行中スタック引抜":TSF_Forth_pullNthis,
+#        "#TSF_pullNthat":TSF_Forth_pullNthat, "#積込先スタック引抜":TSF_Forth_pullNthat,
+#        "#TSF_pullNthey":TSF_Forth_pullNthey, "#スタック一覧引抜":TSF_Forth_pullNthey,
+#        "#TSF_pullLthe":TSF_Forth_pullLthe, "#指定スタック引抜":TSF_Forth_pullLthe,
+#        "#TSF_pullLthis":TSF_Forth_pullLthis, "#実行中スタック引抜":TSF_Forth_pullLthis,
+#        "#TSF_pullLthat":TSF_Forth_pullLthat, "#積込先スタック引抜":TSF_Forth_pullLthat,
+#        "#TSF_pullLthey":TSF_Forth_pullLthey, "#スタック一覧引抜":TSF_Forth_pullLthey,
+#        "#TSF_pushNthe":TSF_Forth_pushNthe, "#指定スタック差込":TSF_Forth_pushNthe,
+#        "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
+#        "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
+#        "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧差込":TSF_Forth_pushNthey,
+#        "#TSF_pushLthe":TSF_Forth_pushLthe, "#指定スタック差込":TSF_Forth_pushLthe,
+#        "#TSF_pushLthis":TSF_Forth_pushLthis, "#実行中スタック差込":TSF_Forth_pushLthis,
+#        "#TSF_pushLthat":TSF_Forth_pushLthat, "#積込先スタック差込":TSF_Forth_pushLthat,
+#        "#TSF_pushLthey":TSF_Forth_pushLthey, "#スタック一覧差込":TSF_Forth_pushLthey,
+   }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
@@ -93,7 +132,7 @@ def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ド
         TSF_Forth_view(TSF_the)
     return ""
 
-def TSF_Forth_RPN():    #TSF_doc:RPN電卓。1枚[rpn]ドロー。
+def TSF_Forth_RPN():    #TSF_doc:RPN電卓。1枚[rpn]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_RPN(TSF_Forth_drawthe()))
     return ""
 
@@ -132,33 +171,49 @@ def TSF_Forth_publishthe():   #TSF_doc:指定スタックをテキスト化。2�
     TSF_the=TSF_Forth_drawthe()
     TSF_publish_log=TSF_Forth_view(TSF_the,False,"")
     TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_the])
-    return None
+    return ""
 
 def TSF_Forth_publishthis():   #TSF_doc:実行中スタックをテキスト化。1枚[path]ドロー。
     TSF_publish_log=TSF_Forth_view(TSF_Forth_drawthis(),False,"")
     TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthis()])
-    return None
+    return ""
 
 def TSF_Forth_publishthat():   #TSF_doc:積込先スタックをテキスト化。1枚[path]ドロー。
     TSF_publish_log=TSF_Forth_view(TSF_Forth_drawthat(),False,"")
     TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthat()])
-    return None
+    return ""
 
 def TSF_Forth_remove():   #TSF_doc:ファイルを削除する。1枚[path]ドロー。
     TSF_Io_savetext(TSF_Forth_drawthe())
-    return None
+    return ""
 
 def TSF_Forth_savetext():   #TSF_doc:テキスト化スタックをファイルに保存する。2枚[path,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
     TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
     TSF_Io_savetext(TSF_Forth_drawthe(),TSF_text)
-    return None
+    return ""
 
 def TSF_Forth_writetext():   #TSF_doc:テキスト化スタックをファイルに追記する。2枚[path,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
     TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
     TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text)
-    return None
+    return ""
+
+def TSF_Forth_lenthe():   #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthe()])))
+    return ""
+
+def TSF_Forth_lenthis():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthis()])))
+    return ""
+
+def TSF_Forth_lenthat():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthat()])))
+    return ""
+
+def TSF_Forth_lenthey():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
+    return ""
 
 
 TSF_mainandargvs=[]
@@ -242,7 +297,7 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSF_doc:�
         if TSF_mergedel:
              TSF_Forth_setTSF(TSF_path)
 
-
+TSF_stackmax=20
 TSF_echo,TSF_echo_log=False,""
 def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
@@ -255,7 +310,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
     while True:
-        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) < 16:
+        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) < TSF_stackmax:
             TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount];  TSF_cardscount+=1;
             if not TSF_cardnow in TSF_cardD:
                 TSF_Forth_return(TSF_stackthat,TSF_cardnow)
@@ -325,8 +380,9 @@ def TSF_Io_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デ�
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyForth.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
-    TSF_Forth_setTSF("PPPP","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
+    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T")
+    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T")
     for TSF_the in TSF_stackO:
         TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log)

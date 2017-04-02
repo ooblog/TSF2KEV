@@ -126,22 +126,22 @@ string TSF_Io_separatepeekL(string[] TSF_separate,string TSF_label){    //#TSFdo
     return TSF_pull;
 }
 
-string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_poke){    //#TSFdoc:TSVなどから数値指定で書込。(TSFAPI)
+string TSF_Io_splitpokeN(string TSF_tsv,string TSF_split,long TSF_peek,string TSF_poke){    //#TSFdoc:TSVなどから数値指定で上書。(TSFAPI)
     string[] TSF_splitpoked=TSF_Io_separatepokeN(TSF_tsv.split(TSF_split),TSF_peek,TSF_poke);
     return join(TSF_splitpoked,TSF_split);
 }
-string[] TSF_Io_separatepokeN(string[] TSF_separate,long TSF_peek,string TSF_poke){    //#TSFdoc:リストから数値指定で書込。(TSFAPI)
+string[] TSF_Io_separatepokeN(string[] TSF_separate,long TSF_peek,string TSF_poke){    //#TSFdoc:リストから数値指定で上書。(TSFAPI)
     string[] TSF_separatepoke=TSF_separate;
     if( 0<=TSF_peek && TSF_peek<TSF_separate.length ){
         TSF_separatepoke[to!size_t(TSF_peek)]=TSF_poke;
     }
     return TSF_separatepoke;
 }
-string TSF_Io_splitpokeL(string TSF_ltsv,string TSF_split,string TSF_label,string TSF_poke){    //#TSFdoc:LTSVからラベル指定で書込。(TSFAPI)
+string TSF_Io_splitpokeL(string TSF_ltsv,string TSF_split,string TSF_label,string TSF_poke){    //#TSFdoc:LTSVからラベル指定で上書。(TSFAPI)
     string[] TSF_splitpoked=TSF_Io_separatepokeL(TSF_ltsv.split(TSF_split),TSF_label,TSF_poke);
     return join(TSF_splitpoked,TSF_split);
 }
-string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_poke){    //#TSFdoc:リストからラベル指定で書込。(TSFAPI)
+string[] TSF_Io_separatepokeL(string[] TSF_separate,string TSF_label,string TSF_poke){    //#TSFdoc:リストからラベル指定で上書。(TSFAPI)
     string[] TSF_separatepoke=TSF_separate;
     if( TSF_label.length>0 ){
         foreach(int TSF_peek,string TSF_separated;TSF_separate){

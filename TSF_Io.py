@@ -108,17 +108,17 @@ def TSF_Io_separatepeekL(TSF_separate,TSF_label):    #TSFdoc:リストからラ�
                 TSF_pull=TSF_separated[len(TSF_label):]
     return TSF_pull
 
-def TSF_Io_splitpokeN(TSF_tsv,TSF_split,TSF_peek,TSF_poke):    #TSFdoc:TSVなどから数値指定で書込。(TSFAPI)
+def TSF_Io_splitpokeN(TSF_tsv,TSF_split,TSF_peek,TSF_poke):    #TSFdoc:TSVなどから数値指定で上書。(TSFAPI)
     TSF_splitpoked=TSF_Io_separatepokeN(TSF_tsv.split(TSF_split),TSF_peek,TSF_poke)
     return TSF_split.join(TSF_splitpoked)
-def TSF_Io_separatepokeN(TSF_separate,TSF_peek,TSF_poke):    #TSFdoc:リストから数値指定で書込。(TSFAPI)
+def TSF_Io_separatepokeN(TSF_separate,TSF_peek,TSF_poke):    #TSFdoc:リストから数値指定で上書。(TSFAPI)
     if 0 <= TSF_peek < len(TSF_separate):
         TSF_separate[TSF_peek]=TSF_poke
     return TSF_separate
-def TSF_Io_splitpokeL(TSF_ltsv,TSF_split,TSF_label,TSF_poke):    #TSFdoc:LTSVからラベル指定で書込。(TSFAPI)
+def TSF_Io_splitpokeL(TSF_ltsv,TSF_split,TSF_label,TSF_poke):    #TSFdoc:LTSVからラベル指定で上書。(TSFAPI)
     TSF_splitpoked=TSF_Io_separatepokeL(TSF_ltsv.split(TSF_split),TSF_label,TSF_poke)
     return TSF_split.join(TSF_splitpoked)
-def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リストからラベル指定で書込。(TSFAPI)
+def TSF_Io_separatepokeL(TSF_separate,TSF_label,TSF_poke):    #TSFdoc:リストからラベル指定で上書。(TSFAPI)
     if len(TSF_label) > 0:
         for TSF_peek,TSF_separated in enumerate(TSF_separate):
             if TSF_separated.find(TSF_label) == 0:
