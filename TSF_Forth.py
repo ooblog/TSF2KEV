@@ -28,17 +28,12 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_RPN":TSF_Forth_RPN, "#逆ポーランド電卓で計算":TSF_Forth_RPN, "#小数計算":TSF_Forth_RPN,
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
-        "#TSF_argvs":TSF_Forth_argvs, "#コマンド読込":TSF_Forth_argvs,
-#_#TSF_argvsthe,#TSF_argvsthis,#TSF_argvsthat,#TSF_argvsthey
+        "#TSF_argvs":TSF_Forth_argvs, "#コマンド積込":TSF_Forth_argvs,
+        "#TSF_argvsthe":TSF_Forth_argvsthe, "#指定スタック積込":TSF_Forth_argvsthe,
+        "#TSF_argvsthis":TSF_Forth_argvsthis, "#実行中スタック積込":TSF_Forth_argvsthis,
+        "#TSF_argvsthat":TSF_Forth_argvsthat, "#積込先スタック積込":TSF_Forth_argvsthat,
+        "#TSF_argvsthey":TSF_Forth_argvsthey, "#スタック一覧積込":TSF_Forth_argvsthey,
 #    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
-        "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
-        "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
-        "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
-        "#TSF_publishthis":TSF_Forth_publishthis, "#実行中スタックをテキスト化":TSF_Forth_publishthis,
-        "#TSF_publishthat":TSF_Forth_publishthat, "#積込先スタックをテキスト化":TSF_Forth_publishthat,
-        "#TSF_remove":TSF_Forth_remove, "#ファイルを削除する":TSF_Forth_remove,
-        "#TSF_savetext":TSF_Forth_savetext, "#テキストファイルに上書":TSF_Forth_savetext,
-        "#TSF_writetext":TSF_Forth_writetext, "#テキストファイルに追記":TSF_Forth_writetext,
         "#TSF_lenthe":TSF_Forth_lenthe, "#指定スタック枚数":TSF_Forth_lenthe,
         "#TSF_lenthis":TSF_Forth_lenthis, "#実行中スタック枚数":TSF_Forth_lenthis,
         "#TSF_lenthat":TSF_Forth_lenthat, "#積込先スタック枚数":TSF_Forth_lenthat,
@@ -75,6 +70,14 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
 #        "#TSF_pushLthis":TSF_Forth_pushLthis, "#実行中スタック差込":TSF_Forth_pushLthis,
 #        "#TSF_pushLthat":TSF_Forth_pushLthat, "#積込先スタック差込":TSF_Forth_pushLthat,
 #        "#TSF_pushLthey":TSF_Forth_pushLthey, "#スタック一覧差込":TSF_Forth_pushLthey,
+        "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
+        "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
+        "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
+        "#TSF_publishthis":TSF_Forth_publishthis, "#実行中スタックをテキスト化":TSF_Forth_publishthis,
+        "#TSF_publishthat":TSF_Forth_publishthat, "#積込先スタックをテキスト化":TSF_Forth_publishthat,
+        "#TSF_remove":TSF_Forth_remove, "#ファイルを削除する":TSF_Forth_remove,
+        "#TSF_savetext":TSF_Forth_savetext, "#テキストファイルに上書":TSF_Forth_savetext,
+        "#TSF_writetext":TSF_Forth_writetext, "#テキストファイルに追記":TSF_Forth_writetext,
    }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -151,12 +154,59 @@ def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…
             TSF_Forth_echo()
     return ""
 
-def TSF_Forth_argvs():    #TSF_doc:コマンドをカード召喚。RPN枚[argvN…argvA,N]リターン。
+def TSF_Forth_argvs():    #TSF_doc:コマンドを積込む。0枚[]ドローしてコマンド枚数+1枚[argvN…argvA,N]リターン。
     TSF_argvslen=len(TSF_mainandargvs[1:]) if len(TSF_mainandargvs) > 0 else 0
     if TSF_argvslen > 0:
         for TSF_card in TSF_mainandargvs[1:]:
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_argvslen))
+    return ""
+
+def TSF_Forth_argvsthe():    #TSF_doc:指定スタックを積込む。1枚[the]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    TSF_the=TSF_Forth_drawthe()
+    if TSF_the in TSF_stackD:
+        for TSF_card in TSF_stackD[TSF_the]:
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    return ""
+
+def TSF_Forth_argvsthis():    #TSF_doc:実行中スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    TSF_the=TSF_Forth_drawthis()
+    if TSF_the in TSF_stackD:
+        for TSF_card in TSF_stackD[TSF_the]:
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    return ""
+
+def TSF_Forth_argvsthat():    #TSF_doc:積込先スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    TSF_the=TSF_Forth_drawthat()
+    if TSF_the in TSF_stackD:
+        for TSF_card in TSF_stackD[TSF_the]:
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    return ""
+
+def TSF_Forth_argvsthey():    #TSF_doc:スタック一覧を積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    for TSF_card in TSF_stackO:
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
+    return ""
+
+def TSF_Forth_lenthe():   #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthe()])))
+    return ""
+
+def TSF_Forth_lenthis():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthis()])))
+    return ""
+
+def TSF_Forth_lenthat():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthat()])))
+    return ""
+
+def TSF_Forth_lenthey():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
+    return ""
 
 def TSF_Forth_readtext():   #TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
     TSF_path=TSF_Forth_drawthe()
@@ -197,22 +247,6 @@ def TSF_Forth_writetext():   #TSF_doc:テキスト化スタックをファイル
     TSF_the=TSF_Forth_drawthe()
     TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
     TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text)
-    return ""
-
-def TSF_Forth_lenthe():   #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthe()])))
-    return ""
-
-def TSF_Forth_lenthis():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthis()])))
-    return ""
-
-def TSF_Forth_lenthat():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthat()])))
-    return ""
-
-def TSF_Forth_lenthey():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
     return ""
 
 

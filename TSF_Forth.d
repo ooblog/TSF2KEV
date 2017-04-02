@@ -35,8 +35,12 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
         "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
         "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
-//#    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
+        "#TSF_argvsthe":&TSF_Forth_argvsthe, "#指定スタック積込":&TSF_Forth_argvsthe,
+        "#TSF_argvsthis":&TSF_Forth_argvsthis, "#実行中スタック積込":&TSF_Forth_argvsthis,
+        "#TSF_argvsthat":&TSF_Forth_argvsthat, "#積込先スタック積込":&TSF_Forth_argvsthat,
+        "#TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
+//#    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
         "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
@@ -125,7 +129,6 @@ string TSF_Forth_RPN(){    //#TSF_doc:RPN電卓。1枚[rpn]ドローして1枚[N
 }
 
 string TSF_Forth_echo(){    //#TSF_doc:カードの表示。1枚[echo]ドロー。
-    writeln("*TSF_Forth_echo");
     if( TSF_echo ){
         TSF_echo_log=TSF_Io_printlog(TSF_Forth_drawthe(),TSF_echo_log);
     }
@@ -145,7 +148,7 @@ string TSF_Forth_echoN(){    //#TSF_doc:カードの表示。RPN枚[echoN…echo
     return "";
 }
 
-string TSF_Forth_argvs(){    //#TSF_doc:コマンドをカード召喚。RPN枚[argvN…argvA,N]リターン。
+string TSF_Forth_argvs(){    //#TSF_doc:コマンドを積込む。0枚[]ドローしてコマンド枚数+1枚[argvN…argvA,N]リターン。
     long TSF_argvslen=TSF_mainandargvs.length?TSF_mainandargvs[1..$].length:0;
     if( TSF_argvslen>0 ){
         foreach(string TSF_card;TSF_mainandargvs[1..$]){
@@ -153,6 +156,64 @@ string TSF_Forth_argvs(){    //#TSF_doc:コマンドをカード召喚。RPN枚[
         }
     }
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_argvslen));
+    return "";
+}
+
+string TSF_Forth_argvsthe(){    //#TSF_doc:指定スタックを積込む。1枚[the]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    string TSF_the=TSF_Forth_drawthe();
+    if( TSF_the in TSF_stackD ){
+        foreach(string TSF_card;TSF_stackD[TSF_the]){
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+        }
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    return "";
+}
+string TSF_Forth_argvsthis(){    //#TSF_doc:実行中スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    string TSF_the=TSF_Forth_drawthis();
+    if( TSF_the in TSF_stackD ){
+        foreach(string TSF_card;TSF_stackD[TSF_the]){
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+        }
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    return "";
+}
+string TSF_Forth_argvsthat(){    //#TSF_doc:積込先スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    string TSF_the=TSF_Forth_drawthat();
+    if( TSF_the in TSF_stackD ){
+        foreach(string TSF_card;TSF_stackD[TSF_the]){
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+        }
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    return "";
+}
+
+string TSF_Forth_argvsthey(){    //#TSF_doc:スタック一覧を積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+    foreach(string TSF_card;TSF_stackO){
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    }
+    return "";
+}
+
+string TSF_Forth_lenthe(){    //TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthe()].length));
+    return "";
+}
+
+string TSF_Forth_lenthis(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
+    return "";
+}
+
+string TSF_Forth_lenthat(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
+    return "";
+}
+
+string TSF_Forth_lenthey(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD.length));
     return "";
 }
 
@@ -202,26 +263,6 @@ string TSF_Forth_writetext(){    //#TSF_doc:テキスト化スタックをファ
     string TSF_the=TSF_Forth_drawthe();
     string TSF_text=(TSF_the in TSF_stackD)?TSF_Io_ESCdecode(join(TSF_stackD[TSF_the],"\n")):"";
     TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text);
-    return "";
-}
-
-string TSF_Forth_lenthe(){    //TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthe()].length));
-    return "";
-}
-
-string TSF_Forth_lenthis(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
-    return "";
-}
-
-string TSF_Forth_lenthat(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
-    return "";
-}
-
-string TSF_Forth_lenthey(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD.length));
     return "";
 }
 

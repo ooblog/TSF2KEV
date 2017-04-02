@@ -15,7 +15,7 @@ import TSF_Forth;
 
 void TSF_sample_help(){
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["help:","#TSF_this","#TSF_fin."],"\t"),"T");
+        join(["help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",
         join([
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
@@ -23,8 +23,18 @@ void TSF_sample_help(){
         "commands:",
         "usage: ./TSF.py [command|file.tsf] [argv] ...",
 //#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
-        "4","#TSF_echoN",
         ],"\t"),"N");
+//    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+//        join(["help:","#TSF_this","#TSF_fin."],"\t"),"T");
+//    TSF_Forth_setTSF("help:",
+//        join([
+//        "  --helloworld  \"Hello world  #TSF_echo\" sample",
+//        "  --help        this commands view",
+//        "commands:",
+//        "usage: ./TSF.py [command|file.tsf] [argv] ...",
+//#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+//        "4","#TSF_echoN",
+//        ],"\t"),"N");
     TSF_sample_run("TSF_sample_help");
 }
 
