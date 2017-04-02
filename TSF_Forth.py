@@ -33,10 +33,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
         "#TSF_publishthis":TSF_Forth_publishthis, "#実行中スタックをテキスト化":TSF_Forth_publishthis,
         "#TSF_publishthat":TSF_Forth_publishthat, "#積込先スタックをテキスト化":TSF_Forth_publishthat,
+        "#TSF_remove":TSF_Forth_remove, "#ファイルを削除する":TSF_Forth_remove,
+        "#TSF_savetext":TSF_Forth_savetext, "#テキストファイルに上書":TSF_Forth_savetext,
+        "#TSF_writetext":TSF_Forth_writetext, "#テキストファイルに追記":TSF_Forth_writetext,
     }
-#    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
-#    TSF_words["#TSF_savetext"]=TSF_Forth_savetext; TSF_words["#テキストファイルに上書"]=TSF_Forth_savetext
-#    TSF_words["#TSF_writetext"]=TSF_Forth_writetext; TSF_words["#テキストファイルに追記"]=TSF_Forth_writetext
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
@@ -144,9 +144,21 @@ def TSF_Forth_publishthat():   #TSF_doc:積込先スタックをテキスト化�
     TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthat()])
     return None
 
-#    TSF_words["#TSF_remove"]=TSF_Forth_remove; TSF_words["#ファイルを削除する"]=TSF_Forth_remove
-#    TSF_words["#TSF_savetext"]=TSF_Forth_savetext; TSF_words["#テキストファイルに上書"]=TSF_Forth_savetext
-#    TSF_words["#TSF_writetext"]=TSF_Forth_writetext; TSF_words["#テキストファイルに追記"]=TSF_Forth_writetext
+def TSF_Forth_remove():   #TSF_doc:ファイルを削除する。1枚[path]ドロー。
+    TSF_Io_savetext(TSF_Forth_drawthe())
+    return None
+
+def TSF_Forth_savetext():   #TSF_doc:テキスト化スタックをファイルに保存する。2枚[path,the]ドロー。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
+    TSF_Io_savetext(TSF_Forth_drawthe(),TSF_text)
+    return None
+
+def TSF_Forth_writetext():   #TSF_doc:テキスト化スタックをファイルに追記する。2枚[path,the]ドロー。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
+    TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text)
+    return None
 
 
 TSF_mainandargvs=[]

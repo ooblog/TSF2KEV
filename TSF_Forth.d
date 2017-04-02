@@ -38,8 +38,12 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
+        "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
         "#TSF_publishthis":&TSF_Forth_publishthis, "#実行中スタックをテキスト化":&TSF_Forth_publishthis,
         "#TSF_publishthat":&TSF_Forth_publishthat, "#積込先スタックをテキスト化":&TSF_Forth_publishthat,
+        "#TSF_remove":&TSF_Forth_remove, "#ファイルを削除する":&TSF_Forth_remove,
+        "#TSF_savetext":&TSF_Forth_savetext, "#テキストファイルに上書":&TSF_Forth_savetext,
+        "#TSF_writetext":&TSF_Forth_writetext, "#テキストファイルに追記":&TSF_Forth_writetext,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -173,6 +177,25 @@ string TSF_Forth_publishthis(){    //#TSF_doc:実行中スタックをテキス�
 string TSF_Forth_publishthat(){    //#TSF_doc:実行中スタックをテキスト化。1枚[path]ドロー。
     string TSF_publish_log=TSF_Forth_view(TSF_Forth_drawthat(),false,"");
     TSF_Forth_setTSF(TSF_Forth_drawthe(),TSF_Io_ESCencode(TSF_publish_log),TSF_styleD[TSF_Forth_drawthat()]);
+    return "";
+}
+
+string TSF_Forth_remove(){    //#TSF_doc:ファイルを削除する。1枚[path]ドロー。
+    TSF_Io_savetext(TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_savetext(){    //#TSF_doc:テキスト化スタックをファイルに保存する。2枚[path,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    string TSF_text=(TSF_the in TSF_stackD)?TSF_Io_ESCdecode(join(TSF_stackD[TSF_the],"\n")):"";
+    TSF_Io_savetext(TSF_Forth_drawthe(),TSF_text);
+    return "";
+}
+
+string TSF_Forth_writetext(){    //#TSF_doc:テキスト化スタックをファイルに追記する。2枚[path,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    string TSF_text=(TSF_the in TSF_stackD)?TSF_Io_ESCdecode(join(TSF_stackD[TSF_the],"\n")):"";
+    TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text);
     return "";
 }
 
