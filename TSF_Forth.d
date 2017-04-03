@@ -40,7 +40,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_argvsthis":&TSF_Forth_argvsthis, "#実行中スタック積込":&TSF_Forth_argvsthis,
         "#TSF_argvsthat":&TSF_Forth_argvsthat, "#積込先スタック積込":&TSF_Forth_argvsthat,
         "#TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
-//#    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
+        "#TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
         "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
@@ -198,9 +198,15 @@ string TSF_Forth_argvsthey(){    //#TSF_doc:スタック一覧を積込む。0�
     return "";
 }
 
-string TSF_Forth_reversethe(){    //#TSF_doc:カードN枚を逆順に積込。スタック枚数+1枚[cardN…cardA,N]ドローしてスタック枚数[cardN…cardA]リターン。
+string TSF_Forth_reverseN(){    //#TSF_doc:カードN枚を逆順に積込。スタック枚数+1枚[cardN…cardA,N]ドローしてスタック枚数[cardN…cardA]リターン。
     string[] TSF_stackR=null;
     long TSF_argvslen=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    foreach(long TSF_count;0..TSF_argvslen){
+        TSF_stackR~=[TSF_Forth_drawthe()];
+    }
+    foreach(string TSF_card;TSF_stackR){
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    }
     return "";
 }
 

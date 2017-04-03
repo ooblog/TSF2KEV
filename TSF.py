@@ -11,29 +11,17 @@ from TSF_Forth import *
 
 
 def TSF_sample_help():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
-#    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-#        "\t".join(["help:","#TSF_argvsthe","#TSF_reverseN","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
-#    TSF_Forth_setTSF("help:",
-#        "\t".join([
-#        "  --helloworld  \"Hello world  #TSF_echo\" sample",
-#        "  --help        this commands view",
-#        "commands:",
-#        "usage: ./TSF.py [command|file.tsf] [argv] ...",
-#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
-#        ]),"N")
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        "\t".join(["help:","#TSF_this","#TSF_fin."]),"T")
+        "\t".join(["help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:",
         "\t".join([
-        "  --helloworld  \"Hello world  #TSF_echo\" sample",
-        "  --help        this commands view",
-        "commands:",
         "usage: ./TSF.py [command|file.tsf] [argv] ...",
+        "commands:",
+        "  --help        this commands view",
+        "  --helloworld  \"Hello world  #TSF_echo\" sample",
 #        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
-        "4","#TSF_echoN",
         ]),"N")
     TSF_sample_run("TSF_sample_help")
-#    TSF_Forth_viewthey()
 
 def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプログラム実行。
     if TSF_sample_sepalete != None:
