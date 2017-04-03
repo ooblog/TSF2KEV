@@ -15,16 +15,16 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
     TSF_Forth_cards={
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
         "#TSF_countmax":TSF_Forth_countmax, "#カード数え上げ上限":TSF_Forth_countmax,
-        "#TSF_this":TSF_Forth_this, "#スタックを実行":TSF_Forth_this,
-        "#TSF_that":TSF_Forth_that, "#スタックに積込":TSF_Forth_that,
+        "#TSF_this":TSF_Forth_this, "#スタック実行":TSF_Forth_this,
+        "#TSF_that":TSF_Forth_that, "#スタック積込":TSF_Forth_that,
         "#TSF_stylethe":TSF_Forth_stylethe, "#指定スタックにスタイル指定":TSF_Forth_stylethe,
         "#TSF_stylethis":TSF_Forth_stylethis, "#実行中スタックにスタイル指定":TSF_Forth_stylethis,
         "#TSF_stylethat":TSF_Forth_stylethat, "#積込先スタックにスタイル指定":TSF_Forth_stylethat,
         "#TSF_stylethey":TSF_Forth_stylethey, "#全スタックにスタイル指定":TSF_Forth_stylethey,
         "#TSF_viewthe":TSF_Forth_viewthe, "#指定スタック表示":TSF_Forth_viewthe,
-        "#TSF_viewthis":TSF_Forth_viewthis, "#実行中スタックを表示":TSF_Forth_viewthis,
-        "#TSF_viewthat":TSF_Forth_viewthat, "#積込先スタックを表示":TSF_Forth_viewthat,
-        "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧を表示":TSF_Forth_viewthey,
+        "#TSF_viewthis":TSF_Forth_viewthis, "#実行中スタック表示":TSF_Forth_viewthis,
+        "#TSF_viewthat":TSF_Forth_viewthat, "#積込先スタック表示":TSF_Forth_viewthat,
+        "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧表示":TSF_Forth_viewthey,
         "#TSF_RPN":TSF_Forth_RPN, "#逆ポーランド電卓で計算":TSF_Forth_RPN, "#小数計算":TSF_Forth_RPN,
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
@@ -38,38 +38,43 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_lenthis":TSF_Forth_lenthis, "#実行中スタック枚数":TSF_Forth_lenthis,
         "#TSF_lenthat":TSF_Forth_lenthat, "#積込先スタック枚数":TSF_Forth_lenthat,
         "#TSF_lenthey":TSF_Forth_lenthey, "#スタック一覧枚数":TSF_Forth_lenthey,
-#        "#TSF_peekNthe":TSF_Forth_peekNthe, "#指定スタック読込":TSF_Forth_peekNthe,
-#        "#TSF_peekNthis":TSF_Forth_peekNthis, "#実行中スタック読込":TSF_Forth_peekNthis,
-#        "#TSF_peekNthat":TSF_Forth_peekNthat, "#積込先スタック読込":TSF_Forth_peekNthat,
-#        "#TSF_peekNthey":TSF_Forth_peekNthey, "#スタック一覧読込":TSF_Forth_peekNthey,
-#        "#TSF_peekLthe":TSF_Forth_peekLthe, "#指定スタック読込":TSF_Forth_peekLthe,
-#        "#TSF_peekLthis":TSF_Forth_peekLthis, "#実行中スタック読込":TSF_Forth_peekLthis,
-#        "#TSF_peekLthat":TSF_Forth_peekLthat, "#積込先スタック読込":TSF_Forth_peekLthat,
-#        "#TSF_peekLthey":TSF_Forth_peekLthey, "#スタック一覧読込":TSF_Forth_peekLthey,
+        "#TSF_carbonthe":TSF_Forth_carbonthe, "#指定表面カード":TSF_Forth_carbonthe,
+        "#TSF_carbonthis":TSF_Forth_carbonthis, "#実行中表面カード":TSF_Forth_carbonthis,
+        "#TSF_carbonthat":TSF_Forth_carbonthat, "#積込先表面カード":TSF_Forth_carbonthat,
+        "#TSF_carbonthey":TSF_Forth_carbonthey, "#スタック一覧表面カード":TSF_Forth_carbonthey,
+        "#TSF_peekNthe":TSF_Forth_peekNthe, "#指定スタック読込":TSF_Forth_peekNthe,
+        "#TSF_peekNthis":TSF_Forth_peekNthis, "#実行中スタック読込":TSF_Forth_peekNthis,
+        "#TSF_peekNthat":TSF_Forth_peekNthat, "#積込先スタック読込":TSF_Forth_peekNthat,
+        "#TSF_peekNthey":TSF_Forth_peekNthey, "#スタック一覧読込":TSF_Forth_peekNthey,
+#        "#TSF_peekLthe":TSF_Forth_peekLthe, "#指定スタックラベルで読込":TSF_Forth_peekLthe,
+#        "#TSF_peekLthis":TSF_Forth_peekLthis, "#実行中スタックラベルで読込":TSF_Forth_peekLthis,
+#        "#TSF_peekLthat":TSF_Forth_peekLthat, "#積込先スタックラベルで読込":TSF_Forth_peekLthat,
+#        "#TSF_peekLthey":TSF_Forth_peekLthey, "#スタック一覧ラベルで読込":TSF_Forth_peekLthey,
+#clone
 #        "#TSF_pokeNthe":TSF_Forth_pokeNthe, "#指定スタック上書":TSF_Forth_pokeNthe,
 #        "#TSF_pokeNthis":TSF_Forth_pokeNthis, "#実行中スタック上書":TSF_Forth_pokeNthis,
 #        "#TSF_pokeNthat":TSF_Forth_pokeNthat, "#積込先スタック上書":TSF_Forth_pokeNthat,
 #        "#TSF_pokeNthey":TSF_Forth_pokeNthey, "#スタック一覧上書":TSF_Forth_pokeNthey,
-#        "#TSF_pokeLthe":TSF_Forth_pokeLthe, "#指定スタック上書":TSF_Forth_pokeLthe,
-#        "#TSF_pokeLthis":TSF_Forth_pokeLthis, "#実行中スタック上書":TSF_Forth_pokeLthis,
-#        "#TSF_pokeLthat":TSF_Forth_pokeLthat, "#積込先スタック上書":TSF_Forth_pokeLthat,
-#        "#TSF_pokeLthey":TSF_Forth_pokeLthey, "#スタック一覧上書":TSF_Forth_pokeLthey,
+#        "#TSF_pokeLthe":TSF_Forth_pokeLthe, "#指定スタックラベルで上書":TSF_Forth_pokeLthe,
+#        "#TSF_pokeLthis":TSF_Forth_pokeLthis, "#実行中スタックラベルで上書":TSF_Forth_pokeLthis,
+#        "#TSF_pokeLthat":TSF_Forth_pokeLthat, "#積込先スタックラベルで上書":TSF_Forth_pokeLthat,
+#        "#TSF_pokeLthey":TSF_Forth_pokeLthey, "#スタック一覧ラベルで上書":TSF_Forth_pokeLthey,
 #        "#TSF_pullNthe":TSF_Forth_pullNthe, "#指定スタック引抜":TSF_Forth_pullNthe,
 #        "#TSF_pulltNhis":TSF_Forth_pullNthis, "#実行中スタック引抜":TSF_Forth_pullNthis,
 #        "#TSF_pullNthat":TSF_Forth_pullNthat, "#積込先スタック引抜":TSF_Forth_pullNthat,
 #        "#TSF_pullNthey":TSF_Forth_pullNthey, "#スタック一覧引抜":TSF_Forth_pullNthey,
-#        "#TSF_pullLthe":TSF_Forth_pullLthe, "#指定スタック引抜":TSF_Forth_pullLthe,
-#        "#TSF_pullLthis":TSF_Forth_pullLthis, "#実行中スタック引抜":TSF_Forth_pullLthis,
-#        "#TSF_pullLthat":TSF_Forth_pullLthat, "#積込先スタック引抜":TSF_Forth_pullLthat,
-#        "#TSF_pullLthey":TSF_Forth_pullLthey, "#スタック一覧引抜":TSF_Forth_pullLthey,
+#        "#TSF_pullLthe":TSF_Forth_pullLthe, "#指定スタックラベルで引抜":TSF_Forth_pullLthe,
+#        "#TSF_pullLthis":TSF_Forth_pullLthis, "#実行中スタックラベルで引抜":TSF_Forth_pullLthis,
+#        "#TSF_pullLthat":TSF_Forth_pullLthat, "#積込先スタックラベルで引抜":TSF_Forth_pullLthat,
+#        "#TSF_pullLthey":TSF_Forth_pullLthey, "#スタック一覧ラベルで引抜":TSF_Forth_pullLthey,
 #        "#TSF_pushNthe":TSF_Forth_pushNthe, "#指定スタック差込":TSF_Forth_pushNthe,
 #        "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
 #        "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
 #        "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧差込":TSF_Forth_pushNthey,
-#        "#TSF_pushLthe":TSF_Forth_pushLthe, "#指定スタック差込":TSF_Forth_pushLthe,
-#        "#TSF_pushLthis":TSF_Forth_pushLthis, "#実行中スタック差込":TSF_Forth_pushLthis,
-#        "#TSF_pushLthat":TSF_Forth_pushLthat, "#積込先スタック差込":TSF_Forth_pushLthat,
-#        "#TSF_pushLthey":TSF_Forth_pushLthey, "#スタック一覧差込":TSF_Forth_pushLthey,
+#        "#TSF_pushLthe":TSF_Forth_pushLthe, "#指定スタックラベルで差込":TSF_Forth_pushLthe,
+#        "#TSF_pushLthis":TSF_Forth_pushLthis, "#実行中スタックラベルで差込":TSF_Forth_pushLthis,
+#        "#TSF_pushLthat":TSF_Forth_pushLthat, "#積込先スタックラベルで差込":TSF_Forth_pushLthat,
+#        "#TSF_pushLthey":TSF_Forth_pushLthey, "#スタック一覧ラベルで差込":TSF_Forth_pushLthey,
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
         "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
@@ -224,6 +229,48 @@ def TSF_Forth_lenthat():   #TSF_doc:指定スタックの枚数を取得。0枚[
 def TSF_Forth_lenthey():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
     return ""
+
+def TSF_Forth_carbonthe():   #TSF_doc:指定スタックから表面カードを読込。1枚[the]ドローして1枚[card]リターン。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_the][-1] if len(TSF_stackD[TSF_the]) else "")
+    return ""
+
+def TSF_Forth_carbonthis():   #TSF_doc:実行中スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthis()][-1] if len(TSF_stackD[TSF_Forth_drawthis()]) else "")
+    return ""
+
+def TSF_Forth_carbonthat():   #TSF_doc:積込先スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthat()][-1] if len(TSF_stackD[TSF_Forth_drawthat()]) else "")
+    return ""
+
+def TSF_Forth_carbonthey():   #TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO[-1] if len(TSF_stackO) else "")
+    return ""
+
+def TSF_Forth_peekNthe():   #TSF_doc:指定スタックからカードを数値で読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthe()],TSF_peek))
+    return ""
+
+def TSF_Forth_peekNthis():   #TSF_doc:実行中スタックからカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthis()],TSF_peek))
+    return ""
+
+def TSF_Forth_peekNthat():   #TSF_doc:積込先スタックからカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthat()],TSF_peek))
+    return ""
+
+def TSF_Forth_peekNthey():   #TSF_doc:スタック一覧からカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_peek))
+    return ""
+
+#        "#TSF_peekLthe":TSF_Forth_peekLthe, "#指定スタックラベルで読込":TSF_Forth_peekLthe,
+#        "#TSF_peekLthis":TSF_Forth_peekLthis, "#実行中スタックラベルで読込":TSF_Forth_peekLthis,
+#        "#TSF_peekLthat":TSF_Forth_peekLthat, "#積込先スタックラベルで読込":TSF_Forth_peekLthat,
+#        "#TSF_peekLthey":TSF_Forth_peekLthey, "#スタック一覧ラベルで読込":TSF_Forth_peekLthey,
 
 def TSF_Forth_readtext():   #TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
     TSF_path=TSF_Forth_drawthe()

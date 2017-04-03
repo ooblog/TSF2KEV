@@ -23,16 +23,16 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
         "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
-        "#TSF_this":&TSF_Forth_this, "#スタックを実行":&TSF_Forth_this,
-        "#TSF_that":&TSF_Forth_that, "#スタックに積込":&TSF_Forth_that,
+        "#TSF_this":&TSF_Forth_this, "#スタック実行":&TSF_Forth_this,
+        "#TSF_that":&TSF_Forth_that, "#スタック積込":&TSF_Forth_that,
         "#TSF_stylethe":&TSF_Forth_stylethe, "#指定スタックにスタイル指定":&TSF_Forth_stylethe,
         "#TSF_stylethis":&TSF_Forth_stylethis, "#実行中スタックにスタイル指定":&TSF_Forth_stylethis,
         "#TSF_stylethat":&TSF_Forth_stylethat, "#積込先スタックにスタイル指定":&TSF_Forth_stylethat,
         "#TSF_stylethey":&TSF_Forth_stylethey, "#全スタックにスタイル指定":&TSF_Forth_stylethey,
         "#TSF_viewthe":&TSF_Forth_viewthe, "#指定スタック表示":&TSF_Forth_viewthe,
-        "#TSF_viewthis":&TSF_Forth_viewthis, "#実行中スタックを表示":&TSF_Forth_viewthis,
-        "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタックを表示":&TSF_Forth_viewthat,
-        "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧を表示":&TSF_Forth_viewthey,
+        "#TSF_viewthis":&TSF_Forth_viewthis, "#実行中スタック表示":&TSF_Forth_viewthis,
+        "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタック表示":&TSF_Forth_viewthat,
+        "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧表示":&TSF_Forth_viewthey,
         "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
         "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
         "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
@@ -42,6 +42,14 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_argvsthat":&TSF_Forth_argvsthat, "#積込先スタック積込":&TSF_Forth_argvsthat,
         "#TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
         "#TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
+        "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
+        "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
+        "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
+        "#TSF_lenthey":&TSF_Forth_lenthey, "#スタック一覧枚数":&TSF_Forth_lenthey,
+        "#TSF_carbonthe":&TSF_Forth_carbonthe, "#指定表面カード":&TSF_Forth_carbonthe,
+        "#TSF_carbonthis":&TSF_Forth_carbonthis, "#実行中表面カード":&TSF_Forth_carbonthis,
+        "#TSF_carbonthat":&TSF_Forth_carbonthat, "#積込先表面カード":&TSF_Forth_carbonthat,
+        "#TSF_carbonthey":&TSF_Forth_carbonthey, "#スタック一覧表面カード":&TSF_Forth_carbonthey,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
         "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
@@ -50,10 +58,6 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_remove":&TSF_Forth_remove, "#ファイルを削除する":&TSF_Forth_remove,
         "#TSF_savetext":&TSF_Forth_savetext, "#テキストファイルに上書":&TSF_Forth_savetext,
         "#TSF_writetext":&TSF_Forth_writetext, "#テキストファイルに追記":&TSF_Forth_writetext,
-        "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
-        "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
-        "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
-        "#TSF_lenthey":&TSF_Forth_lenthey, "#スタック一覧枚数":&TSF_Forth_lenthey,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -216,8 +220,7 @@ string TSF_Forth_reverseN(){    //#TSF_doc:カードN枚を逆順に積込。ス
     return "";
 }
 
-
-string TSF_Forth_lenthe(){    //TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+string TSF_Forth_lenthe(){    //#TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
     string TSF_the=TSF_Forth_drawthe();
     if( TSF_the in TSF_stackD ){
         TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
@@ -225,20 +228,43 @@ string TSF_Forth_lenthe(){    //TSF_doc:指定スタックの枚数を取得。1
     return "";
 }
 
-string TSF_Forth_lenthis(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+string TSF_Forth_lenthis(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
     return "";
 }
 
-string TSF_Forth_lenthat(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+string TSF_Forth_lenthat(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
     return "";
 }
 
-string TSF_Forth_lenthey(){    //TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+string TSF_Forth_lenthey(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD.length));
     return "";
 }
+
+string TSF_Forth_carbonthe(){    //#TSF_doc:指定スタックから表面カードを読込。1枚[the]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_the].length?TSF_stackD[TSF_the][-1]:"");
+    return "";
+}
+
+string TSF_Forth_carbonthis(){    //#TSF_doc:実行中スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthis()].length?TSF_stackD[TSF_Forth_drawthis()][-1]:"");
+    return "";
+}
+
+string TSF_Forth_carbonthat(){    //#TSF_doc:積込先スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthat()].length?TSF_stackD[TSF_Forth_drawthat()][-1]:"");
+    return "";
+}
+
+string TSF_Forth_carbonthey(){    //#TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO.length?TSF_stackO[-1]:"");
+    return "";
+}
+
+
 
 string TSF_Forth_readtext(){    //#TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
     string TSF_path=TSF_Forth_drawthe();
