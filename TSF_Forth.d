@@ -46,10 +46,10 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
         "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
         "#TSF_lenthey":&TSF_Forth_lenthey, "#スタック一覧枚数":&TSF_Forth_lenthey,
-        "#TSF_carbonthe":&TSF_Forth_carbonthe, "#指定表面カード":&TSF_Forth_carbonthe,
-        "#TSF_carbonthis":&TSF_Forth_carbonthis, "#実行中表面カード":&TSF_Forth_carbonthis,
-        "#TSF_carbonthat":&TSF_Forth_carbonthat, "#積込先表面カード":&TSF_Forth_carbonthat,
-        "#TSF_carbonthey":&TSF_Forth_carbonthey, "#スタック一覧表面カード":&TSF_Forth_carbonthey,
+        "#TSF_peekFthe":&TSF_Forth_peekFthe, "#指定表面カード":&TSF_Forth_peekFthe,
+        "#TSF_peekFthis":&TSF_Forth_peekFthis, "#実行中表面カード":&TSF_Forth_peekFthis,
+        "#TSF_peekFthat":&TSF_Forth_peekFthat, "#積込先表面カード":&TSF_Forth_peekFthat,
+        "#TSF_peekFthey":&TSF_Forth_peekFthey, "#スタック一覧表面カード":&TSF_Forth_peekFthey,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
         "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
@@ -243,23 +243,23 @@ string TSF_Forth_lenthey(){    //#TSF_doc:指定スタックの枚数を取得�
     return "";
 }
 
-string TSF_Forth_carbonthe(){    //#TSF_doc:指定スタックから表面カードを読込。1枚[the]ドローして1枚[card]リターン。
+string TSF_Forth_peekFthe(){    //#TSF_doc:指定スタックから表面カードを読込。1枚[the]ドローして1枚[card]リターン。
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_the].length?TSF_stackD[TSF_the][-1]:"");
     return "";
 }
 
-string TSF_Forth_carbonthis(){    //#TSF_doc:実行中スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekFthis(){    //#TSF_doc:実行中スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthis()].length?TSF_stackD[TSF_Forth_drawthis()][-1]:"");
     return "";
 }
 
-string TSF_Forth_carbonthat(){    //#TSF_doc:積込先スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekFthat(){    //#TSF_doc:積込先スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthat()].length?TSF_stackD[TSF_Forth_drawthat()][-1]:"");
     return "";
 }
 
-string TSF_Forth_carbonthey(){    //#TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekFthey(){    //#TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO.length?TSF_stackO[-1]:"");
     return "";
 }
