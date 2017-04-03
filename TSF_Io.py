@@ -171,7 +171,7 @@ def TSF_Io_separatepushL(TSF_separate,TSF_label,TSF_push):    #TSFdoc:リスト�
         TSF_joined=TSF_separate
     return TSF_joined
 
-def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。一応ゼロ除算を「n|0」と返せる。(TSFAPI)
+def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算も「n|0」とテキストで返す。(TSFAPI)
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
     TSF_RPNstack=[]
@@ -236,6 +236,15 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
     if TSF_RPNanswer != "n|0":
         TSF_RPNanswer=str(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
+    return TSF_RPNanswer
+
+def TSF_Io_RPNzero(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
+    TSF_RPNtext=TSF_Io_RPN(TSF_RPN)
+    TSF_RPNanswer=0
+    try:
+        TSF_RPNanswer=int(TSF_RPNtext)
+    except ValueError:
+        TSF_RPNanswer=0
     return TSF_RPNanswer
 
 def TSF_Io_savedir(TSF_path):    #TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)

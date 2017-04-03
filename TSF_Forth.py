@@ -33,7 +33,7 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_argvsthis":TSF_Forth_argvsthis, "#実行中スタック積込":TSF_Forth_argvsthis,
         "#TSF_argvsthat":TSF_Forth_argvsthat, "#積込先スタック積込":TSF_Forth_argvsthat,
         "#TSF_argvsthey":TSF_Forth_argvsthey, "#スタック一覧積込":TSF_Forth_argvsthey,
-#    TSF_words["#TSF_reverseN"]=TSF_shuffle_reverseN; TSF_words["#スタックN個逆順"]=TSF_shuffle_reverseN
+        "#TSF_reverseN":TSF_Forth_reverseN, "#N枚逆順積込":TSF_Forth_reverseN,
         "#TSF_lenthe":TSF_Forth_lenthe, "#指定スタック枚数":TSF_Forth_lenthe,
         "#TSF_lenthis":TSF_Forth_lenthis, "#実行中スタック枚数":TSF_Forth_lenthis,
         "#TSF_lenthat":TSF_Forth_lenthat, "#積込先スタック枚数":TSF_Forth_lenthat,
@@ -148,7 +148,7 @@ def TSF_Forth_echo():    #TSF_doc:カードの表示。1枚[echo]ドロー。
     return ""
 
 def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…echoA,N]ドロー。
-    TSF_echoRPN=max(int(TSF_Io_RPN(TSF_Forth_drawthe())),0)
+    TSF_echoRPN=TSF_Io_RPNzero(TSF_Forth_drawthe())
     if TSF_echoRPN > 0:
         for TSF_count in range(TSF_echoRPN):
             TSF_Forth_echo()
@@ -162,7 +162,7 @@ def TSF_Forth_argvs():    #TSF_doc:コマンドを積込む。0枚[]ドローし
     TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_argvslen))
     return ""
 
-def TSF_Forth_argvsthe():    #TSF_doc:指定スタックを積込む。1枚[the]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthe():    #TSF_doc:指定スタックを積込む。1枚[the]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthe()
     if TSF_the in TSF_stackD:
         for TSF_card in TSF_stackD[TSF_the]:
@@ -170,7 +170,7 @@ def TSF_Forth_argvsthe():    #TSF_doc:指定スタックを積込む。1枚[the]
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
     return ""
 
-def TSF_Forth_argvsthis():    #TSF_doc:実行中スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthis():    #TSF_doc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthis()
     if TSF_the in TSF_stackD:
         for TSF_card in TSF_stackD[TSF_the]:
@@ -178,7 +178,7 @@ def TSF_Forth_argvsthis():    #TSF_doc:実行中スタックを積込む。0枚[
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
     return ""
 
-def TSF_Forth_argvsthat():    #TSF_doc:積込先スタックを積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthat():    #TSF_doc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthat()
     if TSF_the in TSF_stackD:
         for TSF_card in TSF_stackD[TSF_the]:
@@ -186,14 +186,26 @@ def TSF_Forth_argvsthat():    #TSF_doc:積込先スタックを積込む。0枚[
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
     return ""
 
-def TSF_Forth_argvsthey():    #TSF_doc:スタック一覧を積込む。0枚[]ドローしてコマンド枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthey():    #TSF_doc:スタック一覧を積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     for TSF_card in TSF_stackO:
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
     return ""
 
+def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。スタック枚数+1枚[cardN…cardA,N]ドローしてスタック枚数[cardN…cardA]リターン。
+    TSF_stackR=[]
+    TSF_argvslen=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    if TSF_argvslen > 0:
+        for TSF_count in range(TSF_argvslen):
+            TSF_stackR.append(TSF_Forth_drawthe())
+        for TSF_card in TSF_stackR:
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    return ""
+
 def TSF_Forth_lenthe():   #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthe()])))
+    TSF_the=TSF_Forth_drawthe()
+    if TSF_the in TSF_stackD:
+        TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
     return ""
 
 def TSF_Forth_lenthis():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。

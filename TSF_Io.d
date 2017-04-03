@@ -219,7 +219,7 @@ string[] TSF_Io_separatepushL(string[] TSF_separate,string TSF_label,string TSF_
     return TSF_joined;
 }
 
-string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
+string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算も「n|0」とテキストで返す。(TSFAPI)
     string TSF_RPNanswer="";
     string TSF_RPNnum="";  int TSF_RPNminus=0;
     real[] TSF_RPNstack=[];
@@ -328,6 +328,18 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓(TSFAPI)
     }
     if( TSF_RPNanswer != "n|0" ){
         TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
+    }
+    return TSF_RPNanswer;
+}
+
+long TSF_Io_RPNzero(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
+    string TSF_RPNtext=TSF_Io_RPN(TSF_RPN);
+    long TSF_RPNanswer=0;
+    try{
+        TSF_RPNanswer=to!long(TSF_RPNtext);
+    }
+    catch(ConvException e){
+        TSF_RPNanswer=0;
     }
     return TSF_RPNanswer;
 }
