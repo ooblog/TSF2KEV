@@ -22,6 +22,7 @@ string TSF_Forth_version(){    //TSFdoc:TSFバージョン(ブランチ)名(TSFA
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
+        "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
         "#TSF_this":&TSF_Forth_this, "#スタックを実行":&TSF_Forth_this,
         "#TSF_that":&TSF_Forth_that, "#スタックに積込":&TSF_Forth_that,
         "#TSF_stylethe":&TSF_Forth_stylethe, "#指定スタックにスタイル指定":&TSF_Forth_stylethe,
@@ -64,6 +65,11 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
 string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
     TSF_callptrD=null; TSF_callptrO=[];
     return "#exit";
+}
+
+string TSF_Forth_countmax(){    //#TSFdoc:TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。
+    TSF_stackmax=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    return "";
 }
 
 string TSF_Forth_this(){    //#TSF_doc:thisスタックの変更。1枚[this]ドロー。
@@ -386,7 +392,7 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSF_d
     }
 }
 
-long TSF_stackmax=20;
+long TSF_stackmax=256;
 bool TSF_echo=false;  string TSF_echo_log="";
 string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
     string TSF_cardnow=""; string TSF_stacknext="";
