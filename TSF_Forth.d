@@ -368,6 +368,7 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSF_d
             if( TSF_line.front!='\t' ){
                 TSF_lineL=TSF_line.split("\t");
                 if( count(TSF_ESCstack,TSF_lineL[0])==0 ){
+                    TSF_the=TSF_lineL[0];
                     if( TSF_the !in TSF_stackD ){
                         TSF_stackO~=[TSF_the]; TSF_styleO~=[TSF_the];
                     }

@@ -1,9 +1,7 @@
 TSF_Tab-Separated-Forth:
-	help:	#TSF_this	#TSF_fin.
+	help:	#TSF_argvsthe	#TSF_reverseN	help:	#TSF_lenthe	#TSF_echoN	#TSF_fin.
 help:
-	  --helloworld  \"Hello world  #TSF_echo\" sample
-	  --help        this commands view
-	commands:
 	usage: ./TSF.py [command|file.tsf] [argv] ...
-	4
-	#TSF_echoN
+	commands:
+	  --help        this commands view
+	  --helloworld  \"Hello world  #TSF_echo\" sample
