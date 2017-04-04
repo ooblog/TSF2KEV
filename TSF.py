@@ -10,7 +10,7 @@ from TSF_Io import *
 from TSF_Forth import *
 
 
-def TSF_sample_help():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
+def TSF_sample_help():    #TSF_doc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
         "\t".join(["help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:",
@@ -19,21 +19,31 @@ def TSF_sample_help():    #TSF_doc:Helloworldサンプル(「Hello world」を�
         "commands:",
         "  --help        this commands view",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
-#        "  --RPN         decimal calculator \"1/3-m1|2\"-> 0.8333... sample",
+        "  --RPN         decimal calculator \"1,3/m1|2-\"-> 0.8333... sample",
         ]),"N")
     TSF_sample_run("TSF_sample_help")
 
-def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSFサンプルプログラム実行。
+def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSF実行。コマンド実行の場合はソースも表示。
     if TSF_sample_sepalete != None:
         TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
         TSF_Forth_viewthey()
         TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
     TSF_Forth_run()
 
-def TSF_sample_Helloworld():    #TSF_doc:Helloworldサンプル(「Hello world」を表示)。
+def TSF_sample_Helloworld():    #TSF_doc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        "\t".join(["Hello world","#TSF_echo"]),TSF_style="T")
+        "\t".join(["Hello world","#TSF_echo"]),"T")
     TSF_sample_run("TSF_sample_Helloworld")
+
+def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+        "\t".join(["RPN:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("RPN:",
+        "\t".join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullF","#TSF_lenthe","#TSF_reverseN","#TSF_RPN","#TSF_echo"]),"T")
+    TSF_Forth_setTSF("RPNtest:",
+        "\t".join(["1,3/m1|2-"]),"T")
+    TSF_sample_run("TSF_sample_RPN")
+
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Forth_initTSF(TSF_sysargvs[1:],[])
@@ -47,7 +57,7 @@ elif TSF_bootcommand in ["--help","--commands"]:
 elif TSF_bootcommand in ["--hello","--helloworld","--Helloworld"]:
     TSF_sample_Helloworld()
 elif TSF_bootcommand in ["--RPN","--rpn"]:
-    TSF_sample_Helloworld()
+    TSF_sample_RPN()
 else:
     TSF_sample_help()
 sys.exit(0)
