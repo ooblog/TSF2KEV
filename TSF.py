@@ -39,7 +39,7 @@ def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
         "\t".join(["RPN:","#TSF_this","#TSF_fin."]),"T")
     TSF_Forth_setTSF("RPN:",
-        "\t".join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullF","#TSF_lenthe","#TSF_reverseN","#TSF_RPN","#TSF_echo"]),"T")
+        "\t".join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"]),"T")
     TSF_Forth_setTSF("RPNtest:",
         "\t".join(["1,3/m1|2-"]),"T")
     TSF_sample_run("TSF_sample_RPN")

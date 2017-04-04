@@ -216,21 +216,25 @@ def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。スタ�
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     return ""
 
-def TSF_Forth_lenthe():   #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
-    TSF_the=TSF_Forth_drawthe()
+def TSF_Forth_len(TSF_the):    #TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
+    TSF_len=0
     if TSF_the in TSF_stackD:
-        TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+        TSF_len=len(TSF_stackD[TSF_the])
+    return TSF_len
+
+def TSF_Forth_lenthe():    #TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_Forth_len(TSF_Forth_drawthe())))
     return ""
 
-def TSF_Forth_lenthis():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthis()])))
+def TSF_Forth_lenthis():    #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_Forth_len(TSF_Forth_drawthis())))
     return ""
 
-def TSF_Forth_lenthat():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_Forth_drawthat()])))
+def TSF_Forth_lenthat():    #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_Forth_len(TSF_Forth_drawthat())))
     return ""
 
-def TSF_Forth_lenthey():   #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
+def TSF_Forth_lenthey():    #TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
     return ""
 

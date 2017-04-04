@@ -228,21 +228,32 @@ string TSF_Forth_reverseN(){    //#TSF_doc:カードN枚を逆順に積込。ス
     return "";
 }
 
-string TSF_Forth_lenthe(){    //#TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
-    string TSF_the=TSF_Forth_drawthe();
+long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
+    long TSF_len=0;
     if( TSF_the in TSF_stackD ){
-        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+        TSF_len=TSF_stackD[TSF_the].length;
     }
+    return TSF_len;
+}
+
+string TSF_Forth_lenthe(){    //#TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthe())));
+//    string TSF_the=TSF_Forth_drawthe();
+//    if( TSF_the in TSF_stackD ){
+//        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+//    }
     return "";
 }
 
 string TSF_Forth_lenthis(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthis())));
+//    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
     return "";
 }
 
 string TSF_Forth_lenthat(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthat())));
+//    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
     return "";
 }
 
