@@ -22,17 +22,17 @@ string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdout
             TSF_log=TSF_log.back=='\n'?TSF_log:TSF_log~'\n';
         }
     }
-    version(linux){
-        puts(toStringz( TSF_text ));
-    }
-    version(OSX){
-        puts(toStringz( TSF_text ));
-    }
+    auto TSF_Io_printf=toStringz(TSF_text);
     version(Windows){
-        puts(toStringz( to!string(toMBSz(TSF_text)) ));
+        TSF_Io_printf=toStringz(to!string(toMBSz(TSF_text)));
     }
-    if( TSF_text.length>0 ){
-        TSF_log=TSF_text.back=='\n'?TSF_log~TSF_text:TSF_log~TSF_text~'\n';
+    if( TSF_text.length>0 && TSF_text.back=='\n' ){
+        printf("%s",TSF_Io_printf);
+        TSF_log=join([TSF_log,TSF_text]);
+    }
+    else{
+        printf("%s\n",TSF_Io_printf);
+        TSF_log=join([TSF_log,TSF_text,"\n"]);
     }
     return TSF_log;
 }
