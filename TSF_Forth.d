@@ -238,22 +238,16 @@ long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を
 
 string TSF_Forth_lenthe(){    //#TSF_doc:指定スタックの枚数を取得。1枚[the]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthe())));
-//    string TSF_the=TSF_Forth_drawthe();
-//    if( TSF_the in TSF_stackD ){
-//        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
-//    }
     return "";
 }
 
 string TSF_Forth_lenthis(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthis())));
-//    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthis()].length));
     return "";
 }
 
 string TSF_Forth_lenthat(){    //#TSF_doc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_Forth_len(TSF_Forth_drawthat())));
-//    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_Forth_drawthat()].length));
     return "";
 }
 
@@ -262,24 +256,31 @@ string TSF_Forth_lenthey(){    //#TSF_doc:指定スタックの枚数を取得�
     return "";
 }
 
+string TSF_Forth_peekF(string TSF_the){    //#TSF_doc:指定スタックのカードを数値で読込。(TSFAPI)。
+    string TSF_pull="";
+    if( (TSF_the in TSF_stackD)&&(TSF_stackD[TSF_the].length>0) ){
+        TSF_pull=TSF_stackD[TSF_the][$-1];
+    }
+    return TSF_pull;
+}
+
 string TSF_Forth_peekFthe(){    //#TSF_doc:指定スタックから表面カードを読込。1枚[the]ドローして1枚[card]リターン。
-    string TSF_the=TSF_Forth_drawthe();
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_the].length?TSF_stackD[TSF_the][-1]:"");
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekF(TSF_Forth_drawthe()));
     return "";
 }
 
 string TSF_Forth_peekFthis(){    //#TSF_doc:実行中スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthis()].length?TSF_stackD[TSF_Forth_drawthis()][-1]:"");
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekF(TSF_Forth_drawthis()));
     return "";
 }
 
-string TSF_Forth_peekFthat(){    //#TSF_doc:積込先スタックから表面カードを読込。0枚[]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackD[TSF_Forth_drawthat()].length?TSF_stackD[TSF_Forth_drawthat()][-1]:"");
+string TSF_Forth_peekFthat(){    //#TSF_doc:積込先スタックから表面カードを読込(旧「#TSF_carbonthat」に該当)。0枚[]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekF(TSF_Forth_drawthat()));
     return "";
 }
 
 string TSF_Forth_peekFthey(){    //#TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO.length?TSF_stackO[-1]:"");
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO.length?TSF_stackO[$-1]:"");
     return "";
 }
 
