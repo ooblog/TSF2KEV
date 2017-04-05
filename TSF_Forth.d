@@ -256,9 +256,9 @@ string TSF_Forth_lenthey(){    //#TSF_doc:指定スタックの枚数を取得�
     return "";
 }
 
-string TSF_Forth_peekF(string TSF_the){    //#TSF_doc:指定スタックのカードを数値で読込。(TSFAPI)。
+string TSF_Forth_peekF(string TSF_the){    //#指定スタックから表面カードを読込(TSFAPI)。
     string TSF_pull="";
-    if( (TSF_the in TSF_stackD)&&(TSF_stackD[TSF_the].length>0) ){
+    if( (TSF_the in TSF_stackD)&&(0<TSF_stackD[TSF_the].length) ){
         TSF_pull=TSF_stackD[TSF_the][$-1];
     }
     return TSF_pull;
@@ -284,27 +284,32 @@ string TSF_Forth_peekFthey(){    //#TSF_doc:スタック一覧から表面カー
     return "";
 }
 
+string TSF_Forth_peekN(string TSF_the,long TSF_peek){    //#TSF_doc:指定スタックからカードを数値で読込。(TSFAPI)。
+    string TSF_pull="";
+    if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
+        TSF_pull=TSF_stackD[TSF_the][to!size_t(TSF_peek)];
+    }
+    return TSF_pull;
+}
+
 string TSF_Forth_peekNthe(){    //#TSF_doc:指定スタックからカードを数値で読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthe()],TSF_peek));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthe(),TSF_peek));
     return "";
 }
 
 string TSF_Forth_peekNthis(){    //#TSF_doc:実行中スタックからカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
-    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthis()],TSF_peek));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
 string TSF_Forth_peekNthat(){    //#TSF_doc:積込先スタックからカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
-    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackD[TSF_Forth_drawthat()],TSF_peek));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
 string TSF_Forth_peekNthey(){    //#TSF_doc:スタック一覧からカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
-    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_peek));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
