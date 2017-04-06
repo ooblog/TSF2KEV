@@ -224,7 +224,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     string TSF_RPNnum="";  int TSF_RPNminus=0;
     real[] TSF_RPNstack=[];
     string TSF_RPNseq=replace(replace(TSF_RPN,"U+","$"),"0x","$")~" ";
-    real TSF_RPNstackL,TSF_RPNstackR;
+    real TSF_RPNstackL,TSF_RPNstackR,TSF_RPNstackF;
     string[] TSF_RPNcalcND;
     opeexit: foreach(char TSF_RPNope;TSF_RPNseq){
         if( count("0123456789.pm$|",TSF_RPNope) ){
@@ -279,7 +279,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
                 else{
-                    TSF_RPNstackL=0.0;
+                    TSF_RPNstackR=0.0;
                 }
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
@@ -315,6 +315,31 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                             TSF_RPNanswer="n|0";  break opeexit;
                         }
                     break;
+                    default:  break;
+                }
+            }
+            else if( count("Zz",TSF_RPNope) ){
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackF=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackF=0.0;
+                }
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackR=0.0;
+                }
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackL=0.0;
+                }
+                switch( TSF_RPNope ){
+                    case 'Z':  TSF_RPNstack~=TSF_RPNstackF==0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'z':  TSF_RPNstack~=TSF_RPNstackF!=0?TSF_RPNstackL:TSF_RPNstackR;  break;
                     default:  break;
                 }
             }
