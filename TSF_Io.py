@@ -233,14 +233,22 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                         TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
-            elif TSF_RPNope in "Zz":
+            elif TSF_RPNope in "ZzOoUu":
                 TSF_RPNstackF=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "Z":
                     TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF==0 else TSF_RPNstackR)
-                if TSF_RPNope == "z":
+                elif TSF_RPNope == "z":
                     TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF!=0 else TSF_RPNstackR)
+                elif TSF_RPNope == "O":
+                    TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF>=0 else TSF_RPNstackR)
+                elif TSF_RPNope == "o":
+                    TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF>0 else TSF_RPNstackR)
+                elif TSF_RPNope == "U":
+                    TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF<=0 else TSF_RPNstackR)
+                elif TSF_RPNope == "u":
+                    TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF<0 else TSF_RPNstackR)
     TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
     if TSF_RPNanswer != "n|0":
         TSF_RPNanswer=str(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
@@ -320,7 +328,10 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"they:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
-    for debug_rpn in ["U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#"]:
+    for debug_rpn in [
+        "U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#",
+        "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u"
+    ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
