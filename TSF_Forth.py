@@ -35,8 +35,7 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_argvsthey":TSF_Forth_argvsthey, "#スタック一覧積込":TSF_Forth_argvsthey,
         "#TSF_reverseN":TSF_Forth_reverseN, "#N枚逆順積込":TSF_Forth_reverseN,
         "#TSF_joinN":TSF_Forth_joinN, "#N枚1枚化":TSF_Forth_joinN,
-#    TSF_words["#TSF_joinN"]=TSF_match_joinN; TSF_words["#N個連結"]=TSF_match_joinN
-#    TSF_words["#TSF_betweenN"]=TSF_match_betweenN; TSF_words["#挟んでN個連結"]=TSF_match_betweenN
+        "#TSF_sandwichN":TSF_Forth_sandwichN, "#N枚挟んで1枚化":TSF_Forth_sandwichN,
 #    TSF_words["#TSF_split"]=TSF_match_split; TSF_words["#文字で分割"]=TSF_match_split
 #    TSF_words["#TSF_chars"]=TSF_match_chars; TSF_words["#一文字ずつに分離"]=TSF_match_chars
 #    TSF_words["#TSF_charslen"]=TSF_match_charslen; TSF_words["#文字数取得"]=TSF_match_charslen
@@ -221,7 +220,7 @@ def TSF_Forth_argvsthey():    #TSF_doc:スタック一覧を積込む。0枚[]�
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
     return ""
 
-def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。カード枚数+1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
+def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。カード枚数+総数1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
     TSF_stackR=[]
     TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
     if TSF_len > 0:
@@ -231,13 +230,23 @@ def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。カー�
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     return ""
 
-def TSF_Forth_joinN():    #TSF_doc:カードN枚を連結する。カード枚数+1枚[cardN…cardA,N]ドローして1枚[joined]リターン。
+def TSF_Forth_joinN():    #TSF_doc:カードN枚を連結する。カード枚数+総数1枚[cardN…cardA,N]ドローして1枚[joined]リターン。
     TSF_stackR=[]
     TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
     if TSF_len > 0:
         for TSF_count in range(TSF_len):
             TSF_stackR.append(TSF_Forth_drawthe())
         TSF_Forth_return(TSF_Forth_drawthat(),"".join(reversed(TSF_stackR)))
+    return ""
+
+def TSF_Forth_sandwichN():    #TSF_doc:カードN枚を連結する。カード枚数+総数1枚+接続詞1枚[cardN…cardA,N,joint]ドローして1枚[joined]リターン。
+    TSF_stackR=[]
+    TSF_joint=TSF_Forth_drawthe()
+    TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    if TSF_len > 0:
+        for TSF_count in range(TSF_len):
+            TSF_stackR.append(TSF_Forth_drawthe())
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_joint.join(reversed(TSF_stackR)))
     return ""
 
 def TSF_Forth_len(TSF_the):    #TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
