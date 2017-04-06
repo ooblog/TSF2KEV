@@ -34,6 +34,13 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_argvsthat":TSF_Forth_argvsthat, "#積込先スタック積込":TSF_Forth_argvsthat,
         "#TSF_argvsthey":TSF_Forth_argvsthey, "#スタック一覧積込":TSF_Forth_argvsthey,
         "#TSF_reverseN":TSF_Forth_reverseN, "#N枚逆順積込":TSF_Forth_reverseN,
+        "#TSF_joinN":TSF_Forth_joinN, "#N枚1枚化":TSF_Forth_joinN,
+#    TSF_words["#TSF_joinN"]=TSF_match_joinN; TSF_words["#N個連結"]=TSF_match_joinN
+#    TSF_words["#TSF_betweenN"]=TSF_match_betweenN; TSF_words["#挟んでN個連結"]=TSF_match_betweenN
+#    TSF_words["#TSF_split"]=TSF_match_split; TSF_words["#文字で分割"]=TSF_match_split
+#    TSF_words["#TSF_chars"]=TSF_match_chars; TSF_words["#一文字ずつに分離"]=TSF_match_chars
+#    TSF_words["#TSF_charslen"]=TSF_match_charslen; TSF_words["#文字数取得"]=TSF_match_charslen
+#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
         "#TSF_lenthe":TSF_Forth_lenthe, "#指定スタック枚数":TSF_Forth_lenthe,
         "#TSF_lenthis":TSF_Forth_lenthis, "#実行中スタック枚数":TSF_Forth_lenthis,
         "#TSF_lenthat":TSF_Forth_lenthat, "#積込先スタック枚数":TSF_Forth_lenthat,
@@ -46,6 +53,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_peekNthis":TSF_Forth_peekNthis, "#実行中スタック読込":TSF_Forth_peekNthis,
         "#TSF_peekNthat":TSF_Forth_peekNthat, "#積込先スタック読込":TSF_Forth_peekNthat,
         "#TSF_peekNthey":TSF_Forth_peekNthey, "#スタック一覧読込":TSF_Forth_peekNthey,
+#        "#TSF_pokeFthe":TSF_Forth_pokeFthe, "#指定スタック上書":TSF_Forth_pokeFthe,
+#        "#TSF_pokeFthis":TSF_Forth_pokeFthis, "#実行中スタック上書":TSF_Forth_pokeFthis,
+#        "#TSF_pokeFthat":TSF_Forth_pokeFthat, "#積込先スタック上書":TSF_Forth_pokeFthat,
+#        "#TSF_pokeFthey":TSF_Forth_pokeFthey, "#スタック一覧上書":TSF_Forth_pokeFthey,
 #        "#TSF_pokeNthe":TSF_Forth_pokeNthe, "#指定スタック上書":TSF_Forth_pokeNthe,
 #        "#TSF_pokeNthis":TSF_Forth_pokeNthis, "#実行中スタック上書":TSF_Forth_pokeNthis,
 #        "#TSF_pokeNthat":TSF_Forth_pokeNthat, "#積込先スタック上書":TSF_Forth_pokeNthat,
@@ -58,6 +69,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
 #        "#TSF_pulltNhis":TSF_Forth_pullNthis, "#実行中スタック引抜":TSF_Forth_pullNthis,
 #        "#TSF_pullNthat":TSF_Forth_pullNthat, "#積込先スタック引抜":TSF_Forth_pullNthat,
 #        "#TSF_pullNthey":TSF_Forth_pullNthey, "#スタック一覧引抜":TSF_Forth_pullNthey,
+#        "#TSF_pushFthe":TSF_Forth_pushFthe, "#指定スタック差込":TSF_Forth_pushFthe,
+#        "#TSF_pushFthis":TSF_Forth_pushFthis, "#実行中スタック差込":TSF_Forth_pushFthis,
+#        "#TSF_pushFthat":TSF_Forth_pushFthat, "#積込先スタック差込":TSF_Forth_pushFthat,
+#        "#TSF_pushFthey":TSF_Forth_pushFthey, "#スタック一覧差込":TSF_Forth_pushFthey,
 #        "#TSF_pushNthe":TSF_Forth_pushNthe, "#指定スタック差込":TSF_Forth_pushNthe,
 #        "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
 #        "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
@@ -169,11 +184,11 @@ def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…
     return ""
 
 def TSF_Forth_argvs():    #TSF_doc:コマンドを積込む。0枚[]ドローしてコマンド枚数+1枚[argvN…argvA,N]リターン。
-    TSF_argvslen=len(TSF_mainandargvs[1:]) if len(TSF_mainandargvs) > 0 else 0
-    if TSF_argvslen > 0:
+    TSF_len=len(TSF_mainandargvs[1:]) if len(TSF_mainandargvs) > 0 else 0
+    if TSF_len > 0:
         for TSF_card in TSF_mainandargvs[1:]:
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-    TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_argvslen))
+    TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_len))
     return ""
 
 def TSF_Forth_argvsthe():    #TSF_doc:指定スタックを積込む。1枚[the]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
@@ -206,14 +221,23 @@ def TSF_Forth_argvsthey():    #TSF_doc:スタック一覧を積込む。0枚[]�
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
     return ""
 
-def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。スタック枚数+1枚[cardN…cardA,N]ドローしてスタック枚数[cardN…cardA]リターン。
+def TSF_Forth_reverseN():    #TSF_doc:カードN枚を逆順に積込。カード枚数+1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
     TSF_stackR=[]
-    TSF_argvslen=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    if TSF_argvslen > 0:
-        for TSF_count in range(TSF_argvslen):
+    TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    if TSF_len > 0:
+        for TSF_count in range(TSF_len):
             TSF_stackR.append(TSF_Forth_drawthe())
         for TSF_card in TSF_stackR:
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    return ""
+
+def TSF_Forth_joinN():    #TSF_doc:カードN枚を連結する。カード枚数+1枚[cardN…cardA,N]ドローして1枚[joined]リターン。
+    TSF_stackR=[]
+    TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    if TSF_len > 0:
+        for TSF_count in range(TSF_len):
+            TSF_stackR.append(TSF_Forth_drawthe())
+        TSF_Forth_return(TSF_Forth_drawthat(),"".join(reversed(TSF_stackR)))
     return ""
 
 def TSF_Forth_len(TSF_the):    #TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
