@@ -1,7 +1,10 @@
 TSF_Tab-Separated-Forth:
-	RPN:	#TSF_this	#TSF_fin.
+	RPNsetup:	#TSF_this	#TSF_fin.
+RPNsetup:
+	RPNargvs:	#TSF_that	#TSF_argvs	,	#TSF_sandwichN	RPNjump:	RPNargvs:	#TSF_lenthe	#TSF_peekNthe	#TSF_this
+RPNjump:
+	RPNdefault:	RPNdefault:	RPN:
+RPNdefault:
+	1,3/m1|2-	RPN:	#TSF_this
 RPN:
-	RPNtest:	#TSF_that	#TSF_argvs	#TSF_pullFthat	#TSF_RPN	#TSF_echo
-#	RPNtest:	#TSF_that	#TSF_argvs	,	#TSF_sandwichN	#TSF_RPN	#TSF_echo
-RPNtest:
-	1,3/m1|2-
+	#TSF_RPN	#TSF_echo

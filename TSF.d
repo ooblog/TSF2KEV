@@ -35,6 +35,7 @@ void TSF_sample_run(...){    //#TSF_doc:TSF実行。コマンド実行の場合�
         TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
     }
     TSF_Forth_run();
+//    TSF_Forth_viewthey();
 }
 
 void TSF_sample_Helloworld(){    //#TSF_doc:「sample_helloworld.tsf」コマンド版。
@@ -45,11 +46,21 @@ void TSF_sample_Helloworld(){    //#TSF_doc:「sample_helloworld.tsf」コマン
 
 void TSF_sample_RPN(){    //#TSF_doc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["RPN:","#TSF_this","#TSF_fin."],"\t"),"T");
+        join(["RPNsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("RPNsetup:",
+        join(["RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("RPNjump:",
+        join(["-","RPNdefault:","RPN:"],"\t"),"T");
+    TSF_Forth_setTSF("RPNdefault:",
+        join(["1,3/m1|2-","RPN:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("RPN:",
-        join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"],"\t"),"T");
-    TSF_Forth_setTSF("RPNtest:",
-        join(["1,3/m1|2-"],"\t"),"T");
+        join(["#TSF_RPN","#TSF_echo"],"\t"),"T");
+//    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+//        join(["RPN:","#TSF_this","#TSF_fin."],"\t"),"T");
+//    TSF_Forth_setTSF("RPN:",
+//        join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"],"\t"),"T");
+//    TSF_Forth_setTSF("RPNtest:",
+//        join(["1,3/m1|2-"],"\t"),"T");
     TSF_sample_run("TSF_sample_RPN");
 }
 

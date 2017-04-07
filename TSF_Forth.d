@@ -45,6 +45,9 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
         "#TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
         "#TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
+//#    TSF_words["#TSF_chars"]=TSF_match_chars; TSF_words["#一文字ずつに分離"]=TSF_match_chars
+//#    TSF_words["#TSF_charslen"]=TSF_match_charslen; TSF_words["#文字数取得"]=TSF_match_charslen
+//#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
         "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
         "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
         "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
@@ -160,9 +163,9 @@ string TSF_Forth_echo(){    //#TSF_doc:カードの表示。1枚[echo]ドロー�
 }
 
 string TSF_Forth_echoN(){    //#TSF_doc:カードの表示。RPN枚[echoN…echoA,N]ドロー。
-    long TSF_echoRPN=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    if( TSF_echoRPN>0 ){
-        foreach(long TSF_count;0..TSF_echoRPN){
+    long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    if( TSF_len>0 ){
+        foreach(long TSF_count;0..TSF_len){
             TSF_Forth_echo();
         }
     }
@@ -221,11 +224,13 @@ string TSF_Forth_argvsthey(){    //#TSF_doc:カードN枚を逆順に積込。�
 string TSF_Forth_reverseN(){    //#TSF_doc:カードN枚を逆順に積込。カード枚数+総数1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
     string[] TSF_stackR=null;
     long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    foreach(long TSF_count;0..TSF_len){
-        TSF_stackR~=[TSF_Forth_drawthe()];
-    }
-    foreach(string TSF_card;TSF_stackR){
-        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    if( TSF_len>0 ){
+        foreach(long TSF_count;0..TSF_len){
+            TSF_stackR~=[TSF_Forth_drawthe()];
+        }
+        foreach(string TSF_card;TSF_stackR){
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+        }
     }
     return "";
 }
@@ -233,11 +238,13 @@ string TSF_Forth_reverseN(){    //#TSF_doc:カードN枚を逆順に積込。カ
 string TSF_Forth_joinN(){    //#TSF_doc:カードN枚を連結する。カード枚数+総数1枚[cardN…cardA,N]ドローして1枚[joined]リターン。
     string[] TSF_stackR=null;
     long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    foreach(long TSF_count;0..TSF_len){
-        TSF_stackR~=[TSF_Forth_drawthe()];
+    if( TSF_len>0 ){
+        foreach(long TSF_count;0..TSF_len){
+            TSF_stackR~=[TSF_Forth_drawthe()];
+        }
+        TSF_stackR.reverse();
+        TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR));
     }
-    TSF_stackR.reverse();
-    TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR));
     return "";
 }
 
@@ -245,11 +252,13 @@ string TSF_Forth_sandwichN(){    //#TSF_doc:カードN枚を連結する。カ�
     string[] TSF_stackR=null;
     string TSF_joint=TSF_Forth_drawthe();
     long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    foreach(long TSF_count;0..TSF_len){
-        TSF_stackR~=[TSF_Forth_drawthe()];
+    if( TSF_len>0 ){
+        foreach(long TSF_count;0..TSF_len){
+            TSF_stackR~=[TSF_Forth_drawthe()];
+        }
+        TSF_stackR.reverse();
+        TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR,TSF_joint));
     }
-    TSF_stackR.reverse();
-    TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR,TSF_joint));
     return "";
 }
 
@@ -263,13 +272,6 @@ string TSF_Forth_split(){    //#TSF_doc:文字列を分割する。続詞1枚[jo
     }
     return "";
 }
-//def TSF_Forth_split():    #TSF_doc:文字列を分割する。続詞1枚[joint]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
-//    TSF_joint=TSF_Forth_drawthe()
-//    TSF_joined=TSF_Forth_drawthe()
-//    TSF_stackR=TSF_tsvQ.split(TSF_tsvP)
-//    for TSF_card in reversed(TSF_stackR):
-//        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-//    return ""
 
 long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
     long TSF_len=0;
@@ -610,7 +612,7 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
 
 string TSF_Forth_draw(string TSF_the){    //#TSFdoc:スタックから1枚ドロー。(TSFAPI)
     string TSF_draw="";
-    if( TSF_stackD[TSF_the].length>0 && TSF_the.length>0 && TSF_the in TSF_stackD ){
+    if( TSF_stackD[TSF_the].length && TSF_the.length>0 && TSF_the in TSF_stackD ){
         TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].popBack();
     }
     return TSF_draw;

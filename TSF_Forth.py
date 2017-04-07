@@ -176,9 +176,9 @@ def TSF_Forth_echo():    #TSF_doc:カードの表示。1枚[echo]ドロー。
     return ""
 
 def TSF_Forth_echoN():    #TSF_doc:カードの複数枚表示。RPN枚[echoN…echoA,N]ドロー。
-    TSF_echoRPN=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    if TSF_echoRPN > 0:
-        for TSF_count in range(TSF_echoRPN):
+    TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    if TSF_len > 0:
+        for TSF_count in range(TSF_len):
             TSF_Forth_echo()
     return ""
 

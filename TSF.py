@@ -29,6 +29,7 @@ def TSF_sample_run(TSF_sample_sepalete=None):    #TSF_doc:TSF実行。コマン�
         TSF_Forth_viewthey()
         TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
     TSF_Forth_run()
+#    TSF_Forth_viewthey()
 
 def TSF_sample_Helloworld():    #TSF_doc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
@@ -37,11 +38,21 @@ def TSF_sample_Helloworld():    #TSF_doc:「sample_helloworld.tsf」コマンド
 
 def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        "\t".join(["RPN:","#TSF_this","#TSF_fin."]),"T")
+        "\t".join(["RPNsetup:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("RPNsetup:",
+        "\t".join(["RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
+    TSF_Forth_setTSF("RPNjump:",
+        "\t".join(["-","RPNdefault:","RPN:"]),"T")
+    TSF_Forth_setTSF("RPNdefault:",
+        "\t".join(["1,3/m1|2-","RPN:","#TSF_this"]),"T")
     TSF_Forth_setTSF("RPN:",
-        "\t".join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"]),"T")
-    TSF_Forth_setTSF("RPNtest:",
-        "\t".join(["1,3/m1|2-"]),"T")
+        "\t".join(["#TSF_RPN","#TSF_echo"]),"T")
+#    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
+#        "\t".join(["RPN:","#TSF_this","#TSF_fin."]),"T")
+#    TSF_Forth_setTSF("RPN:",
+#        "\t".join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"]),"T")
+#    TSF_Forth_setTSF("RPNtest:",
+#        "\t".join(["1,3/m1|2-"]),"T")
     TSF_sample_run("TSF_sample_RPN")
 
 
