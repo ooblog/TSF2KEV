@@ -44,6 +44,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
         "#TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
         "#TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
+        "#TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
         "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
         "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
         "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
@@ -251,6 +252,24 @@ string TSF_Forth_sandwichN(){    //#TSF_doc:カードN枚を連結する。カ�
     TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR,TSF_joint));
     return "";
 }
+
+string TSF_Forth_split(){    //#TSF_doc:文字列を分割する。続詞1枚[joint]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
+    string TSF_joint=TSF_Forth_drawthe();
+    string TSF_joined=TSF_Forth_drawthe();
+    string[] TSF_stackR=TSF_joined.split(TSF_joint);
+    TSF_stackR.reverse();
+    foreach(string TSF_card;TSF_stackR){
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    }
+    return "";
+}
+//def TSF_Forth_split():    #TSF_doc:文字列を分割する。続詞1枚[joint]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
+//    TSF_joint=TSF_Forth_drawthe()
+//    TSF_joined=TSF_Forth_drawthe()
+//    TSF_stackR=TSF_tsvQ.split(TSF_tsvP)
+//    for TSF_card in reversed(TSF_stackR):
+//        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+//    return ""
 
 long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
     long TSF_len=0;
