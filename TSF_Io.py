@@ -175,7 +175,8 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
     TSF_RPNstack=[]
-    TSF_RPNseq=TSF_RPN.replace("U+","$").replace("0x","$")+" "
+    TSF_RPNseq="".join([TSF_RPN,"  "])
+    if( TSF_RPN[0:2] in ["U+","0x"]): TSF_RPNseq="".join(["$",TSF_RPNseq[2:]])
     for TSF_RPNope in TSF_RPNseq:
         if TSF_RPNope in "0123456789.pm$|":
             TSF_RPNnum+=TSF_RPNope
@@ -256,10 +257,13 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
     if TSF_RPNanswer != "n|0":
         TSF_RPNanswer=str(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
+        if TSF_RPNanswer!="0":
+            TSF_RPNanswer=TSF_RPNanswer.replace('-','m') if TSF_RPNanswer.startswith('-') else "".join(["p",TSF_RPNanswer])
     return TSF_RPNanswer
 
 def TSF_Io_RPNzero(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
     TSF_RPNtext=TSF_Io_RPN(TSF_RPN)
+    TSF_RPNtext=TSF_RPNtext.replace('p','').replace('m','-')
     TSF_RPNanswer=0
     try:
         TSF_RPNanswer=int(TSF_RPNtext)
@@ -333,7 +337,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
     for debug_rpn in [
-        "U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
+        "0","0.0","U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u"
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
