@@ -34,6 +34,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタック表示":&TSF_Forth_viewthat,
         "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧表示":&TSF_Forth_viewthey,
         "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
+//#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
         "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
         "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
@@ -45,9 +46,8 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
         "#TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
         "#TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
-//#    TSF_words["#TSF_chars"]=TSF_match_chars; TSF_words["#一文字ずつに分離"]=TSF_match_chars
-//#    TSF_words["#TSF_charslen"]=TSF_match_charslen; TSF_words["#文字数取得"]=TSF_match_charslen
-//#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
+        "#TSF_chars":&TSF_Forth_chars, "#一文字ずつに分割":&TSF_Forth_chars,
+        "#TSF_charslen":&TSF_Forth_charslen, "#文字数を数える":&TSF_Forth_charslen,
         "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
         "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
         "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
@@ -272,6 +272,32 @@ string TSF_Forth_split(){    //#TSF_doc:文字列を分割する。続詞1枚[jo
     }
     return "";
 }
+
+string TSF_Forth_chars(){    //#TSF_doc:文字列を一文字ずつに分割する。1枚[chars]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
+    string TSF_joined=TSF_Forth_drawthe();
+    char[] TSF_stackR=cast(char[])TSF_joined;
+    TSF_stackR.reverse();
+    foreach(char TSF_card;TSF_stackR){
+        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_card));
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_joined.length));
+    return "";
+}
+
+string TSF_Forth_charslen(){    //#TSF_doc:文字数を数える。1枚[chars]ドローして1枚[N]リターン。
+    string TSF_joined=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_joined.length));
+    return "";
+}
+
+//def TSF_Forth_chars():    #TSF_doc:文字列を一文字ずつに分割する。1枚[chars]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
+//    TSF_joined=TSF_Forth_drawthe()
+//    for TSF_card in reversed(TSF_joined):
+//        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+//    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
+//def TSF_Forth_charslen():    #TSF_doc:文字数を数える。1枚[chars]ドローして1枚[N]リターン。
+//    TSF_joined=TSF_Forth_drawthe()
+//    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
 
 long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
     long TSF_len=0;
