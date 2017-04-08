@@ -26,7 +26,6 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_viewthat":TSF_Forth_viewthat, "#積込先スタック表示":TSF_Forth_viewthat,
         "#TSF_viewthey":TSF_Forth_viewthey, "#スタック一覧表示":TSF_Forth_viewthey,
         "#TSF_RPN":TSF_Forth_RPN, "#逆ポーランド電卓で計算":TSF_Forth_RPN, "#小数計算":TSF_Forth_RPN,
-#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
         "#TSF_echo":TSF_Forth_echo, "#カードを表示":TSF_Forth_echo,
         "#TSF_echoN":TSF_Forth_echoN, "#N枚カードを表示":TSF_Forth_echoN,
         "#TSF_argvs":TSF_Forth_argvs, "#コマンド積込":TSF_Forth_argvs,
@@ -36,6 +35,7 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_argvsthey":TSF_Forth_argvsthey, "#スタック一覧積込":TSF_Forth_argvsthey,
         "#TSF_reverseN":TSF_Forth_reverseN, "#N枚逆順積込":TSF_Forth_reverseN,
         "#TSF_joinN":TSF_Forth_joinN, "#N枚1枚化":TSF_Forth_joinN,
+        "#TSF_join[]":TSF_Forth_joinsquarebrackets, "#括弧で連結":TSF_Forth_joinsquarebrackets,
         "#TSF_sandwichN":TSF_Forth_sandwichN, "#N枚挟んで1枚化":TSF_Forth_sandwichN,
         "#TSF_split":TSF_Forth_split, "#文字で分割":TSF_Forth_split,
         "#TSF_chars":TSF_Forth_chars, "#一文字ずつに分割":TSF_Forth_chars,
@@ -237,6 +237,17 @@ def TSF_Forth_joinN():    #TSF_doc:カードN枚を連結する。カード枚�
         for TSF_count in range(TSF_len):
             TSF_stackR.append(TSF_Forth_drawthe())
         TSF_Forth_return(TSF_Forth_drawthat(),"".join(reversed(TSF_stackR)))
+    return ""
+
+def TSF_Forth_joinsquarebrackets():    #TSF_doc:カードN枚を角括弧で連結する。数式の元を1枚[calc]ドローして1枚[joined]リターン。
+    TSF_calc=TSF_Forth_drawthe()
+    for TSF_count in range(TSF_Forth_len(TSF_Forth_drawthat())):
+        TSF_bracket="".join(["[",str(TSF_count),"]"])
+        if TSF_bracket in TSF_calc:
+            TSF_calc=TSF_calc.replace(TSF_bracket,TSF_Forth_drawthe())
+        else:
+            break;
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_calc)
     return ""
 
 def TSF_Forth_sandwichN():    #TSF_doc:カードN枚を連結する。カード枚数+総数1枚+接続詞1枚[cardN…cardA,N,joint]ドローして1枚[joined]リターン。

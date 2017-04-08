@@ -34,7 +34,6 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタック表示":&TSF_Forth_viewthat,
         "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧表示":&TSF_Forth_viewthey,
         "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
-//#    TSF_words["#TSF_brackets"]=TSF_calc_brackets; TSF_words["#数式に連結"]=TSF_calc_brackets
         "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
         "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
         "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
@@ -44,6 +43,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
         "#TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
         "#TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
+        "#TSF_join[]":&TSF_Forth_joinsquarebrackets, "#括弧で連結":&TSF_Forth_joinsquarebrackets,
         "#TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
         "#TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
         "#TSF_chars":&TSF_Forth_chars, "#一文字ずつに分割":&TSF_Forth_chars,
@@ -245,6 +245,22 @@ string TSF_Forth_joinN(){    //#TSF_doc:カードN枚を連結する。カード
         TSF_stackR.reverse();
         TSF_Forth_return(TSF_Forth_drawthat(),join(TSF_stackR));
     }
+    return "";
+}
+
+string TSF_Forth_joinsquarebrackets(){    //#TSF_doc:カードN枚を角括弧で連結する。数式の元を1枚[calc]ドローして1枚[joined]リターン。
+    string TSF_calc=TSF_Forth_drawthe();
+    string TSF_bracket;
+    foreach(long TSF_count;0..TSF_Forth_len(TSF_Forth_drawthat())){
+        TSF_bracket="["~to!string(TSF_count)~"]";
+        if( count(TSF_calc,TSF_bracket) ){
+            TSF_calc=replace(TSF_calc,TSF_bracket,TSF_Forth_drawthe());
+        }
+        else{
+            break;
+        }
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_calc);
     return "";
 }
 
