@@ -306,15 +306,6 @@ string TSF_Forth_charslen(){    //#TSF_doc:文字数を数える。1枚[chars]�
     return "";
 }
 
-//def TSF_Forth_chars():    #TSF_doc:文字列を一文字ずつに分割する。1枚[chars]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
-//    TSF_joined=TSF_Forth_drawthe()
-//    for TSF_card in reversed(TSF_joined):
-//        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-//    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
-//def TSF_Forth_charslen():    #TSF_doc:文字数を数える。1枚[chars]ドローして1枚[N]リターン。
-//    TSF_joined=TSF_Forth_drawthe()
-//    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
-
 long TSF_Forth_len(string TSF_the){    //#TSF_doc:指定スタックの枚数を取得。(TSFAPI)。
     long TSF_len=0;
     if( TSF_the in TSF_stackD ){
@@ -397,6 +388,45 @@ string TSF_Forth_peekNthat(){    //#TSF_doc:積込先スタックからカード
 
 string TSF_Forth_peekNthey(){    //#TSF_doc:スタック一覧からカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())));
+    return "";
+}
+
+void TSF_Forth_pokeN(string TSF_the,long TSF_peek,string TSF_poke){    //#TSF_doc:指定スタックからカードを数値で読込。(TSFAPI)。
+    if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
+        TSF_stackD[TSF_the][to!size_t(TSF_peek)]=TSF_poke;
+    }
+}
+
+string TSF_Forth_pokeNthe(){    //#TSF_doc:指定スタックからカードを数値で上書。3枚[poke,the,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeNthis(){    //#TSF_doc:実行中スタックからカードを数値で上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_pokeN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeNthat(){    //TSF_doc:積込先スタックからカードを数値で上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_pokeN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeNthey(){    //#TSF_doc:スタック一覧からカードを数値で上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    if( (0<=TSF_peek)&&(TSF_peek<TSF_stackD.length) ){
+        string TSF_poke=TSF_Forth_drawthe();
+        string TSF_pull=TSF_stackO[to!size_t(TSF_peek)];
+        if( TSF_pull!=TSF_poke ){
+            TSF_stackO[to!size_t(TSF_peek)]=TSF_poke;
+            string[] TSF_stackR=TSF_stackD[TSF_pull]; TSF_stackD.remove(TSF_pull);
+            TSF_stackD[TSF_poke]=TSF_stackR;
+        }
+    }
     return "";
 }
 
