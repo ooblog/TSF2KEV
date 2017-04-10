@@ -95,6 +95,7 @@ ENV/
 # git log
 # git ls-files
 # git commit -a -m ""
+# git reset --soft HEAD^
 # git branch
 # git checkout master
 # git checkout 20170327M153945

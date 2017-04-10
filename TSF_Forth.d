@@ -391,6 +391,42 @@ string TSF_Forth_peekNthey(){    //#TSF_doc:スタック一覧からカードを
     return "";
 }
 
+string TSF_Forth_pokeF(string TSF_the,string TSF_poke){    //#TSF_doc:指定スタックの表面カードに上書。(TSFAPI)
+    if( (TSF_the in TSF_stackD)&&(0<TSF_stackD[TSF_the].length) ){
+        TSF_stackD[TSF_the][$-1]=TSF_poke;
+    }
+    return "";
+}
+
+string TSF_Forth_pokeFthe(){    //#TSF_doc:指定スタックから表面カードを上書。2枚[poke,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_pokeF(TSF_the,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthis(){    //#TSF_doc:実行中スタックから表面カードを上書。1枚[poke]ドロー。
+    TSF_Forth_pokeF(TSF_Forth_drawthis(),TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthat(){    //#TSF_doc:積込先スタックの表面カードを上書。1枚[poke]ドロー。
+    TSF_Forth_pokeF(TSF_Forth_drawthat(),TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthey(){    //#TSF_doc:スタック一覧の表面カードを上書。1枚[poke]ドロー。
+    if( (0<TSF_stackD.length) ){
+        string TSF_poke=TSF_Forth_drawthe();
+        string TSF_pull=TSF_stackO[$-1];
+        if( TSF_pull!=TSF_poke ){
+            TSF_stackO[$-1]=TSF_poke;
+            string[] TSF_stackR=TSF_stackD[TSF_pull]; TSF_stackD.remove(TSF_pull);
+            TSF_stackD[TSF_poke]=TSF_stackR;
+        }
+    }
+    return "";
+}
+
 void TSF_Forth_pokeN(string TSF_the,long TSF_peek,string TSF_poke){    //#TSF_doc:指定スタックからカードを数値で読込。(TSFAPI)。
     if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
         TSF_stackD[TSF_the][to!size_t(TSF_peek)]=TSF_poke;
