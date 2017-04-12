@@ -9,7 +9,7 @@ def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:"
 
 def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
-    return "20170327M153945"
+    return "20170413R040745"
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
     TSF_Forth_cards={
