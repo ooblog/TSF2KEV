@@ -468,19 +468,22 @@ def TSF_Forth_pushF(TSF_the,TSF_push):    #TSF_doc:指定スタックに表面�
 def TSF_Forth_pushFthe():    #TSF_doc:実行中スタックに表面カードとして差込。2枚[push,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe())
+    return ""
 
 def TSF_Forth_pushFthis():    #TSF_doc:実行中スタックに表面カードとして差込。1枚[push]ドロー。
     TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis())
+    return ""
 
-def TSF_Forth_pushFthat():    #TSF_doc:積込先スタックに表面カードとして差込(同じカードを1枚ドロー1枚リターン)。
+def TSF_Forth_pushFthat():    #TSF_doc:積込先スタックに表面カードとして差込(同じカードを1枚ドロー1枚リターンなので変化無し)。
 #    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthat())
-    pass
+    return ""
 
 def TSF_Forth_pushFthey():    #TSF_doc:スタック一覧に最後尾スタック名として差込。1枚[push]ドロー。
     TSF_push=TSF_Forth_drawthe()
     if not TSF_push in TSF_stackD:
         TSF_stackO.append(TSF_push)
         TSF_stackD[TSF_push]=[]
+    return ""
 
 def TSF_Forth_pushN(TSF_the,TSF_peek,TSF_push):    #TSF_doc:指定スタックにカードを数値で差込。(TSFAPI)
     if TSF_the in TSF_stackD:
@@ -490,20 +493,25 @@ def TSF_Forth_pushNthe():    #TSF_doc:指定スタックにカードを数値で
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_pushN(TSF_the,TSF_peek,TSF_Forth_drawthe())
+    return ""
 
 def TSF_Forth_pushNthis():    #TSF_doc:実行中スタックにカードを数値で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+    return ""
 
-def TSF_Forth_pushNthat():    #TSF_doc:積込先スタックにカードを数値で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushNthat():    #TSF_doc:積込先スタックにカードを数値で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+    return ""
 
 def TSF_Forth_pushNthey():    #TSF_doc:スタック一覧にスタック名として差込。2枚[push,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_push=TSF_Forth_drawthe()
     if not TSF_push in TSF_stackD:
         TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
         TSF_stackD[TSF_push]=[]
+    return ""
 
 def TSF_Forth_readtext():    #TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
     TSF_path=TSF_Forth_drawthe()
