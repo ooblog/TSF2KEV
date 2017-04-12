@@ -68,14 +68,14 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期�
         "#TSF_pulltNhis":TSF_Forth_pullNthis, "#実行中スタック引抜":TSF_Forth_pullNthis,
         "#TSF_pullNthat":TSF_Forth_pullNthat, "#積込先スタック引抜":TSF_Forth_pullNthat,
         "#TSF_pullNthey":TSF_Forth_pullNthey, "#スタック一覧引抜":TSF_Forth_pullNthey,
-#        "#TSF_pushFthe":TSF_Forth_pushFthe, "#指定スタック差込":TSF_Forth_pushFthe,
-#        "#TSF_pushFthis":TSF_Forth_pushFthis, "#実行中スタック差込":TSF_Forth_pushFthis,
-#        "#TSF_pushFthat":TSF_Forth_pushFthat, "#積込先スタック差込":TSF_Forth_pushFthat,
-#        "#TSF_pushFthey":TSF_Forth_pushFthey, "#スタック一覧差込":TSF_Forth_pushFthey,
-#        "#TSF_pushNthe":TSF_Forth_pushNthe, "#指定スタック差込":TSF_Forth_pushNthe,
-#        "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
-#        "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
-#        "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧差込":TSF_Forth_pushNthey,
+        "#TSF_pushFthe":TSF_Forth_pushFthe, "#指定スタック差込":TSF_Forth_pushFthe,
+        "#TSF_pushFthis":TSF_Forth_pushFthis, "#実行中スタック差込":TSF_Forth_pushFthis,
+        "#TSF_pushFthat":TSF_Forth_pushFthat, "#積込先スタック差込":TSF_Forth_pushFthat,
+        "#TSF_pushFthey":TSF_Forth_pushFthey, "#スタック一覧差込":TSF_Forth_pushFthey,
+        "#TSF_pushNthe":TSF_Forth_pushNthe, "#指定スタック差込":TSF_Forth_pushNthe,
+        "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
+        "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
+        "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧差込":TSF_Forth_pushNthey,
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
         "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
@@ -318,11 +318,11 @@ def TSF_Forth_peekFthat():    #TSF_doc:積込先スタックから表面カー�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekF(TSF_Forth_drawthat()))
     return ""
 
-def TSF_Forth_peekFthey():    #TSF_doc:スタック一覧から表面カードを読込。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_peekFthey():    #TSF_doc:スタック一覧から最後尾スタック名を読込。0枚[]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO[-1] if len(TSF_stackO) else "")
     return ""
 
-def TSF_Forth_peekN(TSF_the,TSF_peek):    #TSF_doc:指定スタックからカードを数値で読込。(TSFAPI)。
+def TSF_Forth_peekN(TSF_the,TSF_peek):    #TSF_doc:指定スタックからスタック名を数値で読込。(TSFAPI)。
     TSF_pull=""
     if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD[TSF_the]):
         TSF_pull=TSF_stackD[TSF_the][TSF_peek]
@@ -341,11 +341,11 @@ def TSF_Forth_peekNthat():    #TSF_doc:積込先スタックからカードを�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
-def TSF_Forth_peekNthey():    #TSF_doc:スタック一覧からカードを数値で読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekNthey():    #TSF_doc:スタック一覧からスタック名を数値で読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
-def TSF_Forth_pokeF(TSF_the,TSF_poke):    #TSF_doc:指定スタックの表面カードに上書。(TSFAPI)
+def TSF_Forth_pokeF(TSF_the,TSF_poke):    #TSF_doc:指定カードの表面カードに上書。(TSFAPI)
     if TSF_the in TSF_stackD and 0 < len(TSF_stackD[TSF_the]):
         TSF_stackD[TSF_the][-1]=TSF_poke
     return ""
@@ -363,7 +363,7 @@ def TSF_Forth_pokeFthat():    #TSF_doc:積込先スタックの表面カード�
     TSF_Forth_pokeF(TSF_Forth_drawthat(),TSF_Forth_drawthe())
     return ""
 
-def TSF_Forth_pokeFthey():    #TSF_doc:スタック一覧の表面カードを上書。1枚[poke]ドロー。
+def TSF_Forth_pokeFthey():    #TSF_doc:スタック一覧の最後尾スタック名を上書。1枚[poke]ドロー。
     if 0 < len(TSF_stackD):
         TSF_poke=TSF_Forth_drawthe()
         TSF_pull=TSF_stackO[-1]
@@ -393,10 +393,10 @@ def TSF_Forth_pokeNthat():    #TSF_doc:積込先スタックからカードを�
     TSF_Forth_pokeN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
     return ""
 
-def TSF_Forth_pokeNthey():    #TSF_doc:スタック一覧からカードを数値で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeNthey():    #TSF_doc:スタック一覧からスタック名を数値で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_poke=TSF_Forth_drawthe()
     if 0 <= TSF_peek < len(TSF_stackD):
-        TSF_poke=TSF_Forth_drawthe()
         TSF_pull=TSF_stackO[TSF_peek]
         if TSF_pull!=TSF_poke:
             TSF_stackO[TSF_peek]=TSF_poke
@@ -422,7 +422,7 @@ def TSF_Forth_pullFthat():    #TSF_doc:積込先スタックから表面カー�
     TSF_Forth_pullF(TSF_Forth_drawthat())
     return ""
 
-def TSF_Forth_pullFthey():    #TSF_doc:スタック一覧から表面カードを引抜。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_pullFthey():    #TSF_doc:スタック一覧から最後尾スタック名を引抜。0枚[]ドローして1枚[card]リターン。
     TSF_pull=""
     if len(TSF_stackO):
         TSF_pull=TSF_stackO.pop()
@@ -446,12 +446,12 @@ def TSF_Forth_pullNthis():    #TSF_doc:実行中スタックからカードを�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_peek))
     return ""
 
-def TSF_Forth_pullNthat():    #TSF_doc:積込先スタックからカードを数値で引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthat():    #TSF_doc:積込先スタックからカードを数値で引抜。1枚[peek]とpeek先のもう1枚ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_peek))
     return ""
 
-def TSF_Forth_pullNthey():    #TSF_doc:スタック一覧からカードを数値で引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthey():    #TSF_doc:スタック一覧からスタック名を数値で引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_pull=""
     if 0 <= TSF_peek < len(TSF_stackD):
@@ -460,6 +460,50 @@ def TSF_Forth_pullNthey():    #TSF_doc:スタック一覧からカードを数�
         TSF_stackD[TSF_the].pop(TSF_pull)
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
+
+def TSF_Forth_pushF(TSF_the,TSF_push):    #TSF_doc:指定スタックに表面カードとして差込。(TSFAPI)
+    if TSF_the in TSF_stackD:
+        TSF_stackD[TSF_the].append(TSF_push)
+
+def TSF_Forth_pushFthe():    #TSF_doc:実行中スタックに表面カードとして差込。2枚[push,the]ドロー。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe())
+
+def TSF_Forth_pushFthis():    #TSF_doc:実行中スタックに表面カードとして差込。1枚[push]ドロー。
+    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis())
+
+def TSF_Forth_pushFthat():    #TSF_doc:積込先スタックに表面カードとして差込(同じカードを1枚ドロー1枚リターン)。
+#    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthat())
+    pass
+
+def TSF_Forth_pushFthey():    #TSF_doc:スタック一覧に最後尾スタック名として差込。1枚[push]ドロー。
+    TSF_push=TSF_Forth_drawthe()
+    if not TSF_push in TSF_stackD:
+        TSF_stackO.append(TSF_push)
+        TSF_stackD[TSF_push]=[]
+
+def TSF_Forth_pushN(TSF_the,TSF_peek,TSF_push):    #TSF_doc:指定スタックにカードを数値で差込。(TSFAPI)
+    if TSF_the in TSF_stackD:
+        TSF_stackD[TSF_the]=TSF_Io_separatepushN(TSF_stackD[TSF_the],TSF_peek,TSF_push)
+
+def TSF_Forth_pushNthe():    #TSF_doc:指定スタックにカードを数値で差込。3枚[push,the,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_pushN(TSF_the,TSF_peek,TSF_Forth_drawthe())
+
+def TSF_Forth_pushNthis():    #TSF_doc:実行中スタックにカードを数値で差込。2枚[push,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+
+def TSF_Forth_pushNthat():    #TSF_doc:積込先スタックにカードを数値で差込。2枚[push,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+
+def TSF_Forth_pushNthey():    #TSF_doc:スタック一覧にスタック名として差込。2枚[push,peek]ドロー。
+    TSF_push=TSF_Forth_drawthe()
+    if not TSF_push in TSF_stackD:
+        TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
+        TSF_stackD[TSF_push]=[]
 
 def TSF_Forth_readtext():    #TSF_doc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。
     TSF_path=TSF_Forth_drawthe()
