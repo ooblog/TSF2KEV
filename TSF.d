@@ -19,23 +19,27 @@ void TSF_sample_help(){    //#TSF_doc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("help:",
         join([
         "usage: ./TSF.py [command|file.tsf] [argv] ...",
-        "commands:",
+        "commands & samples:",
         "  --help        this commands view",
-        "  --helloworld  \"Hello world  #TSF_echo\" sample",
-        "  --RPN         decimal calculator \"1,3/m1|2-\"-> 0.8333... sample",
+        "  --helloworld  \"Hello world  #TSF_echo\"",
+        "  --RPN         decimal calculator \"1,3/m1|2-\"-> 0.8333...",
         ],"\t"),"N");
     TSF_sample_run("TSF_sample_help");
 }
 
 void TSF_sample_run(...){    //#TSF_doc:TSF実行。コマンド実行の場合はソースも表示。
+    string TSF_sample_sepalete="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
-        string TSF_sample_sepalete=va_arg!(string)(_argptr);
+        TSF_sample_sepalete=va_arg!(string)(_argptr);
         TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
         TSF_Forth_viewthey();
         TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
     }
     TSF_Forth_run();
-//    TSF_Forth_viewthey();
+    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
+        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
+        TSF_Forth_viewthey();
+    }
 }
 
 void TSF_sample_Helloworld(){    //#TSF_doc:「sample_helloworld.tsf」コマンド版。
@@ -55,12 +59,6 @@ void TSF_sample_RPN(){    //#TSF_doc:「sample_RPN.tsf」コマンド版。
         join(["1,3/m1|2-","RPN:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("RPN:",
         join(["#TSF_RPN","#TSF_echo"],"\t"),"T");
-//    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-//        join(["RPN:","#TSF_this","#TSF_fin."],"\t"),"T");
-//    TSF_Forth_setTSF("RPN:",
-//        join(["RPNtest:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_RPN","#TSF_echo"],"\t"),"T");
-//    TSF_Forth_setTSF("RPNtest:",
-//        join(["1,3/m1|2-"],"\t"),"T");
     TSF_sample_run("TSF_sample_RPN");
 }
 
@@ -71,7 +69,6 @@ void main(string[] sys_argvs){
     TSF_Forth_initTSF(TSF_sysargvs[1..$],null);
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
         TSF_Forth_merge(TSF_bootcommand,null,true);
-//        TSF_Forth_viewthey();
         TSF_sample_run();
     }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
