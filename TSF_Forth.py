@@ -713,6 +713,9 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
         TSF_stackD[TSF_the]=[]
     TSF_stackD[TSF_the].append(TSF_card)
 
+def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
+    return TSF_mainandargvs
+
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。

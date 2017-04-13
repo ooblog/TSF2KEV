@@ -11,15 +11,15 @@ import std.algorithm;
 import TSF_Io;
 
 
-string TSF_Forth_1ststack(){    //TSFdoc:最初のスタック名(TSFAPI)。
+string TSF_Forth_1ststack(){    //#TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:";
 }
 
-string TSF_Forth_version(){    //TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
+string TSF_Forth_version(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
     return "20170413R040745";
 }
 
-void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){
+void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSF_doc:関数カードに基本的な命令を追加する。(TSFAPI)
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
         "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
@@ -869,6 +869,10 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
     TSF_stackD[TSF_the]~=[TSF_card];
 }
 
+string[] TSF_Forth_mainandargvs(){    //#TSFdoc:argvsの取得。(TSFAPI)
+    return TSF_mainandargvs;
+}
+
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
@@ -894,7 +898,7 @@ string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単�
 
 
 unittest {
-    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
+//    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
 }
 
 
