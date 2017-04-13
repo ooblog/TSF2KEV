@@ -308,7 +308,7 @@ def TSF_Io_writetext(TSF_path,TSF_text):    #TSFdoc:TSF_pathにTSF_textを追記
 
 
 def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デバッグ関数。
-    TSF_debug_log="";  TSF_debug_savefilename="debug/debug_pyIo.log";
+    TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Io.log";
     print("--- {0} ---".format(__file__))
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("\t{0}".format("\t".join(["0",":TSF_fin."])),TSF_debug_log)

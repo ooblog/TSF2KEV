@@ -17,4 +17,4 @@ len:
 	len:	#TSF_that	len:	#TSF_lenthe	#TSF_lenthis	#TSF_lenthat	#TSF_lenthey	#exit	#TSF_this	9	10	11	3
 TSF_argvs:
 	TSF_Forth.py	1
---- TSF_Forth.py > debug/debug_pyForth.log ---
+--- TSF_Forth.py > debug/debug_py-Forth.log ---

@@ -713,7 +713,7 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
-        TSF_stackD[TSF_the]=replace(stripRight(TSF_text),"\t","\n").split("\n");
+        TSF_stackD[TSF_the]=replace(stripRight(TSF_text,'\n'),"\t","\n").split("\n");
         TSF_styleD[TSF_the]=TSF_style;
     }
     else{
@@ -872,7 +872,7 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
-    string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dForth.log";
+    string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Forth.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");

@@ -429,7 +429,7 @@ void TSF_Io_writetext(string TSF_path,string TSF_text){    //#TSFdoc:TSF_pathに
 
 
 string TSF_Io_debug(string[] TSF_argvs){
-    string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_dIo.log";
+    string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Io.log";
     std.stdio.writeln(format("--- %s ---",__FILE__));
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog(format("\t%s",join(["UTF-8",":TSF_encoding","0",":TSF_fin."],"\t")),TSF_debug_log);
