@@ -8,6 +8,7 @@ os.chdir(sys.path[0])
 sys.path.append('.')
 from TSF_Io import *
 from TSF_Forth import *
+from TSF_Trans import *
 
 
 def TSF_sample_help():    #TSF_doc:「sample_help.tsf」コマンド版。
@@ -109,11 +110,17 @@ def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
 
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
-TSF_Forth_initTSF(TSF_sysargvs[1:],[])
+TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Trans_Initcards]
+TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
     TSF_Forth_merge(TSF_bootcommand,[],True)
     TSF_sample_run()
+elif TSF_bootcommand in ["--py","--python","--Python"]:
+    if len(TSF_sysargvs) >= 4:
+        TSF_Trans_python(TSF_sysargvs[2],TSF_sysargvs[3])
+    elif len(TSF_sysargvs) >= 3:
+        TSF_Trans_python(TSF_sysargvs[2])
 elif TSF_bootcommand in ["--help","--commands"]:
     TSF_sample_help()
 elif TSF_bootcommand in ["--about","--aboutTSF"]:

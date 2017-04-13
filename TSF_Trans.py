@@ -6,24 +6,27 @@ from TSF_Io import *
 from TSF_Forth import *
 
 
-def TSF_Trans_Initcards(TSF_words):    #TSF_doc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
-    TSF_words["#TSF_Python"]=TSF_Trans_python; TSF_words["#デッキのpython化"]=TSF_Trans_python
-    TSF_words["#TSF_D-lang"]=TSF_Trans_dlang; TSF_words["#デッキのD言語化"]=TSF_Trans_dlang
+def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
+    TSF_Forth_cards={
+        "#TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,
+        "#TSF_D-lang":TSF_Trans_dlang, "#デッキのD言語化":TSF_Trans_dlang,
+    }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
+    TSF_Trans_python(TSF_Forth_drawthe())
     return ""
 
 def TSF_Trans_dlang():    #TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
     return ""
 
 
-def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。(TSFAPI)
+def TSF_Trans_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
     TSF_mainandargvs=TSF_Forth_mainandargvs()
-    print("TSF_mainandargvs",TSF_mainandargvs)
+    print("TSF_tsfpath",TSF_tsfpath,TSF_pyhonpath)
     TSF_text=""
 
 #def TSF_Forth_writesamplepy(TSF_tsfpath=None,TSF_pyhonpath=None):   #TSF_doc:[filename,stack]スタック全体をpythonとみなして.pyに保存する(TSFAPI)。
