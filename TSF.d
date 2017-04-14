@@ -11,6 +11,7 @@ import std.string;
 
 import TSF_Io;
 import TSF_Forth;
+import TSF_Trans;
 
 
 void TSF_sample_help(){    //#TSF_doc:「sample_help.tsf」コマンド版。
@@ -124,11 +125,20 @@ void TSF_sample_RPN(){    //#TSF_doc:「sample_RPN.tsf」コマンド版。
 
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
+    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Trans_Initcards];
     string TSF_bootcommand=TSF_sysargvs.length<2?"":TSF_sysargvs[1];
-    TSF_Forth_initTSF(TSF_sysargvs[1..$],null);
+    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
         TSF_Forth_merge(TSF_bootcommand,null,true);
         TSF_sample_run();
+    }
+    else if( count(["--py","--python","--Python"],TSF_bootcommand) ){
+        if( TSF_sysargvs.length>=4 ){
+            TSF_Trans_generator_python(TSF_sysargvs[2],TSF_sysargvs[3]);
+        }
+        else if( TSF_sysargvs.length>=3 ){
+            TSF_Trans_generator_python(TSF_sysargvs[2]);
+        }
     }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
         TSF_sample_help();

@@ -7,6 +7,7 @@ from TSF_Forth import *
 
 
 def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
+    TSF_Forth_importlist(TSF_import="TSF_Trans")
     TSF_Forth_cards={
         "#TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,
         "#TSF_D-lang":TSF_Trans_dlang, "#デッキのD言語化":TSF_Trans_dlang,
@@ -17,17 +18,37 @@ def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードにD�
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
-    TSF_Trans_python(TSF_Forth_drawthe())
+    TSF_Trans_generator_python(TSF_Forth_drawthe())
     return ""
 
 def TSF_Trans_dlang():    #TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
+#    TSF_Trans_generator_dlang(TSF_Forth_drawthe())
     return ""
 
 
-def TSF_Trans_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
+def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
     TSF_mainandargvs=TSF_Forth_mainandargvs()
-    print("TSF_tsfpath",TSF_tsfpath,TSF_pyhonpath)
-    TSF_text=""
+#    print("TSF_Forth_importlist",TSF_Forth_importlist())
+    TSF_text,TSF_card="",""
+    if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
+        if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
+            TSF_Forth_merge(TSF_tsfpath,[],True)
+        TSF_text+="#! /usr/bin/env python\n"
+        TSF_text+="# -*- coding: UTF-8 -*-\n"
+        TSF_text+="from __future__ import division,print_function,absolute_import,unicode_literals\n\n"
+        TSF_text+="from TSF_Io import *\n"
+        for TSF_import in TSF_Forth_importlist():
+            TSF_text+="from {0} import *\n".format(TSF_import)
+            TSF_card+="{0}_Initcards,".format(TSF_import)
+        TSF_text+="\n"
+        TSF_text+="TSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
+        TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
+        if TSF_pyhonpath != None:
+#            TSF_io_savetext(TSF_pyhonpath,TSF_text)
+            pass
+        else:
+            for TSF_textline in TSF_text.split('\n'):
+                TSF_Io_printlog(TSF_textline)
 
 #def TSF_Forth_writesamplepy(TSF_tsfpath=None,TSF_pyhonpath=None):   #TSF_doc:[filename,stack]スタック全体をpythonとみなして.pyに保存する(TSFAPI)。
 #    TSF_text=""

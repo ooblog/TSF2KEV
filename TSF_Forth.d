@@ -20,6 +20,7 @@ string TSF_Forth_version(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSF
 }
 
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSF_doc:関数カードに基本的な命令を追加する。(TSFAPI)
+    TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
         "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
@@ -688,6 +689,18 @@ void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()
     foreach(void function(ref string function()[string],ref string[]) TSF_Initcard;TSF_Initcards){
         TSF_Initcard(TSF_cardD,TSF_cardO);
     }
+}
+
+string[] TSF_importlist=null;
+string[] TSF_Forth_importlist(...){    //#TSF_doc:モジュール一覧を管理する(TSFAPI)。
+    string TSF_import="";
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_import=va_arg!(string)(_argptr);
+        if( count(TSF_importlist,TSF_import)==0 ){
+            TSF_importlist~=[TSF_import];
+        }
+    }
+    return TSF_importlist;
 }
 
 string TSF_Forth_style(string TSF_the, ...){    //#TSF_doc:スタックの表示スタイルを指定する(TSFAPI)。

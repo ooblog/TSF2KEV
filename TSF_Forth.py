@@ -12,6 +12,7 @@ def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)�
     return "20170413R040745"
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:ワードを初期化する(TSFAPI)。
+    TSF_Forth_importlist("TSF_Forth")
     TSF_Forth_cards={
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
         "#TSF_countmax":TSF_Forth_countmax, "#カード数え上げ上限":TSF_Forth_countmax,
@@ -579,6 +580,12 @@ def TSF_Forth_initTSF(TSF_sysargvs=[],TSF_addcards=[]):    #TSFdoc:スタック�
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
+
+TSF_importlist=[]
+def TSF_Forth_importlist(TSF_import=None):    #TSF_doc:モジュール一覧を管理する(TSFAPI)。
+    if TSF_import != None and not TSF_import in TSF_importlist:
+        TSF_importlist.append(TSF_import)
+    return TSF_importlist
 
 def TSF_Forth_style(TSF_the,TSF_style=None):    #TSF_doc:スタックの表示スタイルを指定する(TSFAPI)。
     global TSF_styles

@@ -2,10 +2,6 @@
 # -*- coding: UTF-8 -*-
 from __future__ import division,print_function,absolute_import,unicode_literals
 
-import sys
-import os
-os.chdir(sys.path[0])
-sys.path.append('.')
 from TSF_Io import *
 from TSF_Forth import *
 from TSF_Trans import *
@@ -118,9 +114,9 @@ if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TS
     TSF_sample_run()
 elif TSF_bootcommand in ["--py","--python","--Python"]:
     if len(TSF_sysargvs) >= 4:
-        TSF_Trans_python(TSF_sysargvs[2],TSF_sysargvs[3])
+        TSF_Trans_generator_python(TSF_sysargvs[2],TSF_sysargvs[3])
     elif len(TSF_sysargvs) >= 3:
-        TSF_Trans_python(TSF_sysargvs[2])
+        TSF_Trans_generator_python(TSF_sysargvs[2])
 elif TSF_bootcommand in ["--help","--commands"]:
     TSF_sample_help()
 elif TSF_bootcommand in ["--about","--aboutTSF"]:
