@@ -43,43 +43,29 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
         TSF_text+="\n"
         TSF_text+="TSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
         TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
+        TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n\n"
+        for TSF_the in TSF_Forth_stack().keys():
+            TSF_text=TSF_Trans_view_python(TSF_the,False,TSF_text)
+        TSF_text+="\nTSF_Forth_run()\n"
         if TSF_pyhonpath != None:
-#            TSF_io_savetext(TSF_pyhonpath,TSF_text)
-            pass
+            TSF_Io_savetext(TSF_pyhonpath,TSF_text)
         else:
             for TSF_textline in TSF_text.split('\n'):
                 TSF_Io_printlog(TSF_textline)
 
-#def TSF_Forth_writesamplepy(TSF_tsfpath=None,TSF_pyhonpath=None):   #TSF_doc:[filename,stack]スタック全体をpythonとみなして.pyに保存する(TSFAPI)。
-#    TSF_text=""
-#    if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
-#        if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
-#            TSF_Forth_merge(TSF_tsfpath,[],TSF_mergedel=True)
-#            TSF_appendtext=TSF_txt_ESCdecode("\t{0}\t".format("\t".join(TSF_stacks[TSF_Forth_1ststack()])))
-#            TSF_appendtags=re.findall(re.compile("\\t[:a-zA-Z0-9_\/\\\\]*?\\t#TSF_viewpythonappend\\t",re.MULTILINE),TSF_appendtext)
-#            if len(TSF_appendtags):
-#                TSF_Forth_writesamplepyappend(TSF_appendtags[0].replace("\t#TSF_viewpythonappend","").strip('\t'))
-#    TSF_text+="#! /usr/bin/env python\n"
-#    TSF_text+="# -*- coding: UTF-8 -*-\n"
-#    TSF_text+="from __future__ import division,print_function,absolute_import,unicode_literals\n\n"
-#    TSF_text+="import sys\nimport os\nos.chdir(sys.path[0])\nsys.path.append('{0}')\n".format(TSF_Forth_writesamplepyappend())
-#    TSF_text+="from TSF_io import *\n"
-#    TSF_text+="#from TSF_Forth import *\n"
-#    TSF_importlist=["TSF_shuffle","TSF_match","TSF_uri","TSF_calc","TSF_time"]
-#    for TSF_import in TSF_importlist:
-#        TSF_text+="from {0} import *\n".format(TSF_import)
-#    TSF_text+="\n"
-#    TSF_text+="TSF_Forth_init(TSF_io_argvs(),[TSF_shuffle_Initwords,TSF_match_Initwords,TSF_uri_Initwords,TSF_calc_Initwords,TSF_time_Initwords])\n\n"
-#    for TSF_thename in TSF_stacks.keys():
-#        TSF_text=TSF_Forth_samplingpy(TSF_thename,False,TSF_text)
-#    TSF_text+="\nTSF_Forth_addfin(TSF_io_argvs())\nTSF_Forth_argvsleftcut(TSF_io_argvs(),1)\nTSF_Forth_mainfile(TSF_io_argvs()[0])\nTSF_Forth_run()"
-#    if TSF_pyhonpath != None:
-#        TSF_io_savetext(TSF_pyhonpath,TSF_text=TSF_text)
-#    else:
-#        for TSF_textline in TSF_text.split('\n'):
-#            TSF_io_printlog(TSF_textline)
-
-
+def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
+    if TSF_view_log == None: TSF_view_log="";
+    if TSF_the in TSF_Forth_stack():
+        TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stack(TSF_the)]
+        TSF_style=TSF_styleD.get(TSF_the,"T")
+        if TSF_style == "O":
+            TSF_view_logline='TSF_Forth_setTSF("{0}",    "\\t".join(["{1}"]),"O")\n'.format(TSF_the,'","'.join(TSF_cards))
+        elif TSF_style == "T":
+            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    "\\t".join(["{1}"]),"T")\n'.format(TSF_the,'","'.join(TSF_cards))
+        else:  # TSF_style == "N":
+            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    "\\t".join(["{1}"]),"N")\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
+        TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
+    return TSF_view_log
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
