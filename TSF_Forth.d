@@ -730,8 +730,8 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         TSF_styleD[TSF_the]=TSF_style;
     }
     else{
-        if( TSF_the !in TSF_stackD ){ TSF_stackD.remove(TSF_the); }
-        if( TSF_the !in TSF_styleD ){ TSF_styleD.remove(TSF_the); }
+        if( TSF_the in TSF_stackD ){ TSF_stackD.remove(TSF_the); }
+        if( TSF_the in TSF_styleD ){ TSF_styleD.remove(TSF_the); }
         if( count(TSF_stackO,TSF_the) ){ TSF_stackO=remove!((TSF_stackO){return TSF_stackO==TSF_the;})(TSF_stackO); }
         if( count(TSF_styleO,TSF_the) ){ TSF_styleO=remove!((TSF_styleO){return TSF_styleO==TSF_the;})(TSF_styleO); }
     }
@@ -884,6 +884,14 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
 
 string[] TSF_Forth_mainandargvs(){    //#TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs;
+}
+
+string[] [string] TSF_Forth_stack(){    //#TSFdoc:TSF_stackDの取得。(TSFAPI)
+    return TSF_stackD;
+}
+
+string [string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
+    return TSF_styleD;
 }
 
 

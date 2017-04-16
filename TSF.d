@@ -140,6 +140,14 @@ void main(string[] sys_argvs){
             TSF_Trans_generator_python(TSF_sysargvs[2]);
         }
     }
+    else if( count(["--py","--d","--D","--dlang"],TSF_bootcommand) ){
+        if( TSF_sysargvs.length>=4 ){
+            TSF_Trans_generator_dlang(TSF_sysargvs[2],TSF_sysargvs[3]);
+        }
+        else if( TSF_sysargvs.length>=3 ){
+            TSF_Trans_generator_dlang(TSF_sysargvs[2]);
+        }
+    }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
         TSF_sample_help();
     }

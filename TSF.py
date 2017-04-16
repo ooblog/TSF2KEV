@@ -117,6 +117,11 @@ elif TSF_bootcommand in ["--py","--python","--Python"]:
         TSF_Trans_generator_python(TSF_sysargvs[2],TSF_sysargvs[3])
     elif len(TSF_sysargvs) >= 3:
         TSF_Trans_generator_python(TSF_sysargvs[2])
+elif TSF_bootcommand in ["--py","--d","--D","--dlang"]:
+    if len(TSF_sysargvs) >= 4:
+        TSF_Trans_generator_dlang(TSF_sysargvs[2],TSF_sysargvs[3])
+    elif len(TSF_sysargvs) >= 3:
+        TSF_Trans_generator_dlang(TSF_sysargvs[2])
 elif TSF_bootcommand in ["--help","--commands"]:
     TSF_sample_help()
 elif TSF_bootcommand in ["--about","--aboutTSF"]:

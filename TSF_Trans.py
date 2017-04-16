@@ -22,13 +22,12 @@ def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロ�
     return ""
 
 def TSF_Trans_dlang():    #TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
-#    TSF_Trans_generator_dlang(TSF_Forth_drawthe())
+    TSF_Trans_generator_dlang(TSF_Forth_drawthe())
     return ""
 
 
 def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
     TSF_mainandargvs=TSF_Forth_mainandargvs()
-#    print("TSF_Forth_importlist",TSF_Forth_importlist())
     TSF_text,TSF_card="",""
     if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
         if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
@@ -40,8 +39,7 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
         for TSF_import in TSF_Forth_importlist():
             TSF_text+="from {0} import *\n".format(TSF_import)
             TSF_card+="{0}_Initcards,".format(TSF_import)
-        TSF_text+="\n"
-        TSF_text+="TSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
+        TSF_text+="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
         TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
         TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n\n"
         for TSF_the in TSF_Forth_stack().keys():
@@ -53,11 +51,11 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
             for TSF_textline in TSF_text.split('\n'):
                 TSF_Io_printlog(TSF_textline)
 
-def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
-    if TSF_view_log == None: TSF_view_log="";
+def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をPython風テキスト表示(TSFAPI)。
+    if TSF_view_log == None: TSF_view_log=""
     if TSF_the in TSF_Forth_stack():
-        TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stack(TSF_the)]
-        TSF_style=TSF_styleD.get(TSF_the,"T")
+        TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stack()[TSF_the]]
+        TSF_style=TSF_Forth_style().get(TSF_the,"T")
         if TSF_style == "O":
             TSF_view_logline='TSF_Forth_setTSF("{0}",    "\\t".join(["{1}"]),"O")\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
@@ -66,6 +64,27 @@ def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:
             TSF_view_logline='TSF_Forth_setTSF("{0}",\n    "\\t".join(["{1}"]),"N")\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
+
+def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:TSFデッキのD言語化。(TSFAPI)
+    TSF_mainandargvs=TSF_Forth_mainandargvs()
+    TSF_text,TSF_card="",""
+    if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
+        if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
+            TSF_Forth_merge(TSF_tsfpath,[],True)
+        TSF_text+="#! /usr/bin/env rdmd\n\n"
+        TSF_text+="import TSF_Io;\n"
+        for TSF_import in TSF_Forth_importlist():
+            TSF_text+="import {0};\n".format(TSF_import)
+            TSF_card+="{0}_Initcards,".format(TSF_import)
+        TSF_text+="\nvoid main(string[] sys_argvs){\n"
+        TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
+        TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n";
+        if TSF_dlangpath != None:
+#            TSF_Io_savetext(TSF_dlangpath,TSF_text)
+            pass
+        else:
+            for TSF_textline in TSF_text.split('\n'):
+                TSF_Io_printlog(TSF_textline)
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]

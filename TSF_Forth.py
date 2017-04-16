@@ -723,8 +723,12 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
 def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs
 
-def TSF_Forth_stack(TSF_the=None):    #TSFdoc:TSF_stackDの取得。(TSFAPI)
-    return TSF_stackD if TSF_the==None else TSF_stackD.get(TSF_the,[])
+def TSF_Forth_stack():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
+    return TSF_stackD
+
+def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
+    return TSF_styleD
+
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Io_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
