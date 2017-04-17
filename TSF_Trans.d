@@ -107,6 +107,7 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
             TSF_Forth_merge(TSF_tsfpath,null,true);
         }
         TSF_text~="#! /usr/bin/env rdmd\n\n";
+        TSF_text~="import std.string;\n\n";
         TSF_text~="import TSF_Io;\n";
         foreach(string TSF_import;TSF_Forth_importlist()){
             TSF_text~=format("import %s;\n",TSF_import);
@@ -114,10 +115,12 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         }
         TSF_text~="\nvoid main(string[] sys_argvs){\n";
         TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
-        TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n\n";
+        TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
+        TSF_text~="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n\n";
         foreach(string TSF_the;TSF_Forth_stack().keys()){
             TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
         }
+        TSF_text~="\n    TSF_Forth_run();\n}\n";
         if( TSF_dlangpath.length ){
             TSF_Io_savetext(TSF_dlangpath,TSF_text);
         }
@@ -145,9 +148,9 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
 //        writeln(format("TSF_the,TSF_style:%s %s",TSF_the,TSF_style));
         string TSF_view_logline="";
         switch( TSF_style ){
-            case "O":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",join([\"%s\"],\"\\t\"),\"O\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
-            case "T":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",join([\n    \"%s\"],\"\\t\"),\"T\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
-            case "N":  default:  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",join([\n    \"%s\"],\"\\t\"),\"N\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\n    \""));  break;
+            case "O":  TSF_view_logline=format("    TSF_Forth_setTSF(\"%s\",join([\"%s\"],\"\\t\"),\"O\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
+            case "T":  TSF_view_logline=format("    TSF_Forth_setTSF(\"%s\",join([\n        \"%s\"],\"\\t\"),\"T\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
+            case "N":  default:  TSF_view_logline=format("    TSF_Forth_setTSF(\"%s\",join([\n        \"%s\"],\"\\t\"),\"N\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\n        \""));  break;
         }
         TSF_view_log=(TSF_view_io)?TSF_Io_printlog(TSF_view_logline,TSF_view_log):TSF_view_log~TSF_view_logline;
     }

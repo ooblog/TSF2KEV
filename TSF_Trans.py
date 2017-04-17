@@ -72,15 +72,18 @@ def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:T
         if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
             TSF_Forth_merge(TSF_tsfpath,[],True)
         TSF_text+="#! /usr/bin/env rdmd\n\n"
+        TSF_text+="import std.string;\n\n"
         TSF_text+="import TSF_Io;\n"
         for TSF_import in TSF_Forth_importlist():
             TSF_text+="import {0};\n".format(TSF_import)
             TSF_card+="&{0}_Initcards,".format(TSF_import)
         TSF_text+="\nvoid main(string[] sys_argvs){\n"
         TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
-        TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n\n";
+        TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n"
+        TSF_text+="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n\n"
         for TSF_the in TSF_Forth_stack().keys():
             TSF_text=TSF_Trans_view_dlang(TSF_the,False,TSF_text)
+        TSF_text+="\n    TSF_Forth_run();\n}\n"
         if TSF_dlangpath != None:
             TSF_Io_savetext(TSF_dlangpath,TSF_text)
             pass
@@ -94,11 +97,11 @@ def TSF_Trans_view_dlang(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:ã
         TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stack()[TSF_the]]
         TSF_style=TSF_Forth_style().get(TSF_the,"T")
         if TSF_style == "O":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",    join(["{1}"],"\\t"),"O");\n'.format(TSF_the,'","'.join(TSF_cards))
+            TSF_view_logline='    TSF_Forth_setTSF("{0}",join(["{1}"],"\\t"),"O");\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",join([\n    "{1}"],"\\t"),"T");\n'.format(TSF_the,'","'.join(TSF_cards))
+            TSF_view_logline='    TSF_Forth_setTSF("{0}",join([\n        "{1}"],"\\t"),"T");\n'.format(TSF_the,'","'.join(TSF_cards))
         else:  # TSF_style == "N":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",join([\n    "{1}"],"\\t"),"N");\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
+            TSF_view_logline='    TSF_Forth_setTSF("{0}",join([\n        "{1}"],"\\t"),"N");\n'.format(TSF_the,'",\n        "'.join(TSF_cards))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
 

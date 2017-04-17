@@ -1,9 +1,11 @@
 TSF_Tab-Separated-Forth:
 	help:	#TSF_argvsthe	#TSF_reverseN	help:	#TSF_lenthe	#TSF_echoN	#TSF_fin.
 help:
-	usage: ./TSF.py [command|file.tsf] [argv] ...
+	usage: ./TSF.py [command|file.tsf] [argvs] ...
 	commands & samples:
 	  --help        this commands view
+	  --python      TSF to Python
+	  --dlang       TSF to D
 	  --about       about TSF mini guide
 	  --helloworld  "Hello world  #TSF_echo" sample
 	  --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
