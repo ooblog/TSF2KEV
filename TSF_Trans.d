@@ -72,7 +72,7 @@ void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     }
 }
 
-string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をPython風テキスト表示(TSFAPI)。
+string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をPython風テキスト表示。(TSFAPI)
     string TSF_view_log="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_view_log=va_arg!(string)(_argptr);
@@ -107,7 +107,6 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
             TSF_Forth_merge(TSF_tsfpath,null,true);
         }
         TSF_text~="#! /usr/bin/env rdmd\n\n";
-        TSF_text~="\n";
         TSF_text~="import TSF_Io;\n";
         foreach(string TSF_import;TSF_Forth_importlist()){
             TSF_text~=format("import %s;\n",TSF_import);
@@ -115,9 +114,12 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         }
         TSF_text~="\nvoid main(string[] sys_argvs){\n";
         TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
-        TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
+        TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n\n";
+        foreach(string TSF_the;TSF_Forth_stack().keys()){
+            TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
+        }
         if( TSF_dlangpath.length ){
-//            TSF_io_savetext(TSF_dlangpath,TSF_text)
+            TSF_Io_savetext(TSF_dlangpath,TSF_text);
         }
         else{
             foreach(string TSF_textline;TSF_text.split('\n')){
@@ -127,18 +129,25 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     }
 }
 
-string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をPython風テキスト表示(TSFAPI)。
+string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタックの内容をD言語風テキスト表示。(TSFAPI)
     string TSF_view_log="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_view_log=va_arg!(string)(_argptr);
     }
+    string[] TSF_cards;
+    string TSF_style;
     if( TSF_the in TSF_stackD ){
-        string TSF_style=TSF_styleD.get(TSF_the,"T");
+        TSF_cards=TSF_Forth_stack()[TSF_the];
+        foreach(size_t TSF_count,string TSF_card;TSF_cards){
+            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
+        }
+        TSF_style=TSF_Forth_style().get(TSF_the,"T");
+//        writeln(format("TSF_the,TSF_style:%s %s",TSF_the,TSF_style));
         string TSF_view_logline="";
         switch( TSF_style ){
-            case "O":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",    join(\"%s\",\",\"),\"O\");",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
-            case "T":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",\n    join(\"%s\",\",\"),\"T\");",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
-            case "N":  default:  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",\n    join(\"%s\",\",\"),\"N\");",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
+            case "O":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",    join([\"%s\"],\"\\t\"),\"O\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
+            case "T":  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",\n    join([\"%s\"],\"\\t\"),\"T\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;
+            case "N":  default:  TSF_view_logline=format("TSF_Forth_setTSF(\"%s\",\n    join([\"%s\"],\"\\t\"),\"N\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\n    \""));  break;
         }
         TSF_view_log=(TSF_view_io)?TSF_Io_printlog(TSF_view_logline,TSF_view_log):TSF_view_log~TSF_view_logline;
     }
