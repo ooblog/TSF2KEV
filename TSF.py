@@ -8,18 +8,6 @@ from TSF_Trans import *
 
 
 def TSF_sample_help():    #TSF_doc:「sample_help.tsf」コマンド版。
-#    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-#        "\t".join(["help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
-#    TSF_Forth_setTSF("help:",
-#        "\t".join([
-#        "usage: ./TSF.py [command|file.tsf] [argv] ...",
-#        "commands & samples:",
-#        "  --help        this commands view",
-#        "  --about       about TSF mini guide",
-#        "  --helloworld  \"Hello world  #TSF_echo\" sample",
-#        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
-#        ]),"N")
-#    TSF_sample_run("TSF_sample_help")
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:","\t".join([
@@ -104,16 +92,16 @@ def TSF_sample_about():    #TSF_doc:「sample_aboutTSF.tsf」コマンド版。
     TSF_sample_run("TSF_sample_about")
 
 def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        "\t".join(["RPNsetup:","#TSF_this","#TSF_fin."]),"T")
-    TSF_Forth_setTSF("RPNsetup:",
-        "\t".join(["RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
-    TSF_Forth_setTSF("RPNjump:",
-        "\t".join(["-","RPNdefault:","RPN:"]),"T")
-    TSF_Forth_setTSF("RPNdefault:",
-        "\t".join(["1,3/m1|2-","RPN:","#TSF_this"]),"T")
-    TSF_Forth_setTSF("RPN:",
-        "\t".join(["#TSF_RPN","#TSF_echo"]),"T")
+    TSF_Forth_setTSF("RPN:","\t".join([
+        "#TSF_RPN","#TSF_echo"]),"T")
+    TSF_Forth_setTSF("RPNsetup:","\t".join([
+        "RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
+    TSF_Forth_setTSF("RPNjump:","\t".join([
+        "RPNdefault:","RPNdefault:","RPN:"]),"T")
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "RPNsetup:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("RPNdefault:","\t".join([
+        "1,3/m1|2-","RPN:","#TSF_this"]),"T")
     TSF_sample_run("TSF_sample_RPN")
 
 

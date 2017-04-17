@@ -15,18 +15,6 @@ import TSF_Trans;
 
 
 void TSF_sample_help(){    //#TSF_doc:「sample_help.tsf」コマンド版。
-//    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-//        join(["help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
-//    TSF_Forth_setTSF("help:",
-//        join([
-//        "usage: ./TSF.py [command|file.tsf] [argv] ...",
-//        "commands & samples:",
-//        "  --help        this commands view",
-//        "  --about       about TSF mini guide",
-//        "  --helloworld  \"Hello world  #TSF_echo\" sample",
-//        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
-//        ],"\t"),"N");
-//    TSF_sample_run("TSF_sample_help");
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
@@ -121,16 +109,16 @@ void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版�
 }
 
 void TSF_sample_RPN(){    //#TSF_doc:「sample_RPN.tsf」コマンド版。
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["RPNsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
-    TSF_Forth_setTSF("RPNsetup:",
-        join(["RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"],"\t"),"T");
-    TSF_Forth_setTSF("RPNjump:",
-        join(["-","RPNdefault:","RPN:"],"\t"),"T");
-    TSF_Forth_setTSF("RPNdefault:",
-        join(["1,3/m1|2-","RPN:","#TSF_this"],"\t"),"T");
-    TSF_Forth_setTSF("RPN:",
-        join(["#TSF_RPN","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("RPN:",join([
+        "#TSF_RPN","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("RPNsetup:",join([
+        "RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("RPNjump:",join([
+        "RPNdefault:","RPNdefault:","RPN:"],"\t"),"T");
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "RPNsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("RPNdefault:",join([
+        "1,3/m1|2-","RPN:","#TSF_this"],"\t"),"T");
     TSF_sample_run("TSF_sample_RPN");
 }
 
