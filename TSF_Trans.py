@@ -57,11 +57,11 @@ def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:
         TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stack()[TSF_the]]
         TSF_style=TSF_Forth_style().get(TSF_the,"T")
         if TSF_style == "O":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",    "\\t".join(["{1}"]),"O")\n'.format(TSF_the,'","'.join(TSF_cards))
+            TSF_view_logline='TSF_Forth_setTSF("{0}","\\t".join(["{1}"]),"O")\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    "\\t".join(["{1}"]),"T")\n'.format(TSF_the,'","'.join(TSF_cards))
+            TSF_view_logline='TSF_Forth_setTSF("{0}","\\t".join([\n    "{1}"]),"T")\n'.format(TSF_the,'","'.join(TSF_cards))
         else:  # TSF_style == "N":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    "\\t".join(["{1}"]),"N")\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
+            TSF_view_logline='TSF_Forth_setTSF("{0}","\\t".join([\n    "{1}"]),"N")\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
 
@@ -96,9 +96,9 @@ def TSF_Trans_view_dlang(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:ã
         if TSF_style == "O":
             TSF_view_logline='TSF_Forth_setTSF("{0}",    join(["{1}"],"\\t"),"O");\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    join(["{1}"],"\\t"),"T");\n'.format(TSF_the,'","'.join(TSF_cards))
+            TSF_view_logline='TSF_Forth_setTSF("{0}",join([\n    "{1}"],"\\t"),"T");\n'.format(TSF_the,'","'.join(TSF_cards))
         else:  # TSF_style == "N":
-            TSF_view_logline='TSF_Forth_setTSF("{0}",\n    join(["{1}"],"\\t"),"N");\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
+            TSF_view_logline='TSF_Forth_setTSF("{0}",join([\n    "{1}"],"\\t"),"N");\n'.format(TSF_the,'",\n    "'.join(TSF_cards))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
 
