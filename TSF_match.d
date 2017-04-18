@@ -13,6 +13,7 @@ import TSF_Forth;
 void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSF_doc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
+        "#TSF_replace":&TSF_match_replace, "#文字列を置換":&TSF_match_replace,
         "#TSF_replaceN":&TSF_match_replacesN, "#文字列群で置換":&TSF_match_replacesN,
 //        "#TSF_replaceC":&TSF_match_replacesN, "#文字列群で周択置換":&TSF_match_replacesN,
 //        "#TSF_replaceM":&TSF_match_replacesN, "#文字列群で囲択置換":&TSF_match_replacesN,
@@ -27,19 +28,28 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
+string TSF_match_replace(){    //#TSF_doc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+    string TSF_theN=TSF_Forth_drawthe();
+    string TSF_theO=TSF_Forth_drawthe();
+    string TSF_theT=TSF_Forth_drawthe();
+    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
+    return "";
+}
+
 string TSF_match_replacesN(){    //#TSF_doc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-    string TSF_theS=TSF_Forth_drawthe();
+    string TSF_theT=TSF_Forth_drawthe();
     string TSF_text="";
-    if( TSF_theS in TSF_Forth_stackD() ){
-        TSF_text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theS],"\n"));
+    if( TSF_theT in TSF_Forth_stackD() ){
+        TSF_text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));
         foreach(size_t TSF_peek,string TSF_card;TSF_cardsO){
             if( TSF_peek<TSF_cardsN_len ){
                 TSF_text=replace(TSF_text,TSF_card,TSF_cardsN[TSF_peek]);
             }
         }
-        TSF_Forth_setTSF(TSF_theS,TSF_text,"N");
+        TSF_Forth_setTSF(TSF_theT,TSF_text,"N");
     }
     return "";
 }

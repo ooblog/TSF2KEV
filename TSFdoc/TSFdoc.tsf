@@ -1,0 +1,12 @@
+TSF_Tab-Separated-Forth:
+	TSFdocs_merge:	#TSF_this	#TSF_fin.
+TSFdocs_merge:
+	TSFdocs_argvs:	#TSF_that	#TSF_argvs	TSFdocs_flenamejump:	TSFdocs_argvs:	#TSF_lenthe	#TSF_peekNthe	#TSF_this
+TSFdocs_flenamejump:
+	-	-	TSFdocs_defaultflename:	TSFdocs_argvsflename:
+TSFdocs_defaultflename:
+	filename.tsf	TSFdocs_test:	#TSF_this
+TSFdocs_argvsflename:
+	#TSF_pullFthat	TSFdocs_test:	#TSF_this
+TSFdocs_test:
+	#TSF_echo
