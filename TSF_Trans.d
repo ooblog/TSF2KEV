@@ -57,7 +57,8 @@ void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         TSF_text~="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n";
         TSF_text~="TSF_Initcallrun=["~stripRight(TSF_card,',')~"]\n";
         TSF_text~="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n\n";
-        foreach(string TSF_the;TSF_Forth_stack().keys()){
+//        foreach(string TSF_the;TSF_Forth_stackD().keys()){
+        foreach(string TSF_the;TSF_Forth_stackO()){
             TSF_text=TSF_Trans_view_python(TSF_the,false,TSF_text);
         }
         TSF_text~="\nTSF_Forth_run()\n";
@@ -79,8 +80,8 @@ string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc
     }
     string[] TSF_cards;
     string TSF_style;
-    if( TSF_the in TSF_Forth_stack() ){
-        TSF_cards=TSF_Forth_stack()[TSF_the];
+    if( TSF_the in TSF_Forth_stackD() ){
+        TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
             TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
         }
@@ -117,7 +118,8 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
         TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
         TSF_text~="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n\n";
-        foreach(string TSF_the;TSF_Forth_stack().keys()){
+//        foreach(string TSF_the;TSF_Forth_stackD().keys()){
+        foreach(string TSF_the;TSF_Forth_stackO()){
             TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
         }
         TSF_text~="\n    TSF_Forth_run();\n}\n";
@@ -139,8 +141,8 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
     }
     string[] TSF_cards;
     string TSF_style;
-    if( TSF_the in TSF_stackD ){
-        TSF_cards=TSF_Forth_stack()[TSF_the];
+    if( TSF_the in TSF_Forth_stackD() ){
+        TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
             TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
         }

@@ -723,8 +723,11 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
 def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs
 
-def TSF_Forth_stack():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
+def TSF_Forth_stackD():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
     return TSF_stackD
+
+def TSF_Forth_stackO():    #TSFdoc:TSF_stackOの取得。(TSFAPI)
+    return TSF_stackO
 
 def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
     return TSF_styleD

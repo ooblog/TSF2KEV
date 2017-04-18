@@ -103,3 +103,6 @@ ENV/
 # git branch -d 20170413R040745
 # git push github:ooblog/TSF2KEV.git :20170413R040745
 cardsize/
+debug/trans_about.d
+debug/trans_about.py
+

@@ -886,8 +886,12 @@ string[] TSF_Forth_mainandargvs(){    //#TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs;
 }
 
-string[] [string] TSF_Forth_stack(){    //#TSFdoc:TSF_stackDの取得。(TSFAPI)
+string[] [string] TSF_Forth_stackD(){    //#TSFdoc:TSF_stackDの取得。(TSFAPI)
     return TSF_stackD;
+}
+
+string[] TSF_Forth_stackO(){    //#TSFdoc:TSF_stackOの取得。(TSFAPI)
+    return TSF_stackO;
 }
 
 string [string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)

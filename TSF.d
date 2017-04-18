@@ -45,20 +45,18 @@ void TSF_sample_run(...){    //#TSF_doc:TSF実行。コマンド実行の場合�
 }
 
 void TSF_sample_Helloworld(){    //#TSF_doc:「sample_helloworld.tsf」コマンド版。
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["echoTSF:","#TSF_this","#TSF_fin."],"\t"),"T");
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["Hello world","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "Hello world","#TSF_echo"],"\t"),"T");
     TSF_sample_run("TSF_sample_Helloworld");
 }
 
 void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版。
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",
-        join(["echoTSF:","#TSF_this","#TSF_fin."],"\t"),"T");
-    TSF_Forth_setTSF("echoTSF:",
-        join(["aboutTSF:","#TSF_argvsthe","#TSF_reverseN","aboutTSF:","#TSF_lenthe","#TSF_echoN","echoRPN:","#TSF_this"],"\t"),"T");
-    TSF_Forth_setTSF("aboutTSF:",
-        join(["",
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "echoTSF:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("echoTSF:",join([
+        "aboutTSF:","#TSF_argvsthe","#TSF_reverseN","aboutTSF:","#TSF_lenthe","#TSF_echoN","echoRPN:","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("aboutTSF:",join([
+        "",
         "○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。",
         "",
         "　Forth風インタプリタ。単位はtsv文字列。文字列の事をカードと呼称。カードの束をスタックと呼称。スタックの集まりをデッキと呼称。",
@@ -76,12 +74,12 @@ void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版�
         "　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。",
         "　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。",
         ""],"\t"),"N");
-    TSF_Forth_setTSF("echoRPN:",
-        join(["aboutRPNtest:","#TSF_this","aboutRPN:","#TSF_argvsthe","#TSF_reverseN","aboutRPN:","#TSF_lenthe","#TSF_echoN","echoCALC:","#TSF_this"],"\t"),"T");
-    TSF_Forth_setTSF("aboutRPNtest:",
-        join(["▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「#TSF_join」で連結→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
-    TSF_Forth_setTSF("aboutRPN:",
-        join(["",
+    TSF_Forth_setTSF("echoRPN:",join([
+        "aboutRPNtest:","#TSF_this","aboutRPN:","#TSF_argvsthe","#TSF_reverseN","aboutRPN:","#TSF_lenthe","#TSF_echoN","echoCALC:","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("aboutRPNtest:",join([
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「#TSF_join」で連結→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("aboutRPN:",join([
+        "",
         "○「RPN」系小数電卓の概要。",
         "",
         "　TSFでは機能を絞って高速処理をめざすRPNと多機能をめざすcalcの2種類の電卓を用意。RPN(逆ポーランド記法)では括弧を用いません。",
@@ -95,15 +93,14 @@ void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版�
         "　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。",
         "、条件演算子は何に使うかというと「#TSF_this」の飛び先を変更するため「#TSF_peekthe」などと組み合わせます。",
         ""],"\t"),"N");
-    TSF_Forth_setTSF("echoCALC:",
-        join(["aboutCALC:","#TSF_argvsthe","#TSF_reverseN","aboutCALC:","#TSF_lenthe","#TSF_echoN"],"\t"),"T");
-    TSF_Forth_setTSF("aboutCALC:",
-        join(["○「calc」系分数電卓は再開発中なので説明不足します(RPNと共通する内容は圧縮)。",
+    TSF_Forth_setTSF("echoCALC:",join([
+        "aboutCALC:","#TSF_argvsthe","#TSF_reverseN","aboutCALC:","#TSF_lenthe","#TSF_echoN"],"\t"),"T");
+    TSF_Forth_setTSF("aboutCALC:",join([
+        "○「calc」系分数電卓は再開発中なので説明不足します(RPNと共通する内容は圧縮)。",
         "",
-        "　calcは分数を用いる事で桁溢れをなるだけ回避する事を目標とします。",
-        "　「#TSF_join[]」を別途用いる事無くpeekのショートカットができる予定です。",
+        "　calcは分数を用いる事で桁溢れや丸め誤差をなるだけ回避する事を目標とします。",
         "　calcでは分母「n|0」でも条件演算子の可能性などを考慮して計算は続行されます。",
-        "　「1 3 m1|2」は数式「[2]/[1]-[0]」や「1 / 3 - m1|2」で連結予定。",
+        "　「#TSF_join[]」などを別途用いる事無く数式「[2]/[1]-[0]」を直接渡したり「#TSF_this」の飛び先を直接指定できる様にする予定。",
         ""],"\t"),"N");
     TSF_sample_run("TSF_sample_about");
 }
