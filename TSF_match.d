@@ -10,7 +10,7 @@ import TSF_Io;
 import TSF_Forth;
 
 
-void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSF_doc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
+void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
         "#TSF_replace":&TSF_match_replace, "#文字列を置換":&TSF_match_replace,
@@ -28,7 +28,7 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_match_replace(){    //#TSF_doc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+string TSF_match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
     string TSF_theN=TSF_Forth_drawthe();
     string TSF_theO=TSF_Forth_drawthe();
     string TSF_theT=TSF_Forth_drawthe();
@@ -37,7 +37,7 @@ string TSF_match_replace(){    //#TSF_doc:文字列を置換。3枚[cardT,cardO,
     return "";
 }
 
-string TSF_match_replacesN(){    //#TSF_doc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
+string TSF_match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();

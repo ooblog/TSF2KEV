@@ -14,7 +14,7 @@ import TSF_Forth;
 import TSF_Trans;
 
 
-void TSF_sample_help(){    //#TSF_doc:「sample_help.tsf」コマンド版。
+void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
@@ -29,7 +29,7 @@ void TSF_sample_help(){    //#TSF_doc:「sample_help.tsf」コマンド版。
     TSF_sample_run("TSF_sample_help");
 }
 
-void TSF_sample_run(...){    //#TSF_doc:TSF実行。コマンド実行の場合はソースも表示。
+void TSF_sample_run(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
     string TSF_sample_sepalete="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_sample_sepalete=va_arg!(string)(_argptr);
@@ -44,13 +44,13 @@ void TSF_sample_run(...){    //#TSF_doc:TSF実行。コマンド実行の場合�
     }
 }
 
-void TSF_sample_Helloworld(){    //#TSF_doc:「sample_helloworld.tsf」コマンド版。
+void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "Hello world","#TSF_echo"],"\t"),"T");
     TSF_sample_run("TSF_sample_Helloworld");
 }
 
-void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版。
+void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "echoTSF:","#TSF_this","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("echoTSF:",join([
@@ -105,7 +105,7 @@ void TSF_sample_about(){    //#TSF_doc:「sample_aboutTSF.tsf」コマンド版�
     TSF_sample_run("TSF_sample_about");
 }
 
-void TSF_sample_RPN(){    //#TSF_doc:「sample_RPN.tsf」コマンド版。
+void TSF_sample_RPN(){    //#TSFdoc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("RPN:",join([
         "#TSF_RPN","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("RPNsetup:",join([

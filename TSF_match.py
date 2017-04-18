@@ -6,7 +6,7 @@ from TSF_Io import *
 from TSF_Forth import *
 
 
-def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
+def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Match")
     TSF_Forth_cards={
         "#TSF_replace":TSF_match_replace, "#文字列を置換":TSF_match_replace,
@@ -31,7 +31,7 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードに�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-def TSF_match_replace():    #TSF_doc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+def TSF_match_replace():    #TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
     TSF_theN=TSF_Forth_drawthe()
     TSF_theO=TSF_Forth_drawthe()
     TSF_theT=TSF_Forth_drawthe()
@@ -39,7 +39,7 @@ def TSF_match_replace():    #TSF_doc:文字列を置換。3枚[cardT,cardO,cardN
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
     return ""
 
-def TSF_match_replacesN():    #TSF_doc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
+def TSF_match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     TSF_theT=TSF_Forth_drawthe()

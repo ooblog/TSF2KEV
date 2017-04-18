@@ -6,7 +6,7 @@ from TSF_Io import *
 from TSF_Forth import *
 
 
-def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSF_doc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
+def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Trans")
     TSF_Forth_cards={
         "#TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,

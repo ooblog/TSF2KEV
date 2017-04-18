@@ -7,7 +7,7 @@ from TSF_Forth import *
 from TSF_Trans import *
 
 
-def TSF_sample_help():    #TSF_doc:「sample_help.tsf」コマンド版。
+def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:","\t".join([
@@ -21,7 +21,7 @@ def TSF_sample_help():    #TSF_doc:「sample_help.tsf」コマンド版。
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "]),"N")
     TSF_sample_run("TSF_sample_help")
 
-def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSF_doc:TSF実行。コマンド実行の場合はソースも表示。
+def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
     if TSF_sample_sepalete != None:
         TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
         TSF_Forth_viewthey()
@@ -31,12 +31,12 @@ def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSF_d
         TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
         TSF_Forth_viewthey()
 
-def TSF_sample_Helloworld():    #TSF_doc:「sample_helloworld.tsf」コマンド版。
+def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "Hello world","#TSF_echo"]),"T")
     TSF_sample_run("TSF_sample_Helloworld")
 
-def TSF_sample_about():    #TSF_doc:「sample_aboutTSF.tsf」コマンド版。
+def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "echoTSF:","#TSF_this","#TSF_fin."]),"T")
     TSF_Forth_setTSF("echoTSF:","\t".join([
@@ -90,7 +90,7 @@ def TSF_sample_about():    #TSF_doc:「sample_aboutTSF.tsf」コマンド版。
         ""]),"N")
     TSF_sample_run("TSF_sample_about")
 
-def TSF_sample_RPN():    #TSF_doc:「sample_RPN.tsf」コマンド版。
+def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("RPN:","\t".join([
         "#TSF_RPN","#TSF_echo"]),"T")
     TSF_Forth_setTSF("RPNsetup:","\t".join([
