@@ -108,7 +108,7 @@ def TSF_Trans_view_dlang(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:�
     return TSF_view_log
 
 
-TSF_Initcalldebug=[TSF_Forth_Initcards]
+TSF_Initcalldebug=[TSF_Trans_Initcards]
 def TSF_Trans_debug(TSF_sysargvs):    #TSFdoc:「TSF_Trans」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Trans.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)

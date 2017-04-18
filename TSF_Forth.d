@@ -900,7 +900,7 @@ string [string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
 
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
-string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
+void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Forth.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
@@ -918,7 +918,6 @@ string TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単�
     }
     TSF_debug_log=TSF_Io_printlog(format("--- %s > %s ---",__FILE__,TSF_debug_savefilename),TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
-    return TSF_debug_log;
 }
 
 

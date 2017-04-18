@@ -160,16 +160,15 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
 }
 
 
-void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
-string TSF_Trans_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Trans」単体テスト風デバッグ。
+void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Trans_Initcards];
+void TSF_Trans_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Trans」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Trans.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
-    return TSF_debug_log;
 }
 
 unittest {
-    TSF_Trans_debug(TSF_Io_argvs(["dmd","TSF_Trans.d"]));
+//    TSF_Trans_debug(TSF_Io_argvs(["dmd","TSF_Trans.d"]));
 }
 
 
