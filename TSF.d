@@ -127,6 +127,7 @@ void main(string[] sys_argvs){
     TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
         TSF_Forth_merge(TSF_bootcommand,null,true);
+        chdir(dirName(absolutePath(TSF_bootcommand)));
         TSF_sample_run();
     }
     else if( count(["--py","--python","--Python"],TSF_bootcommand) ){
