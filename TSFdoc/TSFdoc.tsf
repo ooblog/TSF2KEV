@@ -10,5 +10,22 @@ TSFdocs_argvsflename:
 	#TSF_pullFthat	TSFdocs_merge:	#TSF_this
 TSFdocs_merge:
 #	#TSF_peekFthat	#TSF_readtext	#TSF_mergethe
-#	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_echo	#TSF_viewthey
-	#TSF_peekFthat	#TSF_readtext	#TSF_viewthey
+	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_echo	#TSF_viewthey
+# -- merge --
+#TSFdocs_files:
+#	READMEtest.md	READMEtest.html
+#TSFdocs_basetext:
+#	<？TSF_MD_H1:TSF1KEV>
+#TSFdocs_tags:
+#	<？TSF_MD_H1:TSF1KEV>	<＄TSF_MD_H1:0>	<？P>	<？/P>	<？BR>
+# -- merge --
+#TSFdocs_basetextset:
+#	#TSF_carbonthat	TSFdocs_basetext:	#TSF_clonethe	#TSF_carbonthat	1	#TSF_echoN	TSFdocs_basetextreplace:	#TSF_this
+#TSFdocs_basetextreplace:
+#	#TSF_carbonthat	TSFdocs_tags:	TSFdocs_filecount:	2	#TSF_peekthe	#TSF_tagcyclestack	#TSF_carbonthat	#TSF_carbonthat	#TSF_savetext	TSFdocs_filenameloop:	#TSF_this
+#TSFdocs_tagcount:
+#	-	TSFdocs_basetextreplace:	#exit
+#TSFdocs_filenameloop:
+#	TSFdocs_filecount:	[TSFdocs_filecount:2]z0~1	#TSF_calcDC	#TSF_peekthe	#TSF_this
+#TSFdocs_filecount:
+#	TSFdocs_filename:	#exit	-

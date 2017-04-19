@@ -1,14 +1,21 @@
+TSF_Tab-Separated-Forth:
+	#TSF_fin.
 TSFdocs_files:
-	debug/test_TSFdoc_README.md	debug/test_TSFdoc_README.html
+	READMEtest.md	READMEtest.html
 TSFdocs_basetext:
 	<？TSF_MD_H1:TSF1KEV>
+	<？P>
+	<？BR>
+	<？/P>
 TSFdocs_tags:
-	<？TSF_MD_H1:TSF1KEV>	<＄TSF_MD_H1:0>	<？P>	<？BR>
+	<？TSF_MD_H1:TSF1KEV>	<＄TSF_MD_H1:0>	<？P>	<？/P>	<？BR>
 <？TSF_MD_H1:TSF1KEV>
 	# <＄TSF_MD_H1:0>	<h1><＄TSF_MD_H1:0></h1>
 <＄TSF_MD_H1:0>
 	プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 <？P>
 		<p>@E
+<？/P>
+		</p>@E
 <？BR>
 		<br />

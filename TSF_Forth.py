@@ -77,6 +77,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック差込":TSF_Forth_pushNthis,
         "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック差込":TSF_Forth_pushNthat,
         "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧差込":TSF_Forth_pushNthey,
+        "#TSF_clonethe":TSF_Forth_clonethe, "#指定スタックの複製":TSF_Forth_clonethe,
+        "#TSF_clonethis":TSF_Forth_clonethis, "#実行中スタックの複製":TSF_Forth_clonethis,
+        "#TSF_clonethat":TSF_Forth_clonethat, "#積込先スタックの複製":TSF_Forth_clonethat,
+        "#TSF_clonethey":TSF_Forth_clonethey, "#スタック一覧の複製":TSF_Forth_clonethey,
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
         "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
@@ -512,6 +516,29 @@ def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧にスタック名とし
     if not TSF_push in TSF_stackD:
         TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
         TSF_stackD[TSF_push]=[]
+    return ""
+
+def TSF_Forth_clone(TSF_clone,TSF_the):    #TSFdoc:スタックを複製する。(TSFAPI)
+    if TSF_the in TSF_stackD:
+        TSF_stacks[TSF_clone]=[TSF_card for TSF_card in TSF_stackD[TSF_the]]
+    else:
+        TSF_stacks[TSF_clone]=[]
+
+def TSF_Forth_clonethe():    #TSF_doc:指定スタックを複製する。2枚[clone,the]ドロー。
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_the)
+    return ""
+
+def TSF_Forth_clonethis():    #TSF_doc:実行中スタックを複製する。2枚[clone]ドロー。
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthis())
+    return ""
+
+def TSF_Forth_clonethat():    #TSF_doc:積込先スタックを複製する。2枚[clone]ドロー。
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthat())
+    return ""
+
+def TSF_Forth_clonethey():    #TSF_doc:スタック名一覧を複製する。2枚[clone]ドロー。
+    TSF_stackD[TSF_Forth_drawthe()]=[TSF_card for TSF_card in TSF_stackO]
     return ""
 
 def TSF_Forth_readtext():    #TSFdoc:ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。

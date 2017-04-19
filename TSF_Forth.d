@@ -77,6 +77,10 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_pushNthis":&TSF_Forth_pushNthis, "#実行中スタック差込":&TSF_Forth_pushNthis,
         "#TSF_pushNthat":&TSF_Forth_pushNthat, "#積込先スタック差込":&TSF_Forth_pushNthat,
         "#TSF_pushNthey":&TSF_Forth_pushNthey, "#スタック一覧差込":&TSF_Forth_pushNthey,
+        "#TSF_clonethe":&TSF_Forth_clonethe, "#指定スタックの複製":&TSF_Forth_clonethe,
+        "#TSF_clonethis":&TSF_Forth_clonethis, "#実行中スタックの複製":&TSF_Forth_clonethis,
+        "#TSF_clonethat":&TSF_Forth_clonethat, "#積込先スタックの複製":&TSF_Forth_clonethat,
+        "#TSF_clonethey":&TSF_Forth_clonethey, "#スタック一覧の複製":&TSF_Forth_clonethey,
         "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
         "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
         "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
@@ -614,6 +618,36 @@ string TSF_Forth_pushNthey(){    //#TSFdoc:スタック一覧にスタック名�
         TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push);
         TSF_stackD[TSF_push]=null;
     }
+    return "";
+}
+
+void TSF_Forth_clone(string TSF_clone,string TSF_the){    //#TSFdoc:スタックを複製する。(TSFAPI)
+    if( TSF_the in TSF_stackD ){
+        TSF_stackD[TSF_clone]=TSF_stackD[TSF_the].dup;
+    }
+    else{
+        TSF_stackD[TSF_clone]=[];
+    }
+}
+
+string TSF_Forth_clonethe(){    //#TSF_doc:指定スタックを複製する。2枚[clone,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_the);
+    return "";
+}
+
+string TSF_Forth_clonethis(){    //#TSF_doc:実行中スタックを複製する。2枚[clone]ドロー。
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthis());
+    return "";
+}
+
+string TSF_Forth_clonethat(){    //TSF_doc:積込先スタックを複製する。2枚[clone]ドロー。
+    TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthat());
+    return "";
+}
+
+string TSF_Forth_clonethey(){    //スタック名一覧を複製する。2枚[clone]ドロー。
+    TSF_stackD[TSF_Forth_drawthe()]=TSF_stackO.dup;
     return "";
 }
 
