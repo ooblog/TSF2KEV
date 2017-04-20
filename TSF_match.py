@@ -13,11 +13,9 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
     TSF_Forth_cards={
         "#TSF_replace":TSF_match_replace, "#文字列を置換":TSF_match_replace,
         "#TSF_resub":TSF_match_resub, "#文字列を正規表現で置換":TSF_match_resub,
-        "#TSF_replacesN":TSF_match_replacesN, "#文字列群で置換":TSF_match_replacesN,
-        "#TSF_replacesC":TSF_match_replacesN, "#文字列群で周択置換":TSF_match_replacesN,
-        "#TSF_replacesM":TSF_match_replacesN, "#文字列群で囲択置換":TSF_match_replacesN,
-        "#TSF_replacesV":TSF_match_replacesN, "#文字列群で逆択置換":TSF_match_replacesN,
-        "#TSF_replacesA":TSF_match_replacesN, "#文字列群で乱択置換":TSF_match_replacesN,
+        "#TSF_replacesN":TSF_match_replacesN, "#文字列群で順択置換":TSF_match_replacesN,
+        "#TSF_replacesC":TSF_match_replacesC, "#文字列群で周択置換":TSF_match_replacesC,
+        "#TSF_replacesM":TSF_match_replacesM, "#文字列群で囲択置換":TSF_match_replacesM,
 #        "#TSF_replacestacks":TSF_match_resubN, "#正規表現群で置換":TSF_match_resubN,
 #        "#TSF_replacethey":TSF_match_replacethey, "#スタック置換":TSF_match_replacethey,
     }
@@ -62,6 +60,27 @@ def TSF_match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackO
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
     return ""
 
+def TSF_match_replacesC():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
+    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
+    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
+    TSF_theT=TSF_Forth_drawthe()
+    if TSF_theT in TSF_Forth_stackD():
+        TSF_text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]))
+        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
+            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[TSF_peek%TSF_cardsN_len])
+        TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
+    return ""
+
+def TSF_match_replacesM():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
+    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
+    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
+    TSF_theT=TSF_Forth_drawthe()
+    if TSF_theT in TSF_Forth_stackD():
+        TSF_text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]))
+        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
+            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)])
+        TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
+    return ""
 
 
 TSF_Initcalldebug=[TSF_Match_Initcards]

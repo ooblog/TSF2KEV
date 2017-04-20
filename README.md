@@ -68,7 +68,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
 ・念のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。  
 ・「#TSF_calc」には小数変換の「D」演算子や分岐先スタック名などテキストを温存する「T」演算子などを用意する予定。  
-・PeekPokePushPullは更にCycle,liMit,reVerse,rAndomおよびeQual,In,firSt,rEst,reseaRch,matcHer,Labelと種類が増えていく予感。派生は「TSF_shuffle」で扱う予定。  
+・PeekPokePushPullは更にCycle(周択),liMit(囲択),reVerse(逆択),rAndom(乱択)およびeQual,In,firSt,rEst,reseaRch,matcHer,Labelと種類が増えていく予感。派生は「TSF_shuffle」で扱う予定。  
 ・TSF1KEVにあった億千万電卓「#TSF_calcKN」(かな)は「#TSF_calcJA」のように言語ロケールに寄せる形で置き換える。。小数点の代わりに「円」を表示する。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、10000分の1(‱)は「毛」表記。  
 ・連想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。  
 ・文字列の類似度がD言語で再現できるか未定なので当面後回しになるかも。  
