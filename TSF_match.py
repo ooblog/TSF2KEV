@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 from __future__ import division,print_function,absolute_import,unicode_literals
 
+import re
+
 from TSF_Io import *
 from TSF_Forth import *
 
@@ -10,11 +12,12 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
     TSF_Forth_importlist(TSF_import="TSF_Match")
     TSF_Forth_cards={
         "#TSF_replace":TSF_match_replace, "#文字列を置換":TSF_match_replace,
-        "#TSF_replaceN":TSF_match_replacesN, "#文字列群で置換":TSF_match_replacesN,
-        "#TSF_replaceC":TSF_match_replacesN, "#文字列群で周択置換":TSF_match_replacesN,
-        "#TSF_replaceM":TSF_match_replacesN, "#文字列群で囲択置換":TSF_match_replacesN,
-        "#TSF_replaceV":TSF_match_replacesN, "#文字列群で逆択置換":TSF_match_replacesN,
-        "#TSF_replaceA":TSF_match_replacesN, "#文字列群で乱択置換":TSF_match_replacesN,
+        "#TSF_resub":TSF_match_resub, "#文字列を正規表現で置換":TSF_match_resub,
+        "#TSF_replacesN":TSF_match_replacesN, "#文字列群で置換":TSF_match_replacesN,
+        "#TSF_replacesC":TSF_match_replacesN, "#文字列群で周択置換":TSF_match_replacesN,
+        "#TSF_replacesM":TSF_match_replacesN, "#文字列群で囲択置換":TSF_match_replacesN,
+        "#TSF_replacesV":TSF_match_replacesN, "#文字列群で逆択置換":TSF_match_replacesN,
+        "#TSF_replacesA":TSF_match_replacesN, "#文字列群で乱択置換":TSF_match_replacesN,
 #        "#TSF_replacestacks":TSF_match_resubN, "#正規表現群で置換":TSF_match_resubN,
 #        "#TSF_replacethey":TSF_match_replacethey, "#スタック置換":TSF_match_replacethey,
     }
@@ -39,7 +42,15 @@ def TSF_match_replace():    #TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
     return ""
 
-def TSF_match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
+def TSF_match_resub():    #TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+    TSF_theN=TSF_Forth_drawthe()
+    TSF_theO=TSF_Forth_drawthe()
+    TSF_theT=TSF_Forth_drawthe()
+    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
+    return ""
+
+def TSF_match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     TSF_theT=TSF_Forth_drawthe()

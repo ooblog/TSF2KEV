@@ -4,6 +4,7 @@ import std.stdio;
 import std.string;
 import std.conv;
 import std.math;
+import std.regex;
 
 
 import TSF_Io;
@@ -14,12 +15,13 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
         "#TSF_replace":&TSF_match_replace, "#文字列を置換":&TSF_match_replace,
-        "#TSF_replaceN":&TSF_match_replacesN, "#文字列群で置換":&TSF_match_replacesN,
-//        "#TSF_replaceC":&TSF_match_replacesN, "#文字列群で周択置換":&TSF_match_replacesN,
-//        "#TSF_replaceM":&TSF_match_replacesN, "#文字列群で囲択置換":&TSF_match_replacesN,
-//        "#TSF_replaceV":&TSF_match_replacesN, "#文字列群で逆択置換":&TSF_match_replacesN,
-//        "#TSF_replaceA":&TSF_match_replacesN, "#文字列群で乱択置換":&TSF_match_replacesN,
-//        "#TSF_replacestacks":&TSF_match_resubN, "#正規表現群で置換":&TSF_match_resubN,
+        "#TSF_resub":&TSF_match_resub, "#文字列を正規表現で置換":&TSF_match_resub,
+        "#TSF_replacesN":&TSF_match_replacesN, "#文字列群で置換":&TSF_match_replacesN,
+//        "#TSF_replacesC":&TSF_match_replacesN, "#文字列群で周択置換":&TSF_match_replacesN,
+//        "#TSF_replacesM":&TSF_match_replacesN, "#文字列群で囲択置換":&TSF_match_replacesN,
+//        "#TSF_replacesV":&TSF_match_replacesN, "#文字列群で逆択置換":&TSF_match_replacesN,
+//        "#TSF_replacesA":&TSF_match_replacesN, "#文字列群で乱択置換":&TSF_match_replacesN,
+//        "#TSF_replacesstacks":&TSF_match_resubN, "#正規表現群で置換":&TSF_match_resubN,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -37,7 +39,17 @@ string TSF_match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,c
     return "";
 }
 
-string TSF_match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。3枚[stackT,stackO,stackN]ドロー。
+string TSF_match_resub(){    //#TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+    string TSF_theN=TSF_Forth_drawthe();
+    string TSF_theO=TSF_Forth_drawthe();
+    string TSF_theT=TSF_Forth_drawthe();
+    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+    TSF_theT=replaceAll(TSF_theT,regex(TSF_theO),TSF_theN);
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
+    return "";
+}
+
+string TSF_match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
