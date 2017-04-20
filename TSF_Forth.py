@@ -694,14 +694,17 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
                 elif not TSF_stacknext in TSF_stackD:
                     break
                 else:
-                    while TSF_stacknext in TSF_callptrO:
-                        TSF_callptrD.pop(TSF_callptrO.pop())
-                    TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
+                    while( TSF_stacknext in TSF_callptrO ):
+                        TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+                    if TSF_stackthis != TSF_stacknext:
+                        TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
+                    else:
+                        TSF_callptrD[TSF_stackthis]=0
                     TSF_stackthis=TSF_stacknext
                     TSF_cardscount=0
         if len(TSF_callptrO) > 0:
             TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]];
-            TSF_callptrD.pop(TSF_callptrO.pop())
+            TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
         else:
             break
     return TSF_echo_log

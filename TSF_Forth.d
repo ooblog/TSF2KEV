@@ -847,7 +847,12 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
                     while( count(TSF_callptrO,TSF_stacknext) ){
                         TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
                     }
-                    TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO~=[TSF_stackthis];
+                    if( TSF_stackthis != TSF_stacknext ){
+                        TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO~=[TSF_stackthis];
+                    }
+                    else{
+                        TSF_callptrD[TSF_stackthis]=0;
+                    }
                     TSF_stackthis=TSF_stacknext;
                     TSF_cardscount=0;
                 }
