@@ -63,17 +63,31 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
+def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)。
+    TSF_pull="";  TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
+    if TSF_the in TSF_Forth_stackD() and 0 < TSF_cardsN_len:
+        TSF_pull=TSF_Forth_stackD()[TSF_the][max(min(TSF_peek,TSF_cardsN_len-1),0)]
+    return TSF_pull
 
 def TSF_Shuffle_peekMthe():    #TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_peekM(TSF_Forth_drawthe(),TSF_peek))
     return ""
 
 def TSF_Shuffle_peekMthis():    #TSFdoc:実行中スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_peekM(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return ""
 
 def TSF_Shuffle_peekMthat():    #TSFdoc:積込先スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_peekM(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return ""
 
 def TSF_Shuffle_peekMthey():    #TSFdoc:スタック一覧から最後尾スタック名を囲択で読込。1枚[peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_pull="";  TSF_cardsN_len=len(TSF_Forth_stackO())
+    if TSF_the in TSF_Forth_stackO() and 0 < TSF_cardsN_len:
+        TSF_pull=TSF_Forth_stackO()[max(min(TSF_peek,TSF_cardsN_len-1),0)]
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
 
 
