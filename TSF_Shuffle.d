@@ -16,6 +16,10 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
         "#TSF_peekMthey":&TSF_Shuffle_peekMthey, "#スタック一覧囲択読込":&TSF_Shuffle_peekMthey,
+        "#TSF_pokeMthe":&TSF_Shuffle_pokeMthe, "#指定スタック囲択上書":&TSF_Shuffle_pokeMthe,
+        "#TSF_pokeMthis":&TSF_Shuffle_pokeMthis, "#実行中スタック囲択上書":&TSF_Shuffle_pokeMthis,
+        "#TSF_pokeMthat":&TSF_Shuffle_pokeMthat, "#積込先スタック囲択上書":&TSF_Shuffle_pokeMthat,
+        "#TSF_pokeMthey":&TSF_Shuffle_pokeMthey, "#スタック一覧囲択上書":&TSF_Shuffle_pokeMthey,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -58,6 +62,46 @@ string TSF_Shuffle_peekMthey(){    //#TSFdoc:スタック一覧から最後尾�
     return "";
 }
 
+void TSF_Shuffle_pokeM(string TSF_the,long TSF_peek,string TSF_poke){    //#TSFdoc:指定スタックからカードを囲択で読込。(TSFAPI)
+    string TSF_pull="";  size_t TSF_cardsN_len=TSF_Forth_stackD()[TSF_the].length;
+    if( (TSF_the in TSF_Forth_stackD())&&(0<TSF_cardsN_len) ){
+        TSF_Forth_stackD()[TSF_the][to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0))]=TSF_poke;
+    }
+}
+
+string TSF_Shuffle_pokeMthe(){    //#TSFdoc:指定スタックからカードを囲択で上書。3枚[poke,the,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Shuffle_pokeM(TSF_the,TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pokeMthis(){    //#TSFdoc:実行中スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_pokeM(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pokeMthat(){    //TSF_doc:積込先スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_pokeM(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pokeMthey(){    //#TSFdoc:スタック一覧からスタック名を囲択で上書。2枚[poke,peek]ドロー。
+    size_t TSF_cardsN_len=TSF_Forth_stackO().length;
+    size_t TSF_peek=to!size_t(fmax(fmin(TSF_Io_RPNzero(TSF_Forth_drawthe()),TSF_cardsN_len-1),0));
+    string TSF_poke=TSF_Forth_drawthe();
+    if( 0<TSF_cardsN_len ){
+        string TSF_pull=TSF_Forth_stackO()[TSF_peek];
+        if( TSF_pull!=TSF_poke ){
+            TSF_Forth_stackO()[TSF_peek]=TSF_poke;
+            string[] TSF_stackR=TSF_Forth_stackD()[TSF_pull]; TSF_Forth_stackD().remove(TSF_pull);
+            TSF_Forth_stackD()[TSF_poke]=TSF_stackR;
+        }
+    }
+    return "";
+}
 
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Shuffle_Initcards];

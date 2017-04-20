@@ -61,6 +61,14 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_peekNthis":&TSF_Forth_peekNthis, "#実行中スタック順択読込":&TSF_Forth_peekNthis,
         "#TSF_peekNthat":&TSF_Forth_peekNthat, "#積込先スタック順択読込":&TSF_Forth_peekNthat,
         "#TSF_peekNthey":&TSF_Forth_peekNthey, "#スタック一覧順択読込":&TSF_Forth_peekNthey,
+        "#TSF_pokeFthe":&TSF_Forth_pokeFthe, "#指定スタック表択上書":&TSF_Forth_pokeFthe,
+        "#TSF_pokeFthis":&TSF_Forth_pokeFthis, "#実行中スタック表択上書":&TSF_Forth_pokeFthis,
+        "#TSF_pokeFthat":&TSF_Forth_pokeFthat, "#積込先スタック表択上書":&TSF_Forth_pokeFthat,
+        "#TSF_pokeFthey":&TSF_Forth_pokeFthey, "#スタック一覧表択上書":&TSF_Forth_pokeFthey,
+        "#TSF_pokeNthe":&TSF_Forth_pokeNthe, "#指定スタック順択上書":&TSF_Forth_pokeNthe,
+        "#TSF_pokeNthis":&TSF_Forth_pokeNthis, "#実行中スタック順択上書":&TSF_Forth_pokeNthis,
+        "#TSF_pokeNthat":&TSF_Forth_pokeNthat, "#積込先スタック順択上書":&TSF_Forth_pokeNthat,
+        "#TSF_pokeNthey":&TSF_Forth_pokeNthey, "#スタック一覧順択上書":&TSF_Forth_pokeNthey,
         "#TSF_pullFthe":&TSF_Forth_pullFthe, "#指定スタック表択引抜":&TSF_Forth_pullFthe,
         "#TSF_pullFthis":&TSF_Forth_pullFthis, "#実行中スタック表択引抜":&TSF_Forth_pullFthis,
         "#TSF_pullFthat":&TSF_Forth_pullFthat, "#積込先スタック表択引抜":&TSF_Forth_pullFthat,
@@ -444,7 +452,7 @@ string TSF_Forth_pokeFthey(){    //#TSFdoc:スタック一覧の最後尾スタ�
     return "";
 }
 
-void TSF_Forth_pokeN(string TSF_the,long TSF_peek,string TSF_poke){    //#TSFdoc:指定スタックからカードを表択で読込。(TSFAPI)。
+void TSF_Forth_pokeN(string TSF_the,long TSF_peek,string TSF_poke){    //#TSFdoc:指定スタックからカードを表択で読込。(TSFAPI)
     if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
         TSF_stackD[TSF_the][to!size_t(TSF_peek)]=TSF_poke;
     }

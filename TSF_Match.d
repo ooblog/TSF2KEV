@@ -14,13 +14,13 @@ import TSF_Forth;
 void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_replace":&TSF_match_replace, "#文字列を置換":&TSF_match_replace,
-        "#TSF_resub":&TSF_match_resub, "#文字列を正規表現で置換":&TSF_match_resub,
-        "#TSF_replacesN":&TSF_match_replacesN, "#文字列群で順択置換":&TSF_match_replacesN,
-        "#TSF_replacesC":&TSF_match_replacesC, "#文字列群で周択置換":&TSF_match_replacesC,
-        "#TSF_replacesM":&TSF_match_replacesM, "#文字列群で囲択置換":&TSF_match_replacesM,
-//        "#TSF_replacesstacks":&TSF_match_resubN, "#正規表現群で置換":&TSF_match_resubN,
-//        "#TSF_replacethey":&TSF_match_replacethey, "#スタック置換":&TSF_match_replacethey,
+        "#TSF_replace":&TSF_Match_replace, "#文字列を置換":&TSF_Match_replace,
+        "#TSF_resub":&TSF_Match_resub, "#文字列を正規表現で置換":&TSF_Match_resub,
+        "#TSF_replacesN":&TSF_Match_replacesN, "#文字列群で順択置換":&TSF_Match_replacesN,
+        "#TSF_replacesC":&TSF_Match_replacesC, "#文字列群で周択置換":&TSF_Match_replacesC,
+        "#TSF_replacesM":&TSF_Match_replacesM, "#文字列群で囲択置換":&TSF_Match_replacesM,
+//        "#TSF_replacesstacks":&TSF_Match_resubN, "#正規表現群で置換":&TSF_Match_resubN,
+//        "#TSF_replacethey":&TSF_Match_replacethey, "#スタック置換":&TSF_Match_replacethey,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -29,7 +29,7 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+string TSF_Match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
     string TSF_theN=TSF_Forth_drawthe();
     string TSF_theO=TSF_Forth_drawthe();
     string TSF_theT=TSF_Forth_drawthe();
@@ -38,7 +38,7 @@ string TSF_match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,c
     return "";
 }
 
-string TSF_match_resub(){    //#TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+string TSF_Match_resub(){    //#TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
     string TSF_theN=TSF_Forth_drawthe();
     string TSF_theO=TSF_Forth_drawthe();
     string TSF_theT=TSF_Forth_drawthe();
@@ -48,7 +48,7 @@ string TSF_match_resub(){    //#TSFdoc:文字列を正規表現で置換。3枚[
     return "";
 }
 
-string TSF_match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
@@ -65,7 +65,7 @@ string TSF_match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてs
     return "";
 }
 
-string TSF_match_replacesC(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesC(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
@@ -80,7 +80,7 @@ string TSF_match_replacesC(){    //#TSFdoc:stackTをテキストとみなしてs
     return "";
 }
 
-string TSF_match_replacesM(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesM(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
