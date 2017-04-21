@@ -746,14 +746,17 @@ def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs
 
 def TSF_Forth_stackD():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
+    global TSF_stackD
     return TSF_stackD
 
 def TSF_Forth_stackO(TSF_Shuffle_stackO=None):    #TSFdoc:TSF_stackOの取得。(TSFAPI)
+    global TSF_stackO
     if TSF_Shuffle_stackO != None:
         TSF_stackO=TSF_Shuffle_stackO
     return TSF_stackO
 
 def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
+    global TSF_styleD
     return TSF_styleD
 
 
