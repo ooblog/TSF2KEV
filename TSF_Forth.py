@@ -439,13 +439,11 @@ def TSF_Forth_pullNthe():    #TSFdoc:指定スタックからカードを表択�
     return ""
 
 def TSF_Forth_pullNthis():    #TSFdoc:実行中スタックからカードを表択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_peek))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
-def TSF_Forth_pullNthat():    #TSFdoc:積込先スタックからカードを表択で引抜。1枚[peek]とpeek先のもう1枚ドローして1枚[card]リターン。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_peek))
+def TSF_Forth_pullNthat():    #TSFdoc:積込先スタックからカードを表択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
 def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を表択で引抜。1枚[peek]ドローして1枚[card]リターン。
@@ -453,7 +451,7 @@ def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を
     TSF_pull=""
     if 0 <= TSF_peek < len(TSF_stackD):
         TSF_pull=TSF_stackO[TSF_peek]
-        TSF_stackO[TSF_peek].pop(TSF_peek)
+        TSF_stackO.pop(TSF_peek)
         TSF_stackD[TSF_the].pop(TSF_pull)
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
@@ -687,7 +685,8 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
                     break
                 else:
                     while( TSF_stacknext in TSF_callptrO ):
-                        TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+#                        TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+                        TSF_callptrD.pop(TSF_callptrO.pop())
                     if TSF_stackthis != TSF_stacknext:
                         TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
                     else:
@@ -696,7 +695,8 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
                     TSF_cardscount=0
         if len(TSF_callptrO) > 0:
             TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]];
-            TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+#            TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+            TSF_callptrD.pop(TSF_callptrO.pop())
         else:
             break
     return TSF_echo_log
@@ -748,7 +748,9 @@ def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
 def TSF_Forth_stackD():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
     return TSF_stackD
 
-def TSF_Forth_stackO():    #TSFdoc:TSF_stackOの取得。(TSFAPI)
+def TSF_Forth_stackO(TSF_Shuffle_stackO=None):    #TSFdoc:TSF_stackOの取得。(TSFAPI)
+    if TSF_Shuffle_stackO != None:
+        TSF_stackO=TSF_Shuffle_stackO
     return TSF_stackO
 
 def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
@@ -756,7 +758,7 @@ def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
 
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
-def TSF_Io_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
+def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Forth.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
@@ -774,9 +776,18 @@ def TSF_Io_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デ�
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     return TSF_debug_log
 
+#def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+#    if TSF_sample_sepalete != None:
+#        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
+#        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
+#    TSF_Forth_run()
+#    if TSF_sample_viewthey != None:
+#        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
 
 if __name__=="__main__":
-    TSF_Io_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))
+    TSF_Forth_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))
 
 
 # Copyright (c) 2017 ooblog

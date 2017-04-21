@@ -555,14 +555,12 @@ string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックからカードを�
 }
 
 string TSF_Forth_pullNthis(){    //#TSFdoc:実行中スタックからカードを表択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_peek));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
-string TSF_Forth_pullNthat(){    //#TSFdoc:積込先スタックからカードを表択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_peek));
+string TSF_Forth_pullNthat(){    //#TSFdoc:積込先スタックからカードを表択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
@@ -952,7 +950,10 @@ string[] [string] TSF_Forth_stackD(){    //#TSFdoc:TSF_stackDの取得。(TSFAPI
     return TSF_stackD;
 }
 
-string[] TSF_Forth_stackO(){    //#TSFdoc:TSF_stackOの取得。(TSFAPI)
+string[] TSF_Forth_stackO(...){    //#TSFdoc:TSF_stackOの取得。(TSFAPI)
+    if( _arguments.length>0 && _arguments[0]==typeid(string[]) ){
+        TSF_stackO=va_arg!(string[])(_argptr);
+    }
     return TSF_stackO;
 }
 
