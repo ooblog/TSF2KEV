@@ -37,10 +37,10 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_pullMthis":TSF_Shuffle_pullMthis, "#実行中スタック囲択引抜":TSF_Shuffle_pullMthis,
         "#TSF_pullMthat":TSF_Shuffle_pullMthat, "#積込先スタック囲択引抜":TSF_Shuffle_pullMthat,
         "#TSF_pullMthey":TSF_Shuffle_pullMthey, "#スタック一覧囲択引抜":TSF_Shuffle_pullMthey,
-#        "#TSF_pushMthe":TSF_Shuffle_pushMthe, "#指定スタック差込":TSF_Shuffle_pushMthe,
-#        "#TSF_pushMthis":TSF_Shuffle_pushMthis, "#実行中スタック差込":TSF_Shuffle_pushMthis,
-#        "#TSF_pushMthat":TSF_Shuffle_pushMthat, "#積込先スタック差込":TSF_Shuffle_pushMthat,
-#        "#TSF_pushMthey":TSF_Shuffle_pushMthey, "#スタック一覧差込":TSF_Shuffle_pushMthey,
+        "#TSF_pushMthe":TSF_Shuffle_pushMthe, "#指定スタック差込":TSF_Shuffle_pushMthe,
+        "#TSF_pushMthis":TSF_Shuffle_pushMthis, "#実行中スタック差込":TSF_Shuffle_pushMthis,
+        "#TSF_pushMthat":TSF_Shuffle_pushMthat, "#積込先スタック差込":TSF_Shuffle_pushMthat,
+        "#TSF_pushMthey":TSF_Shuffle_pushMthey, "#スタック一覧差込":TSF_Shuffle_pushMthey,
 #        "#TSF_peekLthe":TSF_Shuffle_peekLthe, "#指定スタックラベルで読込":TSF_Shuffle_peekLthe,
 #        "#TSF_peekLthis":TSF_Shuffle_peekLthis, "#実行中スタックラベルで読込":TSF_Shuffle_peekLthis,
 #        "#TSF_peekLthat":TSF_Shuffle_peekLthat, "#積込先スタックラベルで読込":TSF_Shuffle_peekLthat,
@@ -144,13 +144,41 @@ def TSF_Shuffle_pullMthat():    #TSFdoc:積込先スタックからカードを�
 
 def TSF_Shuffle_pullMthey():    #TSFdoc:スタック一覧からスタック名を囲択で引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_pull="";  TSF_cardsN_len=len(TSF_Forth_stackO())
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_peek=max(min(TSF_Io_RPNzero(TSF_Forth_drawthe()),TSF_cardsN_len-1),0)
     if 0 < TSF_cardsN_len:
         TSF_pull=TSF_Forth_stackO()[TSF_peek]
-#        TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_peek))
-        TSF_Forth_stackO().pop(TSF_peek)
+        TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_peek))
         TSF_Forth_stackD()[TSF_the].pop(TSF_pull)
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
+    return ""
+
+def TSF_Shuffle_pushM(TSF_the,TSF_peek,TSF_push):    #TSFdoc:指定スタックにカードを囲択で差込。(TSFAPI)
+    TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
+    if TSF_the in TSF_stackD and 0 < TSF_cardsN_len:
+        TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],max(min(TSF_peek,TSF_cardsN_len-1),0),TSF_push)
+
+def TSF_Shuffle_pushMthe():    #TSFdoc:指定スタックにカードを囲択で差込。3枚[push,the,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Shuffle_pushM(TSF_the,TSF_peek,TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pushMthis():    #TSFdoc:実行中スタックにカードを囲択で差込。2枚[push,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_pushM(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pushMthat():    #TSFdoc:積込先スタックにカードを囲択で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_pushM(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pushMthey():    #TSFdoc:スタック一覧にスタック名として囲択で差込。2枚[push,peek]ドロー。
+    TSF_cardsN_len=len(TSF_Forth_stackO())
+    TSF_peek=max(min(TSF_Io_RPNzero(TSF_Forth_drawthe()),TSF_cardsN_len-1),0)
+    if not TSF_push in TSF_Forth_stackD():
+        TSF_Forth_stackO(TSF_Io_separatepushN(TSF_Forth_stackO(),TSF_peek,TSF_push))
+        TSF_Forth_stackD()[TSF_push]=[]
     return ""
 
 

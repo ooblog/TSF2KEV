@@ -24,6 +24,10 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_pullMthis":&TSF_Shuffle_pullMthis, "#実行中スタック囲択引抜":&TSF_Shuffle_pullMthis,
         "#TSF_pullMthat":&TSF_Shuffle_pullMthat, "#積込先スタック囲択引抜":&TSF_Shuffle_pullMthat,
         "#TSF_pullMthey":&TSF_Shuffle_pullMthey, "#スタック一覧囲択引抜":&TSF_Shuffle_pullMthey,
+        "#TSF_pushMthe":&TSF_Shuffle_pushMthe, "#指定スタック差込":&TSF_Shuffle_pushMthe,
+        "#TSF_pushMthis":&TSF_Shuffle_pushMthis, "#実行中スタック差込":&TSF_Shuffle_pushMthis,
+        "#TSF_pushMthat":&TSF_Shuffle_pushMthat, "#積込先スタック差込":&TSF_Shuffle_pushMthat,
+        "#TSF_pushMthey":&TSF_Shuffle_pushMthey, "#スタック一覧差込":&TSF_Shuffle_pushMthey,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -122,17 +126,17 @@ string TSF_Shuffle_pullMthe(){    //#TSFdoc:指定スタックからカードを
     return "";
 }
 
-string TSF_Shuffle_pullMthis(){    //#TSFdoc:実行中スタックからカードを表択で引抜。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Shuffle_pullMthis(){    //#TSFdoc:実行中スタックからカードを囲択で引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_pullM(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
-string TSF_Shuffle_pullMthat(){    //#TSFdoc:積込先スタックからカードを表択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
+string TSF_Shuffle_pullMthat(){    //#TSFdoc:積込先スタックからカードを囲択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_pullM(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
     return "";
 }
 
-string TSF_Shuffle_pullMthey(){    //#TSFdoc:スタック一覧からスタック名を表択で引抜。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Shuffle_pullMthey(){    //#TSFdoc:スタック一覧からスタック名を囲択で引抜。1枚[peek]ドローして1枚[card]リターン。
     string TSF_pull="";  size_t TSF_cardsN_len=TSF_Forth_stackO().length;
     size_t TSF_peek=to!size_t(fmax(fmin(TSF_Io_RPNzero(TSF_Forth_drawthe()),TSF_cardsN_len-1),0));
     if( 0<TSF_cardsN_len ){
@@ -144,6 +148,43 @@ string TSF_Shuffle_pullMthey(){    //#TSFdoc:スタック一覧からスタッ�
     return "";
 }
 
+void TSF_Shuffle_pushM(string TSF_the,long TSF_peek,string TSF_push){    //#TSFdoc:指定スタックにカードを囲択で差込。(TSFAPI)
+    size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;
+    if( TSF_push in TSF_Forth_stackD() ){
+        TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0)),TSF_push);
+    }
+}
+
+string TSF_Shuffle_pushMthe(){    //#TSFdoc:指定スタックにカードを囲択で差込。3枚[push,the,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Shuffle_pushM(TSF_the,TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pushMthis(){    //#TSFdoc:実行中スタックにカードを囲択で差込。2枚[push,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_pushM(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pushMthat(){    //#TSFdoc:積込先スタックにカードを囲択で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_pushM(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pushMthey(){    //#TSFdoc:スタック一覧にスタック名として囲択で差込。2枚[push,peek]ドロー。
+    size_t TSF_cardsN_len=TSF_Forth_stackO().length;
+    size_t TSF_peek=to!size_t(fmax(fmin(TSF_Io_RPNzero(TSF_Forth_drawthe()),TSF_cardsN_len-1),0));
+    string TSF_push=TSF_Forth_drawthe();
+    if( TSF_push !in TSF_stackD ){
+        TSF_Forth_stackO(TSF_Io_separatepushN(TSF_Forth_stackO(),TSF_peek,TSF_push));
+        TSF_Forth_stackD()[TSF_push]=[];
+    }
+    return "";
+}
+
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Shuffle_Initcards];
 void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単体テスト風デバッグ。
@@ -151,7 +192,6 @@ void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
 }
-
 
 unittest {
 //    TSF_Shuffle_debug(TSF_Io_argvs(["dmd","TSF_Shuffle.d"]));
