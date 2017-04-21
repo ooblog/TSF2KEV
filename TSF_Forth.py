@@ -135,15 +135,24 @@ def TSF_Forth_stylethey():    #TSFdoc:全スタックの表示方法を一括指
     return ""
 
 def TSF_Forth_viewthe():    #TSFdoc:指定スタックを表示する。1枚[the]ドロー。
-    TSF_Forth_view(TSF_Forth_drawthe())
+    if TSF_echo:
+        TSF_echo_log=TSF_Forth_view(TSF_Forth_drawthe(),True,TSF_echo_log)
+    else:
+        TSF_Forth_view(TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_viewthis():    #TSFdoc:実行中スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_Forth_drawthis())
+    if TSF_echo:
+        TSF_echo_log=TSF_Forth_view(TSF_Forth_drawthis(),True,TSF_echo_log)
+    else:
+        TSF_Forth_view(TSF_Forth_drawthis())
     return ""
 
 def TSF_Forth_viewthat():    #TSFdoc:積込先スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_Forth_drawthat())
+    if TSF_echo:
+        TSF_echo_log=TSF_Forth_view(TSF_Forth_drawthat(),True,TSF_echo_log)
+    else:
+        TSF_Forth_view(TSF_Forth_drawthat())
     return ""
 
 def TSF_Forth_viewthey():    #TSFdoc:スタック一覧を表示する。0枚ドロー。

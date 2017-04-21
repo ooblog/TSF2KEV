@@ -151,17 +151,32 @@ string TSF_Forth_stylethey(){    //#TSFdoc:全スタックの表示方法を一�
 }
 
 string TSF_Forth_viewthe(){    //#TSFdoc:指定したスタックを表示する。1枚[the]ドロー。
-    TSF_Forth_view(TSF_Forth_drawthe(),true);
+    if( TSF_echo ){
+        TSF_Forth_view(TSF_Forth_drawthe(),true,TSF_echo_log);
+    }
+    else{
+        TSF_Forth_view(TSF_Forth_drawthe(),true);
+    }
     return "";
 }
 
 string TSF_Forth_viewthis(){    //#TSFdoc:実行中スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_Forth_drawthis(),true);
+    if( TSF_echo ){
+        TSF_Forth_view(TSF_Forth_drawthis(),true,TSF_echo_log);
+    }
+    else{
+        TSF_Forth_view(TSF_Forth_drawthis(),true);
+    }
     return "";
 }
 
 string TSF_Forth_viewthat(){    //#TSFdoc:積込先スタックを表示する。0枚ドロー。
-    TSF_Forth_view(TSF_Forth_drawthat(),true);
+    if( TSF_echo ){
+        TSF_Forth_view(TSF_Forth_drawthat(),true,TSF_echo_log);
+    }
+    else{
+        TSF_Forth_view(TSF_Forth_drawthat(),true);
+    }
     return "";
 }
 
