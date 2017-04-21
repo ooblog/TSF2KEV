@@ -33,21 +33,6 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
-//void TSF_sample_run(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
-//    string TSF_sample_sepalete="";
-//    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
-//        TSF_sample_sepalete=va_arg!(string)(_argptr);
-//        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
-//        TSF_Forth_viewthey();
-//        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
-//    }
-//    TSF_Forth_run();
-//    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
-//        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
-//        TSF_Forth_viewthey();
-//    }
-//}
-
 void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "Hello world","#TSF_echo"],"\t"),"T");
@@ -87,7 +72,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "",
         "　※ドローは「pullFthat」、リターンは「pushFthat」、してるとも言える。",
         "",
-        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」を用意する予定。※「F」「N」以外の副詞は「Shuffle」系として準備中です。",
+        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」を用意する予定。※「F」「N」「M」以外の副詞は準備中です。",
         "",
         "　「F」(Front)スタックから表択、一番上に積まれたカード(tsv表現では末尾の文字列)を選択。",
         "　「N」(Number)スタックから順択、一番下のカード(tsv表現では右端の文字列)をゼロとして数値指定で選択。",

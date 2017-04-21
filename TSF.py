@@ -25,16 +25,6 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "]),"N")
     TSF_Forth_samplerun("TSF_sample_help")
 
-#def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
-#    if TSF_sample_sepalete != None:
-#        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
-#        TSF_Forth_viewthey()
-#        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
-#    TSF_Forth_run()
-#    if TSF_sample_viewthey != None:
-#        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
-#        TSF_Forth_viewthey()
-
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "Hello world","#TSF_echo"]),"T")
@@ -73,7 +63,7 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "",
         "　※ドローは「pullFthat」、リターンは「pushFthat」、してるとも言える。",
         "",
-        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」を用意する予定。※「F」「N」以外の副詞は「Shuffle」系として準備中です。",
+        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」を用意する予定。※「F」「N」「M」以外の副詞は準備中です。",
         "",
         "　「F」(Front)スタックから表択、一番上に積まれたカード(tsv表現では末尾の文字列)を選択。",
         "　「N」(Number)スタックから順択、一番下のカード(tsv表現では右端の文字列)をゼロとして数値指定で選択。",
