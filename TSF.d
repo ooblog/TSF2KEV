@@ -30,28 +30,28 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "  --about       about TSF mini guide",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "],"\t"),"N");
-    TSF_sample_run("TSF_sample_help");
+    TSF_Forth_samplerun("TSF_sample_help");
 }
 
-void TSF_sample_run(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
-    string TSF_sample_sepalete="";
-    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
-        TSF_sample_sepalete=va_arg!(string)(_argptr);
-        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
-        TSF_Forth_viewthey();
-        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
-    }
-    TSF_Forth_run();
-    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
-        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
-        TSF_Forth_viewthey();
-    }
-}
+//void TSF_sample_run(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+//    string TSF_sample_sepalete="";
+//    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+//        TSF_sample_sepalete=va_arg!(string)(_argptr);
+//        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
+//        TSF_Forth_viewthey();
+//        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
+//    }
+//    TSF_Forth_run();
+//    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
+//        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
+//        TSF_Forth_viewthey();
+//    }
+//}
 
 void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "Hello world","#TSF_echo"],"\t"),"T");
-    TSF_sample_run("TSF_sample_Helloworld");
+    TSF_Forth_samplerun("TSF_sample_Helloworld");
 }
 
 void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版。
@@ -144,7 +144,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　時刻取得の方法が文字列置換なので、改行やタブ文字なども置換。",
         "　大抵の言語では乱数の生成がマシン時刻に依存してるはずなので時刻の取得と乱数の取得も一ヶ所に集める予定。",
         ""],"\t"),"N");
-    TSF_sample_run("TSF_sample_about");
+    TSF_Forth_samplerun("TSF_sample_about");
 }
 
 void TSF_sample_RPN(){    //#TSFdoc:「sample_RPN.tsf」コマンド版。
@@ -158,7 +158,7 @@ void TSF_sample_RPN(){    //#TSFdoc:「sample_RPN.tsf」コマンド版。
         "RPNsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("RPNdefault:",join([
         "1,3/m1|2-","RPN:","#TSF_this"],"\t"),"T");
-    TSF_sample_run("TSF_sample_RPN");
+    TSF_Forth_samplerun("TSF_sample_RPN");
 }
 
 
@@ -170,7 +170,7 @@ void main(string[] sys_argvs){
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
         TSF_Forth_merge(TSF_bootcommand,null,true);
         chdir(dirName(absolutePath(TSF_bootcommand)));
-        TSF_sample_run();
+        TSF_Forth_samplerun();
     }
     else if( count(["--py","--python","--Python"],TSF_bootcommand) ){
         if( TSF_sysargvs.length>=4 ){

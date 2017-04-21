@@ -776,15 +776,15 @@ def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風�
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
     return TSF_debug_log
 
-#def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
-#    if TSF_sample_sepalete != None:
-#        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
-#        TSF_Forth_viewthey()
-#        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
-#    TSF_Forth_run()
-#    if TSF_sample_viewthey != None:
-#        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
-#        TSF_Forth_viewthey()
+def TSF_Forth_samplerun(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+    if TSF_sample_sepalete != None:
+        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
+        TSF_Forth_viewthey()
+        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
+    TSF_Forth_run()
+    if TSF_sample_viewthey != None:
+        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
+        TSF_Forth_viewthey()
 
 if __name__=="__main__":
     TSF_Forth_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))

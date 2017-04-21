@@ -983,6 +983,21 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 
+void TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+    string TSF_sample_sepalete="";
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_sample_sepalete=va_arg!(string)(_argptr);
+        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
+        TSF_Forth_viewthey();
+        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
+    }
+    TSF_Forth_run();
+    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
+        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
+        TSF_Forth_viewthey();
+    }
+}
+
 
 unittest {
 //    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));

@@ -23,22 +23,22 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --about       about TSF mini guide",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "]),"N")
-    TSF_sample_run("TSF_sample_help")
+    TSF_Forth_samplerun("TSF_sample_help")
 
-def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
-    if TSF_sample_sepalete != None:
-        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
-        TSF_Forth_viewthey()
-        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
-    TSF_Forth_run()
-    if TSF_sample_viewthey != None:
-        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
-        TSF_Forth_viewthey()
+#def TSF_sample_run(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+#    if TSF_sample_sepalete != None:
+#        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
+#        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
+#    TSF_Forth_run()
+#    if TSF_sample_viewthey != None:
+#        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
 
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "Hello world","#TSF_echo"]),"T")
-    TSF_sample_run("TSF_sample_Helloworld")
+    TSF_Forth_samplerun("TSF_sample_Helloworld")
 
 def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
@@ -130,7 +130,7 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　時刻取得の方法が文字列置換なので、改行やタブ文字なども置換。",
         "　大抵の言語では乱数の生成がマシン時刻に依存してるはずなので時刻の取得と乱数の取得も一ヶ所に集める予定。",
         ""]),"N")
-    TSF_sample_run("TSF_sample_about")
+    TSF_Forth_samplerun("TSF_sample_about")
 
 def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("RPN:","\t".join([
@@ -143,7 +143,7 @@ def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
         "RPNsetup:","#TSF_this","#TSF_fin."]),"T")
     TSF_Forth_setTSF("RPNdefault:","\t".join([
         "1,3/m1|2-","RPN:","#TSF_this"]),"T")
-    TSF_sample_run("TSF_sample_RPN")
+    TSF_Forth_samplerun("TSF_sample_RPN")
 
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
@@ -153,7 +153,7 @@ TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
     TSF_Forth_merge(TSF_bootcommand,[],True)
     os.chdir(os.path.dirname(os.path.normpath(TSF_bootcommand)))
-    TSF_sample_run()
+    TSF_Forth_samplerun()
 elif TSF_bootcommand in ["--py","--python","--Python"]:
     if len(TSF_sysargvs) >= 4:
         TSF_Trans_generator_python(TSF_sysargvs[2],TSF_sysargvs[3])
