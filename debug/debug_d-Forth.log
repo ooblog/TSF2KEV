@@ -1,14 +1,14 @@
---- TSF_Forth.d ---
+-- TSF_Forth.d source --
 TSF_Tab-Separated-Forth:
 	PPPP:	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.
 PPPP:
 	this:Peek	that:Poke	the:Pull	they:Push	2	#TSF_echoN	len:	#TSF_this
 len:
 	len:	#TSF_that	len:	#TSF_lenthe	#TSF_lenthis	#TSF_lenthat	#TSF_lenthey	#exit	#TSF_this
---- run ---
+-- TSF_Forth.d run --
 they:Push
 the:Pull
---- fin. ---
+-- TSF_Forth.d viewthey --
 TSF_Tab-Separated-Forth:
 	PPPP:	#TSF_this	TSF_argvs:	#TSF_that	#TSF_argvs	#TSF_fin.	this:Peek	that:Poke
 PPPP:
@@ -17,4 +17,3 @@ len:
 	len:	#TSF_that	len:	#TSF_lenthe	#TSF_lenthis	#TSF_lenthat	#TSF_lenthey	#exit	#TSF_this	9	10	11	3
 TSF_argvs:
 	TSF_Forth.d	1
---- TSF_Forth.d > debug/debug_d-Forth.log ---

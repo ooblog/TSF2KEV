@@ -965,38 +965,85 @@ string [string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Forth.log";
-    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");
     TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T");
     TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T");
-    foreach(string TSF_the;TSF_stackO){
-        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
-    }
-    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log);
-    TSF_debug_log=TSF_Forth_run(TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log);
-    foreach(string TSF_the;TSF_stackO){
-        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
-    }
-    TSF_debug_log=TSF_Io_printlog(format("--- %s > %s ---",__FILE__,TSF_debug_savefilename),TSF_debug_log);
+    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
+//    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
+//    TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
+//    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");
+//    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T");
+//    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T");
+//    foreach(string TSF_the;TSF_stackO){
+//        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
+//    }
+//    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log);
+//    TSF_debug_log=TSF_Forth_run(TSF_debug_log);
+//    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log);
+//    foreach(string TSF_the;TSF_stackO){
+//        TSF_debug_log=TSF_Forth_view(TSF_the,true,TSF_debug_log);
+//    }
+//    TSF_debug_log=TSF_Io_printlog(format("--- %s > %s ---",__FILE__,TSF_debug_savefilename),TSF_debug_log);
+//    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 
-void TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+string TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。ソース表示やログ保存機能付き。
     string TSF_sample_sepalete="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_sample_sepalete=va_arg!(string)(_argptr);
-        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
-        TSF_Forth_viewthey();
-        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
     }
-    TSF_Forth_run();
+    bool TSF_sample_viewthey=false;
     if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
-        TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
-        TSF_Forth_viewthey();
+        TSF_sample_viewthey=va_arg!(bool)(_argptr);
     }
+    string TSF_sample_log="";
+    bool TSF_sample_logsw=false;
+    if( _arguments.length>2 && _arguments[2]==typeid(string) ){
+        TSF_sample_log=va_arg!(string)(_argptr);
+        TSF_sample_logsw=true;
+    }
+    if( TSF_sample_sepalete.length ){
+        TSF_sample_log=TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete),TSF_sample_log);
+        foreach(string TSF_the;TSF_stackO){
+            TSF_sample_log=TSF_Forth_view(TSF_the,true,TSF_sample_log);
+        }
+       TSF_sample_log=TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete),TSF_sample_log);
+    }
+    if( TSF_sample_logsw ){
+        TSF_sample_log=TSF_Forth_run(TSF_sample_log);
+    }
+    else{
+        TSF_Forth_run();
+    }
+    if( TSF_sample_viewthey ){
+        TSF_sample_log=TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete),TSF_sample_log);
+        foreach(string TSF_the;TSF_stackO){
+            TSF_sample_log=TSF_Forth_view(TSF_the,true,TSF_sample_log);
+        }
+    }
+    return TSF_sample_log;
 }
+
+//void TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+//    string TSF_sample_sepalete="";
+//    bool TSF_sample_viewthey=false;
+//    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+//        TSF_sample_sepalete=va_arg!(string)(_argptr);
+//        TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete));
+//        TSF_Forth_viewthey();
+//        TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete));
+//    }
+//    TSF_Forth_run();
+//    if( _arguments.length>1 && _arguments[1]==typeid(bool) ){
+//        TSF_sample_viewthey=va_arg!(bool)(_argptr);
+//        if( TSF_sample_viewthey ){
+//            TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete));
+//            TSF_Forth_viewthey();
+//        }
+//    }
+//}
 
 
 unittest {

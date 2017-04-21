@@ -760,31 +760,56 @@ def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Forth.log";
-    TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
     TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T")
     TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T")
-    for TSF_the in TSF_stackO:
-        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log)
-    TSF_debug_log=TSF_Forth_run(TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log)
-    for TSF_the in TSF_stackO:
-        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
-    TSF_debug_log=TSF_Io_printlog("--- {0} > {1} ---".format(__file__,TSF_debug_savefilename),TSF_debug_log)
+    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
-    return TSF_debug_log
+#    TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
+#    TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
+#    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
+#    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T")
+#    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T")
+#    for TSF_the in TSF_stackO:
+#        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
+#    TSF_debug_log=TSF_Io_printlog("--- run ---",TSF_debug_log)
+#    TSF_debug_log=TSF_Forth_run(TSF_debug_log)
+#    TSF_debug_log=TSF_Io_printlog("--- fin. ---",TSF_debug_log)
+#    for TSF_the in TSF_stackO:
+#        TSF_debug_log=TSF_Forth_view(TSF_the,True,TSF_debug_log)
+#    TSF_debug_log=TSF_Io_printlog("--- {0} > {1} ---".format(__file__,TSF_debug_savefilename),TSF_debug_log)
+#    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
+#    return TSF_debug_log
 
-def TSF_Forth_samplerun(TSF_sample_sepalete=None,TSF_sample_viewthey=None):    #TSFdoc:TSF実行。コマンド実行の場合はソースも表示。
+def TSF_Forth_samplerun(TSF_sample_sepalete=None,TSF_sample_viewthey=None,TSF_sample_log=None):    #TSFdoc:TSF実行。ソース表示やログ保存機能付き。
+    TSF_sample_logsw=True if TSF_sample_log != None else False
+    TSF_sample_log=TSF_sample_log if TSF_sample_log != None else ""
     if TSF_sample_sepalete != None:
-        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
-        TSF_Forth_viewthey()
-        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
-    TSF_Forth_run()
-    if TSF_sample_viewthey != None:
-        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
-        TSF_Forth_viewthey()
+        TSF_sample_log=TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete),TSF_sample_log)
+        for TSF_the in TSF_stackO:
+            TSF_sample_log=TSF_Forth_view(TSF_the,True,TSF_sample_log)
+        TSF_sample_log=TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete),TSF_sample_log)
+    if TSF_sample_logsw:
+        TSF_sample_log=TSF_Forth_run(TSF_sample_log)
+    else:
+        TSF_Forth_run()
+    if TSF_sample_viewthey == True:
+        TSF_sample_log=TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete),TSF_sample_log)
+        for TSF_the in TSF_stackO:
+            TSF_sample_log=TSF_Forth_view(TSF_the,True,TSF_sample_log)
+    return TSF_sample_log
+#    if TSF_sample_sepalete != None:
+#        TSF_Io_printlog("-- {0} source --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
+#        TSF_Io_printlog("-- {0} run --".format(TSF_sample_sepalete))
+#    if TSF_sample_log != None:
+#        TSF_sample_log=TSF_Forth_run(TSF_sample_log)
+#    else:
+#        TSF_Forth_run()
+#    if TSF_sample_viewthey == True:
+#        TSF_Io_printlog("-- {0} viewthey --".format(TSF_sample_sepalete))
+#        TSF_Forth_viewthey()
 
 if __name__=="__main__":
     TSF_Forth_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))
