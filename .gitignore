@@ -91,17 +91,17 @@ ENV/
 # git clone github:ooblog/TSF2KEV.git
 # git status
 # git push github:ooblog/TSF2KEV.git master
-# git push github:ooblog/TSF2KEV.git 20170413R040745
+# git push github:ooblog/TSF2KEV.git 20170422S212854
 # git log
 # git ls-files
 # git commit -a -m ""
 # git reset --soft HEAD^
 # git branch
 # git checkout master
-# git checkout 20170413R040745
-# git merge 20170413R040745
-# git branch -d 20170413R040745
-# git push github:ooblog/TSF2KEV.git :20170413R040745
+# git checkout 20170422S212854
+# git merge 20170422S212854
+# git branch -d 20170422S212854
+# git push github:ooblog/TSF2KEV.git :20170422S212854
 cardsize/
 debug/trans_about.d
 debug/trans_about.py

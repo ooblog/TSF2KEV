@@ -16,7 +16,7 @@ string TSF_Forth_1ststack(){    //#TSFdoc:最初のスタック名(TSFAPI)。
 }
 
 string TSF_Forth_version(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
-    return "20170413R040745";
+    return "20170422S212854";
 }
 
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
