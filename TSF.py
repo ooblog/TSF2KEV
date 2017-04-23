@@ -2,6 +2,10 @@
 # -*- coding: UTF-8 -*-
 from __future__ import division,print_function,absolute_import,unicode_literals
 
+#import sys
+#import os
+#os.chdir(sys.path[0])
+#sys.path.append("TSFpy")
 from TSF_Io import *
 from TSF_Forth import *
 from TSF_Shuffle import *
