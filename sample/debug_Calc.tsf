@@ -1,0 +1,10 @@
+TSF_Tab-Separated-Forth:
+	calccount:	#TSF_this	#TSF_fin.
+calccount:
+	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_peekFthat	#TSF_echo	#TSF_this	calccount:	#TSF_this
+calcjump:
+	#exit	calcpop:
+calcpop:
+	calcsample:	#TSF_pullFthe	#TSF_peekFthat	#TSF_RPN	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+calcsample:
+	1,1+	1,1-	1,1*

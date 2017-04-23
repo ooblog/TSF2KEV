@@ -12,7 +12,7 @@ syntax match tsfIdentifier		"^[^\t^\n]*\ze\n"
 syntax match tsfIdentifier		"^[^\t^\n]*\ze\t"
 syntax match tsfStatement	"\t\zs\#[^\t^\n]*\ze\t"
 syntax match tsfStatement	"\t\zs\#[^\t^\n]*\ze\n"
-syntax match tsfNumber	/n|0/
+syntax match tsfNumber		/n|0/
 
 highlight def link tsfComment	Comment
 highlight def link tsfIdentifier	Identifier

@@ -88,6 +88,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Calc.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
 
 if __name__=="__main__":
     TSF_Calc_debug(TSF_Io_argvs(["python","TSF_Calc.py"]))
