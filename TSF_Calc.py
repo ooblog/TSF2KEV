@@ -29,52 +29,71 @@ def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カー�
     TSF_Forth_return(TSF_calc_bracketsJA(TSF_Forth_drawthe()));
     return ""
 
-#TSF_calc_opewide="f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><" \
-#                "銭十百千万億兆京垓𥝱穣溝澗正載極恒阿那思量" \
-#                "１２３４５６７８９０｜．" "絶負分点円圓" "一二三四五六七八九〇" "壱弐参肆伍陸漆捌玖零" \
-#                "＋－×÷／＼＃％" "加減乗除比税" "足引掛割" "和差積商" "陌阡萬仙秭" \
-#                "（）()｛｝{}［］[]「」｢｣『』Σ但※列Π囲～〜値とを約倍" \
-#                "乗常進対√根π周θｅ底∞無桁"
-#TSF_calc_opehalf="f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><" \
-#                "銭十百千万億兆京垓𥝱穣溝澗正載極恒阿那思量" \
-#                "1234567890|." "!m$..." "1234567890" "1234567890" \
-#                "+-*//\\#%" "+-*/%%" "+-*/" "+-*/" "百千万銭𥝱" \
-#                "()()()()()()()()()MMMMP~~~k&&Gg" \
-#                "^LlERRyyYeennf"
-def TSF_calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索(TSFAPI)。
-    #TSF_calcQ=TSF_calcQ
-    TSF_calcA=TSF_calc_bracketsQQ(TSF_calcQ)
-    #TSF_calcA=TSF_calcA
+TSF_Calc_opeword={"恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",
+    "円周率":"π","2π":"θ","２π":"θ","ネイピア数":"ｅ","プラス":"p","マイナス":"m","絶対値":"p"}
+TSF_Calc_opechar={"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0",
+    "一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","〇":"0",
+    "壱":"1","弐":"2","参":"3","肆":"4","伍":"5","陸":"6","漆":"7","捌":"8","玖":"9","零":"0",
+    "絶":"p","負":"m","分":"_","点":".","円":".","圓":".","陌":"百","佰":"百","阡":"千","仟":"千","萬":"万","仙":"銭","秭":"𥝱",
+    "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＃":"#","％":"%","＾":"^","｜":"|","＿":"_",
+    "加":"+","減":"-","乗":"*","除":"/","捨":"\\","余":"#","比":"%","税":"%","冪":"^","分":"_",
+    "足":"+","引":"-","掛":"*","割":"/","和":"+","差":"-","積":"*","商":"/",
+    "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
+}
+#TSF_calc_okusenman="万億兆京垓𥝱穣溝澗正載極恒阿那思量"
+#TSF_calc_okusenzero=['1'+'0'*((o+1)*4) for o in range(len(TSF_calc_okusenman))]
+#TSF_calc_okusendic=dict(zip(list(TSF_calc_okusenman),TSF_calc_okusenzero))
+
+def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索(TSFAPI)。
+    for TSF_opewordK,TSF_opewordV in TSF_calc_opeword.items():
+        TSF_calcQ=TSF_calcQ.replace(TSF_opewordK,TSF_opewordV)
+    for TSF_opecharK,TSF_opecharV in TSF_calc_opechar.items():
+        TSF_calcQ=TSF_calcQ.replace(TSF_opecharK,TSF_opecharV)
+
+#    TSF_calcA=re.sub(re.compile("([0-9千百十]+?)銭"),"+(\\1)/100",TSF_calcA)
+#    for TSF_okusenK,TSF_okusenV in TSF_calc_okusendic.items():
+#        TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["(\\1)*",TSF_okusenV,"+"]),TSF_calcA)
+#    TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"(\\1*1000)+",TSF_calcA)
+#    TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"(\\1*100)+",TSF_calcA)
+#    TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"(\\1*10)+",TSF_calcA)
+#    TSF_calcA=TSF_calcA.replace('銭',"1|100+")
+#    TSF_calcA=TSF_calcA.replace('十',"10+")
+#    TSF_calcA=TSF_calcA.replace('百',"100+")
+#    TSF_calcA=TSF_calcA.replace('千',"1000+")
+#    for TSF_okusenK,TSF_okusenV in TSF_calc_okusendic.items():
+#        TSF_calcA=TSF_calcA.replace(TSF_okusenK,"".join([TSF_okusenV,"+"]))
+
+
+    TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
+    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
+    if "." in TSF_calcA:
+        pass
+    else:
+        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('|')
+        if int(TSF_calcRD) > 0:
+            TSF_calcA="".join([TSF_calcF,TSF_calc_decimalizeKNcomma(TSF_calcRD),"分の",TSF_calc_decimalizeKNcomma(TSF_calcRN)])
+            TSF_calcA=TSF_calcA.replace("1分の",'')
+        else:
+            TSF_calcA="n|0"
+        TSF_calcA=TSF_calcA.replace('恒','恒河沙').replace('阿','阿僧祇').replace('那','那由他').replace('思','不可思議').replace('量','無量大数')
     return TSF_calcA
 
-#TSF_calc_opewide="f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><" \
-#                "銭十百千万億兆京垓𥝱穣溝澗正載極恒阿那思量" \
-#                "１２３４５６７８９０｜．" "絶負分点円圓" "一二三四五六七八九〇" "壱弐参肆伍陸漆捌玖零" \
-#                "＋－×÷／＼＃％" "加減乗除比税" "足引掛割" "和差積商" "陌阡萬仙秭" \
-#                "（）()｛｝{}［］[]「」｢｣『』Σ但※列Π囲～〜値とを約倍" \
-#                "乗常進対√根π周θｅ底∞無桁"
-#TSF_calc_opehalf="f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><" \
-#                "銭十百千万億兆京垓𥝱穣溝澗正載極恒阿那思量" \
-#                "1234567890|." "!m$..." "1234567890" "1234567890" \
-#                "+-*//\\#%" "+-*/%%" "+-*/" "+-*/" "百千万銭𥝱" \
-#                "()()()()()()()()()MMMMP~~~k&&Gg" \
-#                "^LlERRyyYeennf"
-def TSF_calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索(TSFAPI)。
-    TSF_calcA="n|0"
-#    TSF_calcA=TSF_calc_bracketsbalance(TSF_calcQ);
-#    for TSF_calcbracketQ in TSF_calcQ:
-#        TSF_calcA+=TSF_calc_operator.get(TSF_calcbracketQ,'')
-#        if TSF_calcbracketQ == '(':
-#            TSF_calcbracketLR+=1
-#        if TSF_calcbracketQ == ')':
-#            TSF_calcbracketLR-=1
-#            if TSF_calcbracketLR<TSF_calcbracketCAP:
-#                TSF_calcbracketCAP=TSF_calcbracketLR
-#    if TSF_calcbracketLR > 0:
-#        TSF_calcA=TSF_calcA+')'*abs(TSF_calcbracketLR)
-#    if TSF_calcbracketLR < 0:
-#        TSF_calcA='('*abs(TSF_calcbracketLR)+TSF_calcA
+TSF_Calc_operator="f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
 
+def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索(TSFAPI)。
+    TSF_calcA="n|0"
+    for TSF_calcbracketQ in TSF_calcQ:
+        TSF_calcA+=TSF_calcbracketQ if TSF_calcbracketQ in TSF_Calc_operator else ""
+        if TSF_calcbracketQ == '(':
+            TSF_calcbracketLR+=1
+        if TSF_calcbracketQ == ')':
+            TSF_calcbracketLR-=1
+            if TSF_calcbracketLR<TSF_calcbracketCAP:
+                TSF_calcbracketCAP=TSF_calcbracketLR
+    if TSF_calcbracketLR > 0:
+        TSF_calcA=TSF_calcA+')'*abs(TSF_calcbracketLR)
+    if TSF_calcbracketLR < 0:
+        TSF_calcA='('*abs(TSF_calcbracketLR)+TSF_calcA
     TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
 #    while "(" in TSF_calcA:
 #        for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):

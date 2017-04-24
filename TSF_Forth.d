@@ -226,7 +226,7 @@ string TSF_Forth_argvs(){    //#TSFdoc:コマンドを積込む。0枚[]ドロ�
 string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[the]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthe();
     if( TSF_the in TSF_stackD ){
-        foreach(string TSF_card;TSF_stackD[TSF_the]){
+        foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
     }
@@ -236,7 +236,7 @@ string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[
 string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthis();
     if( TSF_the in TSF_stackD ){
-        foreach(string TSF_card;TSF_stackD[TSF_the]){
+        foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
     }
@@ -246,7 +246,7 @@ string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0
 string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthat();
     if( TSF_the in TSF_stackD ){
-        foreach(string TSF_card;TSF_stackD[TSF_the]){
+        foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
     }
@@ -255,7 +255,7 @@ string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0
 }
 
 string TSF_Forth_argvsthey(){    //#TSFdoc:カードN枚を逆順に積込。カード枚数+総数1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
-    foreach(string TSF_card;TSF_stackO){
+    foreach_reverse(string TSF_card;TSF_stackO){
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
     }
     return "";

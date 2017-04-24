@@ -33,7 +33,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     TSF_Tab-Separated-Forth:
     	echoTSF:	#TSF_this	#TSF_fin.
     echoTSF:
-    	aboutTSF:	#TSF_argvsthe	#TSF_reverseN	aboutTSF:	#TSF_lenthe	#TSF_echoN	echoRPN:	#TSF_this
+    	aboutTSF:	#TSF_argvsthe	#TSF_echoN	echoRPN:	#TSF_this
     aboutTSF:
     	
     	○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。
@@ -77,7 +77,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。
     	
     echoRPN:
-    	aboutRPNtest:	#TSF_this	aboutRPN:	#TSF_argvsthe	#TSF_reverseN	aboutRPN:	#TSF_lenthe	#TSF_echoN	echoCALC:	#TSF_this
+    	aboutRPNtest:	#TSF_this	aboutRPN:	#TSF_argvsthe	#TSF_echoN	echoCALC:	#TSF_this
     aboutRPNtest:
     	▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結→	1	3	m1|2	[2],[1]/[0]-	#TSF_join[]	#TSF_RPN	2	#TSF_joinN	#TSF_echo	▽「1 , 3 / m1|2 -」を「#TSF_join」で連結→	1	,	3	/	m1|2	-	6	#TSF_joinN	#TSF_RPN	2	#TSF_joinN	#TSF_echo
     aboutRPN:
@@ -96,7 +96,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　条件演算子は何に使うかというと「#TSF_this」の飛び先を変更するため「#TSF_peekthe」などと組み合わせます。
     	
     echoCALC:
-    	aboutCALCtest:	#TSF_this	aboutCALC:	#TSF_argvsthe	#TSF_reverseN	aboutCALC:	#TSF_lenthe	#TSF_echoN	echoTIME:	#TSF_this
+    	aboutCALCtest:	#TSF_this	aboutCALC:	#TSF_argvsthe	#TSF_echoN	echoTIME:	#TSF_this
     aboutCALCtest:
     	▽「calc」系準備中	#TSF_echo
     aboutCALC:
@@ -109,7 +109,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　億千万円銭など通貨的な助数詞を扱う予定。
     	
     echoTIME:
-    	aboutTIMEtest:	#TSF_this	aboutTIME:	#TSF_argvsthe	#TSF_reverseN	aboutTIME:	#TSF_lenthe	#TSF_echoN
+    	aboutTIMEtest:	#TSF_this	aboutTIME:	#TSF_argvsthe	#TSF_echoN
     aboutTIMEtest:
     	▽「time」系は準備中	#TSF_echo
     aboutTIME:

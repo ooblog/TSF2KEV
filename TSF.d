@@ -20,7 +20,8 @@ import TSF_Trans;
 
 void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
+//        "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
+        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
         "usage: ./TSF.py [command|file.tsf] [argvs] ...",
         "commands & samples:",
@@ -43,7 +44,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "echoTSF:","#TSF_this","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("echoTSF:",join([
-        "aboutTSF:","#TSF_argvsthe","#TSF_reverseN","aboutTSF:","#TSF_lenthe","#TSF_echoN","echoRPN:","#TSF_this"],"\t"),"T");
+        "aboutTSF:","#TSF_argvsthe","#TSF_echoN","echoRPN:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("aboutTSF:",join([
         "",
         "○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。",
@@ -87,7 +88,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。",
         ""],"\t"),"N");
     TSF_Forth_setTSF("echoRPN:",join([
-        "aboutRPNtest:","#TSF_this","aboutRPN:","#TSF_argvsthe","#TSF_reverseN","aboutRPN:","#TSF_lenthe","#TSF_echoN","echoCALC:","#TSF_this"],"\t"),"T");
+        "aboutRPNtest:","#TSF_this","aboutRPN:","#TSF_argvsthe","#TSF_echoN","echoCALC:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("aboutRPNtest:",join([
         "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「#TSF_join」で連結→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("aboutRPN:",join([
@@ -106,7 +107,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　条件演算子は何に使うかというと「#TSF_this」の飛び先を変更するため「#TSF_peekthe」などと組み合わせます。",
         ""],"\t"),"N");
     TSF_Forth_setTSF("echoCALC:",join([
-        "aboutCALCtest:","#TSF_this","aboutCALC:","#TSF_argvsthe","#TSF_reverseN","aboutCALC:","#TSF_lenthe","#TSF_echoN","echoTIME:","#TSF_this"],"\t"),"T");
+        "aboutCALCtest:","#TSF_this","aboutCALC:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("aboutCALCtest:",join([
         "▽「calc」系準備中","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("aboutCALC:",join([
@@ -119,7 +120,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　億千万円銭など通貨的な助数詞を扱う予定。",
         ""],"\t"),"N");
     TSF_Forth_setTSF("echoTIME:",join([
-        "aboutTIMEtest:","#TSF_this","aboutTIME:","#TSF_argvsthe","#TSF_reverseN","aboutTIME:","#TSF_lenthe","#TSF_echoN"],"\t"),"T");
+        "aboutTIMEtest:","#TSF_this","aboutTIME:","#TSF_argvsthe","#TSF_echoN"],"\t"),"T");
     TSF_Forth_setTSF("aboutTIMEtest:",join([
         "▽「time」系は準備中","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("aboutTIME:",join([

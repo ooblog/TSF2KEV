@@ -1,7 +1,7 @@
 TSF_Tab-Separated-Forth:
 	calccount:	#TSF_this	#TSF_fin.
 calccount:
-	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_peekFthat	#TSF_echo	#TSF_this	calccount:	#TSF_this
+	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	calccount:	#TSF_this
 calcjump:
 	#exit	calcpop:
 calcpop:
