@@ -12,7 +12,7 @@ import std.string;
 import TSF_Io;
 import TSF_Forth;
 import TSF_Shuffle;
-//import TSF_Calc;
+import TSF_Calc;
 //import TSF_Time;
 import TSF_Match;
 import TSF_Trans;
@@ -20,7 +20,6 @@ import TSF_Trans;
 
 void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-//        "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
         "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
         "usage: ./TSF.py [command|file.tsf] [argvs] ...",
@@ -150,7 +149,7 @@ void TSF_sample_RPN(){    //#TSFdoc:「sample_RPN.tsf」コマンド版。
 
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
-    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
+    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
     string TSF_bootcommand=TSF_sysargvs.length<2?"":TSF_sysargvs[1];
     TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){

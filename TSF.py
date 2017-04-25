@@ -9,7 +9,7 @@ from __future__ import division,print_function,absolute_import,unicode_literals
 from TSF_Io import *
 from TSF_Forth import *
 from TSF_Shuffle import *
-#from TSF_Calc import *
+from TSF_Calc import *
 #from TSF_Time import *
 from TSF_Match import *
 from TSF_Trans import *
@@ -17,7 +17,6 @@ from TSF_Trans import *
 
 def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-#        "help:","#TSF_argvsthe","#TSF_reverseN","help:","#TSF_lenthe","#TSF_echoN","#TSF_fin."]),"T")
         "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:","\t".join([
         "usage: ./TSF.py [command|file.tsf] [argvs] ...",
@@ -142,7 +141,7 @@ def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
 
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
-TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
+TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
