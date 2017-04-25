@@ -106,9 +106,10 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
     return TSF_calcA
 
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
+    TSF_calcA=TSF_calcQ
 #    TSF_calcA=TSF_Calc_addition(TSF_calcQ)
     if "," in TSF_calcQ:
-         TSF_calcA=TSF_Io_RPN(TSF_calcQ)
+        TSF_calcA=TSF_Io_RPN(TSF_calcQ)
     else:
         TSF_calcA=TSF_calcQ
 #        TSF_calcA=TSF_Calc_addition(TSF_calcQ)

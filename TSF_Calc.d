@@ -58,16 +58,26 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     if( TSF_calcbracketCAP>0 ){
         foreach(long i;0..TSF_calcbracketCAP){ TSF_calcA="("~TSF_calcA~")"; }
     }
-//    TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
-//    while "(" in TSF_calcA:
-//        for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
-//            TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
-//    TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
+    auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
+    while( count(TSF_calcA,"(") ){
+        foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
+            TSF_calcA=replace(TSF_calcA,TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
+        }
+        TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
+    }
+    TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
     return TSF_calcA;
 }
 
 string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
+//    TSF_calcA=TSF_Calc_addition(TSF_calcQ)
+    if( count(TSF_calcQ,",") ){
+         TSF_calcA=TSF_Io_RPN(TSF_calcQ);
+    }
+    else{
+//        TSF_calcA=TSF_Calc_addition(TSF_calcQ)
+    }
     return TSF_calcA;
 }
 
