@@ -33,7 +33,6 @@ def TSF_Calc_calcsquarebrackets(TSF_calcQ,TSF_calcBL,TSF_calcBR):     #TSFdoc:�
     return TSF_calcA
 
 def TSF_Calc_calc():    #TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()))
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
     return ""
 
@@ -95,23 +94,45 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
     return TSF_calcA
 
 TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><"
+#def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
+#    TSF_calcA=""; TSF_calcbracketLR,TSF_calcbracketCAP=0,0
+#    for TSF_calcbracketQ in TSF_calcQ:
+#        TSF_calcA+=TSF_calcbracketQ if TSF_calcbracketQ in TSF_Calc_operator else ""
+#        if TSF_calcbracketQ == '(':
+#            TSF_calcbracketLR+=1
+#        if TSF_calcbracketQ == ')':
+#            TSF_calcbracketLR-=1
+#            if TSF_calcbracketLR<TSF_calcbracketCAP:
+#                TSF_calcbracketCAP=TSF_calcbracketLR
+#    if TSF_calcbracketLR > 0:
+#        TSF_calcA=TSF_calcA+')'*abs(TSF_calcbracketLR)
+#    if TSF_calcbracketLR < 0:
+#        TSF_calcA='('*abs(TSF_calcbracketLR)+TSF_calcA
+#    TSF_calcA='('*abs(TSF_calcbracketCAP)+TSF_calcA+')'*abs(TSF_calcbracketCAP)
+#    TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
+#    while "(" in TSF_calcA:
+#        for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
+#            TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
+#    TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
+#    return TSF_calcA
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
-    TSF_calcA=""; TSF_calcbracketLR,TSF_calcbracketCAP=0,0
-    for TSF_calcbracketQ in TSF_calcQ:
-        TSF_calcA+=TSF_calcbracketQ if TSF_calcbracketQ in TSF_Calc_operator else ""
-        if TSF_calcbracketQ == '(':
-            TSF_calcbracketLR+=1
-        if TSF_calcbracketQ == ')':
-            TSF_calcbracketLR-=1
-            if TSF_calcbracketLR<TSF_calcbracketCAP:
-                TSF_calcbracketCAP=TSF_calcbracketLR
-    if TSF_calcbracketLR > 0:
-        TSF_calcA=TSF_calcA+')'*abs(TSF_calcbracketLR)
-    if TSF_calcbracketLR < 0:
-        TSF_calcA='('*abs(TSF_calcbracketLR)+TSF_calcA
-    TSF_calcA='('*abs(TSF_calcbracketCAP)+TSF_calcA+')'*abs(TSF_calcbracketCAP)
+    TSF_calcA=TSF_calcQ; TSF_calcBLR,TSF_calcBCAP=0,0
     TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
-    while "(" in TSF_calcA:
+    while "(" in TSF_calcA or ")" in TSF_calcA:
+        TSF_calcBLR,TSF_calcBCAP=0,0
+        for TSF_calcB in TSF_calcA:
+            TSF_calcA+=TSF_calcB if TSF_calcB in TSF_Calc_operator else ""
+            if TSF_calcB == '(':
+                TSF_calcBLR+=1
+            if TSF_calcB == ')':
+                TSF_calcBLR-=1
+                if TSF_calcBLR<TSF_calcBCAP:
+                    TSF_calcbracketCAP=TSF_calcBLR
+        if TSF_calcBLR > 0:
+            TSF_calcA=TSF_calcA+')'*abs(TSF_calcBLR)
+        if TSF_calcBLR < 0:
+            TSF_calcA='('*abs(TSF_calcBLR)+TSF_calcA
+        TSF_calcA='('*abs(TSF_calcBCAP)+TSF_calcA+')'*abs(TSF_calcBCAP)
         for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
     TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
@@ -133,7 +154,22 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Calc.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "calccount:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("calccount:","\t".join([
+        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"]),"T")
+    TSF_Forth_setTSF("calcjump:","\t".join([
+        "#exit","calcpop:"]),"T")
+    TSF_Forth_setTSF("calcpop:","\t".join([
+        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),"T")
+    TSF_Forth_setTSF("calcpeekdata:","\t".join([
+        "009","108","207","306","405","504","603","702","801","900"]),"T")
+    TSF_Forth_setTSF("calcsample:","\t".join([
+        "2,3+","2,3-","2,3*","2,3/", "(2,3-),5+",
+        "[calcpeekdata:8]",
+        "2+3"]),"N")
+    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
     TSF_Calc_debug(TSF_Io_argvs(["python","TSF_Calc.py"]))

@@ -7,6 +7,10 @@ calcjump:
 calcpop:
 #	calcsample:	#TSF_pullFthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+calcpeekdata:
+	009	108	207	306	405	504	603	702	801	900
 calcsample:
-	1,1+	1,1-	1,1*	1,1/
+	2,3+	2,3-	2,3*	2,3/
 	(2,3-),5+
+	[calcpeekdata:8]
+	2+3

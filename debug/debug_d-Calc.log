@@ -1,0 +1,41 @@
+--- TSF_Calc.d ---
+-- TSF_Calc.d source --
+TSF_Tab-Separated-Forth:
+	calccount:	#TSF_this	#TSF_fin.
+calccount:
+	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	calccount:	#TSF_this
+calcjump:
+	#exit	calcpop:
+calcpop:
+	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+calcpeekdata:
+	009	108	207	306	405	504	603	702	801	900
+calcsample:
+	2,3+
+	2,3-
+	2,3*
+	2,3/
+	(2,3-),5+
+	[calcpeekdata:8]
+	2+3
+-- TSF_Calc.d run --
+「2,3+」→「p5」
+「2,3-」→「m1」
+「2,3*」→「p6」
+「2,3/」→「p0.666667」
+「(2,3-),5+」→「p4」
+「[calcpeekdata:8]」→「801」
+「2+3」→「2+3」
+-- TSF_Calc.d viewthey --
+TSF_Tab-Separated-Forth:
+	calccount:	#TSF_this	#TSF_fin.
+calccount:
+	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	calccount:	#TSF_this
+calcjump:
+	#exit	calcpop:
+calcpop:
+	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+calcpeekdata:
+	009	108	207	306	405	504	603	702	801	900
+calcsample:
+	

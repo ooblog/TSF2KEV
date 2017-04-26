@@ -41,13 +41,11 @@ string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF
 }
 
 string TSF_Calc_calc(){    //#TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()));
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
 
 string TSF_Calc_calcJA(){    //#TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Forth_drawthe()));
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
@@ -58,26 +56,55 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
 }
 
 string TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
+//string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
+//    string TSF_calcA="";  long TSF_calcbracketLR=0,TSF_calcbracketCAP=0;
+//    foreach(char TSF_calcbracketQ;TSF_calcQ){
+//        TSF_calcA~=count(TSF_Calc_operator,TSF_calcbracketQ)?to!string(TSF_calcbracketQ):"";
+//        if( TSF_calcbracketQ=='(' ){ TSF_calcbracketLR+=1; }
+//        if( TSF_calcbracketQ==')' ){ TSF_calcbracketLR-=1;
+//            if( TSF_calcbracketLR<TSF_calcbracketCAP ){ TSF_calcbracketCAP=TSF_calcbracketLR; }
+//        }
+//    }
+//    if( TSF_calcbracketLR>0 ){
+//        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA=TSF_calcA~")"; }
+//    }
+//    if( TSF_calcbracketLR<0 ){
+//        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA="("~TSF_calcA; }
+//    }
+//    if( TSF_calcbracketCAP>0 ){
+//        foreach(long i;0..TSF_calcbracketCAP){ TSF_calcA="("~TSF_calcA~")"; }
+//    }
+//    auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
+//    while( count(TSF_calcA,"(") ){
+//        foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
+//            TSF_calcA=replace(TSF_calcA,TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
+//        }
+//        TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
+//    }
+//    TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
+//    return TSF_calcA;
+//}
 string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
-    string TSF_calcA="";  long TSF_calcbracketLR=0,TSF_calcbracketCAP=0;
-    foreach(char TSF_calcbracketQ;TSF_calcQ){
-        TSF_calcA~=count(TSF_Calc_operator,TSF_calcbracketQ)?to!string(TSF_calcbracketQ):"";
-        if( TSF_calcbracketQ=='(' ){ TSF_calcbracketLR+=1; }
-        if( TSF_calcbracketQ==')' ){ TSF_calcbracketLR-=1;
-            if( TSF_calcbracketLR<TSF_calcbracketCAP ){ TSF_calcbracketCAP=TSF_calcbracketLR; }
-        }
-    }
-    if( TSF_calcbracketLR>0 ){
-        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA=TSF_calcA~")"; }
-    }
-    if( TSF_calcbracketLR<0 ){
-        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA="("~TSF_calcA; }
-    }
-    if( TSF_calcbracketCAP>0 ){
-        foreach(long i;0..TSF_calcbracketCAP){ TSF_calcA="("~TSF_calcA~")"; }
-    }
+    string TSF_calcA=TSF_calcQ;  long TSF_calcBLR=0,TSF_calcBCAP=0;
     auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
-    while( count(TSF_calcA,"(") ){
+    while( count(TSF_calcA,"(") || count(TSF_calcA,")") ){
+        TSF_calcBLR=0; TSF_calcBCAP=0;
+        foreach(char TSF_calcB;TSF_calcQ){
+            TSF_calcA~=count(TSF_Calc_operator,TSF_calcB)?to!string(TSF_calcB):"";
+            if( TSF_calcB=='(' ){ TSF_calcBLR+=1; }
+            if( TSF_calcB==')' ){ TSF_calcBLR-=1;
+                if( TSF_calcBLR<TSF_calcBCAP ){ TSF_calcBCAP=TSF_calcBLR; }
+            }
+        }
+        if( TSF_calcBLR>0 ){
+            foreach(long i;0..abs(TSF_calcBLR)){ TSF_calcA=TSF_calcA~")"; }
+        }
+        if( TSF_calcBLR<0 ){
+            foreach(long i;0..abs(TSF_calcBLR)){ TSF_calcA="("~TSF_calcA; }
+        }
+        if( TSF_calcBCAP>0 ){
+            foreach(long i;0..TSF_calcBCAP){ TSF_calcA="("~TSF_calcA~")"; }
+        }
         foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
             TSF_calcA=replace(TSF_calcA,TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
         }
@@ -100,11 +127,27 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
 }
 
 
-void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
+void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Calc_Initcards];
 void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Calc.log";
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "calccount:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("calccount:",join([
+        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("calcjump:",join([
+        "#exit","calcpop:"],"\t"),"T");
+    TSF_Forth_setTSF("calcpop:",join([
+        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("calcpeekdata:",join([
+        "009","108","207","306","405","504","603","702","801","900"],"\t"),"T");
+    TSF_Forth_setTSF("calcsample:",join([
+        "2,3+", "2,3-", "2,3*", "2,3/", "(2,3-),5+",
+        "[calcpeekdata:8]",
+        "2+3"],"\t"),"N");
+    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 
 unittest {
