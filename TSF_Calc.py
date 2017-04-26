@@ -21,12 +21,24 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
+def TSF_Calc_calcsquarebrackets(TSF_calcQ,TSF_calcBL,TSF_calcBR):     #TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
+    TSF_calcA=TSF_calcQ
+    for TSF_stacksK,TSF_stacksV in TSF_Forth_stackD().items():
+        TSF_calcK="".join([TSF_calcBL,TSF_stacksK])
+        if TSF_calcK in TSF_calcA:
+            for TSF_stackC,TSF_stackQ in enumerate(TSF_stacksV):
+                TSF_calcK="".join([TSF_calcBL,TSF_stacksK,str(TSF_stackC),TSF_calcBR])
+                if TSF_calcK in TSF_calcA:
+                    TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_stackQ)
+    return TSF_calcA
+
 def TSF_Calc_calc():    #TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()))
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
     return ""
 
 def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Forth_drawthe()))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
     return ""
 
 TSF_Calc_opeword={"恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",

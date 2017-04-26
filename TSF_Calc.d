@@ -24,13 +24,31 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     } 
 }
 
+string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF_calcBR){    //#TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
+    string TSF_calcA=TSF_calcQ,TSF_calcK="";
+    foreach(string TSF_stacksK,string[] TSF_stacksV;TSF_Forth_stackD()){
+        TSF_calcK=TSF_calcBL~TSF_stacksK;
+        if( count(TSF_calcA,TSF_calcK) ){
+            foreach(size_t TSF_stackC,string TSF_stackQ;TSF_stacksV){
+                TSF_calcK=TSF_calcBL~TSF_stacksK~to!string(TSF_stackC)~TSF_calcBR;
+                if( count(TSF_calcA,TSF_calcK) ){
+                    TSF_calcA=replace(TSF_calcA,TSF_calcK,TSF_stackQ);
+                }
+            }
+        }
+    }
+    return TSF_calcA;
+}
+
 string TSF_Calc_calc(){    //#TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()));
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Forth_drawthe()));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
 
 string TSF_Calc_calcJA(){    //#TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Forth_drawthe()));
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Forth_drawthe()));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
 
