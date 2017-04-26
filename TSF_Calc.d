@@ -56,34 +56,6 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
 }
 
 string TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
-//string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
-//    string TSF_calcA="";  long TSF_calcbracketLR=0,TSF_calcbracketCAP=0;
-//    foreach(char TSF_calcbracketQ;TSF_calcQ){
-//        TSF_calcA~=count(TSF_Calc_operator,TSF_calcbracketQ)?to!string(TSF_calcbracketQ):"";
-//        if( TSF_calcbracketQ=='(' ){ TSF_calcbracketLR+=1; }
-//        if( TSF_calcbracketQ==')' ){ TSF_calcbracketLR-=1;
-//            if( TSF_calcbracketLR<TSF_calcbracketCAP ){ TSF_calcbracketCAP=TSF_calcbracketLR; }
-//        }
-//    }
-//    if( TSF_calcbracketLR>0 ){
-//        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA=TSF_calcA~")"; }
-//    }
-//    if( TSF_calcbracketLR<0 ){
-//        foreach(long i;0..abs(TSF_calcbracketLR)){ TSF_calcA="("~TSF_calcA; }
-//    }
-//    if( TSF_calcbracketCAP>0 ){
-//        foreach(long i;0..TSF_calcbracketCAP){ TSF_calcA="("~TSF_calcA~")"; }
-//    }
-//    auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
-//    while( count(TSF_calcA,"(") ){
-//        foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
-//            TSF_calcA=replace(TSF_calcA,TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
-//        }
-//        TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
-//    }
-//    TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
-//    return TSF_calcA;
-//}
 string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     string TSF_calcA=TSF_calcQ;  long TSF_calcBLR=0,TSF_calcBCAP=0;
     auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
@@ -114,15 +86,24 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     return TSF_calcA;
 }
 
+//auto TSF_calc_NOZUs=[
+//    "T","(lambda TSF_calcSeq:TSF_calcSeq )"
+//];
+//string[string] KV;
+//   KV["k"]="v";
 string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-//    TSF_calcA=TSF_Calc_addition(TSF_calcQ)
     if( count(TSF_calcQ,",") ){
          TSF_calcA=TSF_Io_RPN(TSF_calcQ);
     }
     else{
-//        TSF_calcA=TSF_Calc_addition(TSF_calcQ)
+        TSF_calcA=TSF_Calc_addition(TSF_calcQ);
     }
+    return TSF_calcA;
+}
+
+string TSF_Calc_addition(string TSF_calcQ){    //TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+    string TSF_calcA=TSF_calcQ;
     return TSF_calcA;
 }
 
