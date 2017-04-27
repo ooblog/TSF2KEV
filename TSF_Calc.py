@@ -139,20 +139,61 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
 
 def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
-    TSF_calcQ=TSF_calcQ if "|" in TSF_calcQ else "|".join([TSF_calcQ,"1"])
-    TSF_calcM=TSF_calcQ.count("m")+TSF_calcQ.count("-") if not "!" in TSF_calcQ else 0
-    TSF_calcQ=TSF_calcQ.replace("p","").replace("m","").replace("-","").replace("!","")
-    TSF_calcR=TSF_calcQ.split("|"); TSF_calcN,TSF_calcD=TSF_calcR[0],TSF_calcR[-1]
-    TSF_calcN=TSF_calcN if "." in TSF_calcN else "".join([TSF_calcN,"."])
-    TSF_calcD=TSF_calcD if "." in TSF_calcD else "".join([TSF_calcD,"."])
-    TSF_calcNint=len(TSF_calcN)-1-TSF_calcN.rfind(".")
-    TSF_calcDint=len(TSF_calcD)-1-TSF_calcD.rfind(".")
+    TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])
+    TSF_calcM=TSF_calcA.count("m")+TSF_calcA.count("-") if not "!" in TSF_calcA else 0
+    TSF_calcA=TSF_calcA.replace("p","").replace("m","").replace("-","").replace("!","")
+    TSF_calcR=TSF_calcA.split("|"); TSF_calcNstr,TSF_calcDstr=TSF_calcR[0],TSF_calcR[-1]
+    TSF_calcNstr=TSF_calcNstr if "." in TSF_calcNstr else "".join([TSF_calcNstr,"."])
+    TSF_calcDstr=TSF_calcDstr if "." in TSF_calcDstr else "".join([TSF_calcDstr,"."])
+    TSF_calcNint=len(TSF_calcNstr)-1-TSF_calcNstr.rfind(".")
+    TSF_calcDint=len(TSF_calcDstr)-1-TSF_calcDstr.rfind(".")
     TSF_calcNDint=min(TSF_calcNint,TSF_calcDint)
-    print("TSF_calcNint,TSF_calcDint",TSF_calcNint,TSF_calcDint)
-    TSF_calcN=TSF_calcN.replace(".","");  TSF_calcN="".join([TSF_calcN.lstrip("0"),"0"*(TSF_calcDint-TSF_calcNDint)])
-    TSF_calcD=TSF_calcD.replace(".","");  TSF_calcD="".join([TSF_calcD.lstrip("0"),"0"*(TSF_calcNint-TSF_calcNDint)])
-    print("TSF_calcN,TSF_calcD",TSF_calcN,TSF_calcD)
+    TSF_calcNstr=TSF_calcNstr.replace(".","");  TSF_calcNstr="".join([TSF_calcNstr.lstrip("0"),"0"*(TSF_calcDint-TSF_calcNDint)])
+    TSF_calcDstr=TSF_calcDstr.replace(".","");  TSF_calcDstr="".join([TSF_calcDstr.lstrip("0"),"0"*(TSF_calcNint-TSF_calcNDint)])
+#    print("TSF_calcNstr,TSF_calcDstr",TSF_calcNstr,TSF_calcDstr)
+    try:
+        TSF_calcNbig=decimal.Decimal(TSF_calcNstr)
+        TSF_calcDbig=decimal.Decimal(TSF_calcDstr)
+        TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcNbig,TSF_calcDbig))
+    except decimal.InvalidOperation:
+        TSF_calcA="n|0"
+    if TSF_calcA != "n|0":
+#        print("TSF_calcNbig,TSF_calcDbig",TSF_calcNbig,TSF_calcDbig,TSF_calcGbig)
+        try:
+            TSF_calcNbig=TSF_calcNbig//TSF_calcGbig
+            TSF_calcDbig=TSF_calcDbig//TSF_calcGbig
+            TSF_calcNbig=-TSF_calcNbig if TSF_calcM%2 else TSF_calcNbig
+            TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
+        except decimal.InvalidOperation:
+            TSF_calcA="n|0"
     return TSF_calcA
+
+def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(TSFAPI)
+    try:
+        TSF_calcM,TSF_calcN=abs(decimal.Decimal(TSF_calcN)),abs(decimal.Decimal(TSF_calcD))
+        if TSF_calcM < TSF_calcN:
+            TSF_calcM,TSF_calcN=TSF_calcN,TSF_calcM
+        while TSF_calcN > 0:
+            TSF_calcM,TSF_calcN=TSF_calcN,TSF_calcM%TSF_calcN
+        TSF_calcA=str(TSF_calcM)
+    except decimal.InvalidOperation:
+        TSF_calcA="n|0"
+    return TSF_calcA
+
+def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
+    return decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD)//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
+
+#def LTsv_calc_GCM(LTsv_calcL,LTsv_calcR):
+#    LTsv_GCMm,LTsv_GCMn=abs(int(LTsv_calcL)),abs(int(LTsv_calcR))
+#    if LTsv_GCMm < LTsv_GCMn:
+#        LTsv_GCMm,LTsv_GCMn=LTsv_GCMn,LTsv_GCMm
+#    while LTsv_GCMn > 0:
+#        LTsv_GCMm,LTsv_GCMn=LTsv_GCMn,LTsv_GCMm%LTsv_GCMn
+#    return LTsv_GCMm
+#def LTsv_calc_LCM(LTsv_calcL,LTsv_calcR):
+#    return abs(int(LTsv_calcL))*abs(int(LTsv_calcR))//LTsv_calc_GCM(LTsv_calcL,LTsv_calcR)
+#def TSF_calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
+#    return decimal.Decimal(TSF_calcN*TSF_calcD)//decimal.Decimal(fractions.gcd(TSF_calcN,TSF_calcD))
 
 
 TSF_Initcalldebug=[TSF_Calc_Initcards]
