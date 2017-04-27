@@ -55,14 +55,14 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     return TSF_calcA;
 }
 
-string TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
+//string TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
 string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     string TSF_calcA=TSF_calcQ;  long TSF_calcBLR=0,TSF_calcBCAP=0;
     auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
     while( count(TSF_calcA,"(") || count(TSF_calcA,")") ){
         TSF_calcBLR=0; TSF_calcBCAP=0;
         foreach(char TSF_calcB;TSF_calcQ){
-            TSF_calcA~=count(TSF_Calc_operator,TSF_calcB)?to!string(TSF_calcB):"";
+//            TSF_calcA~=count(TSF_Calc_operator,TSF_calcB)?to!string(TSF_calcB):"";
             if( TSF_calcB=='(' ){ TSF_calcBLR+=1; }
             if( TSF_calcB==')' ){ TSF_calcBLR-=1;
                 if( TSF_calcBLR<TSF_calcBCAP ){ TSF_calcBCAP=TSF_calcBLR; }
@@ -86,11 +86,6 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     return TSF_calcA;
 }
 
-//auto TSF_calc_NOZUs=[
-//    "T","(lambda TSF_calcSeq:TSF_calcSeq )"
-//];
-//string[string] KV;
-//   KV["k"]="v";
 string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
     if( count(TSF_calcQ,",") ){
@@ -102,7 +97,19 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
     return TSF_calcA;
 }
 
-string TSF_Calc_addition(string TSF_calcQ){    //TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+    string TSF_calcA=TSF_calcQ;
+    TSF_calcA=TSF_Calc_multiplication(TSF_calcQ);
+    return TSF_calcA;
+}
+
+string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
+    string TSF_calcA=TSF_calcQ;
+    TSF_calcA=TSF_Calc_fractalize(TSF_calcQ);
+    return TSF_calcA;
+}
+
+string TSF_Calc_fractalize(string TSF_calcQ){    //#TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
     return TSF_calcA;
 }
@@ -126,7 +133,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
     TSF_Forth_setTSF("calcsample:",join([
         "2,3+", "2,3-", "2,3*", "2,3/", "(2,3-),5+",
         "[calcpeekdata:8]",
-        "2+3"],"\t"),"N");
+        "4|6"],"\t"),"N");
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
