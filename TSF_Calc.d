@@ -56,14 +56,12 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     return TSF_calcA;
 }
 
-//string TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><";
 string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     string TSF_calcA=TSF_calcQ;  long TSF_calcBLR=0,TSF_calcBCAP=0;
     auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
     while( count(TSF_calcA,"(") || count(TSF_calcA,")") ){
         TSF_calcBLR=0; TSF_calcBCAP=0;
         foreach(char TSF_calcB;TSF_calcQ){
-//            TSF_calcA~=count(TSF_Calc_operator,TSF_calcB)?to!string(TSF_calcB):"";
             if( TSF_calcB=='(' ){ TSF_calcBLR+=1; }
             if( TSF_calcB==')' ){ TSF_calcBLR-=1;
                 if( TSF_calcBLR<TSF_calcBCAP ){ TSF_calcBCAP=TSF_calcBLR; }
@@ -81,7 +79,6 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
         foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
             TSF_calcA=replace(TSF_calcA,TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
         }
-        TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
     }
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
     return TSF_calcA;
@@ -112,11 +109,13 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
 
 string TSF_Calc_fractalize(string TSF_calcQ){    //#TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-    TSF_calcA=count(TSF_calcA,"|")?TSF_calcA:TSF_calcA~"|";
+    TSF_calcA=count(TSF_calcA,"|")?TSF_calcA:TSF_calcA~"|1";
     long TSF_calcM=count(TSF_calcA,"!")?count(TSF_calcA,"m")+count(TSF_calcA,"-"):0;
     TSF_calcA=replace(replace(replace(replace(TSF_calcA,"p",""),"m",""),"-",""),"!","");
     string[] TSF_calcND=TSF_calcA.split("|");
     string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
+    TSF_calcNstr=count(TSF_calcNstr,".")?TSF_calcNstr:TSF_calcNstr~".";
+    TSF_calcDstr=count(TSF_calcDstr,".")?TSF_calcDstr:TSF_calcDstr~".";
     long TSF_calcNint=TSF_calcNstr.length-1-lastIndexOf(TSF_calcNstr,".");
     long TSF_calcDint=TSF_calcDstr.length-1-lastIndexOf(TSF_calcDstr,".");
     long TSF_calcNDint=to!long(fmin(TSF_calcNint,TSF_calcDint));

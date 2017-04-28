@@ -95,14 +95,12 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
         TSF_calcA=TSF_calcA.replace('恒','恒河沙').replace('阿','阿僧祇').replace('那','那由他').replace('思','不可思議').replace('量','無量大数')
     return TSF_calcA
 
-#TSF_Calc_operator=",f1234567890.pm!|$ELRSsCcTtyYen+-*/\\#%(MPFZzOoUuN~k)&GglAa^><"
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     TSF_calcA=TSF_calcQ; TSF_calcBLR,TSF_calcBCAP=0,0
     TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
     while "(" in TSF_calcA or ")" in TSF_calcA:
         TSF_calcBLR,TSF_calcBCAP=0,0
         for TSF_calcB in TSF_calcA:
-#            TSF_calcA+=TSF_calcB if TSF_calcB in TSF_Calc_operator else ""
             if TSF_calcB == '(':
                 TSF_calcBLR+=1
             if TSF_calcB == ')':
