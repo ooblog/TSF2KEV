@@ -6,6 +6,7 @@ import std.conv;
 import std.math;
 import std.bigint;
 import std.regex;
+import std.algorithm;
 
 import TSF_Io;
 import TSF_Forth;
@@ -111,9 +112,71 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
 
 string TSF_Calc_fractalize(string TSF_calcQ){    //#TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
+    TSF_calcA=count(TSF_calcA,"|")?TSF_calcA:TSF_calcA~"|";
+    long TSF_calcM=count(TSF_calcA,"!")?count(TSF_calcA,"m")+count(TSF_calcA,"-"):0;
+    TSF_calcA=replace(replace(replace(replace(TSF_calcA,"p",""),"m",""),"-",""),"!","");
+    string[] TSF_calcND=TSF_calcA.split("|");
+    string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
+    long TSF_calcNint=TSF_calcNstr.length-1-lastIndexOf(TSF_calcNstr,".");
+    long TSF_calcDint=TSF_calcDstr.length-1-lastIndexOf(TSF_calcDstr,".");
+    long TSF_calcNDint=to!long(fmin(TSF_calcNint,TSF_calcDint));
+    TSF_calcNstr=replace(stripLeft(TSF_calcNstr,'0'),".","");  foreach(long i;0..TSF_calcDint-TSF_calcNDint){ TSF_calcNstr~="0"; }
+    TSF_calcDstr=replace(stripLeft(TSF_calcDstr,'0'),".","");  foreach(long i;0..TSF_calcNint-TSF_calcNDint){ TSF_calcDstr~="0"; }
+    BigInt TSF_calcNbig,TSF_calcDbig,TSF_calcGbig;
+    try{
+        TSF_calcNbig=BigInt(TSF_calcNstr);
+        TSF_calcDbig=BigInt(TSF_calcDstr);
+        TSF_calcGbig=BigInt(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr));
+    }
+    catch(ConvException e){
+        TSF_calcA="n|0";
+    }
+    if( TSF_calcA != "n|0" ){
+        try{
+            TSF_calcNbig=TSF_calcNbig/TSF_calcGbig;
+            TSF_calcDbig=TSF_calcDbig/TSF_calcGbig;
+            TSF_calcNbig=TSF_calcM%2?-TSF_calcNbig:TSF_calcNbig;
+            TSF_calcA=to!string(TSF_calcNbig)~"|"~to!string(TSF_calcDbig);
+        }
+        catch(ConvException e){
+            TSF_calcA="n|0";
+        }
+    }
     return TSF_calcA;
 }
 
+string TSF_Calc_GCM(string TSF_calcN,string TSF_calcD){    //#TSF_doc:最大公約数の計算。(TSFAPI)
+    string TSF_calcA="n|0";
+    BigInt TSF_calcMbig,TSF_calcNbig,TSF_calcMNbig;
+    try{
+        TSF_calcMbig=abs(BigInt(TSF_calcN));
+        TSF_calcNbig=abs(BigInt(TSF_calcD));
+        if( TSF_calcMbig<TSF_calcNbig ){
+//            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig
+            TSF_calcMNbig=TSF_calcMbig;  TSF_calcMbig=TSF_calcNbig;  TSF_calcNbig=TSF_calcMNbig;
+        }
+        while( TSF_calcNbig>0 ){
+//            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig%TSF_calcNbig
+            TSF_calcMNbig=TSF_calcMbig%TSF_calcNbig;  TSF_calcMbig=TSF_calcNbig;  TSF_calcNbig=TSF_calcMNbig;
+        }
+        TSF_calcA=to!string(TSF_calcMbig);
+    }
+    catch(ConvException e){
+        TSF_calcA="n|0";
+    }
+    return TSF_calcA;
+}
+
+string TSF_Calc_LCM(string TSF_calcN,string TSF_calcD){    //#TSF_doc:最小公倍数の計算。
+    string TSF_calcA="n|0";
+    try{
+        TSF_calcA=to!string(abs(BigInt(TSF_calcN)*BigInt(TSF_calcD))/abs(BigInt(TSF_Calc_GCM(TSF_calcN,TSF_calcD))));
+    }
+    catch(ConvException e){
+        TSF_calcA="n|0";
+    }
+    return TSF_calcA;
+}
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Calc_Initcards];
 void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テスト風デバッグ。
@@ -133,7 +196,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
     TSF_Forth_setTSF("calcsample:",join([
         "2,3+", "2,3-", "2,3*", "2,3/", "(2,3-),5+",
         "[calcpeekdata:8]",
-        "4|6"],"\t"),"N");
+        "4|6","3|0.5","3.5|0.05"],"\t"),"N");
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }

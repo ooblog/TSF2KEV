@@ -18,14 +18,18 @@ calcsample:
 	(2,3-),5+
 	[calcpeekdata:8]
 	4|6
+	3|0.5
+	3.5|0.05
 -- TSF_Calc.d run --
 「2,3+」→「p5」
 「2,3-」→「m1」
 「2,3*」→「p6」
 「2,3/」→「p0.666667」
-「(2,3-),5+」→「p4」
-「[calcpeekdata:8]」→「801」
-「4|6」→「4|6」
+「(2,3-),5+」→「1|0」
+「[calcpeekdata:8]」→「1|0」
+「4|6」→「2|3」
+「3|0.5」→「3|5」
+「3.5|0.05」→「70|1」
 -- TSF_Calc.d viewthey --
 TSF_Tab-Separated-Forth:
 	calccount:	#TSF_this	#TSF_fin.

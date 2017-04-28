@@ -142,19 +142,19 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])
     TSF_calcM=TSF_calcA.count("m")+TSF_calcA.count("-") if not "!" in TSF_calcA else 0
     TSF_calcA=TSF_calcA.replace("p","").replace("m","").replace("-","").replace("!","")
-    TSF_calcR=TSF_calcA.split("|"); TSF_calcNstr,TSF_calcDstr=TSF_calcR[0],TSF_calcR[-1]
+    TSF_calcND=TSF_calcA.split("|"); TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
     TSF_calcNstr=TSF_calcNstr if "." in TSF_calcNstr else "".join([TSF_calcNstr,"."])
     TSF_calcDstr=TSF_calcDstr if "." in TSF_calcDstr else "".join([TSF_calcDstr,"."])
     TSF_calcNint=len(TSF_calcNstr)-1-TSF_calcNstr.rfind(".")
     TSF_calcDint=len(TSF_calcDstr)-1-TSF_calcDstr.rfind(".")
     TSF_calcNDint=min(TSF_calcNint,TSF_calcDint)
-    TSF_calcNstr=TSF_calcNstr.replace(".","");  TSF_calcNstr="".join([TSF_calcNstr.lstrip("0"),"0"*(TSF_calcDint-TSF_calcNDint)])
-    TSF_calcDstr=TSF_calcDstr.replace(".","");  TSF_calcDstr="".join([TSF_calcDstr.lstrip("0"),"0"*(TSF_calcNint-TSF_calcNDint)])
+    TSF_calcNstr=TSF_calcNstr.lstrip("0").replace(".","");  TSF_calcNstr="".join([TSF_calcNstr,"0"*(TSF_calcDint-TSF_calcNDint)])
+    TSF_calcDstr=TSF_calcDstr.lstrip("0").replace(".","");  TSF_calcDstr="".join([TSF_calcDstr,"0"*(TSF_calcNint-TSF_calcNDint)])
 #    print("TSF_calcNstr,TSF_calcDstr",TSF_calcNstr,TSF_calcDstr)
     try:
         TSF_calcNbig=decimal.Decimal(TSF_calcNstr)
         TSF_calcDbig=decimal.Decimal(TSF_calcDstr)
-        TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcNbig,TSF_calcDbig))
+        TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr))
     except decimal.InvalidOperation:
         TSF_calcA="n|0"
     if TSF_calcA != "n|0":
@@ -170,31 +170,22 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
 
 def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(TSFAPI)
     try:
-        TSF_calcM,TSF_calcN=abs(decimal.Decimal(TSF_calcN)),abs(decimal.Decimal(TSF_calcD))
-        if TSF_calcM < TSF_calcN:
-            TSF_calcM,TSF_calcN=TSF_calcN,TSF_calcM
-        while TSF_calcN > 0:
-            TSF_calcM,TSF_calcN=TSF_calcN,TSF_calcM%TSF_calcN
-        TSF_calcA=str(TSF_calcM)
+        TSF_calcMbig,TSF_calcNbig=abs(decimal.Decimal(TSF_calcN)),abs(decimal.Decimal(TSF_calcD))
+        if TSF_calcMbig < TSF_calcNbig:
+            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig
+        while TSF_calcNbig > 0:
+            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig%TSF_calcNbig
+        TSF_calcA=str(TSF_calcMbig)
     except decimal.InvalidOperation:
         TSF_calcA="n|0"
     return TSF_calcA
 
 def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
-    return decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD)//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
-
-#def LTsv_calc_GCM(LTsv_calcL,LTsv_calcR):
-#    LTsv_GCMm,LTsv_GCMn=abs(int(LTsv_calcL)),abs(int(LTsv_calcR))
-#    if LTsv_GCMm < LTsv_GCMn:
-#        LTsv_GCMm,LTsv_GCMn=LTsv_GCMn,LTsv_GCMm
-#    while LTsv_GCMn > 0:
-#        LTsv_GCMm,LTsv_GCMn=LTsv_GCMn,LTsv_GCMm%LTsv_GCMn
-#    return LTsv_GCMm
-#def LTsv_calc_LCM(LTsv_calcL,LTsv_calcR):
-#    return abs(int(LTsv_calcL))*abs(int(LTsv_calcR))//LTsv_calc_GCM(LTsv_calcL,LTsv_calcR)
-#def TSF_calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
-#    return decimal.Decimal(TSF_calcN*TSF_calcD)//decimal.Decimal(fractions.gcd(TSF_calcN,TSF_calcD))
-
+    try:
+        TSF_calcA=abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
+    except decimal.InvalidOperation:
+        TSF_calcA="n|0"
+    return 
 
 TSF_Initcalldebug=[TSF_Calc_Initcards]
 def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デバッグ。
