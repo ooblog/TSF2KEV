@@ -131,8 +131,39 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
     return TSF_calcA
 
 def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
+    TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
     TSF_calcA=TSF_Calc_fractalize(TSF_calcQ)
+#    TSF_calcQsplits=TSF_calcQ.replace('*',"\t*").replace('/',"\t/").replace('\\',"\t\\").replace('#',"\t#")
+#    TSF_calcQsplits=TSF_calcQsplits.replace("\t\t",'\t').strip('\t').split('\t')
+#    for TSF_calcQmulti in TSF_calcQsplits:
+#        TSF_calcO=""
+#        for TSF_calcOpe in "*/\\#":
+#            TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
+#        TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmultii.lstrip('*/\\#'))
+#        TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
+#        if decimal.Decimal(TSF_calcRD) == 0:
+#            TSF_calcA="n|0"
+#            break
+#        elif TSF_calcO == "/":
+#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
+#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
+#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+#        elif TSF_calcO == '\\':
+#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
+#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
+#            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+#        elif TSF_calcO == '#':
+#            pass
+#    if TSF_calcA != "n|0":
+#        try:
+#            TSF_calcNbig=TSF_calcNbig//TSF_calcGbig
+#            TSF_calcDbig=TSF_calcDbig//TSF_calcGbig
+#            TSF_calcNbig=-TSF_calcNbig if TSF_calcM%2 else TSF_calcNbig
+#            TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
+#        except decimal.InvalidOperation:
+#            TSF_calcA="n|0"
     return TSF_calcA
 
 def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
@@ -148,22 +179,31 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
     TSF_calcNDint=min(TSF_calcNint,TSF_calcDint)
     TSF_calcNstr=TSF_calcNstr.lstrip("0").replace(".","");  TSF_calcNstr="".join([TSF_calcNstr,"0"*(TSF_calcDint-TSF_calcNDint)])
     TSF_calcDstr=TSF_calcDstr.lstrip("0").replace(".","");  TSF_calcDstr="".join([TSF_calcDstr,"0"*(TSF_calcNint-TSF_calcNDint)])
-#    print("TSF_calcNstr,TSF_calcDstr",TSF_calcNstr,TSF_calcDstr)
-    try:
-        TSF_calcNbig=decimal.Decimal(TSF_calcNstr)
-        TSF_calcDbig=decimal.Decimal(TSF_calcDstr)
-        TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr))
-    except decimal.InvalidOperation:
-        TSF_calcA="n|0"
-    if TSF_calcA != "n|0":
-#        print("TSF_calcNbig,TSF_calcDbig",TSF_calcNbig,TSF_calcDbig,TSF_calcGbig)
+    TSF_calcA=TSF_Calc_bigtostr(TSF_calcNstr,TSF_calcDstr,TSF_calcM)
+#    try:
+#        TSF_calcNbig=decimal.Decimal(TSF_calcNstr)
+#        TSF_calcDbig=decimal.Decimal(TSF_calcDstr)
+#        TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr))
+#        TSF_calcNbig=TSF_calcNbig//TSF_calcGbig
+#        TSF_calcDbig=TSF_calcDbig//TSF_calcGbig
+#        TSF_calcNbig=-TSF_calcNbig if TSF_calcM%2 else TSF_calcNbig
+#        TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
+#    except decimal.InvalidOperation:
+#        TSF_calcA="n|0"
+    return TSF_calcA
+
+def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSF_doc:計算結果を通分する。(TSFAPI)
+    if TSF_calcD != "0" and TSF_calcD != "":
         try:
-            TSF_calcNbig=TSF_calcNbig//TSF_calcGbig
-            TSF_calcDbig=TSF_calcDbig//TSF_calcGbig
+            TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
+            TSF_calcNbig=decimal.Decimal(TSF_calcN)//TSF_calcGbig
+            TSF_calcDbig=decimal.Decimal(TSF_calcD)//TSF_calcGbig
             TSF_calcNbig=-TSF_calcNbig if TSF_calcM%2 else TSF_calcNbig
             TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
         except decimal.InvalidOperation:
             TSF_calcA="n|0"
+    else:
+        TSF_calcA="n|0"
     return TSF_calcA
 
 def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(TSFAPI)

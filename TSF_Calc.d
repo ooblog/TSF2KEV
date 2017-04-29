@@ -102,6 +102,7 @@ string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し�
 }
 
 string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
+    BigInt TSF_calcLN=BigInt(1),TSF_calcLD=BigInt(1);
     string TSF_calcA=TSF_calcQ;
     TSF_calcA=TSF_Calc_fractalize(TSF_calcQ);
     return TSF_calcA;
@@ -121,25 +122,39 @@ string TSF_Calc_fractalize(string TSF_calcQ){    //#TSF_doc:分数電卓なの�
     long TSF_calcNDint=to!long(fmin(TSF_calcNint,TSF_calcDint));
     TSF_calcNstr=replace(stripLeft(TSF_calcNstr,'0'),".","");  foreach(long i;0..TSF_calcDint-TSF_calcNDint){ TSF_calcNstr~="0"; }
     TSF_calcDstr=replace(stripLeft(TSF_calcDstr,'0'),".","");  foreach(long i;0..TSF_calcNint-TSF_calcNDint){ TSF_calcDstr~="0"; }
-    BigInt TSF_calcNbig,TSF_calcDbig,TSF_calcGbig;
-    try{
-        TSF_calcNbig=BigInt(TSF_calcNstr);
-        TSF_calcDbig=BigInt(TSF_calcDstr);
-        TSF_calcGbig=BigInt(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr));
-    }
-    catch(ConvException e){
-        TSF_calcA="n|0";
-    }
-    if( TSF_calcA != "n|0" ){
+    TSF_calcA=TSF_Calc_bigtostr(TSF_calcNstr,TSF_calcDstr,TSF_calcM);
+//    BigInt TSF_calcNbig,TSF_calcDbig,TSF_calcGbig;
+//    try{
+//        TSF_calcNbig=BigInt(TSF_calcNstr);
+//        TSF_calcDbig=BigInt(TSF_calcDstr);
+//        TSF_calcGbig=BigInt(TSF_Calc_GCM(TSF_calcNstr,TSF_calcDstr));
+//        TSF_calcNbig=TSF_calcNbig/TSF_calcGbig;
+//        TSF_calcDbig=TSF_calcDbig/TSF_calcGbig;
+//        TSF_calcNbig=TSF_calcM%2?-TSF_calcNbig:TSF_calcNbig;
+//        TSF_calcA=to!string(TSF_calcNbig)~"|"~to!string(TSF_calcDbig);
+//    }
+//    catch(ConvException e){
+//        TSF_calcA="n|0";
+//    }
+    return TSF_calcA;
+}
+
+string TSF_Calc_bigtostr(string TSF_calcN,string TSF_calcD,long TSF_calcM){    //TSF_doc:計算結果を通分する。(TSFAPI)
+    string TSF_calcA="n|0";
+    if( (TSF_calcD!="0") &&(TSF_calcD!="") ){
         try{
-            TSF_calcNbig=TSF_calcNbig/TSF_calcGbig;
-            TSF_calcDbig=TSF_calcDbig/TSF_calcGbig;
+            BigInt TSF_calcGbig=BigInt(TSF_Calc_GCM(TSF_calcN,TSF_calcD));
+            BigInt TSF_calcNbig=BigInt(TSF_calcN)/TSF_calcGbig;
+            BigInt TSF_calcDbig=BigInt(TSF_calcD)/TSF_calcGbig;
             TSF_calcNbig=TSF_calcM%2?-TSF_calcNbig:TSF_calcNbig;
             TSF_calcA=to!string(TSF_calcNbig)~"|"~to!string(TSF_calcDbig);
         }
         catch(ConvException e){
             TSF_calcA="n|0";
         }
+    }
+    else{
+        TSF_calcA="n|0";
     }
     return TSF_calcA;
 }
