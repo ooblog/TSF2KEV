@@ -135,7 +135,6 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
 def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
-#    TSF_calcA=TSF_Calc_fractalize(TSF_calcQ)
     TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#")
     TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
     for TSF_calcQmulti in TSF_calcQsplits:
@@ -146,11 +145,12 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
         if decimal.Decimal(TSF_calcRD) == 0:
             TSF_calcA="n|0"
+            TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
             break
-#        elif TSF_calcO == "/":
-#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
-#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
-#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+        elif TSF_calcO == "/":
+            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
+            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
 #        elif TSF_calcO == '\\':
 #            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
 #            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
@@ -186,7 +186,7 @@ def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSF_doc:計算結果�
             TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
             TSF_calcNbig=decimal.Decimal(TSF_calcN)//TSF_calcGbig
             TSF_calcDbig=decimal.Decimal(TSF_calcD)//TSF_calcGbig
-            TSF_calcNbig=-TSF_calcNbig if TSF_calcM%2 else TSF_calcNbig
+            TSF_calcNbig=-abs(TSF_calcNbig) if TSF_calcM%2 else abs(TSF_calcNbig)
             TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
         except decimal.InvalidOperation:
             TSF_calcA="n|0"
@@ -229,9 +229,10 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_Forth_setTSF("calcpeekdata:","\t".join([
         "009","108","207","306","405","504","603","702","801","900"]),"T")
     TSF_Forth_setTSF("calcsample:","\t".join([
+        "0|0","0|0,","0/0","0,0/",
         "2,3+","2,3-","2,3*","2,3/", "(2,3-),5+",
         "[calcpeekdata:8]",
-        "4|6","3|0.5","3.5|0.05"]),"N")
+        "4|6","3|0.5","3.5|0.05","4|6*m2|4","4|6/m2|4"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
