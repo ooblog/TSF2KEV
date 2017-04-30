@@ -130,7 +130,7 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
                 break;
-                default:
+                case '*': default:
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRN);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRD);
                 break;
