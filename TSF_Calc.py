@@ -157,7 +157,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
             TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
         elif TSF_calcO == '#':
-            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(TSF_calcLD,TSF_calcRD))
+            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD
             TSF_calcLD=TSF_calcLD*TSF_calcG//TSF_calcLD
             TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)

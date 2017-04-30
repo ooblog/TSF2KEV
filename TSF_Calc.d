@@ -136,6 +136,28 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
                     TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
                 break;
+                case '#':
+                    BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
+                    TSF_calcLN=TSF_calcLN*TSF_calcG/TSF_calcLD;
+                    TSF_calcLD=TSF_calcLD*TSF_calcG/TSF_calcLD;
+                    BigInt TSF_calcRM=BigInt(TSF_calcRN)*TSF_calcG/BigInt(TSF_calcRD);
+                    if( BigInt(TSF_calcRM)==0 ){
+                        TSF_calcA="n|0";
+                        TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
+                        break opeexit;
+                    }
+                    else if( TSF_calcRM>0 ){
+                        TSF_calcLN=TSF_calcLN%TSF_calcRM;
+                    }
+                    else{
+                        if( TSF_calcLN%abs(TSF_calcRM)!=0 ){
+                            TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM);
+                        }
+                        else{
+                            TSF_calcLN=0;
+                        }
+                    }
+                break;
                 case '*': default:
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRN);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRD);
