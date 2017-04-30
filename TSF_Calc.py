@@ -151,11 +151,11 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
             TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
             TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
-#        elif TSF_calcO == '\\':
-#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
-#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
-#            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
-#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+        elif TSF_calcO == "\\":
+            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
+            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
 #        elif TSF_calcO == '#':
 #            pass
         else:  # TSF_calcO == '`':
@@ -232,7 +232,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "0|0","0|0,","0/0","0,0/",
         "2,3+","2,3-","2,3*","2,3/", "(2,3-),5+",
         "[calcpeekdata:8]",
-        "4|6","3|0.5","3.5|0.05","4|6*m2|4","4|6/m2|4"]),"N")
+        "4|6","3|0.5","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

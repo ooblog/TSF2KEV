@@ -130,6 +130,12 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
                 break;
+                case '\\':
+                    TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
+                    TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+                    if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
+                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                break;
                 case '*': default:
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRN);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRD);
@@ -231,7 +237,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "0|0","0|0,","0/0","0,0/",
         "2,3+", "2,3-", "2,3*", "2,3/", "(2,3-),5+",
         "[calcpeekdata:8]",
-        "4|6","3|0.5","3.5|0.05","4|6*m2|4","4|6/m2|4"],"\t"),"N");
+        "4|6","3|0.5","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4"],"\t"),"N");
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
