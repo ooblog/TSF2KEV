@@ -81,7 +81,7 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
         }
     }
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
-    if( count("n0pmT",TSF_calcA[0])==0 ){
+    if( count("n0pm@",TSF_calcA[0])==0 ){
         TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
     }
     return TSF_calcA;
