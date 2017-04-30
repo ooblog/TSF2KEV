@@ -168,7 +168,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
             elif TSF_calcRM > 0:
                 TSF_calcLN=TSF_calcLN%TSF_calcRM
             else:
-                if TSF_calcLN%abs(TSF_calcRM) !=0:
+                if TSF_calcLN%abs(TSF_calcRM) != 0:
                     TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM)
                 else:
                     TSF_calcLN=0
@@ -244,9 +244,10 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "009","108","207","306","405","504","603","702","801","900"]),"T")
     TSF_Forth_setTSF("calcsample:","\t".join([
         "0|0","0|0,","0/0","0,0/",
-        "2,3+","2,3-","2,3*","2,3/", "(2,3-),5+",
+        "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
         "[calcpeekdata:8]",
-        "4|6","3|0.5","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4"]),"N")
+        "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
+        "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

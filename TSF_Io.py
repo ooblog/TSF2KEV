@@ -231,7 +231,14 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "#":
                     try:
-                        TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
+                        if TSF_RPNstackR > 0:
+                            TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
+                        else:
+                            if TSF_RPNstackL%abs(TSF_RPNstackR) != 0:
+                                TSF_RPNstack.append(abs(TSF_RPNstackR)-TSF_RPNstackL%abs(TSF_RPNstackR))
+                            else:
+                                TSF_RPNstack.append(0.0)
+#                        TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == ">":

@@ -311,7 +311,18 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     break;
                     case '#':
                         if( TSF_RPNstackR!=0.0 ){
-                            TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
+                            if( TSF_RPNstackR>0 ){
+                                TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
+                            }
+                            else{
+                                if( TSF_RPNstackL%abs(TSF_RPNstackR)!=0 ){
+                                    TSF_RPNstack~=abs(TSF_RPNstackR)-TSF_RPNstackL%abs(TSF_RPNstackR);
+                                }
+                                else{
+                                    TSF_RPNstack~=0.0;
+                                }
+                            }
+//                            TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit;
