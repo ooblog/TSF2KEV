@@ -156,8 +156,22 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
             TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
             TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
-#        elif TSF_calcO == '#':
-#            pass
+        elif TSF_calcO == '#':
+            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(TSF_calcLD,TSF_calcRD))
+            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD
+            TSF_calcLD=TSF_calcLD*TSF_calcG//TSF_calcLD
+            TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
+            if TSF_calcRM == 0:
+                TSF_calcA="n|0"
+                TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
+                break
+            elif TSF_calcRM > 0:
+                TSF_calcLN=TSF_calcLN%TSF_calcRM
+            else:
+                if TSF_calcLN%abs(TSF_calcRM) !=0:
+                    TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM)
+                else:
+                    TSF_calcLN=0
         else:  # TSF_calcO == '`':
             TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRN)
             TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRD)
@@ -208,10 +222,10 @@ def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(T
 
 def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
     try:
-        TSF_calcA=abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
+        TSF_calcA=str(abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD)))
     except decimal.InvalidOperation:
         TSF_calcA="n|0"
-    return 
+    return TSF_calcA
 
 TSF_Initcalldebug=[TSF_Calc_Initcards]
 def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デバッグ。
