@@ -121,18 +121,18 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
 
 #<>ZzOoUu
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
-    TSF_calcA=TSF_calcQ
+    TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcQ:
-        TSF_calcA=TSF_Io_RPN(TSF_calcQ)
+        TSF_calcA=TSF_Io_RPN(TSF_calcK)
     else:
-        TSF_calcA=TSF_Calc_addition(TSF_calcQ)
+        TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
 
 #+=%Aa
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
-    TSF_calcQreplace=TSF_calcQ.replace('+','\t+').replace('-','\t-').replace('%','\t-')
+    TSF_calcQreplace=TSF_calcQ.replace('+','\t+').replace('-','\t-').replace('%','\t%')
     TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
     for TSF_calcQmulti in TSF_calcQsplits:
         TSF_calcO=" "
@@ -145,19 +145,20 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
             TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
             break
         elif TSF_calcO == "%":
-            pass
+            TSF_calcPN=TSF_calcLN*decimal.Decimal(TSF_calcRN)
+            TSF_calcPD=TSF_calcLD*decimal.Decimal(TSF_calcRD)*decimal.Decimal(100)
+            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),str(TSF_calcPD)))
+            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+TSF_calcPN*TSF_calcG//TSF_calcPD
+            TSF_calcLD=TSF_calcG
         elif TSF_calcO == "-":
             TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD-decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcLD=TSF_calcG
-            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
         else:  # TSF_calcO == '+'
             TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcLD=TSF_calcG
-            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
-#    TSF_calcA=TSF_Calc_multiplication(TSF_calcQ)
     return TSF_calcA
 
 #^<>Gg
@@ -290,7 +291,9 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "[calcpeekdata:8]",
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
         "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
-        "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6"]),"N")
+        "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6",
+        "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3",
+        "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

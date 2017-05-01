@@ -228,7 +228,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     if( count(["U+","0x"],TSF_RPN[0..2]) ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
     real TSF_RPNstackL,TSF_RPNstackR,TSF_RPNstackF;
     string[] TSF_RPNcalcND;
-    opeexit: foreach(char TSF_RPNope;TSF_RPNseq){
+    opeexit_rpn: foreach(char TSF_RPNope;TSF_RPNseq){
         if( count("0123456789.pm$|",TSF_RPNope) ){
             TSF_RPNnum~=TSF_RPNope;
         }
@@ -276,7 +276,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                 }
                 TSF_RPNnum="";
             }
-            if( count("+-*/\\#<>",TSF_RPNope) ){
+            if( count("+-*/\\#%<>",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -298,7 +298,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                             TSF_RPNstack~=TSF_RPNstackL/TSF_RPNstackR;
                         }
                         else{
-                            TSF_RPNanswer="n|0";  break opeexit;
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
                         }
                     break;
                     case '\\':
@@ -306,7 +306,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                             TSF_RPNstack~=to!real(to!long(TSF_RPNstackL/TSF_RPNstackR));
                         }
                         else{
-                            TSF_RPNanswer="n|0";  break opeexit;
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
                         }
                     break;
                     case '#':
@@ -325,9 +325,10 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
 //                            TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
                         }
                         else{
-                            TSF_RPNanswer="n|0";  break opeexit;
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
                         }
                     break;
+                    case '%':  TSF_RPNstack~=TSF_RPNstackL+TSF_RPNstackL*TSF_RPNstackR/100.0;  break;
                     case '>':  TSF_RPNstack~=fmin(TSF_RPNstackL,TSF_RPNstackR);  break;
                     case '<':  TSF_RPNstack~=fmax(TSF_RPNstackL,TSF_RPNstackR);  break;
                     default:  break;
