@@ -210,7 +210,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNanswer="n|0"
                     break;
                 TSF_RPNnum=""
-            if TSF_RPNope in "!":
+            if TSF_RPNope in "!SCTsctREL":
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "!":
                     TSF_RPNstack.append(abs(TSF_RPNstackL))

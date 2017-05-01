@@ -29,7 +29,8 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "  --dlang       TSF to D",
         "  --about       about TSF mini guide",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
-        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "],"\t"),"N");
+        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
+        "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6 "],"\t"),"N");
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
@@ -148,6 +149,20 @@ void TSF_sample_RPN(){    //#TSFdoc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_RPN");
 }
 
+void TSF_sample_calc(){    //#TSFdoc:「sample_calc.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "calcsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("calcsetup:",join([
+        "calcargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","calcjump:","calcargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("calcjump:",join([
+        "calcdefault:","calcdefault:","calc:"],"\t"),"T");
+    TSF_Forth_setTSF("calcdefault:",join([
+        "1/3-m1|2","calc:","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("calc:",join([
+        "#TSF_calc","#TSF_echo"],"\t"),"T");
+    TSF_Forth_samplerun("TSF_sample_calc");
+}
+
 
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
@@ -186,6 +201,9 @@ void main(string[] sys_argvs){
     }
     else if( count(["--RPN","--rpn"],TSF_bootcommand) ){
         TSF_sample_RPN();
+    }
+    else if( count(["--Calc","--calc"],TSF_bootcommand) ){
+        TSF_sample_calc();
     }
     else{
         TSF_sample_help();

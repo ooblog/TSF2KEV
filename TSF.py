@@ -26,7 +26,8 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --dlang       TSF to D",
         "  --about       about TSF mini guide",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
-        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... "]),"N")
+        "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
+        "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6 "]),"N")
     TSF_Forth_samplerun("TSF_sample_help")
 
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
@@ -141,6 +142,19 @@ def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
         "1,3/m1|2-","RPN:","#TSF_this"]),"T")
     TSF_Forth_samplerun("TSF_sample_RPN")
 
+def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "calcsetup:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("calcsetup:","\t".join([
+        "calcargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","calcjump:","calcargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
+    TSF_Forth_setTSF("calcjump:","\t".join([
+        "calcdefault:","calcdefault:","calc:"]),"T")
+    TSF_Forth_setTSF("calcdefault:","\t".join([
+        "1/3-m1|2","calc:","#TSF_this"]),"T")
+    TSF_Forth_setTSF("calc:","\t".join([
+        "#TSF_calc","#TSF_echo"]),"T")
+    TSF_Forth_samplerun("TSF_sample_calc")
+
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
@@ -168,6 +182,8 @@ elif TSF_bootcommand in ["--hello","--helloworld","--Helloworld"]:
     TSF_sample_Helloworld()
 elif TSF_bootcommand in ["--RPN","--rpn"]:
     TSF_sample_RPN()
+elif TSF_bootcommand in ["--Calc","--calc"]:
+    TSF_sample_calc()
 else:
     TSF_sample_help()
 sys.exit(0)

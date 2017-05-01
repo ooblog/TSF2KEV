@@ -22,3 +22,6 @@ cd $script_dir
 ./TSF.py --RPN > debug/debug_py-RPN.log
 ./TSF.d --RPN > debug/debug_d-RPN.log 
 
+./TSF.py --calc > debug/debug_py-calcrpn.log
+./TSF.d --calc > debug/debug_d-calcrpn.log 
+
