@@ -36,6 +36,10 @@ calcsample:
 	5#m4
 	5,4#
 	5,m4#
+	5|6>2|3
+	2|3>5|6
+	5|6<2|3
+	2|3<5|6
 -- TSF_Calc.py run --
 「0|0」→「n|0」
 「0|0,」→「n|0」
@@ -62,6 +66,10 @@ calcsample:
 「5#m4」→「p3|1」
 「5,4#」→「p1」
 「5,m4#」→「p3」
+「5|6>2|3」→「p2|3」
+「2|3>5|6」→「p2|3」
+「5|6<2|3」→「p5|6」
+「2|3<5|6」→「p5|6」
 -- TSF_Calc.py viewthey --
 TSF_Tab-Separated-Forth:
 	calccount:	#TSF_this	#TSF_fin.

@@ -260,7 +260,8 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
         "[calcpeekdata:8]",
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
-        "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#"],"\t"),"N");
+        "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
+        "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6"],"\t"),"N");
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
