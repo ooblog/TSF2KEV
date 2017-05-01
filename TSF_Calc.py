@@ -128,7 +128,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
 
-#+=%Aa
+#Atan2atan
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
@@ -161,7 +161,7 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-#^<>Gg
+#^Gg
 def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
@@ -220,7 +220,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-#SCTsctREL
+#SinCosTansctREL
 def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])

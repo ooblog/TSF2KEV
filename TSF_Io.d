@@ -276,7 +276,18 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                 }
                 TSF_RPNnum="";
             }
-            if( count("+-*/\\#%<>",TSF_RPNope) ){
+            if( count("!",TSF_RPNope) ){
+                if( TSF_RPNstack.length ){
+                    TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
+                }
+                else{
+                    TSF_RPNstackL=0.0;
+                }
+                switch( TSF_RPNope ){
+                    case '!':  default: TSF_RPNstack~=abs(TSF_RPNstackL);  break;
+                }
+            }
+            else if( count("+-*/\\#%<>",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -322,7 +333,6 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                                     TSF_RPNstack~=0.0;
                                 }
                             }
-//                            TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit_rpn;
