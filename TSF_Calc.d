@@ -99,7 +99,10 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
 }
 
 string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+    BigInt TSF_calcLN=BigInt(0),TSF_calcLD=BigInt(1);
     string TSF_calcA=TSF_calcQ;
+    string TSF_calcQreplace=replace(replace(replace(TSF_calcQ,"+","\t+"),"-","\t-"),"%","\t%");
+    string[] TSF_calcQsplits=strip(TSF_calcQreplace,'\t').split('\t');
     TSF_calcA=TSF_Calc_multiplication(TSF_calcQ);
     return TSF_calcA;
 }

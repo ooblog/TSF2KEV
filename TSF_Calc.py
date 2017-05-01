@@ -130,8 +130,34 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
 
 #+=%Aa
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+    TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
-    TSF_calcA=TSF_Calc_multiplication(TSF_calcQ)
+    TSF_calcQreplace=TSF_calcQ.replace('+','\t+').replace('-','\t-').replace('%','\t-')
+    TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
+    for TSF_calcQmulti in TSF_calcQsplits:
+        TSF_calcO=" "
+        for TSF_calcOpe in "+-%":
+            TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
+        TSF_calcRND=TSF_Calc_multiplication(TSF_calcQmulti.lstrip("+-%")).split('|')
+        TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
+        if decimal.Decimal(TSF_calcRD) == 0:
+            TSF_calcA="n|0"
+            TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
+            break
+        elif TSF_calcO == "%":
+            pass
+        elif TSF_calcO == "-":
+            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
+            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD-decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
+            TSF_calcLD=TSF_calcG
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+        else:  # TSF_calcO == '+'
+            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
+            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
+            TSF_calcLD=TSF_calcG
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+    TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
+#    TSF_calcA=TSF_Calc_multiplication(TSF_calcQ)
     return TSF_calcA
 
 #^<>Gg
@@ -162,7 +188,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
         elif TSF_calcO == '#':
             TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD
-            TSF_calcLD=TSF_calcLD*TSF_calcG//TSF_calcLD
+            TSF_calcLD=TSF_calcG
             TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             if TSF_calcRM == 0:
                 TSF_calcA="n|0"
