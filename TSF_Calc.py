@@ -115,15 +115,31 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
         for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
     TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
-    if not TSF_calcA[0] in "n0pm@":
+    if not TSF_calcA[0] in "n0pm:":
         TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
-#<>ZzOoUu
+
+def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。(TSFAPI)
+    TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
+    TSF_calcF=TSF_calcQsplits[0]
+    if "~" in TSF_calcQsplits[-1]:
+        TSF_calcLRsplits=TSF_calcQsplits[-1].split('~')
+        TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[-1];
+    else:
+        TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
+    return TSF_calcF,TSF_calcL,TSF_calcR
+
+#ZzOoUuNMP
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
-    if "," in TSF_calcQ:
+    if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
+    elif ":" in TSF_calcK:
+        TSF_calcA=TSF_calcK
+    elif "Z" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z")
+       TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_Calc_addition(TSF_calcF) == "0|1" else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
@@ -238,13 +254,17 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
     return TSF_calcA
 
 def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSF_doc:計算結果を通分する。(TSFAPI)
-    if TSF_calcD != "0" and TSF_calcD != "":
+    if TSF_calcD != "":
+        if TSF_calcN == "": TSF_calcN="0"
         try:
             TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
-            TSF_calcNbig=decimal.Decimal(TSF_calcN)//TSF_calcGbig
-            TSF_calcDbig=decimal.Decimal(TSF_calcD)//TSF_calcGbig
-            TSF_calcNbig=-abs(TSF_calcNbig) if TSF_calcM%2 else abs(TSF_calcNbig)
-            TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
+            if TSF_calcGbig!=0:
+                TSF_calcNbig=decimal.Decimal(TSF_calcN)//TSF_calcGbig
+                TSF_calcDbig=decimal.Decimal(TSF_calcD)//TSF_calcGbig
+                TSF_calcNbig=-abs(TSF_calcNbig) if TSF_calcM%2 else abs(TSF_calcNbig)
+                TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
+            else:
+                TSF_calcA="n|0"
         except decimal.InvalidOperation:
             TSF_calcA="n|0"
     else:
@@ -263,10 +283,14 @@ def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(T
         TSF_calcA="n|0"
     return TSF_calcA
 
-def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算。
-    try:
-        TSF_calcA=str(abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD)))
-    except decimal.InvalidOperation:
+def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算(TSFAPI)。
+    TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
+    if TSF_calcGbig!=0:
+        try:
+            TSF_calcA=str(abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//abs(TSF_calcGbig))
+        except decimal.InvalidOperation:
+            TSF_calcA="n|0"
+    else:
         TSF_calcA="n|0"
     return TSF_calcA
 
@@ -286,14 +310,16 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_Forth_setTSF("calcpeekdata:","\t".join([
         "009","108","207","306","405","504","603","702","801","900"]),"T")
     TSF_Forth_setTSF("calcsample:","\t".join([
-        "0|0","0|0,","0/0","0,0/",
+        "0|0","0|0,","0/0","0,0/",",0","0",
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
         "[calcpeekdata:8]",
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
         "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
         "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6",
         "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3",
-        "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%"]),"N")
+        "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
+        ",m4!","m4!",
+        "m1Z3~5","0Z3~5","p1Z3~5",]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
