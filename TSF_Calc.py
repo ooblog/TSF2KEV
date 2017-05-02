@@ -115,8 +115,10 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
         for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
     TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
-    if not TSF_calcA[0] in "n0pm:":
-        TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
+    if len(TSF_calcA):
+        if not TSF_calcA[-1] in ":":
+            if not TSF_calcA[0] in "n0pm":
+                TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
 
@@ -135,8 +137,6 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
-    elif ":" in TSF_calcK:
-        TSF_calcA=TSF_calcK
     elif "Z" in TSF_calcK:
        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z")
        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_Calc_addition(TSF_calcF) == "0|1" else TSF_calcR)
@@ -146,8 +146,10 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
 
 #Atan2atan
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
-    TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
+    if TSF_calcA.endswith(':'):
+        return TSF_calcA
+    TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcQreplace=TSF_calcQ.replace('+','\t+').replace('-','\t-').replace('%','\t%')
     TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
     for TSF_calcQmulti in TSF_calcQsplits:

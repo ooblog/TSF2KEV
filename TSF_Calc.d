@@ -8,6 +8,7 @@ import std.bigint;
 import std.regex;
 import std.algorithm;
 import std.typecons;
+import std.array;
 
 import TSF_Io;
 import TSF_Forth;
@@ -83,8 +84,10 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     }
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
     if( TSF_calcA.length ){
-        if( count("n0pm:",TSF_calcA[0])==0 ){
-            TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
+        if( count(":",TSF_calcA[$-1])==0 ){
+            if( count("n0pm",TSF_calcA[0])==0 ){
+                TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
+            }
         }
     }
     return TSF_calcA;
@@ -121,8 +124,11 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
 }
 
 string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
-    BigInt TSF_calcLN=BigInt(0),TSF_calcLD=BigInt(1);
     string TSF_calcA=TSF_calcQ;
+    if( TSF_calcA.back==':' ){
+        return TSF_calcA;
+    }
+    BigInt TSF_calcLN=BigInt(0),TSF_calcLD=BigInt(1);
     string TSF_calcQreplace=replace(replace(replace(TSF_calcQ,"+","\t+"),"-","\t-"),"%","\t%");
     string[] TSF_calcQsplits=strip(TSF_calcQreplace,'\t').split('\t');
     char TSF_calcO;
