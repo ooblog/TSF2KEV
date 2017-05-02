@@ -10,6 +10,8 @@ calcpop:
 	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 calcpeekdata:
 	009	108	207	306	405	504	603	702	801	900
+calcjumpdata:
+	True:	False:
 calcsample:
 	0|0
 	0|0,
@@ -55,9 +57,15 @@ calcsample:
 	100,8%
 	,m4!
 	m4!
-	m1Z3~5
-	0Z3~5
-	p1Z3~5
+	m1Z[calcpeekdata:0]~[calcpeekdata:1]
+	0Z[calcpeekdata:0]~[calcpeekdata:1]
+	p1Z[calcpeekdata:0]~[calcpeekdata:1]
+	m1Z[calcjumpdata:0]~[calcjumpdata:1]
+	0Z[calcjumpdata:0]~[calcjumpdata:1]
+	p1Z[calcjumpdata:0]~[calcjumpdata:1]
+	m1ZTrue:~False:
+	0ZTrue:~False:
+	p1ZTrue:~False:
 -- TSF_Calc.py run --
 「0|0」→「n|0」
 「0|0,」→「n|0」
@@ -103,9 +111,15 @@ calcsample:
 「100,8%」→「p108」
 「,m4!」→「p4」
 「m4!」→「p4|1」
-「m1Z3~5」→「p5|1」
-「0Z3~5」→「p3|1」
-「p1Z3~5」→「p5|1」
+「m1Z[calcpeekdata:0]~[calcpeekdata:1]」→「p108|1」
+「0Z[calcpeekdata:0]~[calcpeekdata:1]」→「p9|1」
+「p1Z[calcpeekdata:0]~[calcpeekdata:1]」→「p108|1」
+「m1Z[calcjumpdata:0]~[calcjumpdata:1]」→「False:」
+「0Z[calcjumpdata:0]~[calcjumpdata:1]」→「True:」
+「p1Z[calcjumpdata:0]~[calcjumpdata:1]」→「False:」
+「m1ZTrue:~False:」→「False:」
+「0ZTrue:~False:」→「True:」
+「p1ZTrue:~False:」→「False:」
 -- TSF_Calc.py viewthey --
 TSF_Tab-Separated-Forth:
 	calccount:	#TSF_this	#TSF_fin.
@@ -117,5 +131,7 @@ calcpop:
 	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 calcpeekdata:
 	009	108	207	306	405	504	603	702	801	900
+calcjumpdata:
+	True:	False:
 calcsample:
 	

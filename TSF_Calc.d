@@ -93,7 +93,7 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     return TSF_calcA;
 }
 
-Tuple!(string,string,string) TSF_Calc_FLR(string TSF_calcQ,char TSF_calcO){    //#三項演算子と「~」を用いてタプルに分割。(TSFAPI)
+auto TSF_Calc_FLR(string TSF_calcQ,char TSF_calcO){    //#三項演算子と「~」を用いてタプルに分割。(TSFAPI)
     string TSF_calcF,TSF_calcL,TSF_calcR;
     string[] TSF_calcQsplits=TSF_calcQ.split(to!string(TSF_calcO));
     TSF_calcF=TSF_calcQsplits[0];
@@ -104,7 +104,7 @@ Tuple!(string,string,string) TSF_Calc_FLR(string TSF_calcQ,char TSF_calcO){    /
     else{
         TSF_calcL=TSF_calcQsplits[$-1];  TSF_calcR=TSF_calcQsplits[$-1];
     }
-    return Tuple!(string,string,string)(TSF_calcF,TSF_calcL,TSF_calcR);
+    return Tuple!(string,string,string)(replace(replace(TSF_Io_RPN(TSF_Calc_addition(TSF_calcF)),"p",""),"m","-"),TSF_calcL,TSF_calcR);
 }
 
 string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
@@ -115,7 +115,27 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
     }
     else if( count(TSF_calcK,'Z') ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'Z');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
-        TSF_calcA=TSF_Calc_addition(TSF_Calc_addition(TSF_calcF)=="0|1"?TSF_calcL:TSF_calcR);
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)==0?TSF_calcL:TSF_calcR);
+    }
+    else if( count(TSF_calcK,'z') ){
+        auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'z');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)!=0?TSF_calcL:TSF_calcR);
+    }
+    else if( count(TSF_calcK,'O') ){
+        auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'O');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)>=0?TSF_calcL:TSF_calcR);
+    }
+    else if( count(TSF_calcK,'o') ){
+        auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'o');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)>0?TSF_calcL:TSF_calcR);
+    }
+    else if( count(TSF_calcK,'U') ){
+        auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'U');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)<=0?TSF_calcL:TSF_calcR);
+    }
+    else if( count(TSF_calcK,'u') ){
+        auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'u');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)<0?TSF_calcL:TSF_calcR);
     }
     else{
         TSF_calcA=TSF_Calc_addition(TSF_calcK);
@@ -125,7 +145,7 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
 
 string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-    if( TSF_calcA.back==':' ){
+    if( (TSF_calcA.length>0)&&(TSF_calcA.back==':') ){
         return TSF_calcA;
     }
     BigInt TSF_calcLN=BigInt(0),TSF_calcLD=BigInt(1);
@@ -168,7 +188,6 @@ string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し�
         }
     }
     TSF_calcA=TSF_Calc_bigtostr(to!string(TSF_calcLN),to!string(TSF_calcLD),(TSF_calcLN<0?1:0));
-//    TSF_calcA=TSF_Calc_multiplication(TSF_calcQ);
     return TSF_calcA;
 }
 
@@ -333,6 +352,8 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("calcpeekdata:",join([
         "009","108","207","306","405","504","603","702","801","900"],"\t"),"T");
+    TSF_Forth_setTSF("calcjumpdata:",join([
+        "True:","False:"],"\t"),"T");
     TSF_Forth_setTSF("calcsample:",join([
         "0|0","0|0,","0/0","0,0/",",0","0",
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
@@ -343,7 +364,9 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3",
         "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
         ",m4!","m4!",
-        "m1Z3~5","0Z3~5","p1Z3~5",],"\t"),"N");
+        "m1Z[calcpeekdata:0]~[calcpeekdata:1]","0Z[calcpeekdata:0]~[calcpeekdata:1]","p1Z[calcpeekdata:0]~[calcpeekdata:1]",
+        "m1Z[calcjumpdata:0]~[calcjumpdata:1]","0Z[calcjumpdata:0]~[calcjumpdata:1]","p1Z[calcjumpdata:0]~[calcjumpdata:1]",
+        "m1ZTrue:~False:","0ZTrue:~False:","p1ZTrue:~False:"],"\t"),"N");
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }

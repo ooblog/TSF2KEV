@@ -130,7 +130,7 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
         TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[-1];
     else:
         TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
-    return TSF_calcF,TSF_calcL,TSF_calcR
+    return TSF_Io_RPN(TSF_Calc_addition(TSF_calcF)).replace('p','').replace('m','-'),TSF_calcL,TSF_calcR
 
 #ZzOoUuNMP
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
@@ -139,7 +139,22 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
     elif "Z" in TSF_calcK:
        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z")
-       TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_Calc_addition(TSF_calcF) == "0|1" else TSF_calcR)
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) == 0 else TSF_calcR)
+    elif "z" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"z")
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) != 0 else TSF_calcR)
+    elif "O" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"O")
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) >= 0 else TSF_calcR)
+    elif "o" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"o")
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) > 0 else TSF_calcR)
+    elif "U" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"U")
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) <= 0 else TSF_calcR)
+    elif "u" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"u")
+       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) < 0 else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
@@ -147,7 +162,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
 #Atan2atan
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     TSF_calcA=TSF_calcQ
-    if TSF_calcA.endswith(':'):
+    if len(TSF_calcA) > 0 and TSF_calcA.endswith(':'):
         return TSF_calcA
     TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcQreplace=TSF_calcQ.replace('+','\t+').replace('-','\t-').replace('%','\t%')
@@ -311,6 +326,8 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),"T")
     TSF_Forth_setTSF("calcpeekdata:","\t".join([
         "009","108","207","306","405","504","603","702","801","900"]),"T")
+    TSF_Forth_setTSF("calcjumpdata:","\t".join([
+        "True:","False:"]),"T")
     TSF_Forth_setTSF("calcsample:","\t".join([
         "0|0","0|0,","0/0","0,0/",",0","0",
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
@@ -321,7 +338,9 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3",
         "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
         ",m4!","m4!",
-        "m1Z3~5","0Z3~5","p1Z3~5",]),"N")
+        "m1Z[calcpeekdata:0]~[calcpeekdata:1]","0Z[calcpeekdata:0]~[calcpeekdata:1]","p1Z[calcpeekdata:0]~[calcpeekdata:1]",
+        "m1Z[calcjumpdata:0]~[calcjumpdata:1]","0Z[calcjumpdata:0]~[calcjumpdata:1]","p1Z[calcjumpdata:0]~[calcjumpdata:1]",
+        "m1ZTrue:~False:","0ZTrue:~False:","p1ZTrue:~False:"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
