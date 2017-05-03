@@ -132,34 +132,36 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
         TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
     return TSF_Io_RPN(TSF_Calc_addition(TSF_calcF)).replace('p','').replace('m','-'),TSF_calcL,TSF_calcR
 
-#ZzOoUuNMP
+#ZzOoUuNMPAtan2atan#SinCosTansctREL#^Gg
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
-    elif "Z" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z")
+    elif "Z~" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z~")
        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) == 0 else TSF_calcR)
-    elif "z" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"z")
+    elif "z~" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"z~")
        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) != 0 else TSF_calcR)
     elif "O" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"O")
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"O~")
        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) >= 0 else TSF_calcR)
-    elif "o" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"o")
+    elif "o~" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"o~")
        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) > 0 else TSF_calcR)
-    elif "U" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"U")
+    elif "U~" in TSF_calcK:
+       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"U~")
        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) <= 0 else TSF_calcR)
-    elif "u" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"u")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) < 0 else TSF_calcR)
+    elif "u~" in TSF_calcK:
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"u~")
+        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) < 0 else TSF_calcR)
+    elif "N~" in TSF_calcK:
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"N~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF == "n|0" else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
 
-#Atan2atan
 def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if len(TSF_calcA) > 0 and TSF_calcA.endswith(':'):
@@ -194,7 +196,6 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-#^Gg
 def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
@@ -247,13 +248,12 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
             TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             if TSF_calcLM < TSF_calcRM:
                 TSF_calcLN,TSF_calcLD=decimal.Decimal(TSF_calcRN),decimal.Decimal(TSF_calcRD)
-        else:  # TSF_calcO == '`':
+        else:  # TSF_calcO == '*':
             TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRN)
             TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRD)
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-#SinCosTansctREL
 def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])
@@ -335,12 +335,13 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
         "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
         "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6",
-        "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3",
-        "100%p8","100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
+        "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3","100%p8",
+        "100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
         ",m4!","m4!",
-        "m1Z[calcpeekdata:0]~[calcpeekdata:1]","0Z[calcpeekdata:0]~[calcpeekdata:1]","p1Z[calcpeekdata:0]~[calcpeekdata:1]",
-        "m1Z[calcjumpdata:0]~[calcjumpdata:1]","0Z[calcjumpdata:0]~[calcjumpdata:1]","p1Z[calcjumpdata:0]~[calcjumpdata:1]",
-        "m1ZTrue:~False:","0ZTrue:~False:","p1ZTrue:~False:"]),"N")
+        "m1Z~[calcpeekdata:0]~[calcpeekdata:1]","0Z~[calcpeekdata:0]~[calcpeekdata:1]","p1Z~[calcpeekdata:0]~[calcpeekdata:1]",
+        "m1Z~[calcjumpdata:0]~[calcjumpdata:1]","0Z~[calcjumpdata:0]~[calcjumpdata:1]","p1Z~[calcjumpdata:0]~[calcjumpdata:1]",
+        "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
+        "0|1N~True:~False:","n|0N~True:~False:"]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

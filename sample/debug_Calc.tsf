@@ -21,6 +21,7 @@ calcsample:
 	2+3	2-3	5|6+p2|3	5|6-p2|3	5|6+m2|3	5|6-m2|3
 	100%p8	100%m8	100*(100+8)/100	100*(100-8)/100	100,8%
 	,m4!	m4!
-	m1Z[calcpeekdata:0]~[calcpeekdata:1]	0Z[calcpeekdata:0]~[calcpeekdata:1]	p1Z[calcpeekdata:0]~[calcpeekdata:1]
-	m1Z[calcjumpdata:0]~[calcjumpdata:1]	0Z[calcjumpdata:0]~[calcjumpdata:1]	p1Z[calcjumpdata:0]~[calcjumpdata:1]
-	m1ZTrue:~False:	0ZTrue:~False:	p1ZTrue:~False:
+	m1Z~[calcpeekdata:0]~[calcpeekdata:1]	0Z~[calcpeekdata:0]~[calcpeekdata:1]	p1Z~[calcpeekdata:0]~[calcpeekdata:1]
+	m1Z~[calcjumpdata:0]~[calcjumpdata:1]	0Z~[calcjumpdata:0]~[calcjumpdata:1]	p1Z~[calcjumpdata:0]~[calcjumpdata:1]
+	m1Z~True:~False:	0Z~True:~False:	p1Z~True:~False:
+	0|1N~True:~False:	n|0N~True:~False:
