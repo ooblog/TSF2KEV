@@ -132,7 +132,7 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
         TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
     return TSF_Io_RPN(TSF_Calc_addition(TSF_calcF)).replace('p','').replace('m','-'),TSF_calcL,TSF_calcR
 
-#ZzOoUuNMPAtan2atan#SinCosTansctREL#^Gg
+#M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:

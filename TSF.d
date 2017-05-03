@@ -90,7 +90,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
     TSF_Forth_setTSF("echoRPN:",join([
         "aboutRPNtest:","#TSF_this","aboutRPN:","#TSF_argvsthe","#TSF_echoN","echoCALC:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("aboutRPNtest:",join([
-        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「#TSF_join」で連結→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
     TSF_Forth_setTSF("aboutRPN:",join([
         "",
         "○「RPN」系小数電卓の概要。",
@@ -99,7 +99,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。",
         "　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」を「1,m2-」と表記する。",
         "　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。",
-        "　通常の割り算の他にも1未満を切り捨てる「\\」、余りを求める「#」がある。",
+        "　通常の割り算の他にも1未満を切り捨てる「\\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。",
         "　計算結果が整数になる場合、および小数の丸めで整数になってしまった場合は整数表記になる。",
         "　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。",
         "　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。",
@@ -109,7 +109,9 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
     TSF_Forth_setTSF("echoCALC:",join([
         "aboutCALCtest:","#TSF_this","aboutCALC:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("aboutCALCtest:",join([
-        "▽「calc」系準備中","#TSF_echo"],"\t"),"T");
+        "▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] #TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("aboutCALCdata:",join([
+        "1","3","m1|2"],"\t"),"T");
     TSF_Forth_setTSF("aboutCALC:",join([
         "",
         "○「calc」系分数電卓は再開発中につき説明不足になります(RPNと共通する内容は圧縮)。",
