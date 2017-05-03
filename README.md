@@ -86,7 +86,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　calcではスタック名(演算を行わない「:」演算子)の可能性などを考慮して「n|0」が発生しても計算は続行されます。
     	　言い方を買えると、calcでは比較演算子(条件演算子)の式に直接スタック名を指定できるので「#TSF_peekNthe」などをショートカットできます。
     	　「#TSF_peekNthe」や「#TSF_join[]」などを別途用いる事無く「[data:2]/[data:1]-[data:0]」のようなショートカットもできます。
-    	　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と演算子にチルダ追加。「N~」は「n|0」のチェック用途。
+    	　スタック名ショートカット実現のため「Z&#126;」「z&#126;」「O&#126;」「o&#126;」「U&#126;」「u&#126;」「N&#126;」と演算子にチルダ追加。「N&#126;」は「n|0」のチェック用途。
     	　億千万円銭など通貨的な助数詞を扱う「#TSF_calcJA」なども予定。
     	
     echoTIME:
@@ -119,22 +119,22 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・文字列の類似度がD言語で再現できるか未定なので当面後回しになるかも。  
 ・言語(D言語のbigintとPythonのdecimal)毎に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcPR」の扱いがどうなるか未定。  
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
-・自然対数(logｅ)は「E~」。常用対数(log10)は「L~」。二進対数(log2)は「l~」の予定。「256l~2」を8にするも「256L~2」や「256E~2」が8になってくれない症状は継続の予感。  
-・「kM~1~10」で1から10まで合計するような和数列(総和)、「kP~1~10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
+・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
+・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
 ・timeとかmatchとかも用意しないと「TSF_doc」が作れないのではがゆい。「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターを「TSF_doc」で置き換えTSFドキュメントも含めたい。  
 
 
 ## Vimシンタックスの設定など。
 
-シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
-「[./TSF_DMDcompile.sh](https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh "TSF2KEV/TSF_DMDcompile.sh at master ooblog/TSF2KEV")」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合)。環境毎に「echo $PATH」は異なる。  
-Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
+シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「&#126;/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
+「[./TSF_DMDcompile.sh](https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh "TSF2KEV/TSF_DMDcompile.sh at master ooblog/TSF2KEV")」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合)。環境毎に「echo $PATH」は異なる。  
+Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
 ついでに「kanedit.vim」の設定もおまけで書いてみた。  
 
     syntax on
     au BufRead,BufNewFile *.tsf set filetype=tsf
     autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
-    command KEVtsf  :source ~/TSF2KEV/KEV/kanedit.vim
+    command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 
 
 
