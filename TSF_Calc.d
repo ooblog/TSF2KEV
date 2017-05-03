@@ -83,6 +83,7 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
         }
     }
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
+//    writeln(format("TSF_calcA %s",TSF_calcA));
     if( TSF_calcA.length ){
         if( count(":",TSF_calcA[$-1])==0 ){
             if( count("n0pm",TSF_calcA[0])==0 ){
@@ -116,6 +117,7 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
     else if( count(TSF_calcK,'Z') ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'Z');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)==0?TSF_calcL:TSF_calcR);
+//        writeln(format("TSF_calcA,TSF_calcF,TSF_calcL,TSF_calcR %s|%s|%s|%s",TSF_calcA,TSF_calcF,TSF_calcL,TSF_calcR));
     }
     else if( count(TSF_calcK,'z') ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,'z');  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
