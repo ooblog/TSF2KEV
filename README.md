@@ -2,7 +2,8 @@
 
 目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
-開発途中のものでもいいから動くTSFをお探しの方は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」を参考。  
+未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
+![TSF syntax image](TSFdoc/TSF_512x384.png "TSF syntax image")  
 
 
 ## 「TSF.d --about」「TSF.py --about」より抜粋。
@@ -65,7 +66,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。
     	　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」を「1,m2-」と表記する。
     	　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。
-　通常の割り算の他にも1未満を切り捨てる「\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。
+    	　通常の割り算の他にも1未満を切り捨てる「\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。
     	　計算結果が整数になる場合、および小数の丸めで整数になってしまった場合は整数表記になる。
     	　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。
     	　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。
@@ -116,11 +117,25 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・億千万電卓「#TSF_calcKN」(かな)は「#TSF_calcJA」のように言語ロケールに寄せる形で置き換える。。小数点の代わりに「円」を表示する。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、10000分の1(‱)は「毛」表記。  
 ・連想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。  
 ・文字列の類似度がD言語で再現できるか未定なので当面後回しになるかも。  
-・timeとかmatchとかも用意しないと「TSF_doc」が作れないのではがゆい。「約四文字」を「TSF_doc」で置き換えたい。  
 ・言語(D言語のbigintとPythonのdecimal)毎に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcPR」の扱いがどうなるか未定。  
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
 ・自然対数(logｅ)は「E~」。常用対数(log10)は「L~」。二進対数(log2)は「l~」の予定。「256l~2」を8にするも「256L~2」や「256E~2」が8になってくれない症状は継続の予感。  
 ・「kM~1~10」で1から10まで合計するような和数列(総和)、「kP~1~10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
+・timeとかmatchとかも用意しないと「TSF_doc」が作れないのではがゆい。「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターを「TSF_doc」で置き換えTSFドキュメントも含めたい。  
+
+
+## Vimシンタックスの設定など。
+
+シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
+「[./TSF_DMDcompile.sh](https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh "TSF2KEV/TSF_DMDcompile.sh at master ooblog/TSF2KEV")」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合)。環境毎に「echo $PATH」は異なる。  
+Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
+ついでに「kanedit.vim」の設定もおまけで書いてみた。  
+
+    syntax on
+    au BufRead,BufNewFile *.tsf set filetype=tsf
+    autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
+    command KEVtsf  :source ~/TSF2KEV/KEV/kanedit.vim
+
 
 
 ## 動作環境。
