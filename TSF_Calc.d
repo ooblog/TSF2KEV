@@ -98,7 +98,6 @@ auto TSF_Calc_FLR(string TSF_calcQ,string TSF_calcO){    //#三項演算子と�
     string TSF_calcF,TSF_calcL,TSF_calcR;
     string[] TSF_calcQsplits=TSF_calcQ.split(TSF_calcO);
     TSF_calcF=TSF_Io_RPN(replace(TSF_Calc_addition(TSF_calcQsplits[0]),"-","m"));
-//    string TSF_calcFadd=TSF_Calc_addition(TSF_calcQsplits[0]); TSF_calcFadd=replace(TSF_calcFadd,"-","m"); TSF_calcF=TSF_Io_RPN(TSF_calcFadd);
     if( count(TSF_calcQsplits[$-1],'~') ){
         string[] TSF_calcLRsplits=TSF_calcQsplits[$-1].split('~');
         TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[$-1];
@@ -118,37 +117,30 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
     else if( count(TSF_calcK,"Z~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"Z~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition(TSF_calcF.front=='0'?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)==0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"z~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"z~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition(TSF_calcF.front!='0'?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)!=0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"O~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"O~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition((TSF_calcF.front=='p')||(TSF_calcF.front=='0')?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)>=0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"o~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"o~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition(TSF_calcF.front=='p'?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)>0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"U~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"U~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition((TSF_calcF.front=='m')||(TSF_calcF.front=='0')?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)<=0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"u~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"u~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition(TSF_calcF.front=='m'?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?"n|0":(to!real(TSF_calcF)<0?TSF_calcL:TSF_calcR);
     }
     else if( count(TSF_calcK,"N~") ){
         auto TSF_calcFLR=TSF_Calc_FLR(TSF_calcK,"N~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcA=TSF_Calc_addition(TSF_calcF.front=='n'?TSF_calcL:TSF_calcR);
-//        TSF_calcA=TSF_calcF=="n|0"?TSF_calcL:TSF_calcR;
     }
     else{
         TSF_calcA=TSF_Calc_addition(TSF_calcK);

@@ -8,10 +8,13 @@ from TSF_Io import *
 def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:"
 
-def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
+def TSF_Forth_branchID():    #TSFdoc:TSFブランチ名(TSFAPI)。
     return "20170422S212854"
 
-def TSF_Forth_lang():    #TSFdoc:TSFバージョン(開発言語)名(TSFAPI)。
+def TSF_Forth_grammarID():    #TSFdoc:TSF文法管理番号(TSFAPI)。
+    return "2"
+
+def TSF_Forth_foolangID():    #TSFdoc:TSF実装言語(TSFAPI)。
     return "Python"
 
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化する(TSFAPI)。
@@ -92,6 +95,9 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#TSF_remove":TSF_Forth_remove, "#ファイルを削除する":TSF_Forth_remove,
         "#TSF_savetext":TSF_Forth_savetext, "#テキストファイルに上書":TSF_Forth_savetext,
         "#TSF_writetext":TSF_Forth_writetext, "#テキストファイルに追記":TSF_Forth_writetext,
+        "#TSF_branch":TSF_Forth_branch, "#TSFのブランチ名":TSF_Forth_branch,
+        "#TSF_grammar":TSF_Forth_grammar, "#TSFの文法管理番号":TSF_Forth_grammar,
+        "#TSF_foolang":TSF_Forth_foolang, "#TSFの実装言語":TSF_Forth_foolang,
    }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -573,6 +579,18 @@ def TSF_Forth_writetext():    #TSFdoc:テキスト化スタックをファイル
     TSF_the=TSF_Forth_drawthe()
     TSF_text=TSF_Io_ESCdecode("\n".join(TSF_stackD[TSF_the])) if TSF_the in TSF_stackD else ""
     TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text)
+    return ""
+
+def TSF_Forth_branch():    #TSFdoc:TSFのブランチ名を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_branchID())
+    return ""
+
+def TSF_Forth_grammar():    #TSFdoc:TSFの文法管理番号を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_grammarID())
+    return ""
+
+def TSF_Forth_foolang():    #TSFdoc:TSFの実装言語を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_foolangID())
     return ""
 
 

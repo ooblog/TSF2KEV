@@ -15,11 +15,15 @@ string TSF_Forth_1ststack(){    //#TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:";
 }
 
-string TSF_Forth_version(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
+string TSF_Forth_branchID(){    //#TSFdoc:TSFブランチ名(TSFAPI)。
     return "20170422S212854";
 }
 
-string TSF_Forth_lang(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
+string TSF_Forth_grammarID(){    //#TSFdoc:TSF文法管理番号(TSFAPI)。
+    return "2";
+}
+
+string TSF_Forth_foolangID(){    //#TSFdoc:TSF実装言語(TSFAPI)。
     return "D-lang";
 }
 
@@ -101,6 +105,9 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_remove":&TSF_Forth_remove, "#ファイルを削除する":&TSF_Forth_remove,
         "#TSF_savetext":&TSF_Forth_savetext, "#テキストファイルに上書":&TSF_Forth_savetext,
         "#TSF_writetext":&TSF_Forth_writetext, "#テキストファイルに追記":&TSF_Forth_writetext,
+        "#TSF_branch":&TSF_Forth_branch, "#TSFのブランチ名":&TSF_Forth_branch,
+        "#TSF_grammar":&TSF_Forth_grammar, "#TSFの文法管理番号":&TSF_Forth_grammar,
+        "#TSF_foolang":&TSF_Forth_foolang, "#TSFの実装言語":&TSF_Forth_foolang,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -722,6 +729,21 @@ string TSF_Forth_writetext(){    //#TSFdoc:テキスト化スタックをファ�
     string TSF_the=TSF_Forth_drawthe();
     string TSF_text=(TSF_the in TSF_stackD)?TSF_Io_ESCdecode(join(TSF_stackD[TSF_the],"\n")):"";
     TSF_Io_writetext(TSF_Forth_drawthe(),TSF_text);
+    return "";
+}
+
+string TSF_Forth_branch(){    //#TSFdoc:TSFのブランチ名を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_branchID());
+    return "";
+}
+
+string TSF_Forth_grammar(){    //#TSFdoc:TSFの文法管理番号を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_grammarID());
+    return "";
+}
+
+string TSF_Forth_foolang(){    //#TSFdoc:TSFの実装言語を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_foolangID());
     return "";
 }
 

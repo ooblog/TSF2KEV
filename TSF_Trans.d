@@ -16,7 +16,6 @@ import TSF_Forth;
 void TSF_Trans_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Trans");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_?-lang":&TSF_Trans_dlang, "#TSFの実装言語":&TSF_Trans_foolang,
         "#TSF_Python":&TSF_Trans_python, "#デッキのpython化":&TSF_Trans_python,
         "#TSF_D-lang":&TSF_Trans_dlang, "#デッキのD言語化":&TSF_Trans_dlang,
     ];
@@ -25,11 +24,6 @@ void TSF_Trans_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
             TSF_cardsD[cardkey]=cardfunc; TSF_cardsO~=[cardkey];
         }
     } 
-}
-
-string TSF_Trans_foolang(){    //#TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_lang());
-    return "";
 }
 
 string TSF_Trans_python(){    //#TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
