@@ -12,10 +12,11 @@ cd $script_dir
 
 ./TSF.py --help > debug/debug_py-help.log
 ./TSF.d --help > debug/debug_d-help.log 
+./TSF.d --d sample/sample_help.tsf debug/trans_help.d
+./TSF.d --py sample/sample_help.tsf debug/trans_help.py
 
 ./TSF.py --about > debug/debug_py-about.log
 ./TSF.d --about > debug/debug_d-about.log 
-
 ./TSF.d --d sample/sample_aboutTSF.tsf debug/trans_about.d
 ./TSF.d --py sample/sample_aboutTSF.tsf debug/trans_about.py
 

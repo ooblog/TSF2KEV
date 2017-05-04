@@ -27,7 +27,8 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --about       about TSF mini guide",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
-        "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6 "]),"N")
+        "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
+        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample"]),"N")
     TSF_Forth_samplerun("TSF_sample_help")
 
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
@@ -158,6 +159,16 @@ def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版。
         "#TSF_calc","#TSF_echo"]),"T")
     TSF_Forth_samplerun("TSF_sample_calc")
 
+def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "FBsetup:","#TSF_this","#TSF_fin."]),"T")
+    TSF_Forth_setTSF("FBsetup:","\t".join([
+        "FZcount:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","FZcount:","4","#TSF_pokeNthe","FBloop:","#TSF_this"]),"T")
+    TSF_Forth_setTSF("FBloop:","\t".join([
+        "FZcount:",",([FZcount:0]+1)","#TSF_calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"]),"T")
+    TSF_Forth_setTSF("FZcount:","\t".join([
+        "0","Fizz","Buzz","Fizz&Buzz","20"]),"T")
+    TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
@@ -187,6 +198,8 @@ elif TSF_bootcommand in ["--RPN","--rpn"]:
     TSF_sample_RPN()
 elif TSF_bootcommand in ["--Calc","--calc"]:
     TSF_sample_calc()
+elif TSF_bootcommand in ["--fizz","--buzz","--fizzbuzz","--FizzBuzz"]:
+    TSF_sample_FizzBuzz()
 else:
     TSF_sample_help()
 sys.exit(0)

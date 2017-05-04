@@ -10,4 +10,4 @@ help:
 	  --helloworld  "Hello world  #TSF_echo" sample
 	  --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
 	  --calc        fraction calculator "1/3-m1|2"-> p5|6
- 
+	  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample
