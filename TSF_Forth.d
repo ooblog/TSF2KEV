@@ -19,6 +19,10 @@ string TSF_Forth_version(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSF
     return "20170422S212854";
 }
 
+string TSF_Forth_lang(){    //#TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
+    return "D-lang";
+}
+
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[

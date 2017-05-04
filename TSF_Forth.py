@@ -11,6 +11,9 @@ def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
 def TSF_Forth_version():    #TSFdoc:TSFバージョン(ブランチ)名(TSFAPI)。
     return "20170422S212854"
 
+def TSF_Forth_lang():    #TSFdoc:TSFバージョン(開発言語)名(TSFAPI)。
+    return "Python"
+
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化する(TSFAPI)。
     TSF_Forth_importlist("TSF_Forth")
     TSF_Forth_cards={

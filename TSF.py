@@ -191,6 +191,14 @@ else:
     TSF_sample_help()
 sys.exit(0)
 
+#        "  --quine       TSF_Forth_viewthey() Quine (self source) sample",
+#        "  --99beer      99 Bottles of Beer sample",
+#        "  --fizzbuzz    ([0]#3Z1~0)+([0]#5Z2~0) Fizz Buzz Fizz&Buzz sample",
+#        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
+#        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
+#        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
+#        "  --calender    \"@000y@0m@0dm@wdec@0h@0n@0s\"-> TSF_time_getdaytime() sample"]),
+
 
 # Copyright (c) 2017 ooblog
 # License: MIT

@@ -9,6 +9,7 @@ from TSF_Forth import *
 def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Trans")
     TSF_Forth_cards={
+        "#TSF_?-lang":TSF_Trans_dlang, "#TSFの実装言語":TSF_Trans_foolang,
         "#TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,
         "#TSF_D-lang":TSF_Trans_dlang, "#デッキのD言語化":TSF_Trans_dlang,
 #        "#TSF_Vim-script":TSF_Trans_vimscript, "#デッキのVimスクリプト化":TSF_Trans_vimscript,
@@ -20,6 +21,10 @@ def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD�
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
+def TSF_Trans_foolang():    #TSFdoc:TSFの実装言語を確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_lang())
+    return ""
+
 def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
     TSF_Trans_generator_python(TSF_Forth_drawthe())
     return ""
@@ -27,7 +32,6 @@ def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロ�
 def TSF_Trans_dlang():    #TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
     TSF_Trans_generator_dlang(TSF_Forth_drawthe())
     return ""
-
 
 def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
     TSF_mainandargvs=TSF_Forth_mainandargvs()

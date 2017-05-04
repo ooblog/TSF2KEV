@@ -1,0 +1,14 @@
+TSF_Tab-Separated-Forth:
+	FBsetup:	#TSF_this	#TSF_fin.
+FBsetup:
+	FBargvs:	#TSF_that	#TSF_argvs	#TSF_pullFthat	FZcount:	#TSF_pushFthe	FZcount:	#TSF_that	#TSF_peekFthat
+	FBloop:	#TSF_this
+FBloop:
+	[0],1-	#TSF_join[]	#TSF_RPN
+	[FZcount:3]-[FZcount:4]	#TSF_calc	#TSF_echo
+	[FZcount:4]o~FBloop:~#exit:	#TSF_calc	#TSF_this
+FZcount:
+	Fizz	Buzz	Fizz&Buzz
+FBargvs:
+	20
+

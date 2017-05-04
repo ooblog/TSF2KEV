@@ -113,9 +113,9 @@ calcsample:
 「100,8%」→「p108」
 「,m4!」→「p4」
 「m4!」→「p4|1」
-「m1Z~[calcpeekdata:0]~[calcpeekdata:1]」→「p108」
-「0Z~[calcpeekdata:0]~[calcpeekdata:1]」→「009」
-「p1Z~[calcpeekdata:0]~[calcpeekdata:1]」→「p108」
+「m1Z~[calcpeekdata:0]~[calcpeekdata:1]」→「p108|1」
+「0Z~[calcpeekdata:0]~[calcpeekdata:1]」→「p9|1」
+「p1Z~[calcpeekdata:0]~[calcpeekdata:1]」→「p108|1」
 「m1Z~[calcjumpdata:0]~[calcjumpdata:1]」→「False:」
 「0Z~[calcjumpdata:0]~[calcjumpdata:1]」→「True:」
 「p1Z~[calcjumpdata:0]~[calcjumpdata:1]」→「False:」

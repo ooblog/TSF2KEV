@@ -124,13 +124,13 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
 
 def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。(TSFAPI)
     TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
-    TSF_calcF=TSF_calcQsplits[0]
+    TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]).replace("-","m"));
     if "~" in TSF_calcQsplits[-1]:
         TSF_calcLRsplits=TSF_calcQsplits[-1].split('~')
         TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[-1];
     else:
         TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
-    return TSF_Io_RPN(TSF_Calc_addition(TSF_calcF)).replace('p','').replace('m','-'),TSF_calcL,TSF_calcR
+    return TSF_calcF,TSF_calcL,TSF_calcR
 
 #M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
@@ -138,26 +138,26 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
     elif "Z~" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z~")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) == 0 else TSF_calcR)
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('0') else TSF_calcR)
     elif "z~" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"z~")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) != 0 else TSF_calcR)
-    elif "O" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"O~")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) >= 0 else TSF_calcR)
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"z~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if not TSF_calcF.startswith('0') else TSF_calcR)
+    elif "O~" in TSF_calcK:
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"O~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('p') or TSF_calcF.startswith('0') else TSF_calcR)
     elif "o~" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"o~")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) > 0 else TSF_calcR)
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"o~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('p') else TSF_calcR)
     elif "U~" in TSF_calcK:
-       TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"U~")
-       TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) <= 0 else TSF_calcR)
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"U~")
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('p') or TSF_calcF.startswith('0') else TSF_calcR)
     elif "u~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"u~")
-        TSF_calcA="n|0" if TSF_calcF == "n|0" else TSF_Calc_addition(TSF_calcL if float(TSF_calcF) < 0 else TSF_calcR)
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('m') else TSF_calcR)
     elif "N~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"N~")
-        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF == "n|0" else TSF_calcR)
+        TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('n') else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
