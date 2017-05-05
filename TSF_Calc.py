@@ -62,37 +62,37 @@ TSF_Calc_rinmoushi="厘毛糸忽微繊沙塵埃渺漠模逡須瞬弾刹徳空清
 TSF_Calc_rinmouzero=['1|1000'+'0'*o for o in range(len(TSF_Calc_rinmoushi))]
 TSF_Calc_rinmoudic=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmouzero))
 def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理。(TSFAPI)
-    for TSF_opewordK,TSF_opewordV in TSF_calc_opeword.items():
+    for TSF_opewordK,TSF_opewordV in TSF_Calc_opeword.items():
         TSF_calcQ=TSF_calcQ.replace(TSF_opewordK,TSF_opewordV)
-    for TSF_opecharK,TSF_opecharV in TSF_calc_opechar.items():
+    for TSF_opecharK,TSF_opecharV in TSF_Calc_opechar.items():
         TSF_calcQ=TSF_calcQ.replace(TSF_opecharK,TSF_opecharV)
     TSF_calcQ=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/100",TSF_calcQ)
-    for TSF_okusenK,TSF_okusenV in TSF_calc_okusendic.items():
+    for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
         TSF_calcQ=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["(\\1)*",TSF_okusenV,"+"]),TSF_calcQ)
     for TSF_rinmouK,TSF_rinmouV in TSF_Calc_rinmoudic.items():
         TSF_calcQ=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["(\\1)*",TSF_rinmouV,"+"]),TSF_calcQ)
     TSF_calcQ=re.sub(re.compile("([0-9]+?)千"),"(\\1*1000)+",TSF_calcQ)
     TSF_calcQ=re.sub(re.compile("([0-9]+?)百"),"(\\1*100)+",TSF_calcQ)
     TSF_calcQ=re.sub(re.compile("([0-9]+?)十"),"(\\1*10)+",TSF_calcQ)
-    TSF_calcQ=TSF_calcA.replace('銭',"1|100+")
-    TSF_calcQ=TSF_calcA.replace('十',"10+")
-    TSF_calcQ=TSF_calcA.replace('百',"100+")
-    TSF_calcQ=TSF_calcA.replace('千',"1000+")
-    for TSF_okusenK,TSF_okusenV in TSF_calc_okusendic.items():
+    TSF_calcQ=TSF_calcQ.replace('銭',"1|100+")
+    TSF_calcQ=TSF_calcQ.replace('十',"10+")
+    TSF_calcQ=TSF_calcQ.replace('百',"100+")
+    TSF_calcQ=TSF_calcQ.replace('千',"1000+")
+    for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
         TSF_calcQ=TSF_calcQ.replace(TSF_okusenK,"".join([TSF_okusenV,"+"]))
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
-    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
-    if "." in TSF_calcA:
-        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('.')
-        TSF_calcA=TSF_calcA.replace('.','円')
-    else:
-        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('|')
-        if int(TSF_calcRD) > 0:
-            TSF_calcA="".join([TSF_calcF,TSF_calc_decimalizeKNcomma(TSF_calcRD),"分の",TSF_calc_decimalizeKNcomma(TSF_calcRN)])
-            TSF_calcA=TSF_calcA.replace("1分の",'')
-        else:
-            TSF_calcA="n|0"
-        TSF_calcA=TSF_calcA.replace('恒','恒河沙').replace('阿','阿僧祇').replace('那','那由他').replace('思','不可思議').replace('量','無量大数')
+#    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
+#    if "." in TSF_calcA:
+#        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('.')
+#        TSF_calcA=TSF_calcA.replace('.','円')
+#    else:
+#        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('|')
+#        if int(TSF_calcRD) > 0:
+#            TSF_calcA="".join([TSF_calcF,TSF_calc_decimalizeKNcomma(TSF_calcRD),"分の",TSF_calc_decimalizeKNcomma(TSF_calcRN)])
+#            TSF_calcA=TSF_calcA.replace("1分の",'')
+#        else:
+#            TSF_calcA="n|0"
+#        TSF_calcA=TSF_calcA.replace('恒','恒河沙').replace('阿','阿僧祇').replace('那','那由他').replace('思','不可思議').replace('量','無量大数')
     return TSF_calcA
 
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)

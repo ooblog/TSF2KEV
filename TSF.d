@@ -167,6 +167,16 @@ void TSF_sample_calc(){    //#TSFdoc:「sample_calc.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_calc");
 }
 
+void TSF_sample_calcJA(){    //#TSFdoc:「sample_calcJA.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "calcsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("calcsetup:",join([
+        "calcdef:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_calcJA","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("calcdef:",join([
+        "1/3-m1|2"],"\t"),"N");
+    TSF_Forth_samplerun("TSF_sample_calc");
+}
+
 void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "FBsetup:","#TSF_this","#TSF_fin."],"\t"),"T");
@@ -218,8 +228,11 @@ void main(string[] sys_argvs){
     else if( count(["--RPN","--rpn"],TSF_bootcommand) ){
         TSF_sample_RPN();
     }
-    else if( count(["--Calc","--calc"],TSF_bootcommand) ){
+    else if( count(["--CALC","--Calc","--calc"],TSF_bootcommand) ){
         TSF_sample_calc();
+    }
+    else if( count(["--calcJA"],TSF_bootcommand) ){
+        TSF_sample_calcJA();
     }
     else if( count(["--fizz","--buzz","--fizzbuzz","--FizzBuzz"],TSF_bootcommand) ){
         TSF_sample_FizzBuzz();

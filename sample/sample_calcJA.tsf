@@ -1,0 +1,7 @@
+TSF_Tab-Separated-Forth:
+	calcsetup:	#TSF_this	#TSF_fin.
+calcsetup:
+	calcdef:	#TSF_that	#TSF_argvs	#TSF_pullFthat	#TSF_calcJA	#TSF_echo
+calcdef:
+	1/3-m1|2
+
