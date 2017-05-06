@@ -81,7 +81,7 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
     TSF_calcA=TSF_calcA.replace('千',"1000+")
     for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
         TSF_calcA=TSF_calcA.replace(TSF_okusenK,"".join([TSF_okusenV,"+"]))
-    print("TSF_Calc_bracketsJA",TSF_calcA)
+#    print("TSF_Calc_bracketsJA",TSF_calcA)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA)
 #    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
 #    if "." in TSF_calcA:
@@ -121,10 +121,6 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
         if not TSF_calcA.endswith(':'):
             if not TSF_calcA[0] in "n0pm":
                 TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
-#    if len(TSF_calcA):
-#        if not TSF_calcA[-1] in ":":
-#            if not TSF_calcA[0] in "n0pm":
-#                TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
 
@@ -265,7 +261,8 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])
     TSF_calcM=TSF_calcA.count("m")+TSF_calcA.count("-") if not "!" in TSF_calcA else 0
     TSF_calcA=TSF_calcA.replace("p","").replace("m","").replace("-","").replace("!","")
-    TSF_calcND=TSF_calcA.split("|"); TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
+    TSF_calcND=TSF_calcA.split("|")
+    TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
     TSF_calcNstr=TSF_calcNstr if "." in TSF_calcNstr else "".join([TSF_calcNstr,"."])
     TSF_calcDstr=TSF_calcDstr if "." in TSF_calcDstr else "".join([TSF_calcDstr,"."])
     TSF_calcNint=len(TSF_calcNstr)-1-TSF_calcNstr.rfind(".")

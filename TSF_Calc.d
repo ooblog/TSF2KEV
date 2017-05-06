@@ -102,7 +102,7 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
         TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
     }
-    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
+//    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA);
     return TSF_calcA;
 }
@@ -132,7 +132,6 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
         }
     }
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
-//    writeln(format("TSF_calcA %s",TSF_calcA));
     if( TSF_calcA.length ){
         if( count(":",TSF_calcA.back)==0 ){
             if( count("n0pm",TSF_calcA.front)==0 ){
@@ -140,13 +139,6 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
             }
         }
     }
-//    if( TSF_calcA.length ){
-//        if( count(":",TSF_calcA[$-1])==0 ){
-//            if( count("n0pm",TSF_calcA[0])==0 ){
-//                TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
-//            }
-//        }
-//    }
     return TSF_calcA;
 }
 
@@ -258,6 +250,7 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
     string TSF_calcA=TSF_calcQ;
     string TSF_calcQreplace=replace(replace(replace(replace(TSF_calcQ,"*","\t*"),"/","\t/"),"\\","\t\\"),"#","\t#");
     string[] TSF_calcQsplits=strip(TSF_calcQreplace,'\t').split('\t');
+    if( TSF_calcQsplits.length==0 ){ TSF_calcQsplits.length=1; TSF_calcQsplits[0]=""; }
     char TSF_calcO;
     string TSF_calcRN,TSF_calcRD;
     opeexit_multiplication: foreach(string TSF_calcQmulti;TSF_calcQsplits){
@@ -265,7 +258,6 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
         foreach(char TSF_calcOpe;"*/\\#"){
             TSF_calcO=count(TSF_calcQmulti,TSF_calcOpe)?TSF_calcOpe:TSF_calcO;
         }
-//        string[] TSF_calcRND=TSF_Calc_fractalize(stripLeft(stripLeft(stripLeft(stripLeft(TSF_calcQmulti,'*'),'/'),'\\'),'#')).split('|');
         string[] TSF_calcRND=TSF_Calc_fractalize(strip(strip(strip(strip(TSF_calcQmulti,'*'),'/'),'\\'),'#')).split('|');
         TSF_calcRN=TSF_calcRND[0]; TSF_calcRD=TSF_calcRND[$-1];
         if( BigInt(TSF_calcRD)==0 ){
