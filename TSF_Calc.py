@@ -81,6 +81,7 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
     TSF_calcA=TSF_calcA.replace('千',"1000+")
     for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
         TSF_calcA=TSF_calcA.replace(TSF_okusenK,"".join([TSF_okusenV,"+"]))
+    print("TSF_Calc_bracketsJA",TSF_calcA)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA)
 #    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
 #    if "." in TSF_calcA:
@@ -117,9 +118,13 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
     TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
     if len(TSF_calcA):
-        if not TSF_calcA[-1] in ":":
+        if not TSF_calcA.endswith(':'):
             if not TSF_calcA[0] in "n0pm":
                 TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
+#    if len(TSF_calcA):
+#        if not TSF_calcA[-1] in ":":
+#            if not TSF_calcA[0] in "n0pm":
+#                TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
 
@@ -174,7 +179,7 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
         TSF_calcO=" "
         for TSF_calcOpe in "+-%":
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
-        TSF_calcRND=TSF_Calc_multiplication(TSF_calcQmulti.lstrip("+-%")).split('|')
+        TSF_calcRND=TSF_Calc_multiplication(TSF_calcQmulti.strip("+-%")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
         if decimal.Decimal(TSF_calcRD) == 0:
             TSF_calcA="n|0"
@@ -206,7 +211,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
         TSF_calcO=" "
         for TSF_calcOpe in "*/\\#<>":
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
-        TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.lstrip("*/\\#<>")).split('|')
+        TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip("*/\\#<>")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
         if decimal.Decimal(TSF_calcRD) == 0:
             TSF_calcA="n|0"

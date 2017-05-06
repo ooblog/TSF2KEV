@@ -38,15 +38,11 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
     ];
     string TSF_Calc_order="10000";
-//    foreach(char okusen;"万億兆京垓𥝱穣溝澗正載極恒阿那思量"){
     foreach(string okusen;["万","億","兆","京","垓","𥝱","穣","溝","澗","正","載","極","恒","阿","那","思","量"]){
-//        TSF_Calc_okusendic[to!string(okusen)]=TSF_Calc_order; TSF_Calc_order~="0000";
         TSF_Calc_okusendic[okusen]=TSF_Calc_order; TSF_Calc_order~="0000";
     }
     TSF_Calc_order="1|1000";
-//    foreach(char rinmou;"厘毛糸忽微繊沙塵埃渺漠模逡須瞬弾刹徳空清耶摩涅"){
     foreach(string rinmou;["厘","毛","糸","忽","微","繊","沙","塵","埃","渺","漠","模","逡","須","瞬","弾","刹","徳","空","清","耶","摩","涅"]){
-//        TSF_Calc_okusendic[to!string(rinmou)]=TSF_Calc_order; TSF_Calc_order~="0";
         TSF_Calc_okusendic[rinmou]=TSF_Calc_order; TSF_Calc_order~="0";
     }
 }
@@ -91,10 +87,10 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     }
     TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+($1)/100");
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
-        TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"+($1)*"~TSF_okusenV);
+        TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"($1)*"~TSF_okusenV~"+");
     }
     foreach(string TSF_rinmouK,string TSF_rinmouV;TSF_Calc_rinmoudic){
-        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"+($1)*"~TSF_rinmouV);
+        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"($1)*"~TSF_rinmouV~"+");
     }
     TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"($1*1000)+");
     TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"($1*100)+");
@@ -106,7 +102,7 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
         TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
     }
-//    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
+    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA);
     return TSF_calcA;
 }
@@ -138,12 +134,19 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
 //    writeln(format("TSF_calcA %s",TSF_calcA));
     if( TSF_calcA.length ){
-        if( count(":",TSF_calcA[$-1])==0 ){
-            if( count("n0pm",TSF_calcA[0])==0 ){
-                TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
+        if( count(":",TSF_calcA.back)==0 ){
+            if( count("n0pm",TSF_calcA.front)==0 ){
+                TSF_calcA=TSF_calcA.front=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
             }
         }
     }
+//    if( TSF_calcA.length ){
+//        if( count(":",TSF_calcA[$-1])==0 ){
+//            if( count("n0pm",TSF_calcA[0])==0 ){
+//                TSF_calcA=TSF_calcA[0]=='-'?replace(TSF_calcA,"-","m"):"p"~TSF_calcA;
+//            }
+//        }
+//    }
     return TSF_calcA;
 }
 
@@ -216,7 +219,8 @@ string TSF_Calc_addition(string TSF_calcQ){    //#TSF_doc:分数電卓の足し�
         foreach(char TSF_calcOpe;"+-%"){
             TSF_calcO=count(TSF_calcQmulti,TSF_calcOpe)?TSF_calcOpe:TSF_calcO;
         }
-        string[] TSF_calcRND=TSF_Calc_multiplication(stripLeft(stripLeft(stripLeft(TSF_calcQmulti,'+'),'-'),'%')).split('|');
+//        string[] TSF_calcRND=TSF_Calc_multiplication(stripLeft(stripLeft(stripLeft(TSF_calcQmulti,'+'),'-'),'%')).split('|');
+        string[] TSF_calcRND=TSF_Calc_multiplication(strip(strip(strip(TSF_calcQmulti,'+'),'-'),'%')).split('|');
         TSF_calcRN=TSF_calcRND[0]; TSF_calcRD=TSF_calcRND[$-1];
         if( BigInt(TSF_calcRD)==0 ){
             TSF_calcA="n|0";
@@ -261,7 +265,8 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSF_doc:分数電卓の�
         foreach(char TSF_calcOpe;"*/\\#"){
             TSF_calcO=count(TSF_calcQmulti,TSF_calcOpe)?TSF_calcOpe:TSF_calcO;
         }
-        string[] TSF_calcRND=TSF_Calc_fractalize(stripLeft(stripLeft(stripLeft(stripLeft(TSF_calcQmulti,'*'),'/'),'\\'),'#')).split('|');
+//        string[] TSF_calcRND=TSF_Calc_fractalize(stripLeft(stripLeft(stripLeft(stripLeft(TSF_calcQmulti,'*'),'/'),'\\'),'#')).split('|');
+        string[] TSF_calcRND=TSF_Calc_fractalize(strip(strip(strip(strip(TSF_calcQmulti,'*'),'/'),'\\'),'#')).split('|');
         TSF_calcRN=TSF_calcRND[0]; TSF_calcRD=TSF_calcRND[$-1];
         if( BigInt(TSF_calcRD)==0 ){
             TSF_calcA="n|0";
