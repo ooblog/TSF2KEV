@@ -1,3 +1,4 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
 	calcsetup:	#TSF_this	#TSF_fin.
 calcsetup:

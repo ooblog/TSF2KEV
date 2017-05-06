@@ -1,3 +1,4 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
 	help:	#TSF_argvsthe	#TSF_echoN	#TSF_fin.
 help:

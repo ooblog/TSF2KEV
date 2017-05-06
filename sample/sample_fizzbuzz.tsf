@@ -1,3 +1,4 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
 	FBsetup:	#TSF_this	#TSF_fin.
 FBsetup:
