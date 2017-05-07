@@ -468,17 +468,19 @@ def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
 
-def TSF_Forth_pushF(TSF_the,TSF_push):    #TSFdoc:指定スタックに表択でカードを差込。(TSFAPI)
-    if TSF_the in TSF_stackD:
-        TSF_stackD[TSF_the].append(TSF_push)
+#def TSF_Forth_pushF(TSF_the,TSF_push):    #TSFdoc:指定スタックに表択でカードを差込。(TSFAPI)
+#    if TSF_the in TSF_stackD:
+#        TSF_stackD[TSF_the].append(TSF_push)
 
 def TSF_Forth_pushFthe():    #TSFdoc:実行中スタックに表択でカードを差込。2枚[push,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
-    TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe())
+#    TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe())
+    TSF_Forth_return(TSF_the,TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_pushFthis():    #TSFdoc:実行中スタックに表択でカードを差込。1枚[push]ドロー。
-    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis())
+#    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis())
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthis())
     return ""
 
 def TSF_Forth_pushFthat():    #TSFdoc:積込先スタックに表択でカードを差込(同じカードを1枚ドロー1枚リターンなので変化無し)。

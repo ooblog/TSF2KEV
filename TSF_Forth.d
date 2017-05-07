@@ -590,20 +590,22 @@ string TSF_Forth_pullNthey(){    //#TSFdoc:スタック一覧からスタック�
     return "";
 }
 
-void TSF_Forth_pushF(string TSF_the,string TSF_push){    //TSF_doc:指定スタックに表択でカードを差込。(TSFAPI)
-    if( TSF_the in TSF_stackD ){
-        TSF_stackD[TSF_the]~=[TSF_push];
-    }
-}
+//void TSF_Forth_pushF(string TSF_the,string TSF_push){    //TSF_doc:指定スタックに表択でカードを差込。(TSFAPI)
+//    if( TSF_the in TSF_stackD ){
+//        TSF_stackD[TSF_the]~=[TSF_push];
+//    }
+//}
 
 string TSF_Forth_pushFthe(){    //#TSFdoc:実行中スタックに表択でカードを差込。2枚[push,the]ドロー。
     string TSF_the=TSF_Forth_drawthe();
-    TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe());
+//    TSF_Forth_pushF(TSF_the,TSF_Forth_drawthe());
+    TSF_Forth_return(TSF_the,TSF_Forth_drawthe());
     return "";
 }
 
 string TSF_Forth_pushFthis(){    //#TSFdoc:実行中スタックに表択でカードを差込。1枚[push]ドロー。
-    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis());
+//    TSF_Forth_pushF(TSF_Forth_drawthat(),TSF_Forth_drawthis());
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthis());
     return "";
 }
 
