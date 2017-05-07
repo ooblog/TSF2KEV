@@ -1,0 +1,29 @@
+#! /usr/bin/env TSF
+TSF_Tab-Separated-Forth:
+	calccount:	#TSF_this	#TSF_fin.
+calccount:
+	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	calccount:	#TSF_this
+calcjump:
+	#exit	calcpop:
+calcpop:
+#	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_peekFthat	calcstack:	#TSF_pushFthe	#TSF_calc	calcstack:	#TSF_pullFthe	#TSF_calcJA	「[2]」→「[1]」「[0]」	#TSF_join[]	#TSF_echo
+calcpeekdata:
+	009	108	207	306	405	504	603	702	801	900
+calcjumpdata:
+	True:	False:
+calcsample:
+	0|0	0|0,	0/0	0,0/	,0	0
+	2,3+	2,3-	2,3*	2,3/	(2,3-),5+
+	[calcpeekdata:8]
+	4|6	3.5|0.05
+	5|6*m2|4	5|6/m2|4	5|6\m2|4	5|6#p2|4	5|6#m2|4
+	10#5	10#m5	10#7	10#m7	5#p4	5#m4	5,4#	5,m4#
+	5|6>2|3	2|3>5|6	5|6<2|3	2|3<5|6
+	2+3	2-3	5|6+p2|3	5|6-p2|3	5|6+m2|3	5|6-m2|3
+	100%p8	100%m8	100*(100+8)/100	100*(100-8)/100	100,8%
+	,m4!	m4!
+	m1Z~[calcpeekdata:0]~[calcpeekdata:1]	0Z~[calcpeekdata:0]~[calcpeekdata:1]	p1Z~[calcpeekdata:0]~[calcpeekdata:1]
+	m1Z~[calcjumpdata:0]~[calcjumpdata:1]	0Z~[calcjumpdata:0]~[calcjumpdata:1]	p1Z~[calcjumpdata:0]~[calcjumpdata:1]
+	m1Z~True:~False:	0Z~True:~False:	p1Z~True:~False:
+	0|1N~True:~False:	n|0N~True:~False:

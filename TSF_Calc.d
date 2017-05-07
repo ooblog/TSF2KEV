@@ -104,6 +104,15 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     }
 //    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA);
+    string TSF_calcF=TSF_calcA.front=='m'?"マイナス":"";
+    if( count(TSF_calcA,".") ){
+        TSF_calcA=replace(TSF_calcA,".","円");
+        TSF_calcA=replace(replace(replace(replace(replace(replace(TSF_calcA,"模","模糊"),"逡","逡巡"),"須","須臾"),"瞬","弾指"),"弾","弾指"),"刹","刹那");
+        TSF_calcA=replace(replace(replace(replace(replace(replace(TSF_calcA,"徳","六徳"),"空","虚空"),"清","清浄"),"耶","阿頼耶"),"摩","阿摩羅"),"涅","涅槃寂静");
+    }
+    else{
+    }
+    TSF_calcA=replace(replace(replace(replace(replace(TSF_calcA,"恒","恒河沙"),"阿","阿僧祇"),"那","那由他"),"思","不可思議"),"量","無量大数");
     return TSF_calcA;
 }
 

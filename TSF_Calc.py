@@ -83,7 +83,14 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
         TSF_calcA=TSF_calcA.replace(TSF_okusenK,"".join([TSF_okusenV,"+"]))
 #    print("TSF_Calc_bracketsJA",TSF_calcA)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA)
-#    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
+    TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
+    if "." in TSF_calcA:
+        TSF_calcA=TSF_calcA.replace(".","円")
+        TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
+        TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静")
+    else:
+        pass
+    TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数")
 #    if "." in TSF_calcA:
 #        TSF_calcRN,TSF_calcRD=TSF_calcA.replace('m','').replace('p','').split('.')
 #        TSF_calcA=TSF_calcA.replace('.','円')
