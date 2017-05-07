@@ -6,7 +6,6 @@ calccount:
 calcjump:
 	#exit	calcpop:
 calcpop:
-#	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calc	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_peekFthat	calcstack:	#TSF_pushFthe	#TSF_calc	calcstack:	#TSF_pullFthe	#TSF_calcJA	「[2]」→「[1]」「[0]」	#TSF_join[]	#TSF_echo
 calcpeekdata:
 	009	108	207	306	405	504	603	702	801	900
@@ -27,3 +26,6 @@ calcsample:
 	m1Z~[calcjumpdata:0]~[calcjumpdata:1]	0Z~[calcjumpdata:0]~[calcjumpdata:1]	p1Z~[calcjumpdata:0]~[calcjumpdata:1]
 	m1Z~True:~False:	0Z~True:~False:	p1Z~True:~False:
 	0|1N~True:~False:	n|0N~True:~False:
+	億千万	,(億千万)
+#	100円25銭	,(100円25銭)
+#	100円12銭5厘	,(100円12銭5厘)
