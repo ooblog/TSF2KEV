@@ -410,22 +410,25 @@ def TSF_Forth_pokeNthey():    #TSFdoc:スタック一覧からスタック名を
             TSF_stackD[TSF_poke]=TSF_stackR
     return ""
 
-def TSF_Forth_pullF(TSF_the):    #TSFdoc:指定スタックから表択でカードを引抜。(TSFAPI)
-    TSF_pull=""
-    if TSF_the in TSF_stackD:
-        TSF_pull=TSF_stackD[TSF_the].pop()
-    return TSF_pull
+#def TSF_Forth_pullF(TSF_the):    #TSFdoc:指定スタックから表択でカードを引抜。(TSFAPI)
+#    TSF_pull=""
+#    if TSF_the in TSF_stackD and len(TSF_stackD[TSF_the]):
+#        TSF_pull=TSF_stackD[TSF_the].pop()
+#    return TSF_pull
 
 def TSF_Forth_pullFthe():    #TSFdoc:指定スタックから表択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthe()))
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthe()))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthe()))
     return ""
 
 def TSF_Forth_pullFthis():    #TSFdoc:実行中スタックから表択でカードを引抜。0枚[]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthis()))
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthis()))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthis()))
     return ""
 
 def TSF_Forth_pullFthat():    #TSFdoc:積込先スタックから表択でカードを引抜のみ(リターンしない)。1枚[card]ドロー。
-    TSF_Forth_pullF(TSF_Forth_drawthat())
+#    TSF_Forth_pullF(TSF_Forth_drawthat())
+    TSF_Forth_draw(TSF_Forth_drawthat())
     return ""
 
 def TSF_Forth_pullFthey():    #TSFdoc:スタック一覧から最後尾スタック名を引抜。0枚[]ドローして1枚[card]リターン。

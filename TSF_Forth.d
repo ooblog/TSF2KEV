@@ -517,26 +517,29 @@ string TSF_Forth_pokeNthey(){    //#TSFdoc:スタック一覧からスタック�
     return "";
 }
 
-string TSF_Forth_pullF(string TSF_the){    //#TSFdoc:指定スタックから表択でカードを引抜。(TSFAPI)
-    string TSF_pull="";
-    if( TSF_the in TSF_stackD ){
-        TSF_pull=TSF_stackD[TSF_the][$-1]; TSF_stackD[TSF_the].popBack();
-    }
-    return TSF_pull;
-}
+//string TSF_Forth_pullF(string TSF_the){    //#TSFdoc:指定スタックから表択でカードを引抜。(TSFAPI)
+//    string TSF_pull="";
+//    if( (TSF_the in TSF_stackD)&&(TSF_stackD[TSF_the].length>0) ){
+//        TSF_pull=TSF_stackD[TSF_the][$-1]; TSF_stackD[TSF_the].popBack();
+//    }
+//    return TSF_pull;
+//}
 
 string TSF_Forth_pullFthe(){    //#TSFdoc:指定スタックから表択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthe()));
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthe()));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthe()));
     return "";
 }
 
 string TSF_Forth_pullFthis(){    //#TSFdoc:実行中スタックから表択でカードを引抜。0枚[]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthis()));
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullF(TSF_Forth_drawthis()));
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthis()));
     return "";
 }
 
 string TSF_Forth_pullFthat(){    //#TSFdoc:積込先スタックから表択でカードを引抜のみ(リターンしない)。1枚[card]ドロー。
-    TSF_Forth_pullF(TSF_Forth_drawthat());
+//    TSF_Forth_pullF(TSF_Forth_drawthat());
+    TSF_Forth_draw(TSF_Forth_drawthat());
     return "";
 }
 
@@ -936,7 +939,8 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
 
 string TSF_Forth_draw(string TSF_the){    //#TSFdoc:スタックから1枚ドロー。(TSFAPI)
     string TSF_draw="";
-    if( TSF_stackD[TSF_the].length && TSF_the.length>0 && TSF_the in TSF_stackD ){
+//    if( TSF_stackD[TSF_the].length && TSF_the.length>0 && TSF_the in TSF_stackD ){
+    if( (TSF_the in TSF_stackD)&&(TSF_stackD[TSF_the].length>0) ){
         TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].popBack();
     }
     return TSF_draw;
