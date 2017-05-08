@@ -38,13 +38,17 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
     ];
     string TSF_Calc_order="*10000";
-    foreach(string okusen;["万","億","兆","京","垓","𥝱","穣","溝","澗","正","載","極","恒","阿","那","思","量"]){
+    string[] TSF_Calc_okusenman=["万","億","兆","京","垓","𥝱","穣","溝","澗","正","載","極","恒","阿","那","思","量"];
+    string[] TSF_Calc_rinmoushi=["厘","毛","糸","忽","微","繊","沙","塵","埃","渺","漠","模","逡","須","瞬","弾","刹","徳","空","清","耶","摩","涅"];
+    foreach(string okusen;TSF_Calc_okusenman){
         TSF_Calc_okusendic[okusen]=TSF_Calc_order; TSF_Calc_order~="0000";
     }
     TSF_Calc_order="/1000";
-    foreach(string rinmou;["厘","毛","糸","忽","微","繊","沙","塵","埃","渺","漠","模","逡","須","瞬","弾","刹","徳","空","清","耶","摩","涅"]){
+    foreach(string rinmou;TSF_Calc_rinmoushi){
         TSF_Calc_okusendic[rinmou]=TSF_Calc_order; TSF_Calc_order~="0";
     }
+    TSF_Calc_okusenyen=["円"]~TSF_Calc_okusenman;
+    TSF_Calc_rinmouyen=["円","割","銭"]~TSF_Calc_rinmoushi;
 }
 
 string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF_calcBR){    //#TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
@@ -77,6 +81,8 @@ string[string] TSF_Calc_opeword;
 string[string] TSF_Calc_opechar;
 string[string] TSF_Calc_okusendic;
 string[string] TSF_Calc_rinmoudic;
+string[] TSF_Calc_okusenyen;
+string[] TSF_Calc_rinmouyen;
 string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日本語処理。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
     foreach(string TSF_opewordK,string TSF_opewordV;TSF_Calc_opeword){
@@ -102,21 +108,69 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
         TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
     }
-    writeln(format("TSF_Calc_bracketsQQ %s",TSF_calcA));
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA);
-    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
     string TSF_calcF=TSF_calcA.front=='m'?"マイナス":"";
     if( TSF_calcA.front!='n' ){
         if( count(TSF_calcA,".") ){
-            TSF_calcA=replace(TSF_calcA,".","円");
+            string[] TSF_calcND=replace(replace(TSF_calcA,"p",""),"m","").split(".");
+            string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
+            TSF_calcNstr=stripLeft(TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4),'0');
+            TSF_calcNstr=replace(TSF_calcNstr,"円","");
+            TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1);
+            TSF_calcDstr=TSF_calcDstr.replace("割","");
+            TSF_calcNstr=TSF_calcNstr.replace("円0","円");
+            TSF_calcA=TSF_calcNstr~TSF_calcDstr;
             TSF_calcA=replace(replace(replace(replace(replace(replace(TSF_calcA,"模","模糊"),"逡","逡巡"),"須","須臾"),"瞬","弾指"),"弾","弾指"),"刹","刹那");
             TSF_calcA=replace(replace(replace(replace(replace(replace(TSF_calcA,"徳","六徳"),"空","虚空"),"清","清浄"),"耶","阿頼耶"),"摩","阿摩羅"),"涅","涅槃寂静");
         }
         else{
             string[] TSF_calcND=replace(replace(TSF_calcA,"p",""),"m","").split("|");
-            string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
+            string TSF_calcNstr,TSF_calcDstr;
+            if( TSF_calcND.length>=2 ){
+                TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr=TSF_calcND[$-1];
+            }
+            else{
+                TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr="1";
+            }
+            TSF_calcNstr=stripLeft(TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4),'0');
+            TSF_calcNstr=replace(TSF_calcNstr,"円","");
+            TSF_calcDstr=stripLeft(TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4),'0');
+            TSF_calcDstr=replace(TSF_calcDstr,"円","");
+            TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"分の");
+            if( TSF_calcDstr=="1"){ TSF_calcA=replace(TSF_calcA,"1分の",""); }
         }
         TSF_calcA=replace(replace(replace(replace(replace(TSF_calcA,"恒","恒河沙"),"阿","阿僧祇"),"那","那由他"),"思","不可思議"),"量","無量大数");
+        TSF_calcA=TSF_calcF~TSF_calcA;
+    }
+    return TSF_calcA;
+}
+
+string TSF_calc_comma_okusen(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC){    //#TSF_doc:整数にコンマ処理。(TSFAPI)
+    string TSF_calcA="";
+    size_t TSF_calcCptr=0;
+    foreach_reverse(size_t TSF_calcM,char TSF_calcK;TSF_calcQ){
+        if( TSF_calcM%TSF_calcC!=0 ){
+            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],"");
+        }
+        else{
+            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:",");
+            TSF_calcCptr++;
+        }
+    }
+    return TSF_calcA;
+}
+
+string TSF_calc_comma_rinmou(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC){    //#TSF_doc:小数にコンマ処理。(TSFAPI)
+    string TSF_calcA="";
+    size_t TSF_calcCptr=0;
+    foreach(size_t TSF_calcM,char TSF_calcK;TSF_calcQ){
+        if( TSF_calcM%TSF_calcC!=0 ){
+            TSF_calcA=join([TSF_calcA,to!string(TSF_calcK)],"");
+        }
+        else{
+            TSF_calcA=join([TSF_calcA,to!string(TSF_calcK)],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:",");
+            TSF_calcCptr++;
+        }
     }
     return TSF_calcA;
 }
