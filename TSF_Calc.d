@@ -37,11 +37,11 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
         "足":"+","引":"-","掛":"*","割":"/","和":"+","差":"-","積":"*","商":"/","足":"+","引":"-","掛":"*","割":"/",
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
     ];
-    string TSF_Calc_order="10000";
+    string TSF_Calc_order="*10000";
     foreach(string okusen;["万","億","兆","京","垓","𥝱","穣","溝","澗","正","載","極","恒","阿","那","思","量"]){
         TSF_Calc_okusendic[okusen]=TSF_Calc_order; TSF_Calc_order~="0000";
     }
-    TSF_Calc_order="1|1000";
+    TSF_Calc_order="/1000";
     foreach(string rinmou;["厘","毛","糸","忽","微","繊","沙","塵","埃","渺","漠","模","逡","須","瞬","弾","刹","徳","空","清","耶","摩","涅"]){
         TSF_Calc_okusendic[rinmou]=TSF_Calc_order; TSF_Calc_order~="0";
     }
@@ -85,25 +85,26 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     foreach(string TSF_opecharK,string TSF_opecharV;TSF_Calc_opechar){
         TSF_calcA=replace(TSF_calcA,TSF_opecharK,TSF_opecharV);
     }
-    TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+($1)/100");
+    TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+$1/100+");
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
-        TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"($1)*"~TSF_okusenV~"+");
+        TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"$1"~TSF_okusenV~"+");
     }
     foreach(string TSF_rinmouK,string TSF_rinmouV;TSF_Calc_rinmoudic){
-        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"($1)*"~TSF_rinmouV~"+");
+        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"$1"~TSF_rinmouV~"+");
     }
-    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"($1*1000)+");
-    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"($1*100)+");
-    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)十"),"($1*10)+");
-    TSF_calcA=replace(TSF_calcA,"銭","1|100+");
+    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"$1*1000+");
+    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"$1*100+");
+    TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)十"),"$1*10+");
+    TSF_calcA=replace(TSF_calcA,"銭","1/100+");
     TSF_calcA=replace(TSF_calcA,"十","10+");
     TSF_calcA=replace(TSF_calcA,"百","100+");
     TSF_calcA=replace(TSF_calcA,"千","1000+");
     foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
         TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
     }
-//    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
+    writeln(format("TSF_Calc_bracketsQQ %s",TSF_calcA));
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcA);
+    writeln(format("TSF_Calc_bracketsJA %s",TSF_calcA));
     string TSF_calcF=TSF_calcA.front=='m'?"マイナス":"";
     if( TSF_calcA.front!='n' ){
         if( count(TSF_calcA,".") ){
