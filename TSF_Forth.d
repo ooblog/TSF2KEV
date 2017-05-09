@@ -795,7 +795,7 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
 //        TSF_stackD[TSF_the]=replace(stripRight(TSF_text,'\n'),"\t","\n").split("\n");
-        TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("'\t","\n").split('\n');
+        TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("\t","\n").split('\n');
         TSF_styleD[TSF_the]=TSF_style;
     }
     else{

@@ -631,7 +631,8 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
     if TSF_text != None:
         if not TSF_the in TSF_stackD:
             TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
-        TSF_stackD[TSF_the]=TSF_text.rstrip('\n').replace('\t','\n').split('\n')
+#        TSF_stackD[TSF_the]=TSF_text.rstrip('\n').replace('\t','\n').split('\n')
+        TSF_stackD[TSF_the]=TSF_text.rstrip("\n").replace("\t","\n").split("\n")
         TSF_styleD[TSF_the]=TSF_style
     else:
         if TSF_the in TSF_stackD:  del TSF_stackD[TSF_the]
