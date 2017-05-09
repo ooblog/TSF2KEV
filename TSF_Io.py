@@ -75,11 +75,11 @@ def TSF_Io_loadtext(TSF_path,TSF_encoding="utf-8"):    #TSFdoc:ファイルか�
     return TSF_text
 
 def TSF_Io_ESCencode(TSF_text):    #TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
-    TSF_text=TSF_text.replace('&',"&amp;").replace('\t',"&tab;")
+    TSF_text=TSF_text.replace("&","&amp;").replace("\t","&tab;")
     return TSF_text
 
 def TSF_Io_ESCdecode(TSF_text):    #TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
-    TSF_text=TSF_text.replace("&tab;",'\t').replace("&amp;",'&')
+    TSF_text=TSF_text.replace("&tab;","\t").replace("&amp;","&")
     return TSF_text
 
 def TSF_Io_splitlen(TSF_text,TSF_split):    #TSFdoc:テキストの行数などを取得。(TSFAPI)
@@ -182,7 +182,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
             TSF_RPNnum+=TSF_RPNope
         else:
             if len(TSF_RPNnum) > 0:
-                TSF_RPNminus=TSF_RPNnum.count('m');  TSF_RPNnum=TSF_RPNnum.replace('p','').replace('m','')
+                TSF_RPNminus=TSF_RPNnum.count('m');  TSF_RPNnum=TSF_RPNnum.replace("p","").replace("m","")
                 if "$" in TSF_RPNnum:
                     try:
                         TSF_RPNcalcN,TSF_RPNcalcD=int(TSF_RPNnum.replace("$",""),16),1.0
@@ -275,7 +275,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
 
 def TSF_Io_RPNzero(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
     TSF_RPNtext=TSF_Io_RPN(TSF_RPN)
-    TSF_RPNtext=TSF_RPNtext.replace('p','').replace('m','-')
+    TSF_RPNtext=TSF_RPNtext.replace("p","").replace("m","-")
     TSF_RPNanswer=0
     try:
         TSF_RPNanswer=int(TSF_RPNtext)

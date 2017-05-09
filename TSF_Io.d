@@ -82,12 +82,14 @@ string TSF_Io_loadtext(string TSF_path, ...){    //#TSFdoc:ファイルからテ
 }
 
 string TSF_Io_ESCencode(string TSF_textdup){    //#TSFdoc:「\t」を「&tab;」に置換。(TSFAPI)
-    string TSF_text=replace(replace(TSF_textdup,"&","&amp;"),"\t","&tab;");
+//    string TSF_text=replace(replace(TSF_textdup,"&","&amp;"),"\t","&tab;");
+    string TSF_text=TSF_textdup.replace("&","&amp;").replace("\t","&tab;");
     return TSF_text;
 }
 
 string TSF_Io_ESCdecode(string TSF_textdup){   //#TSFdoc:「&tab;」を「\t」に戻す。(TSFAPI)
-    string TSF_text=replace(replace(TSF_textdup,"&tab;","\t"),"&amp;","&");
+//    string TSF_text=replace(replace(TSF_textdup,"&tab;","\t"),"&amp;","&");
+    string TSF_text=TSF_textdup.replace("&tab;","\t").replace("&amp;","&");
     return TSF_text;
 }
 
@@ -234,11 +236,13 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
         }
         else{
             if( TSF_RPNnum.length>0 ){
-                TSF_RPNminus=count(TSF_RPNnum,'m');  TSF_RPNnum=replace(replace(TSF_RPNnum,"p",""),"m","");
+//                TSF_RPNminus=count(TSF_RPNnum,'m');  TSF_RPNnum=replace(replace(TSF_RPNnum,"p",""),"m","");
+                TSF_RPNminus=TSF_RPNnum.count('m');  TSF_RPNnum=TSF_RPNnum.replace("p","").replace("m","");
                 real TSF_RPNcalcN,TSF_RPNcalcD;
                 if( count(TSF_RPNnum,'$') ){
                     try{
-                        TSF_RPNcalcN=to!long(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
+//                        TSF_RPNcalcN=to!long(replace(TSF_RPNnum,"$",""),16);  TSF_RPNcalcD=1.0;
+                        TSF_RPNcalcN=to!long(TSF_RPNnum.replace("$",""),16);  TSF_RPNcalcD=1.0;
                     }
                     catch(ConvException e){
                         TSF_RPNanswer="n|0";
@@ -384,7 +388,8 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     if( TSF_RPNanswer != "n|0" ){
         TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
         if( TSF_RPNanswer!="0" ){
-            TSF_RPNanswer=TSF_RPNanswer.front=='-'?replace(TSF_RPNanswer,"-","m"):"p"~TSF_RPNanswer;
+//            TSF_RPNanswer=TSF_RPNanswer.front=='-'?replace(TSF_RPNanswer,"-","m"):"p"~TSF_RPNanswer;
+            TSF_RPNanswer=TSF_RPNanswer.front=='-'?TSF_RPNanswer.replace("-","m"):"p"~TSF_RPNanswer;
         }
     }
     return TSF_RPNanswer;
@@ -392,7 +397,8 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
 
 long TSF_Io_RPNzero(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
     string TSF_RPNtext=TSF_Io_RPN(TSF_RPN);
-    TSF_RPNtext=replace(replace(TSF_RPNtext,"p",""),"m","-");
+//    TSF_RPNtext=replace(replace(TSF_RPNtext,"p",""),"m","-");
+    TSF_RPNtext=TSF_RPNtext.replace("p","").replace("m","-");
     long TSF_RPNanswer=0;
     try{
         TSF_RPNanswer=to!long(TSF_RPNtext);
