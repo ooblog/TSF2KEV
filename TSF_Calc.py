@@ -98,8 +98,7 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4).lstrip('0')
             TSF_calcNstr=TSF_calcNstr.replace("円","")
             TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1)
-            TSF_calcDstr=TSF_calcDstr.replace("割","")
-            TSF_calcDstr=TSF_calcDstr.replace("円0","円")
+            TSF_calcDstr=TSF_calcDstr.replace("割","").replace("円0","円")
             TSF_calcA="".join([TSF_calcNstr,TSF_calcDstr])
             TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
             TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静")
@@ -216,8 +215,8 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
         return TSF_calcA
     TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m")
-    TSF_calcQreplace=TSF_calcQreplace.replace('+','\t+').replace('-','\t-').replace('%','\t%')
-    TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
+    TSF_calcQreplace=TSF_calcQreplace.replace("+","\t+").replace("-","\t-").replace("%","\t%")
+    TSF_calcQsplits=TSF_calcQreplace.strip("\t").split("\t")
     for TSF_calcQmulti in TSF_calcQsplits:
         TSF_calcO=" "
         for TSF_calcOpe in "+-%":
