@@ -110,11 +110,13 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
             else:
                 TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],"1";
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4).lstrip('0')
-            TSF_calcNstr=TSF_calcNstr.replace("円","")
             TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4).lstrip('0')
             TSF_calcDstr=TSF_calcDstr.replace("円","")
             TSF_calcA="分の".join([TSF_calcDstr,TSF_calcNstr])
-            if TSF_calcDstr == "1": TSF_calcA=TSF_calcA.replace("1分の","")
+            if TSF_calcDstr == "1":
+                TSF_calcA=TSF_calcA.replace("1分の","")
+            else:
+                TSF_calcA=TSF_calcA.replace("円","")
         TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数")
         TSF_calcA="".join([TSF_calcF,TSF_calcA])
     return TSF_calcA

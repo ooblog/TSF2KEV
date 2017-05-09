@@ -136,11 +136,15 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
                 TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr="1";
             }
             TSF_calcNstr=stripLeft(TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4),'0');
-            TSF_calcNstr=replace(TSF_calcNstr,"円","");
             TSF_calcDstr=stripLeft(TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4),'0');
             TSF_calcDstr=replace(TSF_calcDstr,"円","");
             TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"分の");
-            if( TSF_calcDstr=="1"){ TSF_calcA=replace(TSF_calcA,"1分の",""); }
+            if( TSF_calcDstr=="1"){
+                TSF_calcA=replace(TSF_calcA,"1分の","");
+            }
+            else{
+                TSF_calcA=replace(TSF_calcA,"円","");
+            }
         }
         TSF_calcA=replace(replace(replace(replace(replace(TSF_calcA,"恒","恒河沙"),"阿","阿僧祇"),"那","那由他"),"思","不可思議"),"量","無量大数");
         TSF_calcA=TSF_calcF~TSF_calcA;
