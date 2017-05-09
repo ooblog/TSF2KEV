@@ -83,7 +83,8 @@ string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc
     if( TSF_the in TSF_Forth_stackD() ){
         TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
-            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
+//            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
+            TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
         TSF_style=TSF_Forth_style().get(TSF_the,"T");
         string TSF_view_logline="";
@@ -144,7 +145,8 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
     if( TSF_the in TSF_Forth_stackD() ){
         TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
-            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
+//            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
+            TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
         TSF_style=TSF_Forth_style().get(TSF_the,"T");
 //        writeln(format("TSF_the,TSF_style:%s %s",TSF_the,TSF_style));

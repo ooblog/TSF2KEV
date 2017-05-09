@@ -57,7 +57,7 @@ string TSF_Match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてs
         TSF_text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));
         foreach(size_t TSF_peek,string TSF_card;TSF_cardsO){
             if( TSF_peek<TSF_cardsN_len ){
-                TSF_text=replace(TSF_text,TSF_card,TSF_cardsN[TSF_peek]);
+                TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[TSF_peek]);
             }
         }
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N");

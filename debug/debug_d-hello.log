@@ -2,4 +2,3 @@
 TSF_Tab-Separated-Forth:
 	Hello world	#TSF_echo
 -- TSF_sample_Helloworld run --
-Hello world

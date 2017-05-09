@@ -10,4 +10,3 @@ calcdefault:
 calc:
 	#TSF_calc	#TSF_echo
 -- TSF_sample_calc run --
-p5|6
