@@ -305,7 +305,8 @@ string TSF_Forth_joinsquarebrackets(){    //#TSFdoc:カードN枚を角括弧で
     foreach(long TSF_count;0..TSF_Forth_len(TSF_Forth_drawthat())){
         TSF_bracket="["~to!string(TSF_count)~"]";
         if( count(TSF_calc,TSF_bracket) ){
-            TSF_calc=replace(TSF_calc,TSF_bracket,TSF_Forth_drawthe());
+//            TSF_calc=replace(TSF_calc,TSF_bracket,TSF_Forth_drawthe());
+            TSF_calc=TSF_calc.replace(TSF_bracket,TSF_Forth_drawthe());
         }
         else{
             break;
@@ -793,7 +794,8 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
-        TSF_stackD[TSF_the]=replace(stripRight(TSF_text,'\n'),"\t","\n").split("\n");
+//        TSF_stackD[TSF_the]=replace(stripRight(TSF_text,'\n'),"\t","\n").split("\n");
+        TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("'\t","\n").split('\n');
         TSF_styleD[TSF_the]=TSF_style;
     }
     else{
