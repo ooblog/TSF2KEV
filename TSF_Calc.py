@@ -140,6 +140,7 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC):    #TSF_doc:小数に�
         else:
             TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else ",").join([TSF_calcA,TSF_calcK])
             TSF_calcCptr+=1
+    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else ",")])
     return TSF_calcA
 
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)

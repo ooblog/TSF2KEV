@@ -183,6 +183,7 @@ string TSF_calc_comma_rinmou(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC)
             TSF_calcCptr++;
         }
     }
+    TSF_calcA=join([TSF_calcA,(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:","]);
     return TSF_calcA;
 }
 
