@@ -111,8 +111,8 @@ def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。
     return "#exit"
 
 def TSF_Forth_countmax():    #TSFdoc:TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。
-    global TSF_stackmax
-    TSF_stackmax=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    global TSF_Forth_stackMAX
+    TSF_Forth_stackMAX=TSF_Io_RPNzero(TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_this():    #TSFdoc:thisスタックの変更。1枚[this]ドロー。
@@ -672,7 +672,7 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSFdoc:ス
         if TSF_mergedel:
              TSF_Forth_setTSF(TSF_path)
 
-TSF_stackmax=256
+TSF_Forth_stackMAX=256
 TSF_echo,TSF_echo_log=False,""
 def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
@@ -685,7 +685,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
     while True:
-        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) and TSF_cardscount < TSF_stackmax:
+        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) and TSF_cardscount < TSF_Forth_stackMAX:
             TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount];  TSF_cardscount+=1;
             if not TSF_cardnow in TSF_cardD:
                 TSF_Forth_return(TSF_stackthat,TSF_cardnow)

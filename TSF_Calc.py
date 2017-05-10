@@ -15,8 +15,8 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_Forth_cards={
         "#TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
         "#TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
-#    TSF_words["#TSF_calcPR"]=TSF_calc_calcPR; TSF_words["#有効桁数"]=TSF_calc_calcPR
-#    TSF_words["#TSF_calcRO"]=TSF_calc_calcRO; TSF_words["#端数処理"]=TSF_calc_calcRO
+        "#TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
+#        "#TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -40,8 +40,10 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_Calc_rinmoushi="厘毛糸忽微繊沙塵埃渺漠模逡須瞬弾刹徳空清耶摩涅"
     TSF_Calc_rinmouzero=["/(1000"+'0'*o+")" for o in range(len(TSF_Calc_rinmoushi))]
     TSF_Calc_rinmoudic=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmouzero))
-    TSF_Calc_okusenyen="".join(["円",TSF_Calc_okusenman]);
-    TSF_Calc_rinmouyen="".join(["円割銭",TSF_Calc_rinmoushi]);
+    TSF_Calc_okusenyen="".join(["円",TSF_Calc_okusenman])
+    TSF_Calc_rinmouyen="".join(["円割銭",TSF_Calc_rinmoushi])
+    global TSF_Calc_precisionMAX
+    TSF_Calc_precisionMAX=100;   decimal.getcontext().prec=TSF_Calc_precisionMAX
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Calc_calcsquarebrackets(TSF_calcQ,TSF_calcBL,TSF_calcBR):     #TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
@@ -61,6 +63,13 @@ def TSF_Calc_calc():    #TSFdoc:分数計算する。カード枚数+数式1枚[
 
 def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
+    return ""
+
+TSF_Calc_precisionMAX=100
+def TSF_Calc_precision():    ##TSF_doc:電卓の有効桁数を変更する。1枚[precision]ドロー。
+    global TSF_Calc_precisionMAX
+    TSF_Calc_precisionMAX=min(max(TSF_Io_RPNzero(TSF_Forth_drawthe()),5),1000)
+    decimal.getcontext().prec=TSF_Calc_precisionMAX
     return ""
 
 def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理。(TSFAPI)

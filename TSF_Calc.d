@@ -19,6 +19,8 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     string function()[string] TSF_Forth_cards=[
         "#TSF_calc":&TSF_Calc_calc, "#分数計算":&TSF_Calc_calc,
         "#TSF_calcJA":&TSF_Calc_calcJA, "#分数計算(日本語)":&TSF_Calc_calcJA,
+//        "#TSF_precision":&TSF_Calc_precision, "#有効桁数":&TSF_Calc_precision,
+//        "#TSF_rounding":&TSF_Calc_rounding, "#端数処理":&TSF_Calc_rounding,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -49,6 +51,7 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     }
     TSF_Calc_okusenyen=["円"]~TSF_Calc_okusenman;
     TSF_Calc_rinmouyen=["円","割","銭"]~TSF_Calc_rinmoushi;
+    TSF_Calc_precisionMAX=100;
 }
 
 string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF_calcBR){    //#TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
@@ -76,6 +79,13 @@ string TSF_Calc_calcJA(){    //#TSFdoc:分数計算する。カード枚数+数�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
+
+long TSF_Calc_precisionMAX;
+string TSF_Calc_precision(){    //#TSF_doc:電卓の有効桁数を変更する。1枚[precision]ドロー。
+    TSF_Calc_precisionMAX=to!long(fmin(fmax(TSF_Io_RPNzero(TSF_Forth_drawthe()),5),1000));
+    return "";
+}
+
 
 string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日本語処理。(TSFAPI)
     string TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ);

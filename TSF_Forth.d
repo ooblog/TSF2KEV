@@ -122,7 +122,7 @@ string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定す�
 }
 
 string TSF_Forth_countmax(){    //#TSFdoc:TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。
-    TSF_stackmax=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_stackMAX=TSF_Io_RPNzero(TSF_Forth_drawthe());
     return "";
 }
 
@@ -794,7 +794,6 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
-//        TSF_stackD[TSF_the]=replace(stripRight(TSF_text,'\n'),"\t","\n").split("\n");
         TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("\t","\n").split('\n');
         TSF_styleD[TSF_the]=TSF_style;
     }
@@ -851,7 +850,7 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSFdo
     }
 }
 
-long TSF_stackmax=256;
+long TSF_Forth_stackMAX=256;
 bool TSF_echo=false;  string TSF_echo_log="";
 string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
     string TSF_cardnow=""; string TSF_stacknext="";
@@ -865,7 +864,7 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
         TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
     }
     while(true){
-        while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<TSF_stackmax ){
+        while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<TSF_Forth_stackMAX ){
             TSF_cardnow=TSF_stackD[TSF_stackthis][to!size_t(TSF_cardscount)];  TSF_cardscount++;
             if( TSF_cardnow !in TSF_cardD ){
                 TSF_Forth_return(TSF_stackthat,TSF_cardnow);
