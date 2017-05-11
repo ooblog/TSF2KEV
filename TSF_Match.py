@@ -13,20 +13,34 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
     TSF_Forth_cards={
         "#TSF_replace":TSF_Match_replace, "#文字列を置換":TSF_Match_replace,
         "#TSF_resub":TSF_Match_resub, "#文字列を正規表現で置換":TSF_Match_resub,
+#        "#TSF_regex":TSF_Match_regex "#文字列を正規表現で置換":TSF_Match_regex,
+#        "#TSF_count":TSF_Match_count, "#文字列を計数":TSF_Match_count,
+#        "#TSF_regcount":TSF_Match_regcount, "#文字列を正規表現で計数":TSF_Match_regcount,
+#        "#TSF_replacesF":TSF_Match_replacesF, "#文字列群で表択置換":TSF_Match_replacesF,
+#        "#TSF_replaceF":TSF_Match_replaceF, "#文字列で表択風置換":TSF_Match_replaceF,
         "#TSF_replacesN":TSF_Match_replacesN, "#文字列群で順択置換":TSF_Match_replacesN,
         "#TSF_replacesC":TSF_Match_replacesC, "#文字列群で周択置換":TSF_Match_replacesC,
         "#TSF_replacesM":TSF_Match_replacesM, "#文字列群で囲択置換":TSF_Match_replacesM,
-#        "#TSF_replacestacks":TSF_Match_resubN, "#正規表現群で置換":TSF_Match_resubN,
-#        "#TSF_replacethey":TSF_Match_replacethey, "#スタック置換":TSF_Match_replacethey,
+#        "#TSF_replacesV":TSF_Match_replacesV, "#文字列群で逆択置換":TSF_Match_replacesV,
+#        "#TSF_replacesA":TSF_Match_replacesA, "#文字列群で乱択置換":TSF_Match_replacesA,
+#        "#TSF_replacesQ":TSF_Match_replacesQ, "#文字列群で同択置換":TSF_Match_replacesQ,
+#        "#TSF_replacesI":TSF_Match_replacesI, "#文字列群で含択置換":TSF_Match_replacesI,
+#        "#TSF_replacesR":TSF_Match_replacesR, "#文字列群で規択置換":TSF_Match_replacesR,
+#        "#TSF_replacesH":TSF_Match_replacesH, "#文字列群で似択置換":TSF_Match_replacesH,
+#        "#TSF_replacesL":TSF_Match_replacesL, "#文字列群で札択置換":TSF_Match_replacesL,
+#        "#TSF_regexesF":TSF_Match_regexesF, "#正規表現の文字列群で表択置換":TSF_Match_regexesF,
+#        "#TSF_regexF":TSF_Match_regexF, "#正規表現の文字列で表択風置換":TSF_Match_regexF,
+#        "#TSF_regexesN":TSF_Match_regexesN, "#正規表現の文字列群で順択置換":TSF_Match_regexesN,
+#        "#TSF_regexesC":TSF_Match_regexesC, "#正規表現の文字列群で周択置換":TSF_Match_regexesC,
+#        "#TSF_regexesM":TSF_Match_regexesM, "#正規表現の文字列群で囲択置換":TSF_Match_regexesM,
+#        "#TSF_regexesV":TSF_Match_regexesV, "#正規表現の文字列群で逆択置換":TSF_Match_regexesV,
+#        "#TSF_regexesA":TSF_Match_regexesA, "#正規表現の文字列群で乱択置換":TSF_Match_regexesA,
+#        "#TSF_regexesQ":TSF_Match_regexesQ, "#正規表現の文字列群で同択置換":TSF_Match_regexesQ,
+#        "#TSF_regexesI":TSF_Match_regexesI, "#正規表現の文字列群で含択置換":TSF_Match_regexesI,
+#        "#TSF_regexesR":TSF_Match_regexesR, "#正規表現の文字列群で規択置換":TSF_Match_regexesR,
+#        "#TSF_regexesH":TSF_Match_regexesH, "#正規表現の文字列群で似択置換":TSF_Match_regexesH,
+#        "#TSF_regexesL":TSF_Match_regexesL, "#正規表現の文字列群で札択置換":TSF_Match_regexesL,
     }
-#    TSF_words["#TSF_replacestacks"]=TSF_Match_replacestacks; TSF_words["#スタックを文字列群で置換"]=TSF_Match_replacestacks
-#    TSF_words["#TSF_resubstacks"]=TSF_Match_resubstacks; TSF_words["#スタックを正規表現群で置換"]=TSF_Match_resubstacks
-#    TSF_words["#TSF_matcher"]=TSF_Match_matcher; TSF_words["#文字列類似度"]=TSF_Match_matcher
-#    TSF_words["#TSF_matchgrade"]=TSF_Match_matchgrade; TSF_words["#文字列類似の合格点"]=TSF_Match_matchgrade
-#    TSF_words["#TSF_countstacks"]=TSF_Match_countstacks; TSF_words["#スタックの該当箇所を数える"]=TSF_Match_countstacks
-#    TSF_words["#TSF_casestacks"]=TSF_Match_casestacks; TSF_words["#スタックの該当箇所で置換"]=TSF_Match_casestacks
-#    TSF_words["#TSF_tagcyclestack"]=TSF_Match_tagcyclestack; TSF_words["#タグ名スタックで周択置換"]=TSF_Match_tagcyclestack
-#    TSF_words["#TSF_taglimitstack"]=TSF_Match_taglimitstack; TSF_words["#タグ名スタックで囲択置換"]=TSF_Match_taglimitstack
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
