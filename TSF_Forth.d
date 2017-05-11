@@ -240,8 +240,11 @@ string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
+        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
     }
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    else{
+        TSF_Forth_return(TSF_Forth_drawthat(),"0");
+    }
     return "";
 }
 string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
@@ -250,8 +253,11 @@ string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
+        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
     }
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    else{
+        TSF_Forth_return(TSF_Forth_drawthat(),"0");
+    }
     return "";
 }
 string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
@@ -260,14 +266,23 @@ string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
         }
+        TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
     }
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD[TSF_the].length));
+    else{
+        TSF_Forth_return(TSF_Forth_drawthat(),"0");
+    }
     return "";
 }
 
 string TSF_Forth_argvsthey(){    //#TSFdoc:カードN枚を逆順に積込。カード枚数+総数1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
-    foreach_reverse(string TSF_card;TSF_stackO){
-        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    if( TSF_stackO.length>0 ){
+        foreach_reverse(string TSF_card;TSF_stackO){
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+            TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackO.length));
+        }
+    }
+    else{
+        TSF_Forth_return(TSF_Forth_drawthat(),"0");
     }
     return "";
 }

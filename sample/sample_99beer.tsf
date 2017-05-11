@@ -1,0 +1,57 @@
+TSF_Tab-Separated-Forth:
+	#TSF_argvs	#TSF_pullFthat	bottlessetup:	#TSF_this	#TSF_fin.	5
+bottlessetup:
+	onthewallint:	#TSF_pushFthe	onthewallint:	#TSF_that	#TSF_peekFthat	#TSF_peekFthat	callbottles:	#TSF_this
+callbottles:
+	2	#TSF_reverseN	#TSF_pullFthat	#TSF_peekFthat	[0],1-	#TSF_join[]	#TSF_RPN
+	N-bottles:	3ormorebottles:	#TSF_clonethe
+	N-bottles:	#TSF_argvsthe	#TSF_echoN
+	[onthewallint:1]o~callbottles:~#exit:	#TSF_calc	#TSF_this
+onthewallstr:
+	{buybottles}	{drink}	{drinked}
+bottlescall:
+	nomorebottles:	1bottle:	2bottles:	3ormorebottles:
+3ormorebottles:
+	{drink} bottles of beer on the wall, {drink} bottles of beer.
+	Take one down and pass it around, {drinked} bottles of beer on the wall.
+2bottles:
+	{drink} bottles of beer on the wall, {drink} bottles of beer.
+	Take one down and pass it around, 1 bottle of beer on the wall.
+1bottle:
+	{drink} bottle of beer on the wall, {drink} bottle of beer.
+	Take one down and pass it around, no more bottles of beer on the wall.
+nomorebottles:
+	No more bottles of beer on the wall, no more bottles of beer.
+	Go to the store and buy some more, {buybottles} bottles of beer on the wall.
+
+
+#TSF_Tab-Separated-Forth:
+#	UTF-8	#TSF_encoding	N-BottlesofBeer:	#TSF_this	0	#TSF_fin.
+#N-BottlesofBeer:
+#	TSF_argvs:	#TSF_cloneargvs	TSF_argvs:	#TSF_lenthe	[0]Z[onthewallint:0]~[TSF_argvs:0]	#TSF_calcDC	onthewallint:	0	#TSF_pokethe	onthewallint:	#TSF_that	#TSF_carbonthat	#TSF_carbonthat	drinkbottles:	#TSF_this
+#drinkbottles:
+#	#TSF_swapBAthat	1	#TSF_popNthat	[onthewallint:1]-1	#TSF_calcDC	countbottles:	#TSF_this
+#countbottles:
+#	bottlesreplace:	bottlescall:	onthewallint:	1	#TSF_peekthe	#TSF_peeklimitthe	#TSF_clonethe	bottlesreplace:	onthewallstr:	onthewallint:	#TSF_replacestacks	bottlesreplace:	#TSF_echothe	lopbottles:	#TSF_this
+#lopbottles:
+#	bottlesjump:	[onthewallint:2]O0~1	#TSF_calcDC	#TSF_peekthe	#TSF_this
+#bottlesjump:
+#	drinkbottles:	#exit
+#onthewallstr:
+#	{buybottles}	{drink}	{drinked}
+#onthewallint:
+#	99
+#bottlescall:
+#	nomorebottles:	1bottle:	2bottles:	3ormorebottles:
+#3ormorebottles:
+#	{drink} bottles of beer on the wall, {drink} bottles of beer.
+#	Take one down and pass it around, {drinked} bottles of beer on the wall.
+#2bottles:
+#	{drink} bottles of beer on the wall, {drink} bottles of beer.
+#	Take one down and pass it around, 1 bottle of beer on the wall.
+#1bottle:
+#	{drink} bottle of beer on the wall, {drink} bottle of beer.
+#	Take one down and pass it around, no more bottles of beer on the wall.
+#nomorebottles:
+#	No more bottles of beer on the wall, no more bottles of beer.
+#	Go to the store and buy some more, {buybottles} bottles of beer on the wall.

@@ -201,7 +201,9 @@ def TSF_Forth_argvsthe():    #TSFdoc:指定スタックを積込む。1枚[the]�
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+        TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
 def TSF_Forth_argvsthis():    #TSFdoc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
@@ -209,7 +211,9 @@ def TSF_Forth_argvsthis():    #TSFdoc:実行中スタックを積込む。0枚[]
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+        TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
 def TSF_Forth_argvsthat():    #TSFdoc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
@@ -217,13 +221,18 @@ def TSF_Forth_argvsthat():    #TSFdoc:積込先スタックを積込む。0枚[]
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+        TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD[TSF_the])))
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
 def TSF_Forth_argvsthey():    #TSFdoc:スタック一覧を積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
-    for TSF_card in reversed(TSF_stackO):
-        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
-    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
+    if len(TSF_stackO) > 0:
+        for TSF_card in reversed(TSF_stackO):
+            TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+            TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackO)))
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
 def TSF_Forth_reverseN():    #TSFdoc:カードN枚を逆順に積込。カード枚数+総数1枚[cardN…cardA,N]ドローしてカード枚数[cardN…cardA]リターン。
