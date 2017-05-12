@@ -22,7 +22,7 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
-        "usage: ./TSF.py [command|file.tsf] [argvs] ...",
+        "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
         "  --help        this commands view",
         "  --python      TSF to Python",
@@ -31,7 +31,8 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
-        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample"],"\t"),"N");
+        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --99bear      99 Bottles of Beer 9 Bottles sample"],"\t"),"N");
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
@@ -189,6 +190,31 @@ void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド�
     TSF_Forth_samplerun("TSF_sample_calc");
 }
 
+void TSF_sample_99beer(){    //#TSFdoc:「sample_99beer.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "#TSF_argvs","#TSF_pullFthat","bottlessetup:","#TSF_this","#TSF_fin.","9"],"\t"),"T");
+    TSF_Forth_setTSF("bottlessetup:",join([
+        "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("callbottles:",join([
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("onthewallstr:",join([
+        "{buybottles}","{drink}","{drinked}"],"\t"),"T");
+    TSF_Forth_setTSF("bottlescall:",join([
+        "nomorebottles:","1bottle:","2bottles:","3ormorebottles:"],"\t"),"T");
+    TSF_Forth_setTSF("3ormorebottles:",join([
+        "{drink} bottles of beer on the wall, {drink} bottles of beer.",
+        "Take one down and pass it around, {drinked} bottles of beer on the wall."],"\t"),"N");
+    TSF_Forth_setTSF("2bottles:",join([
+        "{drink} bottles of beer on the wall, {drink} bottles of beer.",
+        "Take one down and pass it around, 1 bottle of beer on the wall."],"\t"),"N");
+    TSF_Forth_setTSF("1bottle:",join([
+        "{drink} bottle of beer on the wall, {drink} bottle of beer.",
+        "Take one down and pass it around, no more bottles of beer on the wall."],"\t"),"N");
+    TSF_Forth_setTSF("nomorebottles:",join([
+        "No more bottles of beer on the wall, no more bottles of beer.",
+        "Go to the store and buy some more, {buybottles} bottles of beer on the wall."],"\t"),"N");
+    TSF_Forth_samplerun("TSF_sample_99beer");
+}
 
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
@@ -236,6 +262,9 @@ void main(string[] sys_argvs){
     }
     else if( count(["--fizz","--buzz","--fizzbuzz","--FizzBuzz"],TSF_bootcommand) ){
         TSF_sample_FizzBuzz();
+    }
+    else if( count(["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"],TSF_bootcommand) ){
+        TSF_sample_99beer();
     }
     else{
         TSF_sample_help();

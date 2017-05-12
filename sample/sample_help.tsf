@@ -2,7 +2,7 @@
 TSF_Tab-Separated-Forth:
 	help:	#TSF_argvsthe	#TSF_echoN	#TSF_fin.
 help:
-	usage: ./TSF.py [command|file.tsf] [argvs] ...
+	usage: ./TSF [command|file.tsf] [argvs] ...
 	commands & samples:
 	  --help        this commands view
 	  --python      TSF to Python
@@ -12,3 +12,5 @@ help:
 	  --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
 	  --calc        fraction calculator "1/3-m1|2"-> p5|6
 	  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample
+	  --99bear      99 Bottles of Beer 9 Bottles sample
+

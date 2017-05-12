@@ -26,3 +26,9 @@ cd $script_dir
 ./TSF.py --calc > debug/debug_py-calcrpn.log
 ./TSF.d --calc > debug/debug_d-calcrpn.log 
 
+./TSF.py --fizzbuzz > debug/debug_py-fizzbuzz.log
+./TSF.d --fizzbuzz > debug/debug_d-fizzbuzz.log 
+
+./TSF.py --99beer 99 > debug/debug_py-99beer.log
+./TSF.d --99beer 99 > debug/debug_d-99beer.log 
+

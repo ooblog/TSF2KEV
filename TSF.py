@@ -19,7 +19,7 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),"T")
     TSF_Forth_setTSF("help:","\t".join([
-        "usage: ./TSF.py [command|file.tsf] [argvs] ...",
+        "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
         "  --help        this commands view",
         "  --python      TSF to Python",
@@ -28,10 +28,10 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
-        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample"]),"N")
+        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --99bear      99 Bottles of Beer 9 Bottles sample"]),"N")
     TSF_Forth_samplerun("TSF_sample_help")
 #        "  --quine       TSF_Forth_viewthey() Quine (self source) sample",
-#        "  --99beer      99 Bottles of Beer sample",
 #        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
 #        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
 #        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
@@ -185,6 +185,31 @@ def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版�
         "0","Fizz","Buzz","Fizz&Buzz","20"]),"T")
     TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
+def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "#TSF_argvs","#TSF_pullFthat","bottlessetup:","#TSF_this","#TSF_fin.","9"]),"T")
+    TSF_Forth_setTSF("bottlessetup:","\t".join([
+        "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"]),"T")
+    TSF_Forth_setTSF("callbottles:","\t".join([
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),"T")
+    TSF_Forth_setTSF("onthewallstr:","\t".join([
+        "{buybottles}","{drink}","{drinked}"]),"T")
+    TSF_Forth_setTSF("bottlescall:","\t".join([
+        "nomorebottles:","1bottle:","2bottles:","3ormorebottles:"]),"T")
+    TSF_Forth_setTSF("3ormorebottles:","\t".join([
+        "{drink} bottles of beer on the wall, {drink} bottles of beer.",
+        "Take one down and pass it around, {drinked} bottles of beer on the wall."]),"N")
+    TSF_Forth_setTSF("2bottles:","\t".join([
+        "{drink} bottles of beer on the wall, {drink} bottles of beer.",
+        "Take one down and pass it around, 1 bottle of beer on the wall."]),"N")
+    TSF_Forth_setTSF("1bottle:","\t".join([
+        "{drink} bottle of beer on the wall, {drink} bottle of beer.",
+        "Take one down and pass it around, no more bottles of beer on the wall."]),"N")
+    TSF_Forth_setTSF("nomorebottles:","\t".join([
+        "No more bottles of beer on the wall, no more bottles of beer.",
+        "Go to the store and buy some more, {buybottles} bottles of beer on the wall."]),"N")
+    TSF_Forth_samplerun("TSF_sample_99beer")
+
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
@@ -217,6 +242,8 @@ elif TSF_bootcommand in ["--calcJA"]:
     TSF_sample_calcJA()
 elif TSF_bootcommand in ["--fizz","--buzz","--fizzbuzz","--FizzBuzz"]:
     TSF_sample_FizzBuzz()
+elif TSF_bootcommand in ["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"]:
+    TSF_sample_99beer()
 else:
     TSF_sample_help()
 sys.exit(0)

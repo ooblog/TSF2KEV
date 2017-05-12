@@ -1,0 +1,30 @@
+-- TSF_sample_calc source --
+TSF_Tab-Separated-Forth:
+	FBsetup:	#TSF_this	#TSF_fin.
+FBsetup:
+	FZcount:	#TSF_that	#TSF_argvs	#TSF_pullFthat	#TSF_peekFthat	FZcount:	4	#TSF_pokeNthe	FBloop:	#TSF_this
+FBloop:
+	FZcount:	,([FZcount:0]+1)	#TSF_calc	FZcount:	0	#TSF_pokeNthe	([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)	#TSF_calc	#TSF_peekNthe	#TSF_echo	[FZcount:4]-[FZcount:0]o~FBloop:~#exit:	#TSF_calc	#TSF_this
+FZcount:
+	0	Fizz	Buzz	Fizz&Buzz	20
+-- TSF_sample_calc run --
+p1
+p2
+Fizz
+p4
+Buzz
+Fizz
+p7
+p8
+Fizz
+Buzz
+p11
+Fizz
+p13
+p14
+Fizz&Buzz
+p16
+p17
+Fizz
+p19
+Buzz

@@ -17,7 +17,7 @@ TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("help:",join([
-        "usage: ./TSF.py [command|file.tsf] [argvs] ...",
+        "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
         "  --help        this commands view",
         "  --python      TSF to Python",
@@ -26,7 +26,8 @@ TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
-        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample"],"\t"),"N");
+        "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --99bear      99 Bottles of Beer 9 Bottles sample"],"\t"),"N");
 
     TSF_Forth_run();
 }
