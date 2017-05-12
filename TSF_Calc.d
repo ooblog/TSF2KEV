@@ -18,6 +18,7 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     TSF_Forth_importlist("TSF_Calc");
     string function()[string] TSF_Forth_cards=[
         "#TSF_calc":&TSF_Calc_calc, "#分数計算":&TSF_Calc_calc,
+        "#TSF_-calc":&TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":&TSF_Calc_calcMinus,
         "#TSF_calcJA":&TSF_Calc_calcJA, "#分数計算(日本語)":&TSF_Calc_calcJA,
 //        "#TSF_precision":&TSF_Calc_precision, "#有効桁数":&TSF_Calc_precision,
 //        "#TSF_rounding":&TSF_Calc_rounding, "#端数処理":&TSF_Calc_rounding,
@@ -72,6 +73,11 @@ string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF
 
 string TSF_Calc_calc(){    //#TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
+    return "";
+}
+
+string TSF_Calc_calcMinus(){    //#TSFdoc:分数計算する。符号pmを省略する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQM(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
 
@@ -239,6 +245,13 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
     }
     return TSF_calcA;
 }
+
+string TSF_Calc_bracketsQQM(string TSF_calcQ){    //#TSF_doc:分数電卓のPM符号省略。(TSFAPI)
+    string TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ);
+    TSF_calcA=TSF_calcA.replace("p","").replace("m","-");
+    return TSF_calcA;
+}
+
 
 auto TSF_Calc_FLR(string TSF_calcQ,string TSF_calcO){    //#三項演算子と「~」を用いてタプルに分割。(TSFAPI)
     string TSF_calcF,TSF_calcL,TSF_calcR;

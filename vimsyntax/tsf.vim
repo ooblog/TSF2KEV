@@ -1,11 +1,11 @@
 " TSF syntax file
 " Language:	TSF_Tab-Separated-Forth:
 " Maintainer:	ooblog
-" Last Change:	2017 Apr 23
+" Last Change:	2017 May 12
 
 
 "syntax iskeyword	[,#,@,_,-,|,.,],48-57,192-255
-setlocal iskeyword=35,45,46,48-57,64,91,93,95,192-255
+setlocal iskeyword=32-127,192-255
 
 syntax match tsfComment		"^#.*$"
 syntax match tsfIdentifier		"^[^\t^\n]*\ze\n"

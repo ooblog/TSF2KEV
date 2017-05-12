@@ -14,6 +14,7 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_Forth_importlist(TSF_import="TSF_Calc")
     TSF_Forth_cards={
         "#TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
+        "#TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
         "#TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
         "#TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
 #        "#TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
@@ -59,6 +60,10 @@ def TSF_Calc_calcsquarebrackets(TSF_calcQ,TSF_calcBL,TSF_calcBR):     #TSFdoc:�
 
 def TSF_Calc_calc():    #TSFdoc:分数計算する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQ(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
+    return ""
+
+def TSF_Calc_calcMinus():    #TSFdoc:分数計算する。符号pmを省略する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsQQM(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
     return ""
 
 def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
@@ -194,6 +199,10 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
                 TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
+def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSF_doc:分数電卓のPM符号省略。(TSFAPI)
+    TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
+    TSF_calcA=TSF_calcA.replace("p","").replace("m","-")
+    return TSF_calcA
 
 def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。(TSFAPI)
     TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
