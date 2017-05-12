@@ -104,6 +104,8 @@ ENV/
 # git push github:ooblog/TSF2KEV.git :20170422S212854
 TSF
 TSF.o
+TSF.obj
+TSF.exe
 cardsize/
 debug/trans_about.d
 debug/trans_about.py
