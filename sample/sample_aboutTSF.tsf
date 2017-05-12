@@ -2,7 +2,7 @@
 TSF_Tab-Separated-Forth:
 	echoTSF:	#TSF_this	#TSF_fin.
 echoTSF:
-	aboutTSF:	#TSF_argvsthe	#TSF_echoN	echoRPN:	#TSF_this
+	aboutTSF:	#TSF_argvsthe	#TSF_echoN	echoRPNcalc:	#TSF_this
 aboutTSF:
 	
 	○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。
@@ -16,8 +16,8 @@ aboutTSF:
 	　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。
 	　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。
 	　オーバーフローもしくは「#exit #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。
-	　TSFにループ構文は存在しないので末尾再帰がループになる。同様にループの内側からループの外側スタックを呼び出してもコールスタックが破棄される。
-	　TSFにはif構文も存在しないので「#TSF_this」の飛び先を条件演算子で置き換える必要。条件演算子は「#TSF_RPN」「#TSF_calc」に用意。
+	　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。
+	　TSFにはif構文も存在しないけど「#TSF_calc」の条件演算子や「#TSF_this」の飛び先に「#TSF_peekNthe」などを組み合わせる事で分岐は可能。
 	　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。
 	　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。
 	　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。
@@ -45,45 +45,40 @@ aboutTSF:
 	　「H」(matcHer)スタックから似択、文字列の一致度が一定数以上のカードを選択。Python以外の言語で一致度の基準が未定義。
 	　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。
 	
-echoRPN:
-	aboutRPNtest:	#TSF_this	aboutRPN:	#TSF_argvsthe	#TSF_echoN	echoCALC:	#TSF_this
+echoRPNcalc:
+	aboutRPNtest:	#TSF_this	aboutRPNcalc:	#TSF_argvsthe	#TSF_echoN	echoTIME:	#TSF_this
 aboutRPNtest:
 	▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→	1	3	m1|2	[2],[1]/[0]-	#TSF_join[]	#TSF_RPN	2	#TSF_joinN	#TSF_echo
 	▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→	1	,	3	/	m1|2	-	6	#TSF_joinN	#TSF_RPN	2	#TSF_joinN	#TSF_echo
-aboutRPN:
+	▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→	1	3	m1|2	[2]/[1]-[0]	#TSF_join[]	#TSF_calc	2	#TSF_joinN	#TSF_echo
+	▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→	1	/	3	-	m1|2	5	#TSF_joinN	#TSF_calc	2	#TSF_joinN	#TSF_echo
+	▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→	[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]	#TSF_calc	2	#TSF_joinN	#TSF_echo
+	▽漢数字テスト「億千万」を「#TSF_calcJA」→	億千万	#TSF_calcJA	2	#TSF_joinN	#TSF_echo
+aboutCALCdata:
+	1	3	m1|2
+aboutRPNcalc:
 	
-	○「RPN」系小数電卓の概要。
+	○「#TSF_RPN」逆ポーランド小数電卓の概要。
 	
-	　TSFでは機能を絞って高速処理をめざすRPNと多機能をめざすcalcの2種類の電卓を用意。RPN(逆ポーランド記法)では括弧を用いません。
+	　TSFでは高速処理を目指すRPNと多機能に備えるcalcの2種類の電卓を用意。
 	　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。
-	　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」を「1,m2-」と表記する。
+	　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」も「1,m2-」と表記する。
 	　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。
 	　通常の割り算の他にも1未満を切り捨てる「\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。
 	　計算結果が整数になる場合、および小数の丸めで整数になってしまった場合は整数表記になる。
 	　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。
 	　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。
 	　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。
-	　条件演算子は何に使うかというと「#TSF_this」の飛び先を変更するため「#TSF_peekthe」などと組み合わせます。
+	　条件演算子とスタック名(演算を行わない「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます。
 	
-echoCALC:
-	aboutCALCtest:	#TSF_this	aboutCALC:	#TSF_argvsthe	#TSF_echoN	echoTIME:	#TSF_this
-aboutCALCtest:
-	▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→	1	3	m1|2	[2]/[1]-[0]	#TSF_join[]	#TSF_calc	2	#TSF_joinN	#TSF_echo
-	▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→	1	/	3	-	m1|2	5	#TSF_joinN	#TSF_calc	2	#TSF_joinN	#TSF_echo
-	▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] #TSF_calc」→	[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]	#TSF_calc	2	#TSF_joinN	#TSF_echo
-aboutCALCdata:
-	1	3	m1|2
-aboutCALC:
+	○「#TSF_calc」系分数電卓の概要(RPNと共通する内容は圧縮)。
 	
-	○「calc」系分数電卓の概要(RPNと共通する内容は圧縮)。
-	
-	　calcは括弧と分数も使えます。RPN(小数)も混在できます。分数を用いる事で桁溢れや丸め誤差をなるだけ回避する事を目標とします。
+	　calcは括弧や分数なども使えます。RPN電卓も混在できます。分数を用いる事で桁溢れや丸め誤差をなるだけ回避する事を目標とします。
 	　calcではRPNとは事なり、括弧が無くても「小数の分数化＞掛け算系＞足し算系＞条件演算子」のような計算順序が存在します。
-	　calcではスタック名(演算を行わない「:」演算子)の可能性などを考慮して「n|0」が発生しても計算は続行されます。
-	　言い方を買えると、calcでは比較演算子(条件演算子)の式に直接スタック名を指定できるので「#TSF_peekNthe」などをショートカットできます。
-	　「#TSF_peekNthe」や「#TSF_join[]」などを別途用いる事無く「[data:2]/[data:1]-[data:0]」のようなショートカットもできます。
-	　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と演算子にチルダ追加。「N~」は「n|0」のチェック用途。
-	　億千万円銭など通貨的な助数詞を扱う「#TSF_calcJA」なども予定。
+	　calcでは式に直接スタック名を「[data:2]/[data:1]-[data:0]」できるので、「#TSF_peekNthe」「#TSF_join[]」をショートカットできます。
+	　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と条件演算子にチルダ追加。「N~」は「n|0」のチェック用途。
+	　「#TSF_-calc」を用いると計算結果の符号を「p」「m」から「-」のみに変更できる。
+	　「#TSF_calcJA」を用いると億千万円銭など通貨的な助数詞を扱う。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、1万分の1(‱)は「毛」表記。
 	
 echoTIME:
 	aboutTIMEtest:	#TSF_this	aboutTIME:	#TSF_argvsthe	#TSF_echoN
@@ -93,6 +88,6 @@ aboutTIME:
 	
 	○「time」系分数電卓も再開発中につき説明不足になります。
 	
-	　時刻取得の方法が文字列置換なので、改行やタブ文字なども置換。
-	　大抵の言語では乱数の生成がマシン時刻に依存してるはずなので時刻の取得と乱数の取得も一ヶ所に集める予定。
+	　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。
+	　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
 	
