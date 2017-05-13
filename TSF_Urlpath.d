@@ -6,6 +6,7 @@ import std.conv;
 import std.math;
 import std.bigint;
 import std.regex;
+import std.path;
 
 import TSF_Io;
 import TSF_Forth;
@@ -30,7 +31,7 @@ string TSF_Urlpath_fileext(){    //#TSFdoc:現在日時の取得。1枚[daytimef
 
 
 string TSF_Urlpath_fileext_api(string TSF_filepath){    //#TSFdoc:ファイルの拡張子を取得。(TSFAPI)
-    return TSF_filepath;
+    return extension(TSF_filepath);
 }
 
 
