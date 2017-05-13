@@ -28,18 +28,8 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
 #        "#TSF_replacesR":TSF_Match_replacesR, "#文字列群で規択置換":TSF_Match_replacesR,
 #        "#TSF_replacesH":TSF_Match_replacesH, "#文字列群で似択置換":TSF_Match_replacesH,
 #        "#TSF_replacesL":TSF_Match_replacesL, "#文字列群で札択置換":TSF_Match_replacesL,
-#        "#TSF_regexesF":TSF_Match_regexesF, "#正規表現の文字列群で表択置換":TSF_Match_regexesF,
-#        "#TSF_regexF":TSF_Match_regexF, "#正規表現の文字列で表択風置換":TSF_Match_regexF,
-#        "#TSF_regexesN":TSF_Match_regexesN, "#正規表現の文字列群で順択置換":TSF_Match_regexesN,
-#        "#TSF_regexesC":TSF_Match_regexesC, "#正規表現の文字列群で周択置換":TSF_Match_regexesC,
-#        "#TSF_regexesM":TSF_Match_regexesM, "#正規表現の文字列群で囲択置換":TSF_Match_regexesM,
-#        "#TSF_regexesV":TSF_Match_regexesV, "#正規表現の文字列群で逆択置換":TSF_Match_regexesV,
-#        "#TSF_regexesA":TSF_Match_regexesA, "#正規表現の文字列群で乱択置換":TSF_Match_regexesA,
-#        "#TSF_regexesQ":TSF_Match_regexesQ, "#正規表現の文字列群で同択置換":TSF_Match_regexesQ,
-#        "#TSF_regexesI":TSF_Match_regexesI, "#正規表現の文字列群で含択置換":TSF_Match_regexesI,
-#        "#TSF_regexesR":TSF_Match_regexesR, "#正規表現の文字列群で規択置換":TSF_Match_regexesR,
-#        "#TSF_regexesH":TSF_Match_regexesH, "#正規表現の文字列群で似択置換":TSF_Match_regexesH,
-#        "#TSF_regexesL":TSF_Match_regexesL, "#正規表現の文字列群で札択置換":TSF_Match_regexesL,
+#    TSF_words["#TSF_casestacks"]=TSF_match_casestacks; TSF_words["#スタックの該当箇所で置換"]=TSF_match_casestacks
+#        "#TSF_aliasesN":TSF_Match_aliasesN, "#文字列群で順択置換":TSF_Match_aliasesN,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -95,6 +85,20 @@ def TSF_Match_replacesM():    #TSFdoc:stackTをテキストとみなしてstackO
             TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)])
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
     return ""
+
+
+#def TSF_match_casestacks():   #TSF_doc:[matcher,algo,stackO,stackN]Oスタックに該当するmatcherがあった場合、stackNのエイリアスを呼び出す。algoは文字列の比較方法。
+#    TSF_tsvN=TSF_Forth_popthat()
+#    TSF_tsvO=TSF_Forth_popthat(); TSF_strsO=TSF_Forth_stackvalue(TSF_tsvO)
+#    TSF_algo=TSF_Forth_popthat()
+#    TSF_matcher=TSF_Forth_popthat()
+#    TSF_case=""
+#    for TSF_peek,TSF_strO in enumerate(TSF_strsO):
+#        if TSF_match_case.get(TSF_algo,TSF_match_case['equal'])(TSF_matcher,TSF_strO):
+#            TSF_case=TSF_Forth_peekthe(TSF_tsvN,TSF_peek)
+#            break
+#    TSF_Forth_pushthat(str(TSF_case))
+#    return None
 
 
 TSF_Initcalldebug=[TSF_Match_Initcards]

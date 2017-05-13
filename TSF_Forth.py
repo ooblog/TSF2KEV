@@ -98,6 +98,7 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#TSF_branch":TSF_Forth_branch, "#TSFのブランチ名":TSF_Forth_branch,
         "#TSF_grammar":TSF_Forth_grammar, "#TSFの文法管理番号":TSF_Forth_grammar,
         "#TSF_foolang":TSF_Forth_foolang, "#TSFの実装言語":TSF_Forth_foolang,
+        "#TSF_mainfile":TSF_Forth_mainfile, "#実行ファイル名":TSF_Forth_mainfile,
    }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -592,6 +593,10 @@ def TSF_Forth_foolang():    #TSFdoc:TSFの実装言語を確認する。0枚[]�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_foolangID())
     return ""
 
+def TSF_Forth_mainfile():    #TSFdoc:TSFの実装ファイルを確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_mainfilepath())
+    return ""
+
 
 TSF_mainandargvs=[]
 TSF_cardD={}
@@ -767,6 +772,13 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
 
 def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs
+
+TSF_mainfilepath=""
+def TSF_Forth_mainfilepath(TSF_mainfile=None):    #TSF_doc:実行ファイル名を設定・取得(TSFAPI)。
+    global TSF_mainfilepath
+    if TSF_mainfile != None:
+        TSF_mainfilepath=TSF_mainfile
+    return TSF_mainfilepath
 
 def TSF_Forth_stackD():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
     global TSF_stackD

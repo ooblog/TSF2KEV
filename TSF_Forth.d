@@ -108,6 +108,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_branch":&TSF_Forth_branch, "#TSFのブランチ名":&TSF_Forth_branch,
         "#TSF_grammar":&TSF_Forth_grammar, "#TSFの文法管理番号":&TSF_Forth_grammar,
         "#TSF_foolang":&TSF_Forth_foolang, "#TSFの実装言語":&TSF_Forth_foolang,
+        "#TSF_mainfile":&TSF_Forth_mainfile, "#実行ファイル名":&TSF_Forth_mainfile,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -749,6 +750,11 @@ string TSF_Forth_foolang(){    //#TSFdoc:TSFの実装言語を確認する。0�
     return "";
 }
 
+string TSF_Forth_mainfile(){    //#TSFdoc:TSFの実装ファイルを確認する。0枚[]ドローして1枚[lang]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_mainfilepath());
+    return "";
+}
+
 
 string[] TSF_mainandargvs=null;
 string function()[string] TSF_cardD=null;
@@ -973,6 +979,14 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
 
 string[] TSF_Forth_mainandargvs(){    //#TSFdoc:argvsの取得。(TSFAPI)
     return TSF_mainandargvs;
+}
+
+string TSF_mainfilepath="";
+string TSF_Forth_mainfilepath(...){    //#TSF_doc:実行ファイル名を設定・取得(TSFAPI)。
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_mainfilepath=va_arg!(string)(_argptr);
+    }
+    return TSF_mainfilepath;
 }
 
 string[] [string] TSF_Forth_stackD(){    //#TSFdoc:TSF_stackDの取得。(TSFAPI)

@@ -211,7 +211,8 @@ TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):
     TSF_Forth_merge(TSF_bootcommand,[],True)
-    os.chdir(os.path.dirname(os.path.normpath(TSF_bootcommand)))
+    os.chdir(os.path.dirname(os.path.abspath(TSF_bootcommand)))
+    TSF_Forth_mainfilepath(os.path.abspath(TSF_bootcommand))
     TSF_Forth_samplerun()
 elif TSF_bootcommand in ["--py","--python","--Python"]:
     if len(TSF_sysargvs) >= 4:
