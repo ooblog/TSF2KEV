@@ -171,6 +171,8 @@ def TSF_Io_separatepushL(TSF_separate,TSF_label,TSF_push):    #TSFdoc:リスト�
         TSF_joined=TSF_separate
     return TSF_joined
 
+#"0123456789abcdef.pm$|":
+#M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算も「n|0」とテキストで返す。(TSFAPI)
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
@@ -186,7 +188,6 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                 if "|" in TSF_RPNnum:
                     try:
                         TSF_RPNcalcND=TSF_RPNnum.split("|")
-#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
                         TSF_RPNcalcN=float(int(TSF_RPNcalcND[0].replace("$",""),16)) if "$" in TSF_RPNcalcND[0] else float(TSF_RPNcalcND[0])
                         TSF_RPNcalcD=float(int(TSF_RPNcalcND[-1].replace("$",""),16)) if "$" in TSF_RPNcalcND[-1] else float(TSF_RPNcalcND[-1])
                     except ValueError:
@@ -194,30 +195,10 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                         break;
                 else:
                     try:
-#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
                         TSF_RPNcalcN,TSF_RPNcalcD=float(int(TSF_RPNnum.replace("$",""),16)) if "$" in TSF_RPNnum else float(TSF_RPNnum),1.0
                     except ValueError:
                         TSF_RPNanswer="n|0"
                         break;
-#                if "$" in TSF_RPNnum:
-#                    try:
-#                        TSF_RPNcalcN,TSF_RPNcalcD=int(TSF_RPNnum.replace("$",""),16),1.0
-#                    except ValueError:
-#                        TSF_RPNanswer="n|0"
-#                        break;
-#                elif "|" in TSF_RPNnum:
-#                    try:
-#                        TSF_RPNcalcND=TSF_RPNnum.split("|")
-#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
-#                    except ValueError:
-#                        TSF_RPNanswer="n|0"
-#                        break;
-#                else:
-#                    try:
-#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
-#                    except ValueError:
-#                        TSF_RPNanswer="n|0"
-#                        break;
                 if TSF_RPNminus%2:
                     TSF_RPNcalcN=-TSF_RPNcalcN
                 try:

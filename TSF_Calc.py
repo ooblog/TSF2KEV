@@ -26,12 +26,12 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_Calc_opeorder=["恒河沙","阿僧祇","那由他","不可思議","無量大数","無限",
         "模糊","逡巡","須臾","瞬息","弾指","刹那","六徳","虚空","清浄","阿頼耶","阿摩羅","涅槃寂静",
         "円周率","2π","円周","ネイピア数","ルート","プラス","マイナス","絶対値",
-        "足す","引く","掛ける","割る",
+        "足す","引く","掛ける","割る","分の",
     ]
     TSF_Calc_opeword={"恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",
         "模糊":"模","逡巡":"逡","須臾":"須","瞬息":"瞬","弾指":"弾","刹那":"刹","六徳":"徳","虚空":"空","清浄":"清","阿頼耶":"耶","阿摩羅":"摩","涅槃寂静":"涅",
         "円周率":"π","2π":"θ","円周":"θ","ネイピア数":"ｅ","ルート":"√","プラス":"+","マイナス":"-","絶対値":"!",
-        "足す":"足","引く":"引","掛ける":"掛","割る":"割",
+        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":"_",
     }
     TSF_Calc_opechar={"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0",
         "一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","〇":"0",
@@ -222,6 +222,7 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
         TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
     return TSF_calcF,TSF_calcL,TSF_calcR
 
+#"0123456789abcdef.pm$|":
 #M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
@@ -347,6 +348,10 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
 
 def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
+    if "_" in TSF_calcA:
+        TSF_calcND=TSF_calcA.split("_")
+        TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1]
+        TSF_calcA="|".join([TSF_calcDstr,TSF_calcNstr])
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])
     TSF_calcM=TSF_calcA.count("m")+TSF_calcA.count("-") if not "!" in TSF_calcA else 0
     TSF_calcA=TSF_calcA.replace("p","").replace("m","").replace("-","").replace("!","")
@@ -433,7 +438,9 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "m1Z~[calcpeekdata:0]~[calcpeekdata:1]","0Z~[calcpeekdata:0]~[calcpeekdata:1]","p1Z~[calcpeekdata:0]~[calcpeekdata:1]",
         "m1Z~[calcjumpdata:0]~[calcjumpdata:1]","0Z~[calcjumpdata:0]~[calcjumpdata:1]","p1Z~[calcjumpdata:0]~[calcjumpdata:1]",
         "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
-        "0|1N~True:~False:","n|0N~True:~False:"]),"N")
+        "0|1N~True:~False:","n|0N~True:~False:",
+        "2/3","2|3","2_3","3/2","3|2","3_2",
+        ]),"N")
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

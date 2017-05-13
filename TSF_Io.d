@@ -241,8 +241,6 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                 if( count(TSF_RPNnum,'|') ){
                     try{
                         TSF_RPNcalcND=TSF_RPNnum.split("|");
-//                        TSF_RPNcalcN=to!real(TSF_RPNcalcND[0]);
-//                        TSF_RPNcalcD=to!real(TSF_RPNcalcND[$-1]);
                         TSF_RPNcalcN=count(TSF_RPNcalcND[0],'$')?to!real(to!long(TSF_RPNcalcND[0].replace("$",""),16)):to!real(TSF_RPNcalcND[0]);
                         TSF_RPNcalcD=count(TSF_RPNcalcND[$-1],'$')?to!real(to!long(TSF_RPNcalcND[$-1].replace("$",""),16)):to!real(TSF_RPNcalcND[$-1]);
                     }
@@ -253,7 +251,6 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                 }
                 else{
                     try{
-//                        TSF_RPNcalcN=to!real(TSF_RPNnum);  TSF_RPNcalcD=1.0;
                         TSF_RPNcalcN=count(TSF_RPNnum,'$')?to!real(to!long(TSF_RPNnum.replace("$",""),16)):to!real(TSF_RPNnum);  TSF_RPNcalcD=1.0;
                     }
                     catch(ConvException e){
@@ -261,34 +258,6 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                         break;
                     }
                 }
-//                if( count(TSF_RPNnum,'$') ){
-//                    try{
-//                        TSF_RPNcalcN=to!long(TSF_RPNnum.replace("$",""),16);  TSF_RPNcalcD=1.0;
-//                    }
-//                    catch(ConvException e){
-//                        TSF_RPNanswer="n|0";
-//                        break;
-//                    }
-//                }
-//                else if( count(TSF_RPNnum,'|') ){
-//                    try{
-//                        TSF_RPNcalcND=TSF_RPNnum.split("|");
-//                        TSF_RPNcalcN=to!real(TSF_RPNcalcND[0]);  TSF_RPNcalcD=to!real(TSF_RPNcalcND[1]);
-//                    }
-//                    catch(ConvException e){
-//                        TSF_RPNanswer="n|0";
-//                        break;
-//                    }
-//                }
-//                else{
-//                    try{
-//                        TSF_RPNcalcN=to!real(TSF_RPNnum);  TSF_RPNcalcD=1.0;
-//                    }
-//                    catch(ConvException e){
-//                        TSF_RPNanswer="n|0";
-//                        break;
-//                    }
-//                }
                 if( TSF_RPNminus%2 ){
                     TSF_RPNcalcN=-TSF_RPNcalcN;
                 }
@@ -518,7 +487,7 @@ void TSF_Io_debug(string[] TSF_argvs){
 
 
 unittest {
-    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
+//    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 

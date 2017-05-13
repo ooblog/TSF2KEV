@@ -68,6 +68,12 @@ calcsample:
 	p1Z~True:~False:
 	0|1N~True:~False:
 	n|0N~True:~False:
+	2/3
+	2|3
+	2_3
+	3/2
+	3|2
+	3_2
 -- TSF_Calc.d run --
 「0|0」→「n|0」
 「0|0,」→「n|0」
@@ -124,6 +130,12 @@ calcsample:
 「p1Z~True:~False:」→「False:」
 「0|1N~True:~False:」→「False:」
 「n|0N~True:~False:」→「True:」
+「2/3」→「p2|3」
+「2|3」→「p2|3」
+「2_3」→「p3|2」
+「3/2」→「p3|2」
+「3|2」→「p3|2」
+「3_2」→「p2|3」
 -- TSF_Calc.d viewthey --
 TSF_Tab-Separated-Forth:
 	calccount:	#TSF_this	#TSF_fin.

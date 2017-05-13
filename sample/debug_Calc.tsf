@@ -26,3 +26,4 @@ calcsample:
 	m1Z~[calcjumpdata:0]~[calcjumpdata:1]	0Z~[calcjumpdata:0]~[calcjumpdata:1]	p1Z~[calcjumpdata:0]~[calcjumpdata:1]
 	m1Z~True:~False:	0Z~True:~False:	p1Z~True:~False:
 	0|1N~True:~False:	n|0N~True:~False:
+	2/3	2|3	2_3	3/2	3|2	3_2
