@@ -22,10 +22,17 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
-    global TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic,TSF_Calc_okusenyen,TSF_Calc_rinmouyen
+    global TSF_Calc_opeorder,TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic,TSF_Calc_okusenyen,TSF_Calc_rinmouyen
+    TSF_Calc_opeorder=["恒河沙","阿僧祇","那由他","不可思議","無量大数","無限",
+        "模糊","逡巡","須臾","瞬息","弾指","刹那","六徳","虚空","清浄","阿頼耶","阿摩羅","涅槃寂静",
+        "円周率","2π","円周","ネイピア数","ルート","プラス","マイナス","絶対値",
+        "足す","引く","掛ける","割る",
+    ]
     TSF_Calc_opeword={"恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",
         "模糊":"模","逡巡":"逡","須臾":"須","瞬息":"瞬","弾指":"弾","刹那":"刹","六徳":"徳","虚空":"空","清浄":"清","阿頼耶":"耶","阿摩羅":"摩","涅槃寂静":"涅",
-        "円周率":"π","2π":"θ","２π":"θ","ネイピア数":"ｅ","プラス":"","マイナス":"-","絶対値":"!"}
+        "円周率":"π","2π":"θ","円周":"θ","ネイピア数":"ｅ","ルート":"√","プラス":"+","マイナス":"-","絶対値":"!",
+        "足す":"足","引く":"引","掛ける":"掛","割る":"割",
+    }
     TSF_Calc_opechar={"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0",
         "一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","〇":"0",
         "壱":"1","弐":"2","参":"3","肆":"4","伍":"5","陸":"6","漆":"7","捌":"8","玖":"9","零":"0",
@@ -88,7 +95,6 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
             TSF_calcNstr=TSF_calcNstr.replace("円","")
             TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,True)
-#            TSF_calcDstr=TSF_calcDstr.replace("割","").replace("円0","円")
             TSF_calcDstr=TSF_calcDstr.replace("割","")
             TSF_calcA="".join([TSF_calcNstr,TSF_calcDstr])
             if TSF_calcA.startswith('円'): TSF_calcA=TSF_calcA.replace("円","")
@@ -115,8 +121,10 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
 def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if not re.search(re.compile("^[\x20-\x7E]+$"),TSF_calcA):
-        for TSF_opewordK,TSF_opewordV in TSF_Calc_opeword.items():
-            TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_opewordV)
+#        for TSF_opewordK,TSF_opewordV in TSF_Calc_opeword.items():
+#            TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_opewordV)
+        for TSF_opewordK in TSF_Calc_opeorder:
+            TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_Calc_opeword[TSF_opewordK])
         for TSF_opecharK,TSF_opecharV in TSF_Calc_opechar.items():
             TSF_calcA=TSF_calcA.replace(TSF_opecharK,TSF_opecharV)
         TSF_calcA=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/(100)",TSF_calcA)
@@ -124,7 +132,6 @@ def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数
             TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
         for TSF_rinmouK,TSF_rinmouV in TSF_Calc_rinmoudic.items():
             TSF_calcA=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
-#            print("",TSF_rinmouK,TSF_calcA)
         TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"+\\1*(1000)",TSF_calcA)
         TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"+\\1*(100)",TSF_calcA)
         TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"+\\1*(10)",TSF_calcA)
@@ -170,6 +177,7 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:
         TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
     return TSF_calcA
 
+TSF_Calc_opeorder=[]
 TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic={},{},{},{}
 TSF_Calc_okusenyen,TSF_Calc_rinmouyen="",""
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
