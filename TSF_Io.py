@@ -178,30 +178,46 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNseq="".join([TSF_RPN,"  "])
     if( TSF_RPN[0:2] in ["U+","0x"]): TSF_RPNseq="".join(["$",TSF_RPNseq[2:]])
     for TSF_RPNope in TSF_RPNseq:
-        if TSF_RPNope in "0123456789.pm$|":
+        if TSF_RPNope in "0123456789abcdef.pm$|":
             TSF_RPNnum+=TSF_RPNope
         else:
             if len(TSF_RPNnum) > 0:
                 TSF_RPNminus=TSF_RPNnum.count('m');  TSF_RPNnum=TSF_RPNnum.replace("p","").replace("m","")
-                if "$" in TSF_RPNnum:
-                    try:
-                        TSF_RPNcalcN,TSF_RPNcalcD=int(TSF_RPNnum.replace("$",""),16),1.0
-                    except ValueError:
-                        TSF_RPNanswer="n|0"
-                        break;
-                elif "|" in TSF_RPNnum:
+                if "|" in TSF_RPNnum:
                     try:
                         TSF_RPNcalcND=TSF_RPNnum.split("|")
-                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
+#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
+                        TSF_RPNcalcN=float(int(TSF_RPNcalcND[0].replace("$",""),16)) if "$" in TSF_RPNcalcND[0] else float(TSF_RPNcalcND[0])
+                        TSF_RPNcalcD=float(int(TSF_RPNcalcND[-1].replace("$",""),16)) if "$" in TSF_RPNcalcND[-1] else float(TSF_RPNcalcND[-1])
                     except ValueError:
                         TSF_RPNanswer="n|0"
                         break;
                 else:
                     try:
-                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
+#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
+                        TSF_RPNcalcN,TSF_RPNcalcD=float(int(TSF_RPNnum.replace("$",""),16)) if "$" in TSF_RPNnum else float(TSF_RPNnum),1.0
                     except ValueError:
                         TSF_RPNanswer="n|0"
                         break;
+#                if "$" in TSF_RPNnum:
+#                    try:
+#                        TSF_RPNcalcN,TSF_RPNcalcD=int(TSF_RPNnum.replace("$",""),16),1.0
+#                    except ValueError:
+#                        TSF_RPNanswer="n|0"
+#                        break;
+#                elif "|" in TSF_RPNnum:
+#                    try:
+#                        TSF_RPNcalcND=TSF_RPNnum.split("|")
+#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNcalcND[0]),float(TSF_RPNcalcND[-1])
+#                    except ValueError:
+#                        TSF_RPNanswer="n|0"
+#                        break;
+#                else:
+#                    try:
+#                        TSF_RPNcalcN,TSF_RPNcalcD=float(TSF_RPNnum),1.0
+#                    except ValueError:
+#                        TSF_RPNanswer="n|0"
+#                        break;
                 if TSF_RPNminus%2:
                     TSF_RPNcalcN=-TSF_RPNcalcN
                 try:
@@ -349,7 +365,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("\t{0}".format(TSF_Io_splitpushL(TSF_debug_PPPP,'\t',"cards:","pushed")),TSF_debug_log)
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_log=TSF_debug_log)
     for debug_rpn in [
-        "0","0.0","U+p128","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
+        "0","0.0","U+p128","$ffff","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u"
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
