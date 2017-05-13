@@ -146,9 +146,6 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
 string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
     if( count(match(TSF_calcA,"^[\x20-\x7E]+$"))==0 ){
-//        foreach(string TSF_opewordK,string TSF_opewordV;TSF_Calc_opeword){
-//            TSF_calcA=replace(TSF_calcA,TSF_opewordK,TSF_opewordV);
-//        }
         foreach(string TSF_opewordK;TSF_Calc_opeorder){
             TSF_calcA=replace(TSF_calcA,TSF_opewordK,TSF_Calc_opeword[TSF_opewordK]);
         }
@@ -458,9 +455,7 @@ string TSF_Calc_fractalize(string TSF_calcQ){    //#TSF_doc:分数電卓なの�
     TSF_calcA=count(TSF_calcA,"|")?TSF_calcA:TSF_calcA~"|1";
     long TSF_calcM=TSF_calcA.count("!")==0?TSF_calcA.count("m")+TSF_calcA.count("-"):0;
     TSF_calcA=TSF_calcA.replace("p","").replace("m","").replace("-","").replace("!","");
-//    string[] TSF_calcND=TSF_calcA.split("|");
     TSF_calcND=TSF_calcA.split("|");
-//    string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
     TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr=TSF_calcND[$-1];
     TSF_calcNstr=count(TSF_calcNstr,".")?TSF_calcNstr:TSF_calcNstr~".";
     TSF_calcDstr=count(TSF_calcDstr,".")?TSF_calcDstr:TSF_calcDstr~".";

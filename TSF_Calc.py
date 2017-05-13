@@ -121,8 +121,6 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
 def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if not re.search(re.compile("^[\x20-\x7E]+$"),TSF_calcA):
-#        for TSF_opewordK,TSF_opewordV in TSF_Calc_opeword.items():
-#            TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_opewordV)
         for TSF_opewordK in TSF_Calc_opeorder:
             TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_Calc_opeword[TSF_opewordK])
         for TSF_opecharK,TSF_opecharV in TSF_Calc_opechar.items():
