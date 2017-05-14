@@ -11,48 +11,67 @@ from TSF_Forth import *
 def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Match")
     TSF_Forth_cards={
-        "#TSF_replace":TSF_Match_replace, "#文字列を置換":TSF_Match_replace,
-        "#TSF_resub":TSF_Match_resub, "#文字列を正規表現で置換":TSF_Match_resub,
-#        "#TSF_regex":TSF_Match_regex "#文字列を正規表現で置換":TSF_Match_regex,
-#        "#TSF_count":TSF_Match_count, "#文字列を計数":TSF_Match_count,
-#        "#TSF_regcount":TSF_Match_regcount, "#文字列を正規表現で計数":TSF_Match_regcount,
+#        "#TSF_replace":TSF_Match_replace, "#文字列を置換":TSF_Match_replace,
+#        "#TSF_regex":TSF_Match_regex, "#文字列を正規表現で置換":TSF_Match_regex,
 #        "#TSF_replacesF":TSF_Match_replacesF, "#文字列群で表択置換":TSF_Match_replacesF,
-#        "#TSF_replaceF":TSF_Match_replaceF, "#文字列で表択風置換":TSF_Match_replaceF,
-        "#TSF_replacesN":TSF_Match_replacesN, "#文字列群で順択置換":TSF_Match_replacesN,
-        "#TSF_replacesC":TSF_Match_replacesC, "#文字列群で周択置換":TSF_Match_replacesC,
-        "#TSF_replacesM":TSF_Match_replacesM, "#文字列群で囲択置換":TSF_Match_replacesM,
-#        "#TSF_replacesV":TSF_Match_replacesV, "#文字列群で逆択置換":TSF_Match_replacesV,
-#        "#TSF_replacesA":TSF_Match_replacesA, "#文字列群で乱択置換":TSF_Match_replacesA,
-#        "#TSF_replacesQ":TSF_Match_replacesQ, "#文字列群で同択置換":TSF_Match_replacesQ,
-#        "#TSF_replacesI":TSF_Match_replacesI, "#文字列群で含択置換":TSF_Match_replacesI,
-#        "#TSF_replacesR":TSF_Match_replacesR, "#文字列群で規択置換":TSF_Match_replacesR,
-#        "#TSF_replacesH":TSF_Match_replacesH, "#文字列群で似択置換":TSF_Match_replacesH,
-#        "#TSF_replacesL":TSF_Match_replacesL, "#文字列群で札択置換":TSF_Match_replacesL,
-#    TSF_words["#TSF_casestacks"]=TSF_match_casestacks; TSF_words["#スタックの該当箇所で置換"]=TSF_match_casestacks
-#        "#TSF_aliasesN":TSF_Match_aliasesN, "#文字列群で順択置換":TSF_Match_aliasesN,
+        "#TSF_replacesQN":TSF_Match_replacesQN, "#同択文字列群で順択置換":TSF_Match_replacesQN,
+        "#TSF_replacesQC":TSF_Match_replacesQC, "#同択文字列群で周択置換":TSF_Match_replacesQC,
+        "#TSF_replacesQM":TSF_Match_replacesQM, "#同択文字列群で囲択置換":TSF_Match_replacesQM,
+#        "#TSF_replacesQV":TSF_Match_replacesQV, "#同択文字列群で逆択置換":TSF_Match_replacesQV,
+#        "#TSF_replacesQA":TSF_Match_replacesQA, "#同択文字列群で乱択置換":TSF_Match_replacesQA,
+        "#TSF_replacesQT":TSF_Match_replacesQT, "#同択文字列群で額択置換":TSF_Match_replacesQT,
+#        "#TSF_replacesIN":TSF_Match_replacesIN, "#含択文字列群で順択置換":TSF_Match_replacesIN,
+#        "#TSF_replacesIC":TSF_Match_replacesIC, "#含択文字列群で周択置換":TSF_Match_replacesIC,
+#        "#TSF_replacesIM":TSF_Match_replacesIM, "#含択文字列群で囲択置換":TSF_Match_replacesIM,
+#        "#TSF_replacesIV":TSF_Match_replacesIV, "#含択文字列群で逆択置換":TSF_Match_replacesIV,
+#        "#TSF_replacesIA":TSF_Match_replacesIA, "#含択文字列群で乱択置換":TSF_Match_replacesIA,
+#        "#TSF_replacesIT":TSF_Match_replacesIT, "#含択文字列群で額択置換":TSF_Match_replacesIT,
+#        "#TSF_replacesRN":TSF_Match_replacesRN, "#規択文字列群で順択置換":TSF_Match_replacesRN,
+#        "#TSF_replacesRC":TSF_Match_replacesRC, "#規択文字列群で周択置換":TSF_Match_replacesRC,
+#        "#TSF_replacesRM":TSF_Match_replacesRM, "#規択文字列群で囲択置換":TSF_Match_replacesRM,
+#        "#TSF_replacesRV":TSF_Match_replacesRV, "#規択文字列群で逆択置換":TSF_Match_replacesRV,
+#        "#TSF_replacesRA":TSF_Match_replacesRA, "#規択文字列群で乱択置換":TSF_Match_replacesRA,
+        "#TSF_replacesRT":TSF_Match_replacesRT, "#含択文字列群で額択置換":TSF_Match_replacesRT,
+#        "#TSF_replacesHN":TSF_Match_replacesHN, "#似択文字列群で順択置換":TSF_Match_replacesHN,
+#        "#TSF_replacesHC":TSF_Match_replacesHC, "#似択文字列群で周択置換":TSF_Match_replacesHC,
+#        "#TSF_replacesHM":TSF_Match_replacesHM, "#似択文字列群で囲択置換":TSF_Match_replacesHM,
+#        "#TSF_replacesHV":TSF_Match_replacesHV, "#似択文字列群で逆択置換":TSF_Match_replacesHV,
+#        "#TSF_replacesHA":TSF_Match_replacesHA, "#似択文字列群で乱択置換":TSF_Match_replacesHA,
+#        "#TSF_replacesHT":TSF_Match_replacesHT, "#似択文字列群で額択置換":TSF_Match_replacesHT,
+        "#TSF_aliasQN":TSF_Match_aliasQN, "#同択カードを順択置換":TSF_Match_aliasQN,
+#        "#TSF_aliasesQC":TSF_Match_aliasesQC, "#文字列群で順択置換":TSF_Match_aliasesQC,
+#        "#TSF_aliasesQM":TSF_Match_aliasesQM, "#文字列群で順択置換":TSF_Match_aliasesQM,
+#        "#TSF_aliasesQV":TSF_Match_aliasesQV, "#文字列群で順択置換":TSF_Match_aliasesQV,
+#        "#TSF_aliasesQA":TSF_Match_aliasesQA, "#文字列群で順択置換":TSF_Match_aliasesQA,
+#        "#TSF_countsQ":TSF_Match_countsQ, "#文字列群で同択計数":TSF_Match_countsQ,
+#        "#TSF_countsI":TSF_Match_countsI, "#文字列群で含択計数":TSF_Match_countsI,
+#        "#TSF_countsL":TSF_Match_countsL, "#文字列群で規択計数":TSF_Match_countsL,
+#        "#TSF_countsH":TSF_Match_countsH, "#文字列群で似択計数":TSF_Match_countsH,
+#        "#TSF_countsL":TSF_Match_countsL, "#文字列群で札択計数":TSF_Match_countsL,
     }
+#   N,C,M,V,A,T*Q,I,R,H,L
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-def TSF_Match_replace():    #TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-    TSF_theN=TSF_Forth_drawthe()
-    TSF_theO=TSF_Forth_drawthe()
-    TSF_theT=TSF_Forth_drawthe()
-    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-    return ""
+#def TSF_Match_replace():    #TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+#    TSF_theN=TSF_Forth_drawthe()
+#    TSF_theO=TSF_Forth_drawthe()
+#    TSF_theT=TSF_Forth_drawthe()
+#    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN)
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
+#    return ""
 
-def TSF_Match_resub():    #TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-    TSF_theN=TSF_Forth_drawthe()
-    TSF_theO=TSF_Forth_drawthe()
-    TSF_theT=TSF_Forth_drawthe()
-    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-    return ""
+#def TSF_Match_regex():    #TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+#    TSF_theN=TSF_Forth_drawthe()
+#    TSF_theO=TSF_Forth_drawthe()
+#    TSF_theT=TSF_Forth_drawthe()
+#    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
+#    return ""
 
-def TSF_Match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+def TSF_Match_replacesQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     TSF_theT=TSF_Forth_drawthe()
@@ -64,7 +83,7 @@ def TSF_Match_replacesN():    #TSFdoc:stackTをテキストとみなしてstackO
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
     return ""
 
-def TSF_Match_replacesC():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
+def TSF_Match_replacesQC():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     TSF_theT=TSF_Forth_drawthe()
@@ -75,7 +94,7 @@ def TSF_Match_replacesC():    #TSFdoc:stackTをテキストとみなしてstackO
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
     return ""
 
-def TSF_Match_replacesM():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
+def TSF_Match_replacesQM():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     TSF_theT=TSF_Forth_drawthe()
@@ -86,7 +105,26 @@ def TSF_Match_replacesM():    #TSFdoc:stackTをテキストとみなしてstackO
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
     return ""
 
+def TSF_Match_replacesQT():    #TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
+    TSF_theN=TSF_Forth_drawthe()
+    TSF_theO=TSF_Forth_drawthe()
+    TSF_theT=TSF_Forth_drawthe()
+    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN)
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
+    return ""
 
+def TSF_Match_replacesRT():    #TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
+    TSF_theN=TSF_Forth_drawthe()
+    TSF_theO=TSF_Forth_drawthe()
+    TSF_theT=TSF_Forth_drawthe()
+    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
+    return ""
+
+def TSF_Match_aliasQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。2枚[stackO,stackN]ドロー。1枚リターン[cardN]。
+    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
+    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
+#        "#TSF_countsN":TSF_Match_countsN, "#文字列群で順択置換":TSF_Match_countsN,
 #def TSF_match_casestacks():   #TSF_doc:[matcher,algo,stackO,stackN]Oスタックに該当するmatcherがあった場合、stackNのエイリアスを呼び出す。algoは文字列の比較方法。
 #    TSF_tsvN=TSF_Forth_popthat()
 #    TSF_tsvO=TSF_Forth_popthat(); TSF_strsO=TSF_Forth_stackvalue(TSF_tsvO)

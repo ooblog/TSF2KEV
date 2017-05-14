@@ -76,7 +76,7 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "",
         "　※ドローは「pullFthat」、リターンは「pushFthat」、してるとも言える。",
         "",
-        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」を用意する予定。※「F」「N」「M」以外の副詞は準備中です。",
+        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」などを用意する予定。文字列置換関連でも同様の名前を用いる場合あり。",
         "",
         "　「F」(Front)スタックから表択、一番上に積まれたカード(tsv表現では末尾の文字列)を選択。",
         "　「N」(Number)スタックから順択、一番下のカード(tsv表現では右端の文字列)をゼロとして数値指定で選択。",
@@ -89,6 +89,9 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　「R」(reseaRch)スタックから規択、正規表現に該当するカードを選択。カードの枚数は動詞による。TSFを実装する言語毎に正規表現の方言が存在する問題。",
         "　「H」(matcHer)スタックから似択、文字列の一致度が一定数以上のカードを選択。Python以外の言語で一致度の基準が未定義。",
         "　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。",
+        "　「T」(Text)スタックではなくカードから額択、「alias」「replaces」「count」関連でスタック経由ではなく直接カードを指定する場合用途。",
+        "",
+        "　※「peek」「poke」「pull」「push」関連では副詞は重複しませんが、「alias」「replaces」「count」関連では二重副詞(副詞の組み合わせ)が発生します。",
         ""]),"N")
     TSF_Forth_setTSF("echoRPNcalc:","\t".join([
         "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"]),"T")
@@ -186,7 +189,7 @@ def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
     TSF_Forth_setTSF("bottlessetup:","\t".join([
         "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"]),"T")
     TSF_Forth_setTSF("callbottles:","\t".join([
-        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),"T")
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),"T")
     TSF_Forth_setTSF("onthewallstr:","\t".join([
         "{buybottles}","{drink}","{drinked}"]),"T")
     TSF_Forth_setTSF("bottlescall:","\t".join([

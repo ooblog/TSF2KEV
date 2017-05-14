@@ -4,7 +4,7 @@ TSF_Tab-Separated-Forth:
 bottlessetup:
 	onthewallint:	#TSF_pushFthe	onthewallint:	#TSF_that	#TSF_peekFthat	#TSF_peekFthat	callbottles:	#TSF_this
 callbottles:
-	#TSF_swapBA	#TSF_pullFthat	#TSF_peekFthat	[0],1-	#TSF_join[]	#TSF_-calc	N-bottles:	bottlescall:	[onthewallint:1]	#TSF_calc	#TSF_peekMthe	#TSF_clonethe	N-bottles:	onthewallstr:	onthewallint:	#TSF_replacesN	N-bottles:	#TSF_argvsthe	#TSF_echoN	[onthewallint:1]o~callbottles:~#exit:	#TSF_calc	#TSF_this
+	#TSF_swapBA	#TSF_pullFthat	#TSF_peekFthat	[0],1-	#TSF_join[]	#TSF_-calc	N-bottles:	bottlescall:	[onthewallint:1]	#TSF_calc	#TSF_peekMthe	#TSF_clonethe	N-bottles:	onthewallstr:	onthewallint:	#TSF_replacesQN	N-bottles:	#TSF_argvsthe	#TSF_echoN	[onthewallint:1]o~callbottles:~#exit:	#TSF_calc	#TSF_this
 onthewallstr:
 	{buybottles}	{drink}	{drinked}
 bottlescall:

@@ -14,13 +14,14 @@ import TSF_Forth;
 void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_replace":&TSF_Match_replace, "#文字列を置換":&TSF_Match_replace,
-        "#TSF_resub":&TSF_Match_resub, "#文字列を正規表現で置換":&TSF_Match_resub,
-        "#TSF_replacesN":&TSF_Match_replacesN, "#文字列群で順択置換":&TSF_Match_replacesN,
-        "#TSF_replacesC":&TSF_Match_replacesC, "#文字列群で周択置換":&TSF_Match_replacesC,
-        "#TSF_replacesM":&TSF_Match_replacesM, "#文字列群で囲択置換":&TSF_Match_replacesM,
-//        "#TSF_replacesstacks":&TSF_Match_resubN, "#正規表現群で置換":&TSF_Match_resubN,
-//        "#TSF_replacethey":&TSF_Match_replacethey, "#スタック置換":&TSF_Match_replacethey,
+//        "#TSF_replace":&TSF_Match_replace, "#文字列を置換":&TSF_Match_replace,
+//        "#TSF_regex":&TSF_Match_regex, "#文字列を正規表現で置換":&TSF_Match_regex,
+        "#TSF_replacesQN":&TSF_Match_replacesQN, "#文字列群で順択置換":&TSF_Match_replacesQN,
+        "#TSF_replacesQC":&TSF_Match_replacesQC, "#文字列群で周択置換":&TSF_Match_replacesQC,
+        "#TSF_replacesQM":&TSF_Match_replacesQM, "#文字列群で囲択置換":&TSF_Match_replacesQM,
+        "#TSF_replacesQT":&TSF_Match_replacesQT, "#同択文字列群で額択置換":&TSF_Match_replacesQT,
+        "#TSF_replacesRT":&TSF_Match_replacesRT, "#含択文字列群で額択置換":&TSF_Match_replacesRT,
+//        "#TSF_aliasQN":TSF_Match_aliasQN, "#同択カードを順択置換":TSF_Match_aliasQN,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -29,26 +30,26 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_Match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-    string TSF_theN=TSF_Forth_drawthe();
-    string TSF_theO=TSF_Forth_drawthe();
-    string TSF_theT=TSF_Forth_drawthe();
-    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
-    return "";
-}
+//string TSF_Match_replace(){    //#TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+//    string TSF_theN=TSF_Forth_drawthe();
+//    string TSF_theO=TSF_Forth_drawthe();
+//    string TSF_theT=TSF_Forth_drawthe();
+//    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
+//    return "";
+//}
 
-string TSF_Match_resub(){    //#TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-    string TSF_theN=TSF_Forth_drawthe();
-    string TSF_theO=TSF_Forth_drawthe();
-    string TSF_theT=TSF_Forth_drawthe();
-    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
-    TSF_theT=replaceAll(TSF_theT,regex(TSF_theO),TSF_theN);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
-    return "";
-}
+//string TSF_Match_regex(){    //#TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
+//    string TSF_theN=TSF_Forth_drawthe();
+//    string TSF_theO=TSF_Forth_drawthe();
+//    string TSF_theT=TSF_Forth_drawthe();
+//    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+//    TSF_theT=replaceAll(TSF_theT,regex(TSF_theO),TSF_theN);
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
+//    return "";
+//}
 
-string TSF_Match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesQN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
@@ -65,7 +66,7 @@ string TSF_Match_replacesN(){    //#TSFdoc:stackTをテキストとみなしてs
     return "";
 }
 
-string TSF_Match_replacesC(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesQC(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
@@ -80,7 +81,7 @@ string TSF_Match_replacesC(){    //#TSFdoc:stackTをテキストとみなしてs
     return "";
 }
 
-string TSF_Match_replacesM(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
+string TSF_Match_replacesQM(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
     string TSF_theN=TSF_Forth_drawthe();  string[] TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  size_t TSF_cardsN_len=TSF_cardsN.length;
     string TSF_theO=TSF_Forth_drawthe();  string[] TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
     string TSF_theT=TSF_Forth_drawthe();
@@ -92,6 +93,25 @@ string TSF_Match_replacesM(){    //#TSFdoc:stackTをテキストとみなしてs
         }
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N");
     }
+    return "";
+}
+
+string TSF_Match_replacesQT(){    //#TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
+    string TSF_theN=TSF_Forth_drawthe();
+    string TSF_theO=TSF_Forth_drawthe();
+    string TSF_theT=TSF_Forth_drawthe();
+    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
+    return "";
+}
+
+string TSF_Match_replacesRT(){    //#TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
+    string TSF_theN=TSF_Forth_drawthe();
+    string TSF_theO=TSF_Forth_drawthe();
+    string TSF_theT=TSF_Forth_drawthe();
+    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN);
+    TSF_theT=replaceAll(TSF_theT,regex(TSF_theO),TSF_theN);
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT);
     return "";
 }
 
