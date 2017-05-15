@@ -19,7 +19,19 @@ TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
 TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[0]));
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "Hello world","#TSF_echo"],"\t"),"T");
+        "quine_echo:","#TSF_this","#TSF_fin.","sample_quine.tsf"],"\t"),"T");
+    TSF_Forth_setTSF("quine_echo:",join([
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_echo"],"\t"),"T");
+    TSF_Forth_setTSF("quine_ext:",join([
+        ".tsf",".py",".d"],"\t"),"T");
+    TSF_Forth_setTSF("quine_view:",join([
+        "quine_TSF:","quine_Python:","quine_D:"],"\t"),"T");
+    TSF_Forth_setTSF("quine_TSF:",join([
+        "#TSF_viewthey"],"\t"),"N");
+    TSF_Forth_setTSF("quine_Python:",join([
+        "#TSF_Python"],"\t"),"N");
+    TSF_Forth_setTSF("quine_D:",join([
+        "#TSF_D-lang"],"\t"),"N");
 
     TSF_Forth_run();
 }

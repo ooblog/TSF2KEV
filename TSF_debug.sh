@@ -32,3 +32,5 @@ cd $script_dir
 ./TSF.py --99beer 99 > debug/debug_py-99beer.log
 ./TSF.d --99beer 99 > debug/debug_d-99beer.log 
 
+./TSF.d --d sample/sample_quine.tsf trans_quine.d
+./TSF.d --py sample/sample_quine.tsf trans_quine.py

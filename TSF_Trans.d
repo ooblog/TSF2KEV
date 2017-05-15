@@ -46,29 +46,29 @@ void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         if( TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath).length ){
             TSF_Forth_merge(TSF_tsfpath,null,true);
         }
-        TSF_text~="#! /usr/bin/env python\n";
-        TSF_text~="# -*- coding: UTF-8 -*-\n";
-        TSF_text~="from __future__ import division,print_function,absolute_import,unicode_literals\n\n";
-        TSF_text~="from TSF_Io import *\n";
-        foreach(string TSF_import;TSF_Forth_importlist()){
-            TSF_text~=format("from %s import *\n",TSF_import);
-            TSF_card~=format("%s_Initcards,",TSF_import);
-        }
-        TSF_text~="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n";
-        TSF_text~="TSF_Initcallrun=["~stripRight(TSF_card,',')~"]\n";
-        TSF_text~="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n\n";
-//        foreach(string TSF_the;TSF_Forth_stackD().keys()){
-        foreach(string TSF_the;TSF_Forth_stackO()){
-            TSF_text=TSF_Trans_view_python(TSF_the,false,TSF_text);
-        }
-        TSF_text~="\nTSF_Forth_run()\n";
-        if( TSF_pyhonpath.length ){
-            TSF_Io_savetext(TSF_pyhonpath,TSF_text);
-        }
-        else{
-            foreach(string TSF_textline;TSF_text.split('\n')){
-                TSF_Io_printlog(TSF_textline);
-            }
+    }
+    TSF_text~="#! /usr/bin/env python\n";
+    TSF_text~="# -*- coding: UTF-8 -*-\n";
+    TSF_text~="from __future__ import division,print_function,absolute_import,unicode_literals\n\n";
+    TSF_text~="from TSF_Io import *\n";
+    foreach(string TSF_import;TSF_Forth_importlist()){
+        TSF_text~=format("from %s import *\n",TSF_import);
+        TSF_card~=format("%s_Initcards,",TSF_import);
+    }
+    TSF_text~="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n";
+    TSF_text~="TSF_Initcallrun=["~stripRight(TSF_card,',')~"]\n";
+    TSF_text~="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n";
+    TSF_text~="TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[0]))\n\n";
+    foreach(string TSF_the;TSF_Forth_stackO()){
+        TSF_text=TSF_Trans_view_python(TSF_the,false,TSF_text);
+    }
+    TSF_text~="\nTSF_Forth_run()\n";
+    if( TSF_pyhonpath.length ){
+        TSF_Io_savetext(TSF_pyhonpath,TSF_text);
+    }
+    else{
+        foreach(string TSF_textline;TSF_text.split('\n')){
+            TSF_Io_printlog(TSF_textline);
         }
     }
 }
@@ -83,7 +83,6 @@ string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc
     if( TSF_the in TSF_Forth_stackD() ){
         TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
-//            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
             TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
         TSF_style=TSF_Forth_style().get(TSF_the,"T");
@@ -108,29 +107,30 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
         if( TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath).length ){
             TSF_Forth_merge(TSF_tsfpath,null,true);
         }
-        TSF_text~="#! /usr/bin/env rdmd\n\n";
-        TSF_text~="import std.string;\n\n";
-        TSF_text~="import TSF_Io;\n";
-        foreach(string TSF_import;TSF_Forth_importlist()){
-            TSF_text~=format("import %s;\n",TSF_import);
-            TSF_card~=format("&%s_Initcards,",TSF_import);
-        }
-        TSF_text~="\nvoid main(string[] sys_argvs){\n";
-        TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
-        TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
-        TSF_text~="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n\n";
-//        foreach(string TSF_the;TSF_Forth_stackD().keys()){
-        foreach(string TSF_the;TSF_Forth_stackO()){
-            TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
-        }
-        TSF_text~="\n    TSF_Forth_run();\n}\n";
-        if( TSF_dlangpath.length ){
-            TSF_Io_savetext(TSF_dlangpath,TSF_text);
-        }
-        else{
-            foreach(string TSF_textline;TSF_text.split('\n')){
-                TSF_Io_printlog(TSF_textline);
-            }
+    }
+    TSF_text~="#! /usr/bin/env rdmd\n\n";
+    TSF_text~="import std.string;\n";
+    TSF_text~="import std.path;\n\n";
+    TSF_text~="import TSF_Io;\n";
+    foreach(string TSF_import;TSF_Forth_importlist()){
+        TSF_text~=format("import %s;\n",TSF_import);
+        TSF_card~=format("&%s_Initcards,",TSF_import);
+    }
+    TSF_text~="\nvoid main(string[] sys_argvs){\n";
+    TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
+    TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
+    TSF_text~="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n";
+    TSF_text~="TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[0]));\n\n";
+    foreach(string TSF_the;TSF_Forth_stackO()){
+        TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
+    }
+    TSF_text~="\n    TSF_Forth_run();\n}\n";
+    if( TSF_dlangpath.length ){
+        TSF_Io_savetext(TSF_dlangpath,TSF_text);
+    }
+    else{
+        foreach(string TSF_textline;TSF_text.split('\n')){
+            TSF_Io_printlog(TSF_textline);
         }
     }
 }
@@ -145,11 +145,9 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
     if( TSF_the in TSF_Forth_stackD() ){
         TSF_cards=TSF_Forth_stackD()[TSF_the];
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
-//            TSF_cards[TSF_count]=replace(replace(replace(replace(TSF_Io_ESCdecode(TSF_card),"\\","\\\\"),"\"","\\\""),"\t","\\t"),"\n","\\n");
             TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
         TSF_style=TSF_Forth_style().get(TSF_the,"T");
-//        writeln(format("TSF_the,TSF_style:%s %s",TSF_the,TSF_style));
         string TSF_view_logline="";
         switch( TSF_style ){
             case "O":  TSF_view_logline=format("    TSF_Forth_setTSF(\"%s\",join([\"%s\"],\"\\t\"),\"O\");\n",TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;

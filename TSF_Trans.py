@@ -34,30 +34,30 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
     if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
         if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
             TSF_Forth_merge(TSF_tsfpath,[],True)
-        TSF_text+="#! /usr/bin/env python\n"
-        TSF_text+="# -*- coding: UTF-8 -*-\n"
-        TSF_text+="from __future__ import division,print_function,absolute_import,unicode_literals\n\n"
-        TSF_text+="from TSF_Io import *\n"
-        for TSF_import in TSF_Forth_importlist():
-            TSF_text+="from {0} import *\n".format(TSF_import)
-            TSF_card+="{0}_Initcards,".format(TSF_import)
-        TSF_text+="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
-        TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
-        TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n\n"
-#        for TSF_the in TSF_Forth_stackD().keys():
-        for TSF_the in TSF_Forth_stackO():
-            TSF_text=TSF_Trans_view_python(TSF_the,False,TSF_text)
-        TSF_text+="\nTSF_Forth_run()\n"
-        if TSF_pyhonpath != None:
-            TSF_Io_savetext(TSF_pyhonpath,TSF_text)
-        else:
-            for TSF_textline in TSF_text.split('\n'):
-                TSF_Io_printlog(TSF_textline)
+    TSF_text+="#! /usr/bin/env python\n"
+    TSF_text+="# -*- coding: UTF-8 -*-\n"
+    TSF_text+="from __future__ import division,print_function,absolute_import,unicode_literals\n\n"
+    TSF_text+="from TSF_Io import *\n"
+    for TSF_import in TSF_Forth_importlist():
+        TSF_text+="from {0} import *\n".format(TSF_import)
+        TSF_card+="{0}_Initcards,".format(TSF_import)
+    TSF_text+="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
+    TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
+    TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n"
+    TSF_text+="TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[0]))\n\n"
+    for TSF_the in TSF_Forth_stackO():
+        TSF_text=TSF_Trans_view_python(TSF_the,False,TSF_text)
+    TSF_text+="\nTSF_Forth_run()\n"
+    if TSF_pyhonpath != None:
+        TSF_Io_savetext(TSF_pyhonpath,TSF_text)
+    else:
+        print("debug TSF_tsfpath",TSF_tsfpath)
+        for TSF_textline in TSF_text.split('\n'):
+            TSF_Io_printlog(TSF_textline)
 
 def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をPython風テキスト表示。(TSFAPI)
     if TSF_view_log == None: TSF_view_log=""
     if TSF_the in TSF_Forth_stackD():
-#        TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace('\\','\\\\').replace('"','\\"').replace('\t','\\t').replace('\n','\\n') for TSF_card in TSF_Forth_stackD()[TSF_the]]
         TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n") for TSF_card in TSF_Forth_stackD()[TSF_the]]
         TSF_style=TSF_Forth_style().get(TSF_the,"T")
         if TSF_style == "O":
@@ -75,26 +75,27 @@ def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:T
     if os.path.isfile(TSF_tsfpath if TSF_tsfpath != None else ""):
         if len(TSF_Forth_loadtext(TSF_tsfpath,TSF_tsfpath)):
             TSF_Forth_merge(TSF_tsfpath,[],True)
-        TSF_text+="#! /usr/bin/env rdmd\n\n"
-        TSF_text+="import std.string;\n\n"
-        TSF_text+="import TSF_Io;\n"
-        for TSF_import in TSF_Forth_importlist():
-            TSF_text+="import {0};\n".format(TSF_import)
-            TSF_card+="&{0}_Initcards,".format(TSF_import)
-        TSF_text+="\nvoid main(string[] sys_argvs){\n"
-        TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
-        TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n"
-        TSF_text+="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n\n"
-#        for TSF_the in TSF_Forth_stackD().keys():
-        for TSF_the in TSF_Forth_stackO():
-            TSF_text=TSF_Trans_view_dlang(TSF_the,False,TSF_text)
-        TSF_text+="\n    TSF_Forth_run();\n}\n"
-        if TSF_dlangpath != None:
-            TSF_Io_savetext(TSF_dlangpath,TSF_text)
-            pass
-        else:
-            for TSF_textline in TSF_text.split('\n'):
-                TSF_Io_printlog(TSF_textline)
+    TSF_text+="#! /usr/bin/env rdmd\n\n"
+    TSF_text+="import std.string;\n"
+    TSF_text+="import std.path;\n\n"
+    TSF_text+="import TSF_Io;\n"
+    for TSF_import in TSF_Forth_importlist():
+        TSF_text+="import {0};\n".format(TSF_import)
+        TSF_card+="&{0}_Initcards,".format(TSF_import)
+    TSF_text+="\nvoid main(string[] sys_argvs){\n"
+    TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
+    TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n"
+    TSF_text+="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n"
+    TSF_text+="TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[0]));\n\n"
+    for TSF_the in TSF_Forth_stackO():
+        TSF_text=TSF_Trans_view_dlang(TSF_the,False,TSF_text)
+    TSF_text+="\n    TSF_Forth_run();\n}\n"
+    if TSF_dlangpath != None:
+        TSF_Io_savetext(TSF_dlangpath,TSF_text)
+        pass
+    else:
+        for TSF_textline in TSF_text.split('\n'):
+            TSF_Io_printlog(TSF_textline)
 
 def TSF_Trans_view_dlang(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をD言語風テキスト表示。(TSFAPI)
     if TSF_view_log == None: TSF_view_log=""

@@ -17,18 +17,18 @@ TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)
 TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[0]))
 
 TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-    "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),"T")
-TSF_Forth_setTSF("help:","\t".join([
-    "usage: ./TSF [command|file.tsf] [argvs] ...",
-    "commands & samples:",
-    "  --help        this commands view",
-    "  --python      TSF to Python",
-    "  --dlang       TSF to D",
-    "  --about       about TSF mini guide",
-    "  --helloworld  \"Hello world  #TSF_echo\" sample",
-    "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
-    "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
-    "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
-    "  --99bear      99 Bottles of Beer 9 Bottles sample"]),"N")
+    "quine_echo:","#TSF_this","#TSF_fin.","sample_quine.tsf"]),"T")
+TSF_Forth_setTSF("quine_echo:","\t".join([
+    "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_echo"]),"T")
+TSF_Forth_setTSF("quine_ext:","\t".join([
+    ".tsf",".py",".d"]),"T")
+TSF_Forth_setTSF("quine_view:","\t".join([
+    "quine_TSF:","quine_Python:","quine_D:"]),"T")
+TSF_Forth_setTSF("quine_TSF:","\t".join([
+    "#TSF_viewthey"]),"N")
+TSF_Forth_setTSF("quine_Python:","\t".join([
+    "#TSF_Python"]),"N")
+TSF_Forth_setTSF("quine_D:","\t".join([
+    "#TSF_D-lang"]),"N")
 
 TSF_Forth_run()

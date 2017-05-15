@@ -11,9 +11,6 @@ from TSF_Forth import *
 def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Match")
     TSF_Forth_cards={
-#        "#TSF_replace":TSF_Match_replace, "#文字列を置換":TSF_Match_replace,
-#        "#TSF_regex":TSF_Match_regex, "#文字列を正規表現で置換":TSF_Match_regex,
-#        "#TSF_replacesF":TSF_Match_replacesF, "#文字列群で表択置換":TSF_Match_replacesF,
         "#TSF_replacesQN":TSF_Match_replacesQN, "#同択文字列群で順択置換":TSF_Match_replacesQN,
         "#TSF_replacesQC":TSF_Match_replacesQC, "#同択文字列群で周択置換":TSF_Match_replacesQC,
         "#TSF_replacesQM":TSF_Match_replacesQM, "#同択文字列群で囲択置換":TSF_Match_replacesQM,
@@ -49,27 +46,10 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
 #        "#TSF_countsH":TSF_Match_countsH, "#文字列群で似択計数":TSF_Match_countsH,
 #        "#TSF_countsL":TSF_Match_countsL, "#文字列群で札択計数":TSF_Match_countsL,
     }
-#   N,C,M,V,A,T*Q,I,R,H,L
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
-
-#def TSF_Match_replace():    #TSFdoc:文字列を置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-#    TSF_theN=TSF_Forth_drawthe()
-#    TSF_theO=TSF_Forth_drawthe()
-#    TSF_theT=TSF_Forth_drawthe()
-#    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN)
-#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-#    return ""
-
-#def TSF_Match_regex():    #TSFdoc:文字列を正規表現で置換。3枚[cardT,cardO,cardN]ドローして1枚[cardT]リターン。
-#    TSF_theN=TSF_Forth_drawthe()
-#    TSF_theO=TSF_Forth_drawthe()
-#    TSF_theT=TSF_Forth_drawthe()
-#    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
-#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-#    return ""
 
 def TSF_Match_replacesQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
@@ -121,22 +101,15 @@ def TSF_Match_replacesRT():    #TSFdoc:stackTをテキストとみなしてcardO
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
     return ""
 
-def TSF_Match_aliasQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。2枚[stackO,stackN]ドロー。1枚リターン[cardN]。
+def TSF_Match_aliasQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[cardT,stackO,stackN]ドロー。1枚リターン[cardN]。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
     TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-#        "#TSF_countsN":TSF_Match_countsN, "#文字列群で順択置換":TSF_Match_countsN,
-#def TSF_match_casestacks():   #TSF_doc:[matcher,algo,stackO,stackN]Oスタックに該当するmatcherがあった場合、stackNのエイリアスを呼び出す。algoは文字列の比較方法。
-#    TSF_tsvN=TSF_Forth_popthat()
-#    TSF_tsvO=TSF_Forth_popthat(); TSF_strsO=TSF_Forth_stackvalue(TSF_tsvO)
-#    TSF_algo=TSF_Forth_popthat()
-#    TSF_matcher=TSF_Forth_popthat()
-#    TSF_case=""
-#    for TSF_peek,TSF_strO in enumerate(TSF_strsO):
-#        if TSF_match_case.get(TSF_algo,TSF_match_case['equal'])(TSF_matcher,TSF_strO):
-#            TSF_case=TSF_Forth_peekthe(TSF_tsvN,TSF_peek)
-#            break
-#    TSF_Forth_pushthat(str(TSF_case))
-#    return None
+    TSF_cardT=TSF_Forth_drawthe();
+    for TSF_peek,TSF_card in enumerate(TSF_cardsO):
+        if TSF_cardT == TSF_card:
+            TSF_cardT=TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)]
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_cardT)
+    return ""
 
 
 TSF_Initcalldebug=[TSF_Match_Initcards]

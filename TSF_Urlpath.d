@@ -31,6 +31,7 @@ string TSF_Urlpath_fileext(){    //#TSFdoc:現在日時の取得。1枚[daytimef
 
 
 string TSF_Urlpath_fileext_api(string TSF_filepath){    //#TSFdoc:ファイルの拡張子を取得。(TSFAPI)
+//    writeln(format("TSF_Urlpath_fileext_api %s %s",TSF_filepath,extension(TSF_filepath)));
     return extension(TSF_filepath);
 }
 
