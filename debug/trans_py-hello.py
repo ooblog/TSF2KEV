@@ -14,7 +14,7 @@ from TSF_Trans import *
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
 TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)
-TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[0]))
+TSF_Forth_mainfilepath(os.path.abspath("debug/trans_py-hello.py"))
 
 TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
     "Hello world","#TSF_echo"]),"T")

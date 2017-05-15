@@ -15,13 +15,13 @@ import TSF_Trans;
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
     void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
-TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
-TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[0]));
+    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
+    TSF_Forth_mainfilepath(absolutePath("trans_quine.d"));
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "quine_echo:","#TSF_this","#TSF_fin.","sample_quine.tsf"],"\t"),"T");
     TSF_Forth_setTSF("quine_echo:",join([
-        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_echo"],"\t"),"T");
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("quine_ext:",join([
         ".tsf",".py",".d"],"\t"),"T");
     TSF_Forth_setTSF("quine_view:",join([

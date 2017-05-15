@@ -68,7 +68,7 @@ string TSF_Match_replacesQM(){    //#TSFdoc:stackTをテキストとみなして
     if( TSF_theT in TSF_Forth_stackD() ){
         TSF_text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));
         foreach(size_t TSF_peek,string TSF_card;TSF_cardsO){
-            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[to!size_t(fmax(TSF_peek,TSF_cardsN_len))]);
+            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[to!size_t(fmin(TSF_peek,TSF_cardsN_len))]);
         }
         TSF_Forth_setTSF(TSF_theT,TSF_text,"N");
     }
@@ -100,7 +100,7 @@ string TSF_Match_aliasQN(){    //#TSFdoc:stackTをテキストとみなしてsta
     string TSF_cardT=TSF_Forth_drawthe();
     foreach(size_t TSF_peek,string TSF_card;TSF_cardsO){
         if( TSF_cardT==TSF_card ){
-            TSF_cardT=TSF_cardsN[to!size_t(fmax(TSF_peek,TSF_cardsN_len))];
+            TSF_cardT=TSF_cardsN[to!size_t(fmin(TSF_peek,TSF_cardsN_len))];
         }
     }
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_cardT);

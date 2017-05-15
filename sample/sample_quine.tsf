@@ -1,8 +1,7 @@
 TSF_Tab-Separated-Forth:
 	quine_echo:	#TSF_this	#TSF_fin.	sample_quine.tsf
 quine_echo:
-#	#TSF_mainfile	#TSF_fileext	quine_ext:	quine_view:	#TSF_aliasQN	#TSF_this
-	#TSF_mainfile	#TSF_fileext	quine_ext:	quine_view:	#TSF_aliasQN	#TSF_echo
+	#TSF_mainfile	#TSF_fileext	quine_ext:	quine_view:	#TSF_aliasQN	#TSF_this
 quine_ext:
 	.tsf	.py	.d
 quine_view:

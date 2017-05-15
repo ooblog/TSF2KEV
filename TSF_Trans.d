@@ -58,7 +58,7 @@ void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     TSF_text~="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n";
     TSF_text~="TSF_Initcallrun=["~stripRight(TSF_card,',')~"]\n";
     TSF_text~="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n";
-    TSF_text~="TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[0]))\n\n";
+    TSF_text~=format("TSF_Forth_mainfilepath(os.path.abspath(\"%s\"))\n\n",TSF_pyhonpath!=""?TSF_pyhonpath:"TSF_sysargvs[0]");
     foreach(string TSF_the;TSF_Forth_stackO()){
         TSF_text=TSF_Trans_view_python(TSF_the,false,TSF_text);
     }
@@ -119,8 +119,8 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     TSF_text~="\nvoid main(string[] sys_argvs){\n";
     TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
     TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
-    TSF_text~="TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n";
-    TSF_text~="TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[0]));\n\n";
+    TSF_text~="    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n";
+    TSF_text~=format("    TSF_Forth_mainfilepath(absolutePath(\"%s\"));\n\n",TSF_dlangpath!=""?TSF_dlangpath:"TSF_sysargvs[0]");
     foreach(string TSF_the;TSF_Forth_stackO()){
         TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
     }
