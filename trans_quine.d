@@ -19,7 +19,7 @@ void main(string[] sys_argvs){
     TSF_Forth_mainfilepath(absolutePath(__FILE__));
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "quine_echo:","#TSF_this","#TSF_fin.","sample_quine.tsf"],"\t"),"T");
+        "quine_echo:","#TSF_this","#TSF_fin."],"\t"),"T");
     TSF_Forth_setTSF("quine_echo:",join([
         "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("quine_ext:",join([

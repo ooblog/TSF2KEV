@@ -33,7 +33,9 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
-        "  --99bear      99 Bottles of Beer 9 Bottles sample"],"\t"),"N");
+        "  --99bear      99 Bottles of Beer 9 Bottles sample",
+        "  --quine       quine (TSF,Python,D... selfsource) sample",
+        ],"\t"),"N");
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
@@ -214,6 +216,24 @@ void TSF_sample_99beer(){    //#TSFdoc:「sample_99beer.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_99beer");
 }
 
+void TSF_sample_quine(){    //#TSFdoc:「sample_quine.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "quine_echo:","#TSF_this","#TSF_fin."],"\t"),"T");
+    TSF_Forth_setTSF("quine_echo:",join([
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"],"\t"),"T");
+    TSF_Forth_setTSF("quine_ext:",join([
+        ".tsf",".py",".d"],"\t"),"T");
+    TSF_Forth_setTSF("quine_view:",join([
+        "quine_TSF:","quine_Python:","quine_D:"],"\t"),"T");
+    TSF_Forth_setTSF("quine_TSF:",join([
+        "#TSF_viewthey"],"\t"),"N");
+    TSF_Forth_setTSF("quine_Python:",join([
+        "#TSF_Python"],"\t"),"N");
+    TSF_Forth_setTSF("quine_D:",join([
+        "#TSF_D-lang"],"\t"),"N");
+    TSF_Forth_samplerun("TSF_sample_quine");
+}
+
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
     void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
@@ -268,6 +288,10 @@ void main(string[] sys_argvs){
     }
     else if( count(["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"],TSF_bootcommand) ){
         TSF_sample_99beer();
+    }
+    else if( count(["--quine","--Quine"],TSF_bootcommand) ){
+        TSF_Forth_mainfilepath("sample/sample_quine.tsf");
+        TSF_sample_quine();
     }
     else{
         TSF_sample_help();

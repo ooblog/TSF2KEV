@@ -1,5 +1,6 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	quine_echo:	#TSF_this	#TSF_fin.	sample_quine.tsf
+	quine_echo:	#TSF_this	#TSF_fin.
 quine_echo:
 	#TSF_mainfile	#TSF_fileext	quine_ext:	quine_view:	#TSF_aliasQN	#TSF_this
 quine_ext:

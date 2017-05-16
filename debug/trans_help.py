@@ -29,6 +29,7 @@ TSF_Forth_setTSF("help:","\t".join([
     "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
     "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
     "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
-    "  --99bear      99 Bottles of Beer 9 Bottles sample"]),"N")
+    "  --99bear      99 Bottles of Beer 9 Bottles sample",
+    "  --quine       quine (TSF,Python,D... selfsource) sample"]),"N")
 
 TSF_Forth_run()
