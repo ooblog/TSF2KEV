@@ -21,11 +21,11 @@ def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD�
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Trans_python():    #TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
-    TSF_Trans_generator_python(TSF_Forth_drawthe())
+    TSF_Trans_generator_python()
     return ""
 
 def TSF_Trans_dlang():    #TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
-    TSF_Trans_generator_dlang(TSF_Forth_drawthe())
+    TSF_Trans_generator_dlang()
     return ""
 
 def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:TSFデッキのPython化。(TSFAPI)
@@ -44,14 +44,13 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
     TSF_text+="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
     TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
     TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n"
-    TSF_text+="TSF_Forth_mainfilepath(os.path.abspath(\"{0}\"))\n\n".format(TSF_pyhonpath if TSF_pyhonpath != None else "TSF_sysargvs[0]")
+    TSF_text+="TSF_Forth_mainfilepath(os.path.abspath(\"{0}\"))\n\n".format(TSF_Forth_mainfilepath())
     for TSF_the in TSF_Forth_stackO():
         TSF_text=TSF_Trans_view_python(TSF_the,False,TSF_text)
     TSF_text+="\nTSF_Forth_run()\n"
     if TSF_pyhonpath != None:
         TSF_Io_savetext(TSF_pyhonpath,TSF_text)
     else:
-        print("debug TSF_tsfpath",TSF_tsfpath)
         for TSF_textline in TSF_text.split('\n'):
             TSF_Io_printlog(TSF_textline)
 
@@ -86,7 +85,7 @@ def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:T
     TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
     TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n"
     TSF_text+="    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n"
-    TSF_text+="    TSF_Forth_mainfilepath(absolutePath(\"{0}\"));\n\n".format(TSF_dlangpath if TSF_dlangpath != None else "TSF_sysargvs[0]")
+    TSF_text+="    TSF_Forth_mainfilepath(absolutePath(\"{0}\"));\n\n".format(TSF_Forth_mainfilepath())
     for TSF_the in TSF_Forth_stackO():
         TSF_text=TSF_Trans_view_dlang(TSF_the,False,TSF_text)
     TSF_text+="\n    TSF_Forth_run();\n}\n"

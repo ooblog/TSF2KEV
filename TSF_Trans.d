@@ -27,18 +27,21 @@ void TSF_Trans_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
 }
 
 string TSF_Trans_python(){    //#TSFdoc:TSFデッキのPython化。1枚[path]ドロー。
-    TSF_Trans_generator_python(TSF_Forth_drawthe());
+    TSF_Trans_generator_python();
     return "";
 }
 
 string TSF_Trans_dlang(){    //#TSFdoc:TSFデッキのD言語化。1枚[path]ドロー。
-    TSF_Trans_generator_dlang(TSF_Forth_drawthe());
+    TSF_Trans_generator_dlang();
     return "";
 }
 
-void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッキのPython化。(TSFAPI)
-    string TSF_pyhonpath="";
+void TSF_Trans_generator_python(...){    //#TSFdoc:TSFデッキのPython化。(TSFAPI)
+    string TSF_tsfpath="",TSF_pyhonpath="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_tsfpath=va_arg!(string)(_argptr);
+    }
+    if( _arguments.length>1 && _arguments[1]==typeid(string) ){
         TSF_pyhonpath=va_arg!(string)(_argptr);
     }
     string TSF_text="",TSF_card="";
@@ -58,7 +61,7 @@ void TSF_Trans_generator_python(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     TSF_text~="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n";
     TSF_text~="TSF_Initcallrun=["~stripRight(TSF_card,',')~"]\n";
     TSF_text~="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n";
-    TSF_text~=format("TSF_Forth_mainfilepath(os.path.abspath(\"%s\"))\n\n",TSF_pyhonpath!=""?TSF_pyhonpath:"TSF_sysargvs[0]");
+    TSF_text~=format("TSF_Forth_mainfilepath(os.path.abspath(\"%s\"))\n\n",TSF_Forth_mainfilepath());
     foreach(string TSF_the;TSF_Forth_stackO()){
         TSF_text=TSF_Trans_view_python(TSF_the,false,TSF_text);
     }
@@ -97,9 +100,12 @@ string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc
     return TSF_view_log;
 }
 
-void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッキのD言語化。(TSFAPI)
-    string TSF_dlangpath="";
+void TSF_Trans_generator_dlang(...){    //#TSFdoc:TSFデッキのD言語化。(TSFAPI)
+    string TSF_tsfpath="",TSF_dlangpath="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_tsfpath=va_arg!(string)(_argptr);
+    }
+    if( _arguments.length>1 && _arguments[1]==typeid(string) ){
         TSF_dlangpath=va_arg!(string)(_argptr);
     }
     string TSF_text="",TSF_card="";
@@ -120,7 +126,7 @@ void TSF_Trans_generator_dlang(string TSF_tsfpath,...){    //#TSFdoc:TSFデッ�
     TSF_text~="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n";
     TSF_text~="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["~stripRight(TSF_card,',')~"];\n";
     TSF_text~="    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n";
-    TSF_text~=format("    TSF_Forth_mainfilepath(absolutePath(\"%s\"));\n\n",TSF_dlangpath!=""?TSF_dlangpath:"TSF_sysargvs[0]");
+    TSF_text~=format("    TSF_Forth_mainfilepath(absolutePath(\"%s\"));\n\n",TSF_Forth_mainfilepath());
     foreach(string TSF_the;TSF_Forth_stackO()){
         TSF_text=TSF_Trans_view_dlang(TSF_the,false,TSF_text);
     }

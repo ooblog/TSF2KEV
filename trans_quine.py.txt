@@ -32,3 +32,4 @@ TSF_Forth_setTSF("quine_D:","\t".join([
     "#TSF_D-lang"]),"N")
 
 TSF_Forth_run()
+
