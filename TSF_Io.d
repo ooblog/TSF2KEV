@@ -13,28 +13,23 @@ import std.compiler;
 import std.system;
 import std.typecons;
 import std.math;
+import std.algorithm;
 
 
-string TSF_Io_printlog(string TSF_text, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
-    string TSF_log="";
+string TSF_Io_printlog(string TSF_textdup, ...){    //#TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
+    string TSF_text=TSF_textdup.stripRight('\n'); string TSF_log="";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_log=va_arg!(string)(_argptr);
         if( TSF_log.length>0 ){
             TSF_log=TSF_log.back=='\n'?TSF_log:TSF_log~'\n';
         }
+        TSF_log=join([TSF_log,TSF_text,"\n"]);
     }
     auto TSF_Io_printf=toStringz(TSF_text);
     version(Windows){
         TSF_Io_printf=toStringz(to!string(toMBSz(TSF_text)));
     }
-    if( TSF_text.length>0 && TSF_text.back=='\n' ){
-        printf("%s",TSF_Io_printf);
-        TSF_log=join([TSF_log,TSF_text]);
-    }
-    else{
-        printf("%s\n",TSF_Io_printf);
-        TSF_log=join([TSF_log,TSF_text,"\n"]);
-    }
+    printf("%s\n",TSF_Io_printf);
     return TSF_log;
 }
 

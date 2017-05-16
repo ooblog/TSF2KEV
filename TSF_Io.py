@@ -39,14 +39,15 @@ if sys.platform.startswith("linux"):
 
 TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
 def TSF_Io_printlog(TSF_text,TSF_log=None):    ##TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
-    TSF_log="" if TSF_log == None else TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n']) if len(TSF_log) else ""
-    TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
-    if TSF_text.endswith('\n'):
-        TSF_libc.printf(b"%s",TSF_Io_printf)
-        TSF_log="".join([TSF_log,TSF_text]) if TSF_log != None else ""
+    TSF_text=TSF_text.rstrip('\n')
+    if TSF_log != None:
+        if len(TSF_log) > 0:
+            TSF_log=TSF_log if TSF_log.endswith('\n') else "".join([TSF_log,'\n'])
+        TSF_log="".join([TSF_log,TSF_text,'\n'])
     else:
-        TSF_libc.printf(b"%s\n",TSF_Io_printf)
-        TSF_log="".join([TSF_log,TSF_text,'\n']) if TSF_log != None else ""
+        TSF_log=""
+    TSF_Io_printf=TSF_text.encode(TSF_Io_stdout,"xmlcharrefreplace")
+    TSF_libc.printf(b"%s\n",TSF_Io_printf)
     return TSF_log
 
 def TSF_Io_argvs(TSF_argvdup=None):    #TSFdoc:TSF起動コマンド引数の文字コード対策。(TSFAPI)

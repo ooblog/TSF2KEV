@@ -71,6 +71,7 @@ void TSF_Trans_generator_python(...){    //#TSFdoc:TSFデッキのPython化。(T
         TSF_Io_savetext(TSF_pyhonpath,TSF_text);
     }
     else{
+        TSF_text=TSF_text.stripRight('\n');
         foreach(string TSF_textline;TSF_text.split('\n')){
             TSF_Io_printlog(TSF_textline);
         }
@@ -137,6 +138,7 @@ void TSF_Trans_generator_dlang(...){    //#TSFdoc:TSFデッキのD言語化。(T
         TSF_Io_savetext(TSF_dlangpath,TSF_text);
     }
     else{
+        TSF_text=TSF_text.stripRight('\n');
         foreach(string TSF_textline;TSF_text.split('\n')){
             TSF_Io_printlog(TSF_textline);
         }

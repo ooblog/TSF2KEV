@@ -35,4 +35,3 @@ void main(string[] sys_argvs){
 
     TSF_Forth_run();
 }
-

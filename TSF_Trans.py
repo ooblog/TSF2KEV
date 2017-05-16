@@ -52,6 +52,7 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
     if TSF_pyhonpath != None:
         TSF_Io_savetext(TSF_pyhonpath,TSF_text)
     else:
+        TSF_text=TSF_text.rstrip('\n')
         for TSF_textline in TSF_text.split('\n'):
             TSF_Io_printlog(TSF_textline)
 
@@ -95,6 +96,7 @@ def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:T
         TSF_Io_savetext(TSF_dlangpath,TSF_text)
         pass
     else:
+        TSF_text=TSF_text.rstrip('\n')
         for TSF_textline in TSF_text.split('\n'):
             TSF_Io_printlog(TSF_textline)
 
