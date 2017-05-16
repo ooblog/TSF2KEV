@@ -34,3 +34,8 @@ cd $script_dir
 
 ./TSF.d --d sample/sample_quine.tsf trans_quine.d
 ./TSF.d --py sample/sample_quine.tsf trans_quine.py
+./trans_quine.py > trans_quine.py.txt
+./trans_quine.d > trans_quine.d.txt
+diff trans_quine.py trans_quine.py.txt
+diff trans_quine.d trans_quine.d.txt
+

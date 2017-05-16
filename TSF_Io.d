@@ -413,8 +413,8 @@ void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:TSF_pathにTSF_textを�
     string TSF_text="";  bool TSF_remove=true;
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_text=va_arg!(string)(_argptr); TSF_remove=false;
-        TSF_Io_savedir(TSF_path);
     }
+    TSF_Io_savedir(TSF_path);
     if( TSF_text.length>0 ){
         TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';
     }
@@ -428,9 +428,10 @@ void TSF_Io_savetext(string TSF_path, ...){    //#TSFdoc:TSF_pathにTSF_textを�
     }
 }
 
-void TSF_Io_writetext(string TSF_path,string TSF_text){    //#TSFdoc:TSF_pathにTSF_textを追記する。(TSFAPI)
-    if( TSF_text.length>0 ){
-        TSF_text=TSF_text.back=='\n'?TSF_text:TSF_text~'\n';
+void TSF_Io_writetext(string TSF_path,string TSF_addtext){    //#TSFdoc:TSF_pathにTSF_textを追記する。(TSFAPI)
+    string TSF_text="";
+    if( TSF_addtext.length>0 ){
+        TSF_text=TSF_addtext.back=='\n'?TSF_text:TSF_addtext~'\n';
     }
     TSF_Io_savedir(TSF_path);
     if( exists(TSF_path) ){
