@@ -184,7 +184,7 @@ void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド�
     TSF_Forth_setTSF("FBsetup:",join([
         "FZcount:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","FZcount:","4","#TSF_pokeNthe","FBloop:","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("FBloop:",join([
-        "FZcount:",",([FZcount:0]+1)","#TSF_calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"],"\t"),"T");
+        "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"],"\t"),"T");
     TSF_Forth_setTSF("FZcount:",join([
         "0","Fizz","Buzz","Fizz&Buzz","20"],"\t"),"T");
     TSF_Forth_samplerun("TSF_sample_calc");
