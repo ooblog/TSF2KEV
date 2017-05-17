@@ -118,21 +118,30 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
         TSF_calcA="".join([TSF_calcF,TSF_calcA])
     return TSF_calcA
 
+TSF_CalcReg_ascii=re.compile("^[\x20-\x7E]+$")
+TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic={},{},{},{}
+TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen=[],"",""
+TSF_CalcReg_okusen,TSF_CalcReg_rinmousen=[],[]
+TSF_CalcReg_senCpercent,TSF_CalcReg_senKkilo,TSF_CalcReg_hyakuH,TSF_CalcReg_juuD=re.compile("([0-9百十]+?)銭"),re.compile("([0-9]+?)千"),re.compile("([0-9]+?)百"),re.compile("([0-9]+?)十")
 def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     TSF_calcA=TSF_calcQ
-    if not re.search(re.compile("^[\x20-\x7E]+$"),TSF_calcA):
+    if not re.search(TSF_CalcReg_ascii,TSF_calcA):
         for TSF_opewordK in TSF_Calc_opeorder:
             TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_Calc_opeword[TSF_opewordK])
         for TSF_opecharK,TSF_opecharV in TSF_Calc_opechar.items():
             TSF_calcA=TSF_calcA.replace(TSF_opecharK,TSF_opecharV)
-        TSF_calcA=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/(100)",TSF_calcA)
+#        TSF_calcA=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/(100)",TSF_calcA)
+        TSF_calcA=re.sub(TSF_CalcReg_senCpercent,"+(\\1)/(100)",TSF_calcA)
         for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
             TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
         for TSF_rinmouK,TSF_rinmouV in TSF_Calc_rinmoudic.items():
             TSF_calcA=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
-        TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"+\\1*(1000)",TSF_calcA)
-        TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"+\\1*(100)",TSF_calcA)
-        TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"+\\1*(10)",TSF_calcA)
+#        TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"+\\1*(1000)",TSF_calcA)
+#        TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"+\\1*(100)",TSF_calcA)
+#        TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"+\\1*(10)",TSF_calcA)
+        TSF_calcA=re.sub(TSF_CalcReg_senKkilo,"+\\1*(1000)",TSF_calcA)
+        TSF_calcA=re.sub(TSF_CalcReg_hyakuH,"+\\1*(100)",TSF_calcA)
+        TSF_calcA=re.sub(TSF_CalcReg_juuD,"+\\1*(10)",TSF_calcA)
         TSF_calcA=TSF_calcA.replace('銭',"+(1|100)")
         TSF_calcA=TSF_calcA.replace('十',"+(10)")
         TSF_calcA=TSF_calcA.replace('百',"+(100)")
@@ -175,13 +184,10 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:
         TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
     return TSF_calcA
 
-TSF_Calc_opeorder=[]
-TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic={},{},{},{}
-TSF_Calc_okusenyen,TSF_Calc_rinmouyen="",""
+TSF_CalcReg_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     TSF_calcA=TSF_calc_commacut_JA(TSF_calcQ); TSF_calcBLR,TSF_calcBCAP=0,0
 #    TSF_calcA=TSF_calcQ; TSF_calcBLR,TSF_calcBCAP=0,0
-    TSF_calc_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
     while "(" in TSF_calcA or ")" in TSF_calcA:
         TSF_calcBLR,TSF_calcBCAP=0,0
         for TSF_calcB in TSF_calcA:
@@ -196,7 +202,7 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
         if TSF_calcBLR < 0:
             TSF_calcA='('*abs(TSF_calcBLR)+TSF_calcA
         TSF_calcA='('*abs(TSF_calcBCAP)+TSF_calcA+')'*abs(TSF_calcBCAP)
-        for TSF_calcK in re.findall(TSF_calc_bracketreg,TSF_calcA):
+        for TSF_calcK in re.findall(TSF_CalcReg_bracketreg,TSF_calcA):
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
     TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
     if len(TSF_calcA):

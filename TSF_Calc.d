@@ -143,25 +143,35 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
     return TSF_calcA;
 }
 
+auto TSF_CalcReg_ascii=regex("^[\x20-\x7E]+$");
+string[string] TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic;
+string[] TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen;
+auto TSF_CalcReg_okusen=[],TSF_CalcReg_rinmousen=[];
+auto TSF_CalcReg_senCpercent=regex("([0-9百十]+?)銭"),TSF_CalcReg_senKkilo=regex("([0-9]+?)千"),TSF_CalcReg_hyakuH=regex("([0-9]+?)百"),TSF_CalcReg_juuD=regex("([0-9]+?)十");
 string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-    if( count(match(TSF_calcA,"^[\x20-\x7E]+$"))==0 ){
+//    if( count(match(TSF_calcA,TSF_CalcReg_ascii))==0 ){
+    if( !match(TSF_calcA,TSF_CalcReg_ascii) ){
         foreach(string TSF_opewordK;TSF_Calc_opeorder){
             TSF_calcA=replace(TSF_calcA,TSF_opewordK,TSF_Calc_opeword[TSF_opewordK]);
         }
         foreach(string TSF_opecharK,string TSF_opecharV;TSF_Calc_opechar){
             TSF_calcA=replace(TSF_calcA,TSF_opecharK,TSF_opecharV);
         }
-        TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+($1)/(100)");
+//        TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+($1)/(100)");
+        TSF_calcA=replace(TSF_calcA,TSF_CalcReg_senCpercent,"+($1)/(100)");
         foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
             TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"+($1)"~TSF_okusenV);
         }
         foreach(string TSF_rinmouK,string TSF_rinmouV;TSF_Calc_rinmoudic){
             TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"+($1)"~TSF_rinmouV);
         }
-        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"+$1*(1000)");
-        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"+$1*(100)");
-        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)十"),"+$1*(10)");
+//        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"+$1*(1000)");
+//        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"+$1*(100)");
+//        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)十"),"+$1*(10)");
+        TSF_calcA=replace(TSF_calcA,TSF_CalcReg_senKkilo,"+$1*(1000)");
+        TSF_calcA=replace(TSF_calcA,TSF_CalcReg_hyakuH,"+$1*(100)");
+        TSF_calcA=replace(TSF_calcA,TSF_CalcReg_juuD,"+$1*(10)");
         TSF_calcA=replace(TSF_calcA,"銭","+(1|100)");
         TSF_calcA=replace(TSF_calcA,"十","+(10)");
         TSF_calcA=replace(TSF_calcA,"百","+(100)");
@@ -215,11 +225,9 @@ string TSF_calc_comma_rinmou(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC,
     return TSF_calcA;
 }
 
-string[string] TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic;
-string[] TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen;
+auto TSF_CalcReg_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
 string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     string TSF_calcA=TSF_calc_commacut_JA(TSF_calcQ);  long TSF_calcBLR=0,TSF_calcBCAP=0;
-    auto TSF_calc_bracketreg=regex("[(](?<=[(])[^()]*(?=[)])[)]");
     while( count(TSF_calcA,"(") || count(TSF_calcA,")") ){
         TSF_calcBLR=0; TSF_calcBCAP=0;
         foreach(char TSF_calcB;TSF_calcQ){
@@ -237,7 +245,7 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSF_doc:分数電卓のmain�
         if( TSF_calcBCAP>0 ){
             foreach(long i;0..TSF_calcBCAP){ TSF_calcA="("~TSF_calcA~")"; }
         }
-        foreach(TSF_calcK;match(TSF_calcA,TSF_calc_bracketreg)){
+        foreach(TSF_calcK;match(TSF_calcA,TSF_CalcReg_bracketreg)){
             TSF_calcA=TSF_calcA.replace(TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
         }
     }
