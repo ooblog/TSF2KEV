@@ -23,6 +23,7 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     global TSF_Calc_opeorder,TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic,TSF_Calc_okusenyen,TSF_Calc_rinmouyen
+    global TSF_CalcReg_okusen,TSF_CalcReg_rinmou
     TSF_Calc_opeorder=["恒河沙","阿僧祇","那由他","不可思議","無量大数","無限",
         "模糊","逡巡","須臾","瞬息","弾指","刹那","六徳","虚空","清浄","阿頼耶","阿摩羅","涅槃寂静",
         "円周率","2π","円周","ネイピア数","ルート","プラス","マイナス","絶対値",
@@ -43,11 +44,17 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
     }
     TSF_Calc_okusenman="万億兆京垓𥝱穣溝澗正載極恒阿那思量"
-    TSF_Calc_okusenzero=["*(10000"+'0'*(o*4)+")" for o in range(len(TSF_Calc_okusenman))]
+#    TSF_Calc_okusenzero=["*(10000"+'0'*(o*4)+")" for o in range(len(TSF_Calc_okusenman))]
+    TSF_Calc_okusenzero=["".join(["*(10000",'0'*(o*4),")"]) for o in range(len(TSF_Calc_okusenman))]
     TSF_Calc_okusendic=dict(zip(list(TSF_Calc_okusenman),TSF_Calc_okusenzero))
+    TSF_Calc_okusenreg=["".join(["([0-9千百十]+?)",k]) for k in TSF_Calc_okusenman]
+    TSF_CalcReg_okusen=dict(zip(list(TSF_Calc_okusenman),TSF_Calc_okusenreg))
     TSF_Calc_rinmoushi="厘毛糸忽微繊沙塵埃渺漠模逡須瞬弾刹徳空清耶摩涅"
-    TSF_Calc_rinmouzero=["/(1000"+'0'*o+")" for o in range(len(TSF_Calc_rinmoushi))]
+#    TSF_Calc_rinmouzero=["/(1000"+'0'*o+")" for o in range(len(TSF_Calc_rinmoushi))]
+    TSF_Calc_rinmouzero=["".join(["*(10000",'0'*o,")"]) for o in range(len(TSF_Calc_rinmoushi))]
     TSF_Calc_rinmoudic=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmouzero))
+    TSF_Calc_rinmoureg=["".join(["([0-9千百十]+?)",k]) for k in TSF_Calc_rinmoushi]
+    TSF_CalcReg_rinmou=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmoureg))
     TSF_Calc_okusenyen="".join(["円",TSF_Calc_okusenman])
     TSF_Calc_rinmouyen="".join(["円割銭",TSF_Calc_rinmoushi])
     global TSF_Calc_precisionMAX
@@ -121,7 +128,7 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理�
 TSF_CalcReg_ascii=re.compile("^[\x20-\x7E]+$")
 TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic={},{},{},{}
 TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen=[],"",""
-TSF_CalcReg_okusen,TSF_CalcReg_rinmousen=[],[]
+TSF_CalcReg_okusen,TSF_CalcReg_rinmou=[],[]
 TSF_CalcReg_senCpercent,TSF_CalcReg_senKkilo,TSF_CalcReg_hyakuH,TSF_CalcReg_juuD=re.compile("([0-9百十]+?)銭"),re.compile("([0-9]+?)千"),re.compile("([0-9]+?)百"),re.compile("([0-9]+?)十")
 def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     TSF_calcA=TSF_calcQ
@@ -133,9 +140,11 @@ def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数
 #        TSF_calcA=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/(100)",TSF_calcA)
         TSF_calcA=re.sub(TSF_CalcReg_senCpercent,"+(\\1)/(100)",TSF_calcA)
         for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
-            TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
+#            TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
+            TSF_calcA=re.sub(TSF_CalcReg_okusen[TSF_okusenK],"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
         for TSF_rinmouK,TSF_rinmouV in TSF_Calc_rinmoudic.items():
-            TSF_calcA=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
+#            TSF_calcA=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
+            TSF_calcA=re.sub(TSF_CalcReg_rinmou[TSF_rinmouK],"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
 #        TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"+\\1*(1000)",TSF_calcA)
 #        TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"+\\1*(100)",TSF_calcA)
 #        TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"+\\1*(10)",TSF_calcA)

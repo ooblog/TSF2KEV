@@ -52,10 +52,14 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     string[] TSF_Calc_rinmoushi=["厘","毛","糸","忽","微","繊","沙","塵","埃","渺","漠","模","逡","須","瞬","弾","刹","徳","空","清","耶","摩","涅"];
     foreach(string okusen;TSF_Calc_okusenman){
         TSF_Calc_okusendic[okusen]=TSF_Calc_order~")"; TSF_Calc_order~="0000";
+//        TSF_CalcReg_okusen[okusen]=regex("([0-9千百十]+?)"~okusen);
+        TSF_CalcReg_okusen[okusen]="([0-9千百十]+?)"~okusen;
     }
     TSF_Calc_order="/(1000";
     foreach(string rinmou;TSF_Calc_rinmoushi){
-        TSF_Calc_okusendic[rinmou]=TSF_Calc_order~")"; TSF_Calc_order~="0";
+        TSF_Calc_rinmoudic[rinmou]=TSF_Calc_order~")"; TSF_Calc_order~="0";
+//        TSF_CalcReg_rinmou[rinmou]=regex("([0-9]+?)"~rinmou);
+        TSF_CalcReg_rinmou[rinmou]="([0-9]+?)"~rinmou;
     }
     TSF_Calc_okusenyen=["円"]~TSF_Calc_okusenman;
     TSF_Calc_rinmouyen=["円","割","銭"]~TSF_Calc_rinmoushi;
@@ -146,11 +150,11 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSF_doc:分数電卓の日�
 auto TSF_CalcReg_ascii=regex("^[\x20-\x7E]+$");
 string[string] TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic;
 string[] TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen;
-auto TSF_CalcReg_okusen=[],TSF_CalcReg_rinmousen=[];
+//Regex[string] TSF_CalcReg_okusen,TSF_CalcReg_rinmou;
+string[string] TSF_CalcReg_okusen,TSF_CalcReg_rinmou;
 auto TSF_CalcReg_senCpercent=regex("([0-9百十]+?)銭"),TSF_CalcReg_senKkilo=regex("([0-9]+?)千"),TSF_CalcReg_hyakuH=regex("([0-9]+?)百"),TSF_CalcReg_juuD=regex("([0-9]+?)十");
 string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-//    if( count(match(TSF_calcA,TSF_CalcReg_ascii))==0 ){
     if( !match(TSF_calcA,TSF_CalcReg_ascii) ){
         foreach(string TSF_opewordK;TSF_Calc_opeorder){
             TSF_calcA=replace(TSF_calcA,TSF_opewordK,TSF_Calc_opeword[TSF_opewordK]);
@@ -161,10 +165,12 @@ string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSF_doc:整数のコンマ�
 //        TSF_calcA=replace(TSF_calcA,regex("([0-9百十]+?)銭"),"+($1)/(100)");
         TSF_calcA=replace(TSF_calcA,TSF_CalcReg_senCpercent,"+($1)/(100)");
         foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
-            TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"+($1)"~TSF_okusenV);
+//            TSF_calcA=replace(TSF_calcA,regex("([0-9千百十]+?)"~TSF_okusenK),"+($1)"~TSF_okusenV);
+            TSF_calcA=replace(TSF_calcA,regex(TSF_CalcReg_okusen[TSF_okusenK]),"+($1)"~TSF_okusenV);
         }
         foreach(string TSF_rinmouK,string TSF_rinmouV;TSF_Calc_rinmoudic){
-            TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"+($1)"~TSF_rinmouV);
+//            TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)"~TSF_rinmouK),"+($1)"~TSF_rinmouV);
+            TSF_calcA=replace(TSF_calcA,regex(TSF_CalcReg_rinmou[TSF_rinmouK]),"+($1)"~TSF_rinmouV);
         }
 //        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)千"),"+$1*(1000)");
 //        TSF_calcA=replace(TSF_calcA,regex("([0-9]+?)百"),"+$1*(100)");
