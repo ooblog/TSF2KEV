@@ -4,8 +4,7 @@ import std.stdio;
 import std.string;
 import std.conv;
 import std.math;
-import std.bigint;
-import std.regex;
+import std.datetime;
 
 import TSF_Io;
 import TSF_Forth;
@@ -28,6 +27,45 @@ string TSF_Time_calender(){    //#TSFdoc:現在日時の取得。1枚[daytimefor
     return "";
 }
 
+string[] TSF_zodiacjp=["鼠","牛","虎","兎","龍","蛇","馬","羊","猿","鶏","犬","猪"];
+string[] TSF_zodiacch=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+long[] TSF_maxmonth=    [31,31,28,31,30,31,30,31,31,30,31,30,31,31];
+long[] TSF_maxmonthleep=[31,31,29,31,30,31,30,31,31,30,31,30,31,31];
+string[] TSF_monthjp=   [  "師走",  "睦月",   "如月",  "弥生",   "卯月",  "皐月","水無月",  "文月",  "葉月",  "長月",   "神無月",   "霜月",  "師走",  "睦月"];
+string[] TSF_month_jp=  ["　師走","　睦月", "　如月","　弥生", "　卯月","　皐月","水無月","　文月","　葉月","　長月",   "神無月", "　霜月","　師走","　睦月"];
+string[] TSF_monthjpiz= [  "師走",  "睦月",   "如月",  "弥生",   "卯月",  "皐月","水無月",  "文月",  "葉月",  "長月",   "神有月",   "霜月",  "師走",  "睦月"];
+string[] TSF_month_jpiz=["　師走","　睦月", "　如月","　弥生", "　卯月","　皐月","水無月","　文月","　葉月","　長月",   "神有月", "　霜月","　師走","　睦月"];
+string[] TSF_monthenl=  ["December","January","February","March","April", "May",   "June",  "July",  "August","September","October","November","December","January"];
+string[] TSF_monthens=  ["Dec",     "Jan",    "Feb",     "Mar",  "Apr"  , "May",   "Jun",   "Jul",   "Aug",   "Sep",      "Oct",    "Nov",     "Dec",      "Jan"];
+string[] TSF_monthenc=  ["D",       "J",      "F",          "C", "A",     "M",       "N",     "L",    "U",    "S",        "O",      "N"       ,"D",        "J"];
+string[] TSF_monthenh=  ["December","January","February","marCh","April", "May",   "juNe",  "juLy",  "aUgust","September","October","November","December","January"];
+string[] TSF_weekdayjp =["月",    "火",     "水",       "木",      "金",    "土",     "日"];
+string[] TSF_weekdayens=["Mon",   "Tue",    "Wed"      ,"Thu",     "Fri",   "Sat",     "Sun"];
+string[] TSF_weekdayenl=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+string[] TSF_weekdayenc=["M",     "T",      "W",           "R",    "F",     "S",        "U"];
+string[] TSF_weekdayenh=["Monday","Tuesday","Wednesday","thuRsday","Friday","Saturday","sUnday"];
+string[] TSF_ampmjp= ["午前","午後","徹夜"];
+string[] TSF_ampmenl=["am",  "pm", "an"];
+string[] TSF_ampmenu=["AM",  "PM", "AN"];
+
+long TSF_earlier_diffminute=0,TSF_earlier_overhour=24;
+SysTime TSF_earlier_now;
+//auto TSF_meridian_now;
+//auto TSF_allnight_now;
+enum TSF_meridian {
+    Year,Yearlower,YearZodiac,Yeardays,YearIso,WeekNumberYearIso,WeekDayIso,
+    Month,Monthdays,
+    EnumLen,};
+long[TSF_meridian.EnumLen] TSF_meridian_Enum;
+enum TSF_allnight {
+    Year,Yearlower,YearZodiac,Yeardays,YearIso,WeekNumberYearIso,WeekDayIso,
+    Month,Monthdays,carryMonth,
+    EnumLen,};
+long[TSF_allnight.EnumLen] TSF_allnight_Enum;
+
+void TSF_time_setdaytime(...){
+    TSF_earlier_now=Clock.currTime();
+}
 
 string TSF_Time_getdaytime(string TSF_daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
     return TSF_daytimeformat;
