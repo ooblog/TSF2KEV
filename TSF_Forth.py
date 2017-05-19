@@ -518,6 +518,8 @@ def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧にスタック名とし
     return ""
 
 def TSF_Forth_clone(TSF_clone,TSF_the):    #TSFdoc:スタックを複製する。(TSFAPI)
+    if not TSF_clone in TSF_stackD:
+        TSF_stackO.append(TSF_clone)
     if TSF_the in TSF_stackD:
         TSF_stackD[TSF_clone]=[TSF_card for TSF_card in TSF_stackD[TSF_the]]
     else:

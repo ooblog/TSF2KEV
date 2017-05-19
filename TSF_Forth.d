@@ -657,6 +657,9 @@ string TSF_Forth_pushNthey(){    //#TSFdoc:スタック一覧にスタック名�
 }
 
 void TSF_Forth_clone(string TSF_clone,string TSF_the){    //#TSFdoc:スタックを複製する。(TSFAPI)
+    if( TSF_clone !in TSF_stackD ){
+        TSF_stackO~=[TSF_clone];
+    }
     if( TSF_the in TSF_stackD ){
         TSF_stackD[TSF_clone]=TSF_stackD[TSF_the].dup;
     }

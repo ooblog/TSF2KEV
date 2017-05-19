@@ -62,7 +62,6 @@ TSF_allnight_EnumLen=7+3;  (
 )=range(0,TSF_allnight_EnumLen)
 TSF_allnight_Enum=[0]*TSF_allnight_EnumLen;
 
-TSF_TimeEnum=0
 #TSF_earlier_diffminute,TSF_earlier_overhour=0,24
 #TSF_earlier_now,TSF_meridian_now,TSF_allnight_now=None,None,None
 #TSF_meridian_Year,TSF_meridian_Yearlower,TSF_meridian_YearZodiac,TSF_meridian_Yeardays,TSF_meridian_YearIso,TSF_meridian_WeekNumberYearIso,TSF_meridian_WeekDayIso=None,None,None,None,None,None,None
