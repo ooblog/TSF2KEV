@@ -3,6 +3,7 @@
 from __future__ import division,print_function,absolute_import,unicode_literals
 
 import re
+import random
 
 from TSF_Io import *
 from TSF_Forth import *
@@ -45,11 +46,61 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
 #        "#TSF_countsL":TSF_Match_countsL, "#文字列群で規択計数":TSF_Match_countsL,
 #        "#TSF_countsH":TSF_Match_countsH, "#文字列群で似択計数":TSF_Match_countsH,
 #        "#TSF_countsL":TSF_Match_countsL, "#文字列群で札択計数":TSF_Match_countsL,
+        "#TSF_replacesQSN":TSF_Match_replacesQSN, "#同択文字列群で順択置換":TSF_Match_replacesQSN,
+        "#TSF_replacesQDN":TSF_Match_replacesQDN, "#同択文字列で順択置換":TSF_Match_replacesQDN,
+        "#TSF_replacesQON":TSF_Match_replacesQON, "#同択で順択置換":TSF_Match_replacesQON,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
+
+def TSF_Match_replace(TSF_QIRHL,TSF_SDO,TSF_FNCMVA):    #TSFdoc:replace関連の共通部品。(TSFAPI)
+    TSF_theN=TSF_Forth_drawthe();  TSF_theO=TSF_Forth_drawthe();  TSF_theT=TSF_Forth_drawthe();
+    TSF_Text="";  TSF_cardsN,TSF_cardsO=[],[];  TSF_cardsI=TSF_cardsN
+    TSF_cardsN_len=0;  TSF_cardsO_len=0;  TSF_SDOpoke="";
+    if TSF_SDO == "D" or TSF_SDO == "O":
+        TSF_cardsN=TSF_theN;  TSF_cardsN_len=1;
+        TSF_cardsO=TSF_theO;  TSF_cardsO_len=1;
+        TSF_Text=TSF_theT;  TSF_SDOpoke="D"
+    if TSF_SDO == "S" or TSF_SDO == "O":
+        TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
+        TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=len(TSF_cardsO);
+        if TSF_theT in TSF_Forth_stackD():
+            TSF_Text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]));  TSF_SDOpoke="S"
+    if TSF_FNCMVA == "F":
+        TSF_cardsI=[TSF_cardsN[-1] for TSF_peek in range(TSF_cardsO_len)]
+    elif TSF_FNCMVA == "N":
+        TSF_cardsI=[(TSF_cardsN[TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
+    elif TSF_FNCMVA == "C":
+        TSF_cardsI=[TSF_cardsN[TSF_peek%TSF_cardsN_len] for TSF_peek in range(TSF_cardsO_len)]
+    elif TSF_FNCMVA == "M":
+        TSF_cardsI=[TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
+    elif TSF_FNCMVA == "V":
+        TSF_cardsI=[(TSF_cardsN[TSF_cardsN_len-1-TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
+    elif TSF_FNCMVA == "A":
+        TSF_cardsI=[TSF_cardsN[random.randint(0,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
+    if TSF_QIRHL == "Q":
+        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
+            TSF_Text=TSF_Text.replace(TSF_card,TSF_cardsI[TSF_peek])
+#    elif TSF_QIRHL == "I":
+    elif TSF_QIRHL == "R":
+        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
+            TSF_Text=re.sub(re.compile(TSF_card,re.MULTILINE),TSF_cardsI[TSF_peek],TSF_Text)
+#    elif TSF_QIRHL == "H":
+#    elif TSF_QIRHL == "L":
+    if TSF_SDOpoke == "S":
+        TSF_Forth_setTSF(TSF_theT,TSF_Text,"N")
+    elif TSF_SDOpoke == "D":
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text)
+
+def TSF_Match_replacesQSN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+    TSF_Match_replace("Q","S","N");    return ""
+def TSF_Match_replacesQDN():    #TSFdoc:stackTをカードとみなしてcardOの文字列をcardNの文字列に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+    TSF_Match_replace("Q","D","N");    return ""
+def TSF_Match_replacesQON():    #TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。
+    TSF_Match_replace("Q","O","N");    return ""
+
 
 def TSF_Match_replacesQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);

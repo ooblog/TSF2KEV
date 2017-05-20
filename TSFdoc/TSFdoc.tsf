@@ -4,10 +4,10 @@ TSF_Tab-Separated-Forth:
 #TSFdocs_files:
 #	READMEtest.md	READMEtest.html
 #TSFdocs_basedoc:
-#	<？P><＄TSF_MD_H1:0><？BR><？/P>
+#	{?P}{$TSF_MD_H1:0}{?BR}{?/P}
 #TSFdocs_tags:
-#	<＄TSF_MD_H1:0>	<？P>	<？/P>	<？BR>
-#<＄TSF_MD_H1:0>
+#	{$TSF_MD_H1:0}	{?P}	{?/P}	{?BR}
+#{$TSF_MD_H1:0}
 #	プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 # -- merge --
 TSFdocs_merge:
