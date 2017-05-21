@@ -18,7 +18,7 @@ from TSF_Trans import *
 
 def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),"T")
+        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),'T')
     TSF_Forth_setTSF("help:","\t".join([
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
@@ -32,9 +32,8 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
-        ]),"N")
+        ]),'N')
     TSF_Forth_samplerun("TSF_sample_help")
-#        "  --quine       TSF_Forth_viewthey() Quine (self source) sample",
 #        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
 #        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
 #        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
@@ -42,14 +41,14 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
 
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "Hello world","#TSF_echo"]),"T")
+        "Hello world","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_Helloworld")
 
 def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "echoTSF:","#TSF_this","#TSF_fin."]),"T")
+        "echoTSF:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("echoTSF:","\t".join([
-        "aboutTSF:","#TSF_argvsthe","#TSF_echoN","echoRPNcalc:","#TSF_this"]),"T")
+        "aboutTSF:","#TSF_argvsthe","#TSF_echoN","echoRPNcalc:","#TSF_this"]),'T')
     TSF_Forth_setTSF("aboutTSF:","\t".join([
         "",
         "○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。",
@@ -97,13 +96,13 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　「S」(Stack)スタックを用意、同名のカードが存在しても、スタックを用います。",
         "　「D」(carD)カードを用意、同名のスタックが存在しても、スタック名そのものを1枚のカード束とみなします。",
         "　「O」(stack Or card)スタックまたはカードを用意、スタックが存在すればスタックを用い、スタックが存在しなければスタック名そのものを1枚のカード束とみなします。",
-        ""]),"N")
+        ""]),'N')
     TSF_Forth_setTSF("echoRPNcalc:","\t".join([
-        "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"]),"T")
+        "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"]),'T')
     TSF_Forth_setTSF("aboutRPNtest:","\t".join([
-        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo"]),"T")
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo"]),'T')
     TSF_Forth_setTSF("aboutCALCdata:","\t".join([
-        "1","3","m1|2"]),"T")
+        "1","3","m1|2"]),'T')
     TSF_Forth_setTSF("aboutRPNcalc:","\t".join([
         "",
         "○「#TSF_RPN」逆ポーランド小数電卓の概要。",
@@ -128,106 +127,106 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と条件演算子にチルダ追加。「N~」は「n|0」のチェック用途。",
         "　「#TSF_-calc」を用いると計算結果の符号を「p」「m」から「-」のみに変更できる。",
         "　「#TSF_calcJA」を用いると億千万円銭など通貨的な助数詞を扱う。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、1万分の1(‱)は「毛」表記。",
-        ""]),"N")
+        ""]),'N')
     TSF_Forth_setTSF("echoTIME:","\t".join([
-        "aboutTIMEtest:","#TSF_this","aboutTIME:","#TSF_argvsthe","#TSF_echoN"]),"T")
+        "aboutTIMEtest:","#TSF_this","aboutTIME:","#TSF_argvsthe","#TSF_echoN"]),'T')
     TSF_Forth_setTSF("aboutTIMEtest:","\t".join([
-        "▽「time」系は準備中","#TSF_echo"]),"T")
+        "▽「time」系は準備中","#TSF_echo"]),'T')
     TSF_Forth_setTSF("aboutTIME:","\t".join([
         "",
         "○「time」系分数電卓も再開発中につき説明不足になります。",
         "",
         "　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。",
         "　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。",
-        ""]),"N")
+        ""]),'N')
     TSF_Forth_samplerun("TSF_sample_about")
 
 def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
     TSF_Forth_setTSF("RPN:","\t".join([
-        "#TSF_RPN","#TSF_echo"]),"T")
+        "#TSF_RPN","#TSF_echo"]),'T')
     TSF_Forth_setTSF("RPNsetup:","\t".join([
-        "RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
+        "RPNargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","RPNjump:","RPNargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),'T')
     TSF_Forth_setTSF("RPNjump:","\t".join([
-        "RPNdefault:","RPNdefault:","RPN:"]),"T")
+        "RPNdefault:","RPNdefault:","RPN:"]),'T')
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "RPNsetup:","#TSF_this","#TSF_fin."]),"T")
+        "RPNsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("RPNdefault:","\t".join([
-        "1,3/m1|2-","RPN:","#TSF_this"]),"T")
+        "1,3/m1|2-","RPN:","#TSF_this"]),'T')
     TSF_Forth_samplerun("TSF_sample_RPN")
 
 def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "calcsetup:","#TSF_this","#TSF_fin."]),"T")
+        "calcsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("calcsetup:","\t".join([
-        "calcargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","calcjump:","calcargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),"T")
+        "calcargvs:","#TSF_that","#TSF_argvs",",","#TSF_sandwichN","calcjump:","calcargvs:","#TSF_lenthe","#TSF_peekNthe","#TSF_this"]),'T')
     TSF_Forth_setTSF("calcjump:","\t".join([
-        "calcdefault:","calcdefault:","calc:"]),"T")
+        "calcdefault:","calcdefault:","calc:"]),'T')
     TSF_Forth_setTSF("calcdefault:","\t".join([
-        "1/3-m1|2","calc:","#TSF_this"]),"T")
+        "1/3-m1|2","calc:","#TSF_this"]),'T')
     TSF_Forth_setTSF("calc:","\t".join([
-        "#TSF_calc","#TSF_echo"]),"T")
+        "#TSF_calc","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_calc")
 
 def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "calcsetup:","#TSF_this","#TSF_fin."]),"T")
+        "calcsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("calcsetup:","\t".join([
-        "calcdef:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_calcJA","#TSF_echo"]),"T")
+        "calcdef:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_calcJA","#TSF_echo"]),'T')
     TSF_Forth_setTSF("calcdef:","\t".join([
-        "1/3-m1|2"]),"N")
+        "1/3-m1|2"]),'N')
     TSF_Forth_samplerun("TSF_sample_calc")
 
 def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "FBsetup:","#TSF_this","#TSF_fin."]),"T")
+        "FBsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("FBsetup:","\t".join([
-        "FZcount:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","FZcount:","4","#TSF_pokeNthe","FBloop:","#TSF_this"]),"T")
+        "FZcount:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","FZcount:","4","#TSF_pokeNthe","FBloop:","#TSF_this"]),'T')
     TSF_Forth_setTSF("FBloop:","\t".join([
-        "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"]),"T")
+        "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("FZcount:","\t".join([
-        "0","Fizz","Buzz","Fizz&Buzz","20"]),"T")
+        "0","Fizz","Buzz","Fizz&Buzz","20"]),'T')
     TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
 def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "#TSF_argvs","#TSF_pullFthat","bottlessetup:","#TSF_this","#TSF_fin.","9"]),"T")
+        "#TSF_argvs","#TSF_pullFthat","bottlessetup:","#TSF_this","#TSF_fin.","9"]),'T')
     TSF_Forth_setTSF("bottlessetup:","\t".join([
-        "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"]),"T")
+        "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"]),'T')
     TSF_Forth_setTSF("callbottles:","\t".join([
-        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),"T")
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("onthewallstr:","\t".join([
-        "{buybottles}","{drink}","{drinked}"]),"T")
+        "{buybottles}","{drink}","{drinked}"]),'T')
     TSF_Forth_setTSF("bottlescall:","\t".join([
-        "nomorebottles:","1bottle:","2bottles:","3ormorebottles:"]),"T")
+        "nomorebottles:","1bottle:","2bottles:","3ormorebottles:"]),'T')
     TSF_Forth_setTSF("3ormorebottles:","\t".join([
         "{drink} bottles of beer on the wall, {drink} bottles of beer.",
-        "Take one down and pass it around, {drinked} bottles of beer on the wall."]),"N")
+        "Take one down and pass it around, {drinked} bottles of beer on the wall."]),'N')
     TSF_Forth_setTSF("2bottles:","\t".join([
         "{drink} bottles of beer on the wall, {drink} bottles of beer.",
-        "Take one down and pass it around, 1 bottle of beer on the wall."]),"N")
+        "Take one down and pass it around, 1 bottle of beer on the wall."]),'N')
     TSF_Forth_setTSF("1bottle:","\t".join([
         "{drink} bottle of beer on the wall, {drink} bottle of beer.",
-        "Take one down and pass it around, no more bottles of beer on the wall."]),"N")
+        "Take one down and pass it around, no more bottles of beer on the wall."]),'N')
     TSF_Forth_setTSF("nomorebottles:","\t".join([
         "No more bottles of beer on the wall, no more bottles of beer.",
-        "Go to the store and buy some more, {buybottles} bottles of beer on the wall."]),"N")
+        "Go to the store and buy some more, {buybottles} bottles of beer on the wall."]),'N')
     TSF_Forth_samplerun("TSF_sample_99beer")
 
 def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "quine_echo:","#TSF_this","#TSF_fin."]),"T")
+        "quine_echo:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("quine_echo:","\t".join([
-        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"]),"T")
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"]),'T')
     TSF_Forth_setTSF("quine_ext:","\t".join([
-        ".tsf",".py",".d"]),"T")
+        ".tsf",".py",".d"]),'T')
     TSF_Forth_setTSF("quine_view:","\t".join([
-        "quine_TSF:","quine_Python:","quine_D:"]),"T")
+        "quine_TSF:","quine_Python:","quine_D:"]),'T')
     TSF_Forth_setTSF("quine_TSF:","\t".join([
-        "#TSF_viewthey"]),"N")
+        "#TSF_viewthey"]),'N')
     TSF_Forth_setTSF("quine_Python:","\t".join([
-        "#TSF_Python"]),"N")
+        "#TSF_Python"]),'N')
     TSF_Forth_setTSF("quine_D:","\t".join([
-        "#TSF_D-lang"]),"N")
+        "#TSF_D-lang"]),'N')
     TSF_Forth_samplerun("TSF_sample_quine")
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)

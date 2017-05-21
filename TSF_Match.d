@@ -73,7 +73,7 @@ void TSF_Match_replace(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA){    //#TSFdo
     }
     switch( TSF_SDOpoke ){
         case 'S':
-            TSF_Forth_setTSF(TSF_theT,TSF_Text,"N"); break;
+            TSF_Forth_setTSF(TSF_theT,TSF_Text,'N'); break;
         case 'D':
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text); break;
         default: break;

@@ -762,7 +762,7 @@ string TSF_Forth_mainfile(){    //#TSFdoc:TSFの実装ファイルを確認す�
 string[] TSF_mainandargvs=null;
 string function()[string] TSF_cardD=null;
 string[] [string] TSF_stackD=null;
-string [string] TSF_styleD=null;
+char [string] TSF_styleD=null;
 long[string] TSF_callptrD=null;
 string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
 string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
@@ -775,7 +775,7 @@ void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()
     TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_cardscount=0;
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.","T");
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.",'T');
     TSF_mainandargvs=TSF_sysargvs;
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards]~TSF_addcalls;
     foreach(void function(ref string function()[string],ref string[]) TSF_Initcard;TSF_Initcards){
@@ -795,10 +795,10 @@ string[] TSF_Forth_importlist(...){    //#TSFdoc:モジュール一覧を管理�
     return TSF_importlist;
 }
 
-string TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示スタイルを指定する(TSFAPI)。
-    string TSF_style="";
+char TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示スタイルを指定する(TSFAPI)。
+    char TSF_style='T';
     if( TSF_the !in TSF_stackD ){
-        if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        if( _arguments.length>0 && _arguments[0]==typeid(char) ){
             TSF_styleD[TSF_the]=TSF_style;
         }
         TSF_style=TSF_styleD[TSF_the];
@@ -807,13 +807,13 @@ string TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示�
 }
 
 void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-    string TSF_text="",TSF_style="T";
+    string TSF_text="";  char TSF_style='T';
     if( _arguments.length>0 ){
         if( _arguments[0]==typeid(string) ){
             TSF_text=va_arg!(string)(_argptr);
         }
-        if( _arguments.length>1 && _arguments[1]==typeid(string) ){
-            TSF_style=va_arg!(string)(_argptr);
+        if( _arguments.length>1 && _arguments[1]==typeid(char) ){
+            TSF_style=va_arg!(char)(_argptr);
         }
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
@@ -832,7 +832,7 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
 string TSF_Forth_loadtext(string TSF_the,string TSF_path){    //#TSFdoc:スタックにテキストファイルを読み込む。(TSFAPI)
     string TSF_text=TSF_Io_loadtext(TSF_path);
     TSF_text=TSF_Io_ESCencode(TSF_text);
-    TSF_Forth_setTSF(TSF_the,TSF_text,"N");
+    TSF_Forth_setTSF(TSF_the,TSF_text,'N');
     return TSF_text;
 }
 
@@ -854,7 +854,7 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSFdo
                         TSF_stackO~=[TSF_the]; TSF_styleO~=[TSF_the];
                     }
                     TSF_stackD[TSF_the]=null;
-                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?"O":"";
+                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?'O':'T';
                 }
             }
             if( count(TSF_ESCstack,TSF_the)==0 ){
@@ -863,8 +863,8 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSFdo
                     TSF_stackO~=[TSF_the]; TSF_styleO~=[TSF_the];
                 }
                 TSF_stackD[TSF_the]~=TSF_lineL;
-                if( TSF_styleD[TSF_the]!="O" ){
-                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?"T":"N";
+                if( TSF_styleD[TSF_the]!='O' ){
+                    TSF_styleD[TSF_the]=TSF_lineL.length>=2?'T':'N';
                 }
             }
         }
@@ -933,12 +933,12 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
         TSF_view_log=va_arg!(string)(_argptr);
     }
     if( TSF_the in TSF_stackD ){
-        string TSF_style=TSF_styleD.get(TSF_the,"T");
+        char TSF_style=TSF_styleD.get(TSF_the,'T');
         string TSF_view_logline="";
         switch( TSF_style ){
-            case "O":  TSF_view_logline=format("%s\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
-            case "T":  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
-            case "N": default:  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\n\t"));  break;
+            case 'O':  TSF_view_logline=format("%s\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
+            case 'T':  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
+            case 'N': default:  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\n\t"));  break;
         }
         TSF_view_log=(TSF_view_io)?TSF_Io_printlog(TSF_view_logline,TSF_view_log):TSF_view_log~TSF_view_logline;
     }
@@ -1003,7 +1003,7 @@ string[] TSF_Forth_stackO(...){    //#TSFdoc:TSF_stackOの取得。(TSFAPI)
     return TSF_stackO;
 }
 
-string [string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
+char[string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
     return TSF_styleD;
 }
 
@@ -1012,9 +1012,9 @@ void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&
 void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Forth.log";
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T");
-    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T");
-    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T");
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.",'T');
+    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this",'T');
+    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this",'T');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }

@@ -19,7 +19,7 @@ void main(string[] sys_argvs){
     TSF_Forth_mainfilepath(absolutePath(__FILE__));
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),"T");
+        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("help:",join([
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
@@ -32,7 +32,7 @@ void main(string[] sys_argvs){
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
-        "  --quine       quine (TSF,Python,D... selfsource) sample"],"\t"),"N");
+        "  --quine       quine (TSF,Python,D... selfsource) sample"],"\t"),'N');
 
     TSF_Forth_run();
 }

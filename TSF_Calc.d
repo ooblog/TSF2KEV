@@ -551,17 +551,17 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
     TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "calccount:","#TSF_this","#TSF_fin."],"\t"),"T");
+        "calccount:","#TSF_this","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("calccount:",join([
-        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"],"\t"),"T");
+        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("calcjump:",join([
-        "#exit","calcpop:"],"\t"),"T");
+        "#exit","calcpop:"],"\t"),'T');
     TSF_Forth_setTSF("calcpop:",join([
-        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),"T");
+        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("calcpeekdata:",join([
-        "009","108","207","306","405","504","603","702","801","900"],"\t"),"T");
+        "009","108","207","306","405","504","603","702","801","900"],"\t"),'T');
     TSF_Forth_setTSF("calcjumpdata:",join([
-        "True:","False:"],"\t"),"T");
+        "True:","False:"],"\t"),'T');
     TSF_Forth_setTSF("calcsample:",join([
         "0|0","0|0,","0/0","0,0/",",0","0",
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
@@ -577,7 +577,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
         "0|1N~True:~False:","n|0N~True:~False:",
         "2/3","2|3","2_3","3/2","3|2","3_2",
-        ],"\t"),"N");
+        ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }

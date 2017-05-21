@@ -427,17 +427,17 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "calccount:","#TSF_this","#TSF_fin."]),"T")
+        "calccount:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("calccount:","\t".join([
-        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"]),"T")
+        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"]),'T')
     TSF_Forth_setTSF("calcjump:","\t".join([
-        "#exit","calcpop:"]),"T")
+        "#exit","calcpop:"]),'T')
     TSF_Forth_setTSF("calcpop:","\t".join([
-        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),"T")
+        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("calcpeekdata:","\t".join([
-        "009","108","207","306","405","504","603","702","801","900"]),"T")
+        "009","108","207","306","405","504","603","702","801","900"]),'T')
     TSF_Forth_setTSF("calcjumpdata:","\t".join([
-        "True:","False:"]),"T")
+        "True:","False:"]),'T')
     TSF_Forth_setTSF("calcsample:","\t".join([
         "0|0","0|0,","0/0","0,0/",",0","0",
         "2,3+","2,3-","2,3*","2,3/","(2,3-),5+",
@@ -453,7 +453,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
         "0|1N~True:~False:","n|0N~True:~False:",
         "2/3","2|3","2_3","3/2","3|2","3_2",
-        ]),"N")
+        ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

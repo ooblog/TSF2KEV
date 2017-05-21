@@ -619,7 +619,7 @@ def TSF_Forth_initTSF(TSF_sysargvs=[],TSF_addcards=[]):    #TSFdoc:スタック�
     TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_cardscount=0
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.",'T')
     TSF_mainandargvs=TSF_sysargvs
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
@@ -638,12 +638,12 @@ def TSF_Forth_style(TSF_the,TSF_style=None):    #TSFdoc:スタックの表示ス
             TSF_styleD[TSF_the]=TSF_style
         TSF_style=TSF_styleD[TSF_the]
     else:
-        TSF_style=""
+        TSF_style='T'
     return TSF_style
 
 def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外からスタックにカードを積む/無を積むと削除。(TSFAPI)
     global TSF_stackD,TSF_styleD,TSF_stackO,TSF_styleO
-    if TSF_style == None: TSF_style="T"
+    if TSF_style == None: TSF_style='T'
     if TSF_text != None:
         if not TSF_the in TSF_stackD:
             TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
@@ -659,7 +659,7 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
 def TSF_Forth_loadtext(TSF_the,TSF_path):    #TSFdoc:スタックにテキストファイルを読み込む。(TSFAPI)
     TSF_text=TSF_Io_loadtext(TSF_path)
     TSF_text=TSF_Io_ESCencode(TSF_text)
-    TSF_Forth_setTSF(TSF_the,TSF_text,"N")
+    TSF_Forth_setTSF(TSF_the,TSF_text,'N')
     return TSF_text
 
 def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSFdoc:スタック内のテキストをTSFとして読み込む。(TSFAPI)
@@ -677,14 +677,14 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSFdoc:ス
                     if not TSF_the in TSF_stackD:
                         TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
                     TSF_stackD[TSF_the]=[]
-                    TSF_styleD[TSF_the]="O" if len(TSF_lineL) >= 2 else ""
+                    TSF_styleD[TSF_the]='O' if len(TSF_lineL) >= 2 else 'T'
             if not TSF_the in TSF_ESCstack:
                 TSF_lineL=TSF_line.split('\t')[1:]
                 if not TSF_the in TSF_stackD:
                     TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
                 TSF_stackD[TSF_the].extend(TSF_lineL)
-                if TSF_styleD[TSF_the] != "O":
-                    TSF_styleD[TSF_the]="T" if len(TSF_lineL) >= 2 else "N"
+                if TSF_styleD[TSF_the] != 'O':
+                    TSF_styleD[TSF_the]='T' if len(TSF_lineL) >= 2 else 'N'
         if TSF_mergedel:
              TSF_Forth_setTSF(TSF_path)
 
@@ -734,12 +734,12 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
 def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタックの内容をテキスト表示(TSFAPI)。
     if TSF_view_log == None: TSF_view_log="";
     if TSF_the in TSF_stackD:
-        TSF_style=TSF_styleD.get(TSF_the,"T")
-        if TSF_style == "O":
+        TSF_style=TSF_styleD.get(TSF_the,'T')
+        if TSF_style == 'O':
             TSF_view_logline="{0}\t{1}\n".format(TSF_the,"\t".join(TSF_stackD[TSF_the]))
-        elif TSF_style == "T":
+        elif TSF_style == 'T':
             TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\t".join(TSF_stackD[TSF_the]))
-        else:  # TSF_style == "N":
+        else:  # TSF_style == 'N':
             TSF_view_logline="{0}\n\t{1}\n".format(TSF_the,"\n\t".join(TSF_stackD[TSF_the]))
         TSF_view_log=TSF_Io_printlog(TSF_view_logline,TSF_log=TSF_view_log) if TSF_view_io == True else TSF_view_log+TSF_view_logline
     return TSF_view_log
@@ -801,9 +801,9 @@ TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Forth.log";
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.","T")
-    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this","T")
-    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this","T")
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.",'T')
+    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this",'T')
+    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this",'T')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
