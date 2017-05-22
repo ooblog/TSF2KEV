@@ -193,7 +193,7 @@ def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
     TSF_Forth_setTSF("bottlessetup:","\t".join([
         "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"]),'T')
     TSF_Forth_setTSF("callbottles:","\t".join([
-        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),'T')
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQSN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("onthewallstr:","\t".join([
         "{buybottles}","{drink}","{drinked}"]),'T')
     TSF_Forth_setTSF("bottlescall:","\t".join([
@@ -216,7 +216,7 @@ def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "quine_echo:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("quine_echo:","\t".join([
-        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"]),'T')
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQON","#TSF_this"]),'T')
     TSF_Forth_setTSF("quine_ext:","\t".join([
         ".tsf",".py",".d"]),'T')
     TSF_Forth_setTSF("quine_view:","\t".join([

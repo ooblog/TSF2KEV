@@ -12,12 +12,12 @@ from TSF_Forth import *
 def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Match")
     TSF_Forth_cards={
-        "#TSF_replacesQN":TSF_Match_replacesQN, "#同択文字列群で順択置換":TSF_Match_replacesQN,
-        "#TSF_replacesQC":TSF_Match_replacesQC, "#同択文字列群で周択置換":TSF_Match_replacesQC,
-        "#TSF_replacesQM":TSF_Match_replacesQM, "#同択文字列群で囲択置換":TSF_Match_replacesQM,
+#        "#TSF_replacesQN":TSF_Match_replacesQN, "#同択文字列群で順択置換":TSF_Match_replacesQN,
+#        "#TSF_replacesQC":TSF_Match_replacesQC, "#同択文字列群で周択置換":TSF_Match_replacesQC,
+#        "#TSF_replacesQM":TSF_Match_replacesQM, "#同択文字列群で囲択置換":TSF_Match_replacesQM,
 #        "#TSF_replacesQV":TSF_Match_replacesQV, "#同択文字列群で逆択置換":TSF_Match_replacesQV,
 #        "#TSF_replacesQA":TSF_Match_replacesQA, "#同択文字列群で乱択置換":TSF_Match_replacesQA,
-        "#TSF_replacesQT":TSF_Match_replacesQT, "#同択文字列群で額択置換":TSF_Match_replacesQT,
+#        "#TSF_replacesQT":TSF_Match_replacesQT, "#同択文字列群で額択置換":TSF_Match_replacesQT,
 #        "#TSF_replacesIN":TSF_Match_replacesIN, "#含択文字列群で順択置換":TSF_Match_replacesIN,
 #        "#TSF_replacesIC":TSF_Match_replacesIC, "#含択文字列群で周択置換":TSF_Match_replacesIC,
 #        "#TSF_replacesIM":TSF_Match_replacesIM, "#含択文字列群で囲択置換":TSF_Match_replacesIM,
@@ -29,14 +29,14 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
 #        "#TSF_replacesRM":TSF_Match_replacesRM, "#規択文字列群で囲択置換":TSF_Match_replacesRM,
 #        "#TSF_replacesRV":TSF_Match_replacesRV, "#規択文字列群で逆択置換":TSF_Match_replacesRV,
 #        "#TSF_replacesRA":TSF_Match_replacesRA, "#規択文字列群で乱択置換":TSF_Match_replacesRA,
-        "#TSF_replacesRT":TSF_Match_replacesRT, "#含択文字列群で額択置換":TSF_Match_replacesRT,
+#        "#TSF_replacesRT":TSF_Match_replacesRT, "#含択文字列群で額択置換":TSF_Match_replacesRT,
 #        "#TSF_replacesHN":TSF_Match_replacesHN, "#似択文字列群で順択置換":TSF_Match_replacesHN,
 #        "#TSF_replacesHC":TSF_Match_replacesHC, "#似択文字列群で周択置換":TSF_Match_replacesHC,
 #        "#TSF_replacesHM":TSF_Match_replacesHM, "#似択文字列群で囲択置換":TSF_Match_replacesHM,
 #        "#TSF_replacesHV":TSF_Match_replacesHV, "#似択文字列群で逆択置換":TSF_Match_replacesHV,
 #        "#TSF_replacesHA":TSF_Match_replacesHA, "#似択文字列群で乱択置換":TSF_Match_replacesHA,
 #        "#TSF_replacesHT":TSF_Match_replacesHT, "#似択文字列群で額択置換":TSF_Match_replacesHT,
-        "#TSF_aliasQN":TSF_Match_aliasQN, "#同択カードを順択置換":TSF_Match_aliasQN,
+#        "#TSF_aliasQN":TSF_Match_aliasQN, "#同択カードを順択置換":TSF_Match_aliasQN,
 #        "#TSF_aliasesQC":TSF_Match_aliasesQC, "#文字列群で順択置換":TSF_Match_aliasesQC,
 #        "#TSF_aliasesQM":TSF_Match_aliasesQM, "#文字列群で順択置換":TSF_Match_aliasesQM,
 #        "#TSF_aliasesQV":TSF_Match_aliasesQV, "#文字列群で順択置換":TSF_Match_aliasesQV,
@@ -58,6 +58,7 @@ def TSF_Match_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
+# TSF --calc 5*3*6*2 = 180
 def TSF_Match_replace(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RAC):    #TSFdoc:replace,aliass,countsの共通部品。(TSFAPI)
     TSF_theN=TSF_Forth_drawthe();  TSF_theO=TSF_Forth_drawthe();  TSF_theT=TSF_Forth_drawthe();
     TSF_Text="";  TSF_cardsN,TSF_cardsO=[],[];  TSF_cardsI=TSF_cardsN;  TSF_cardsT=""
@@ -113,46 +114,6 @@ def TSF_Match_replace(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RAC):    #TSFdoc:replace,
     elif TSF_SDOpoke == 'D':
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text)
 
-def TSF_Match_replace_(TSF_QIRHL,TSF_SDO,TSF_FNCMVA):    #TSFdoc:replace関連の共通部品。(TSFAPI)
-    TSF_theN=TSF_Forth_drawthe();  TSF_theO=TSF_Forth_drawthe();  TSF_theT=TSF_Forth_drawthe();
-    TSF_Text="";  TSF_cardsN,TSF_cardsO=[],[];  TSF_cardsI=TSF_cardsN;  TSF_cardsT=""
-    TSF_cardsN_len=0;  TSF_cardsO_len=0;  TSF_SDOpoke="";
-    if TSF_SDO == 'D' or TSF_SDO == 'O':
-        TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
-        TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
-        TSF_Text=TSF_theT;  TSF_SDOpoke='D';
-    if TSF_SDO == 'S' or TSF_SDO == 'O':
-        TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-        TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=len(TSF_cardsO);
-        if TSF_theT in TSF_Forth_stackD():
-            TSF_Text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]));  TSF_SDOpoke='S';
-    if TSF_FNCMVA == 'F':
-        TSF_cardsI=[TSF_cardsN[-1] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'N':
-        TSF_cardsI=[(TSF_cardsN[TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'C':
-        TSF_cardsI=[TSF_cardsN[TSF_peek%TSF_cardsN_len] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'M':
-        TSF_cardsI=[TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'V':
-        TSF_cardsI=[(TSF_cardsN[-1-TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'A':
-        TSF_cardsI=[TSF_cardsN[random.randint(0,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
-    if TSF_QIRHL == 'Q':
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            TSF_Text=TSF_Text.replace(TSF_card,TSF_cardsI[TSF_peek])
-#    elif TSF_QIRHL == 'I':
-    elif TSF_QIRHL == 'R':
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            TSF_Text=re.sub(re.compile(TSF_card,re.MULTILINE),TSF_cardsI[TSF_peek],TSF_Text)
-#    elif TSF_QIRHL == 'H':
-#    elif TSF_QIRHL == 'L':
-    if TSF_SDOpoke == 'S':
-        TSF_Forth_setTSF(TSF_theT,TSF_Text,'N')
-    elif TSF_SDOpoke == 'D':
-        TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text)
-
-# TSF --calc 5*3*6 = 90
 
 def TSF_Match_replacesQSN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_Match_replace('Q','S','N','R');    return ""
@@ -161,114 +122,12 @@ def TSF_Match_replacesQDN():    #TSFdoc:stackTをカードとみなしてcardO�
 def TSF_Match_replacesQON():    #TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。
     TSF_Match_replace('Q','O','N','R');    return ""
 
-
-def TSF_Match_replacesQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
-    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-    TSF_theT=TSF_Forth_drawthe()
-    if TSF_theT in TSF_Forth_stackD():
-        TSF_text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]))
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            if TSF_peek < TSF_cardsN_len:
-                TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[TSF_peek])
-        TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
-    return ""
-
-def TSF_Match_replacesQC():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は周択。3枚[stackT,stackO,stackN]ドロー。
-    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-    TSF_theT=TSF_Forth_drawthe()
-    if TSF_theT in TSF_Forth_stackD():
-        TSF_text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]))
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[TSF_peek%TSF_cardsN_len])
-        TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
-    return ""
-
-def TSF_Match_replacesQM():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[stackT,stackO,stackN]ドロー。
-    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-    TSF_theT=TSF_Forth_drawthe()
-    if TSF_theT in TSF_Forth_stackD():
-        TSF_text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]))
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            TSF_text=TSF_text.replace(TSF_card,TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)])
-        TSF_Forth_setTSF(TSF_theT,TSF_text,"N")
-    return ""
-
-def TSF_Match_replacesQT():    #TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
-    TSF_theN=TSF_Forth_drawthe()
-    TSF_theO=TSF_Forth_drawthe()
-    TSF_theT=TSF_Forth_drawthe()
-    TSF_theT=TSF_theT.replace(TSF_theO,TSF_theN)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-    return ""
-
-def TSF_Match_replacesRT():    #TSFdoc:stackTをテキストとみなしてcardOの文字列をcardNの文字列に置換。3枚[stackT,cardO,cardN]ドロー。1枚リターン[cardN]。
-    TSF_theN=TSF_Forth_drawthe()
-    TSF_theO=TSF_Forth_drawthe()
-    TSF_theT=TSF_Forth_drawthe()
-    TSF_theT=re.sub(re.compile(TSF_theO,re.MULTILINE),TSF_theN,TSF_theT)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_theT)
-    return ""
-
-def TSF_Match_alias(TSF_QIRHL,TSF_SDO,TSF_FNCMVA):    #TSFdoc:alias関連の共通部品。(TSFAPI)
-    TSF_theN=TSF_Forth_drawthe();  TSF_theO=TSF_Forth_drawthe();  TSF_theT=TSF_Forth_drawthe();
-    TSF_Text="";  TSF_cardsN,TSF_cardsO=[],[];  TSF_cardsI=TSF_cardsN;  TSF_cardsT=""
-    TSF_cardsN_len=0;  TSF_cardsO_len=0;  TSF_SDOpoke="";
-    if TSF_SDO == 'D' or TSF_SDO == 'O':
-        TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
-        TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
-        TSF_Text=TSF_theT;  TSF_SDOpoke='D';
-    if TSF_SDO == 'S' or TSF_SDO == 'O':
-        TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-        TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=len(TSF_cardsO);
-        if TSF_theT in TSF_Forth_stackD():
-            TSF_Text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]));  TSF_SDOpoke='S';
-    if TSF_FNCMVA == 'F':
-        TSF_cardsI=[TSF_cardsN[-1] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'N':
-        TSF_cardsI=[(TSF_cardsN[TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'C':
-        TSF_cardsI=[TSF_cardsN[TSF_peek%TSF_cardsN_len] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'M':
-        TSF_cardsI=[TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'V':
-        TSF_cardsI=[(TSF_cardsN[-1-TSF_peek] if TSF_peek < TSF_cardsN_len else "") for TSF_peek in range(TSF_cardsO_len)]
-    elif TSF_FNCMVA == 'A':
-        TSF_cardsI=[TSF_cardsN[random.randint(0,TSF_cardsN_len-1)] for TSF_peek in range(TSF_cardsO_len)]
-    if TSF_QIRHL == 'Q':
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            if TSF_Text == TSF_card:
-                TSF_cardsT=TSF_cardsI[TSF_peek];  break;
-    if TSF_QIRHL == 'I':
-        for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-            if TSF_card in TSF_Text:
-                TSF_cardsT=TSF_cardsI[TSF_peek];  break;
-#    elif TSF_QIRHL == 'R':
-#    elif TSF_QIRHL == 'H':
-#    elif TSF_QIRHL == 'L':
-    if TSF_SDOpoke == 'S':
-        TSF_Forth_setTSF(TSF_theT,TSF_cardsT,'N')
-    elif TSF_SDOpoke == 'D':
-        TSF_Forth_return(TSF_Forth_drawthat(),TSF_cardsT)
-
 def TSF_Match_aliasQSN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群と同択できたらstackNの文字列群で代入。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_Match_replace('Q','S','N','A');    return ""
 def TSF_Match_aliasQDN():    #TSFdoc:stackTをカードとみなしてcardOの文字列と同択できたらstackNの文字列で代入。不足分はゼロ文字列。3枚[cardT,cardO,cardN]ドロー。
     TSF_Match_replace('Q','D','N','A');    return ""
 def TSF_Match_aliasQON():    #TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。
     TSF_Match_replace('Q','O','N','A');    return ""
-
-def TSF_Match_aliasQN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に置換。不足分は囲択。3枚[cardT,stackO,stackN]ドロー。1枚リターン[cardN]。
-    TSF_theN=TSF_Forth_drawthe();  TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
-    TSF_theO=TSF_Forth_drawthe();  TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);
-    TSF_cardT=TSF_Forth_drawthe();
-    for TSF_peek,TSF_card in enumerate(TSF_cardsO):
-        if TSF_cardT == TSF_card:
-            TSF_cardT=TSF_cardsN[min(TSF_peek,TSF_cardsN_len-1)]
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_cardT)
-    return ""
 
 
 TSF_Initcalldebug=[TSF_Match_Initcards]
