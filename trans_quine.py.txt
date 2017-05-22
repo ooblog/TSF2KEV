@@ -19,7 +19,7 @@ TSF_Forth_mainfilepath(os.path.abspath(__file__))
 TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
     "quine_echo:","#TSF_this","#TSF_fin."]),'T')
 TSF_Forth_setTSF("quine_echo:","\t".join([
-    "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"]),'T')
+    "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQON","#TSF_this"]),'T')
 TSF_Forth_setTSF("quine_ext:","\t".join([
     ".tsf",".py",".d"]),'T')
 TSF_Forth_setTSF("quine_view:","\t".join([

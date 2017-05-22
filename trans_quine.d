@@ -21,7 +21,7 @@ void main(string[] sys_argvs){
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "quine_echo:","#TSF_this","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("quine_echo:",join([
-        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQN","#TSF_this"],"\t"),'T');
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQON","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("quine_ext:",join([
         ".tsf",".py",".d"],"\t"),'T');
     TSF_Forth_setTSF("quine_view:",join([
