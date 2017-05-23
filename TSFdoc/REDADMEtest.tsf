@@ -5,17 +5,17 @@ TSFdocs_files:
 TSFdocs_basedoc:
 	{?TSF_MD_H1:TSF1KEV}
 	{?P}
+	test{?BR}
 	{?/P}
-	{?BR}
 TSFdocs_tags:
-	{?TSF_MD_H1:TSF1KEV}	{$TSF_MD_H1:0}	{?P}	{?/P}	{?BR}
+	{?BR}	{?/P}	{?P}	{$TSF_MD_H1:0}	{?TSF_MD_H1:TSF1KEV}
 {?TSF_MD_H1:TSF1KEV}
 	# {$TSF_MD_H1:0}	<h1>{$TSF_MD_H1:0}</h1>
 {$TSF_MD_H1:0}
 	プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 {?P}
-		<p>@E
+		<p>
 {?/P}
-		</p>@E
+		</p>
 {?BR}
 		<br />
