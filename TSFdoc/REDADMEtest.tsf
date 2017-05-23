@@ -3,16 +3,23 @@ TSF_Tab-Separated-Forth:
 TSFdocs_files:
 	READMEtest.md	READMEtest.html
 TSFdocs_basedoc:
-	{?TSF_MD_H1:TSF1KEV}
+	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
 	{?P}
-	test{?BR}
+	目標は「LTsv10kanedit」の「LTsv/kanedit.vim」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
+	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「LTsv10kanedit」をお使いください。{?BR}
+	未実装の機能の一部は「TSF1KEV」も参考。{?BR}
 	{?/P}
+	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
 TSFdocs_tags:
-	{?BR}	{?/P}	{?P}	{$TSF_MD_H1:0}	{?TSF_MD_H1:TSF1KEV}
-{?TSF_MD_H1:TSF1KEV}
-	# {$TSF_MD_H1:0}	<h1>{$TSF_MD_H1:0}</h1>
-{$TSF_MD_H1:0}
-	プログラミング言語「TSF_Tab-Separated-Forth」開発中。
+	{?BR}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+{?H1}
+	#	<h1>
+{?/H1}
+		</h1>
+{?H2}
+	##	<h2>
+{?/H2}
+		</h2>
 {?P}
 		<p>
 {?/P}

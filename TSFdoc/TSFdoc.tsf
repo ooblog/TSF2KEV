@@ -1,10 +1,7 @@
 TSF_Tab-Separated-Forth:
 	#TSF_argvs	#TSF_pullFthat	TSFdocs_merge:	#TSF_this	#TSF_fin.	REDADMEtest.tsf
 # -- merge --
-#TSFdocs_files:
-#TSFdocs_basedoc:
-#TSFdocs_tags:
-# -- merge --
+#	TSFdocs_files:	TSFdocs_basedoc:	TSFdocs_tags:
 TSFdocs_merge:
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	TSFdocs_loop:	#TSF_this
 TSFdocs_loop:
