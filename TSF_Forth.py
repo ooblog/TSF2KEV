@@ -289,10 +289,12 @@ def TSF_Forth_chars():    #TSFdoc:文字列を一文字ずつに分割する。1
     for TSF_card in reversed(TSF_joined):
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
+    return ""
 
 def TSF_Forth_charslen():    #TSFdoc:文字数を数える。1枚[chars]ドローして1枚[N]リターン。
     TSF_joined=TSF_Forth_drawthe()
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_joined)))
+    return ""
 
 def TSF_Forth_len(TSF_the):    #TSFdoc:指定スタックの枚数を取得。(TSFAPI)。
     TSF_len=0

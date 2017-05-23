@@ -3,6 +3,7 @@
 import std.stdio;
 import std.string;
 import std.conv;
+import std.utf;
 import std.array;
 import std.typecons;
 import core.vararg;
@@ -359,18 +360,18 @@ string TSF_Forth_split(){    //#TSFdoc:文字列を分割する。続詞1枚[joi
 
 string TSF_Forth_chars(){    //#TSFdoc:文字列を一文字ずつに分割する。1枚[chars]ドローしてカード枚数+総数1枚[cardN…cardA,N]リターン。
     string TSF_joined=TSF_Forth_drawthe();
-    char[] TSF_stackR=cast(char[])TSF_joined;
-    TSF_stackR.reverse();
-    foreach(char TSF_card;TSF_stackR){
+    dchar[] TSF_stackU=cast(dchar[])toUTF32(TSF_joined);
+    foreach_reverse(dchar TSF_card;TSF_stackU){
         TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_card));
     }
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_joined.length));
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackU.length));
     return "";
 }
 
 string TSF_Forth_charslen(){    //#TSFdoc:文字数を数える。1枚[chars]ドローして1枚[N]リターン。
     string TSF_joined=TSF_Forth_drawthe();
-    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_joined.length));
+    dchar[] TSF_stackU=cast(dchar[])toUTF32(TSF_joined);
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackU.length));
     return "";
 }
 
