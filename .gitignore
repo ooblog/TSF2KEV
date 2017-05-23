@@ -101,7 +101,6 @@ ENV/
 # git checkout 20170514U013702
 # git merge 20170514U013702
 # git branch -d 20170514U013702
-# git push github:ooblog/TSF2KEV.git :20170514U013702
 TSF
 TSF.o
 TSF.obj

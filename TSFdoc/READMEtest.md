@@ -1,4 +1,3 @@
-{?TSF_MD_H1:TSF1KEV}
-{?P}
-test{?BR}
-{?/P}
+# プログラミング言語「TSF_Tab-Separated-Forth」開発中。
+
+test

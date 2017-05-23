@@ -2,13 +2,8 @@ TSF_Tab-Separated-Forth:
 	#TSF_argvs	#TSF_pullFthat	TSFdocs_merge:	#TSF_this	#TSF_fin.	REDADMEtest.tsf
 # -- merge --
 #TSFdocs_files:
-#	READMEtest.md	READMEtest.html
 #TSFdocs_basedoc:
-#	{?P}{$TSF_MD_H1:0}{?BR}{?/P}
 #TSFdocs_tags:
-#	{$TSF_MD_H1:0}	{?P}	{?/P}	{?BR}
-#{$TSF_MD_H1:0}
-#	プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 # -- merge --
 TSFdocs_merge:
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	TSFdocs_loop:	#TSF_this
@@ -19,6 +14,6 @@ TSFdocs_loop:
 	#TSF_peekFthat	TSF_carbondoc:	#TSF_savetext
 	TSFdocs_files:	#TSF_lenthe	[0]Z~#exit:~TSFdocs_loop:	#TSF_join[]	#TSF_calc	#TSF_this
 TSFtags_loop:
-	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	3	,	#TSF_sandwichN	#TSF_echo
-#	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	#TSF_docsQSN
+#	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	3	,	#TSF_sandwichN	#TSF_echo
+	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	#TSF_docsQ
 	TSF_carbontags:	#TSF_lenthe	[0]Z~#exit:~TSFtags_loop:	#TSF_join[]	#TSF_calc	#TSF_this
