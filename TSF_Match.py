@@ -116,12 +116,8 @@ def TSF_Match_replaceRAD(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RAD):    #TSFdoc:repla
         TSF_Text=TSF_cardsT
     if TSF_RAD == 'D':
         if TSF_QIRHL == 'Q':
-            if TSF_cardsO[0] in TSF_Text:
-                if TSF_cardsN[0] in TSF_Forth_stackO():
-                    TSF_Docs=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_cardsN[0]]))
-                else:
-                    TSF_Docs=TSF_cardsN[0]
-                TSF_Text=TSF_Text.replace(TSF_cardsO[0],TSF_Docs)
+            TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[TSF_theN]);
+            TSF_Text=TSF_Text.replace(TSF_theO,TSF_Io_ESCdecode("\n".join(TSF_cardsN)))
 #        elif TSF_QIRHL == 'I':
 #        elif TSF_QIRHL == 'R':
 #        elif TSF_QIRHL == 'H':

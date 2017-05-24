@@ -98,16 +98,8 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
         case 'D':
             switch( TSF_QIRHL ){
                 case 'Q':
-                    if( count(TSF_Text,TSF_cardsO[0]) ){
-                        string TSF_Docs;
-                        if( count(TSF_Forth_stackO(),TSF_cardsN[0]) ){
-                            TSF_Docs=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_cardsN[0]],"\n"));
-                        }
-                        else{
-                            TSF_Docs=TSF_cardsN[0];
-                        }
-                        TSF_Text=TSF_Text.replace(TSF_cardsO[0],TSF_Docs);
-                    }
+                    TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[TSF_theN]);
+                    TSF_Text=TSF_Text.replace(TSF_theO,TSF_Io_ESCdecode(join(TSF_cardsN,"\n")));
                 break;
                 default: break;
             }

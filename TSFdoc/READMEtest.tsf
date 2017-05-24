@@ -2,8 +2,14 @@
 TSF_Tab-Separated-Forth:
 	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
 TSFdocs_files:
-	READMEtest.md	READMEtest.html
+	READMEtest.md	READMEtest.html	sample_aboutTSFtest.tsf
 TSFdocs_basedoc:
+	{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}
+TSFdocs_tags:
+	{?BR}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}
+{?TSFreadmehead}
+	{$TSFreadmehead}	{$TSFreadmehead}	
+{$TSFreadmehead}
 	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
 	{?P}
 	目標は「LTsv10kanedit」の「LTsv/kanedit.vim」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
@@ -11,19 +17,25 @@ TSFdocs_basedoc:
 	未実装の機能の一部は「TSF1KEV」も参考。{?BR}
 	{?/P}
 	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
-TSFdocs_tags:
-	{?BR}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+{?TSFabout}
+	{$TSFabout}
+{$TSFabout}
+	#! /usr/bin/env TSF
+{?TSFreadmebuttom}
+	{$TSFreadmebuttom}	{$TSFreadmebuttom}	
+{$TSFreadmebuttom}
+	{?H2}「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。{?H2}
 {?H1}
-	#	<h1>
+	#	<h1>	
 {?/H1}
-		</h1>
+		</h1>	
 {?H2}
-	##	<h2>
+	##	<h2>	
 {?/H2}
-		</h2>
+		</h2>	
 {?P}
-		<p>
+		<p>	
 {?/P}
-		</p>
+		</p>	
 {?BR}
-		<br />
+		<br />	
