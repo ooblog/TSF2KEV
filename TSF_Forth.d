@@ -8,6 +8,8 @@ import std.array;
 import std.typecons;
 import core.vararg;
 import std.algorithm;
+import std.file;
+import std.path;
 
 import TSF_Io;
 
@@ -32,6 +34,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
+        "#TSF_runagain":&TSF_Forth_runagain, "#TSFを再走。":&TSF_Forth_runagain,
         "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
         "#TSF_this":&TSF_Forth_this, "#スタック実行":&TSF_Forth_this,
         "#TSF_that":&TSF_Forth_that, "#スタック積込":&TSF_Forth_that,
@@ -118,9 +121,16 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     } 
 }
 
-string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
+string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定する。0枚[]ドロー。
     TSF_callptrD=null; TSF_callptrO=[];
-    return "#exit";
+    return "#exit:";
+}
+
+string TSF_runagain="";
+string TSF_Forth_runagain(){    //#TSFdoc:TSF終了時のオプションを指定する。1枚[tsf]ドロー。
+    TSF_runagain=TSF_Forth_drawthe();
+    TSF_Forth_fin();
+    return "#exit:";
 }
 
 string TSF_Forth_countmax(){    //#TSFdoc:TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。
@@ -885,41 +895,53 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
     else{
         TSF_echo=false; TSF_echo_log="";
     }
-    if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." )==0 ){
-        TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
-    }
     while(true){
-        while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<TSF_Forth_stackMAX ){
-            TSF_cardnow=TSF_stackD[TSF_stackthis][to!size_t(TSF_cardscount)];  TSF_cardscount++;
-            if( TSF_cardnow !in TSF_cardD ){
-                TSF_Forth_return(TSF_stackthat,TSF_cardnow);
-            }
-            else{
-                TSF_stacknext=TSF_cardD[TSF_cardnow]();
-                if( TSF_stacknext=="" ){
-                    continue;
-                }
-                else if( TSF_stacknext !in TSF_stackD ){
-                    break;
+        if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." )==0 ){
+            TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
+        }
+        while(true){
+            while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<TSF_Forth_stackMAX ){
+                TSF_cardnow=TSF_stackD[TSF_stackthis][to!size_t(TSF_cardscount)];  TSF_cardscount++;
+                if( TSF_cardnow !in TSF_cardD ){
+                    TSF_Forth_return(TSF_stackthat,TSF_cardnow);
                 }
                 else{
-                    while( count(TSF_callptrO,TSF_stacknext) ){
-                        TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
+                    TSF_stacknext=TSF_cardD[TSF_cardnow]();
+                    if( TSF_stacknext=="" ){
+                        continue;
                     }
-                    if( TSF_stackthis != TSF_stacknext ){
-                        TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO~=[TSF_stackthis];
+                    else if( TSF_stacknext !in TSF_stackD ){
+                        break;
                     }
                     else{
-                        TSF_callptrD[TSF_stackthis]=0;
+                        while( count(TSF_callptrO,TSF_stacknext) ){
+                            TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
+                        }
+                        if( TSF_stackthis != TSF_stacknext ){
+                            TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO~=[TSF_stackthis];
+                        }
+                        else{
+                            TSF_callptrD[TSF_stackthis]=0;
+                        }
+                        TSF_stackthis=TSF_stacknext;
+                        TSF_cardscount=0;
                     }
-                    TSF_stackthis=TSF_stacknext;
-                    TSF_cardscount=0;
                 }
             }
+            if( TSF_callptrO.length>0 ){
+                TSF_stackthis=TSF_callptrO[$-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[$-1]];
+                TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
+            }
+            else{
+                break;
+            }
         }
-        if( TSF_callptrO.length>0 ){
-            TSF_stackthis=TSF_callptrO[$-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[$-1]];
-            TSF_callptrD.remove(TSF_callptrO[$-1]); TSF_callptrO.popBack();
+        if( exists(TSF_runagain) && TSF_Forth_loadtext(TSF_runagain,TSF_runagain).length>0 ){
+            TSF_Forth_merge(TSF_runagain,null,true);
+            chdir(dirName(absolutePath(TSF_runagain)));
+            TSF_Forth_mainfilepath(absolutePath(TSF_runagain));
+            TSF_runagain="";
+            TSF_Forth_samplerun(TSF_echo_log);
         }
         else{
             break;

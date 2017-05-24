@@ -21,6 +21,7 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
     TSF_Forth_importlist("TSF_Forth")
     TSF_Forth_cards={
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
+        "#TSF_runagain":TSF_Forth_runagain, "#TSFを再走。":TSF_Forth_runagain,
         "#TSF_countmax":TSF_Forth_countmax, "#カード数え上げ上限":TSF_Forth_countmax,
         "#TSF_this":TSF_Forth_this, "#スタック実行":TSF_Forth_this,
         "#TSF_that":TSF_Forth_that, "#スタック積込":TSF_Forth_that,
@@ -105,11 +106,17 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-def TSF_Forth_fin():    #TSFdoc:TSF終了時のオプションを指定する。1枚[errmsg]ドロー。
-    global TSF_fincode
+def TSF_Forth_fin():    #TSFdoc:TSFを終了する。0枚[]ドロー。
     global TSF_callptrD,TSF_callptrO
     TSF_callptrD={};  TSF_callptrO=[];
-    return "#exit"
+    return "#exit:"
+
+TSF_runagain=""
+def TSF_Forth_runagain():    #TSFdoc:TSFを終了する。1枚[tsf]ドロー。
+    global TSF_runagain
+    TSF_runagain=TSF_Forth_drawthe();
+    TSF_Forth_fin()
+    return "#exit:"
 
 def TSF_Forth_countmax():    #TSFdoc:TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。
     global TSF_Forth_stackMAX
@@ -696,39 +703,49 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     global TSF_echo,TSF_echo_log
+    global TSF_runagain
     if TSF_run_log != None:
         TSF_echo,TSF_echo_log=True,TSF_run_log
     else:
         TSF_echo,TSF_echo_log=False,""
-    if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
-        TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
     while True:
-        while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) and TSF_cardscount < TSF_Forth_stackMAX:
-            TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount];  TSF_cardscount+=1;
-            if not TSF_cardnow in TSF_cardD:
-                TSF_Forth_return(TSF_stackthat,TSF_cardnow)
-            else:
-                TSF_stacknext=TSF_cardD[TSF_cardnow]()
-                if TSF_stacknext == "":
-                    continue
-                elif not TSF_stacknext in TSF_stackD:
-                    break
+        if not "#TSF_fin." in TSF_stackD[TSF_Forth_1ststack()]:
+            TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.")
+        while True:
+            while TSF_cardscount < len(TSF_stackD[TSF_stackthis]) and TSF_cardscount < TSF_Forth_stackMAX:
+                TSF_cardnow=TSF_stackD[TSF_stackthis][TSF_cardscount];  TSF_cardscount+=1;
+                if not TSF_cardnow in TSF_cardD:
+                    TSF_Forth_return(TSF_stackthat,TSF_cardnow)
                 else:
-                    while( TSF_stacknext in TSF_callptrO ):
-#                        TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
-                        TSF_callptrD.pop(TSF_callptrO.pop())
-                    if TSF_stackthis != TSF_stacknext:
-                        TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
-                    else:
-                        TSF_cardscount=0
-                        TSF_callptrD[TSF_stackthis]=TSF_cardscount
+                    TSF_stacknext=TSF_cardD[TSF_cardnow]()
+                    if TSF_stacknext == "":
                         continue
-                    TSF_stackthis=TSF_stacknext
-                    TSF_cardscount=0
-        if len(TSF_callptrO) > 0:
-            TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]];
-#            TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
-            TSF_callptrD.pop(TSF_callptrO.pop())
+                    elif not TSF_stacknext in TSF_stackD:
+                        break
+                    else:
+                        while( TSF_stacknext in TSF_callptrO ):
+    #                        TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+                            TSF_callptrD.pop(TSF_callptrO.pop())
+                        if TSF_stackthis != TSF_stacknext:
+                            TSF_callptrD[TSF_stackthis]=TSF_cardscount;  TSF_callptrO.append(TSF_stackthis);
+                        else:
+                            TSF_cardscount=0
+                            TSF_callptrD[TSF_stackthis]=TSF_cardscount
+                            continue
+                        TSF_stackthis=TSF_stacknext
+                        TSF_cardscount=0
+            if len(TSF_callptrO) > 0:
+                TSF_stackthis=TSF_callptrO[-1]; TSF_cardscount=TSF_callptrD[TSF_callptrO[-1]];
+    #            TSF_callptrD.pop(TSF_callptrO[-1]);  TSF_callptrO.pop();
+                TSF_callptrD.pop(TSF_callptrO.pop())
+            else:
+                break
+        if os.path.isfile(TSF_runagain) and len(TSF_Forth_loadtext(TSF_runagain,TSF_runagain)):
+            TSF_Forth_merge(TSF_runagain,[],True)
+            os.chdir(os.path.dirname(os.path.abspath(TSF_runagain)))
+            TSF_Forth_mainfilepath(os.path.abspath(TSF_runagain))
+            TSF_runagain=""
+            TSF_Forth_run(TSF_echo_log)
         else:
             break
     return TSF_echo_log

@@ -1,5 +1,6 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	#TSF_fin.
+	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
 TSFdocs_files:
 	READMEtest.md	READMEtest.html
 TSFdocs_basedoc:

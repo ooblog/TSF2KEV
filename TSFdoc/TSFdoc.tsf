@@ -1,5 +1,6 @@
+#! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	#TSF_argvs	#TSF_pullFthat	TSFdocs_merge:	#TSF_this	#TSF_fin.	REDADMEtest.tsf
+	#TSF_argvs	#TSF_pullFthat	TSFdocs_merge:	#TSF_this	#TSF_fin.	READMEtest.tsf
 # -- merge --
 #	TSFdocs_files:	TSFdocs_basedoc:	TSFdocs_tags:
 TSFdocs_merge:
