@@ -959,9 +959,9 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
         char TSF_style=TSF_styleD.get(TSF_the,'T');
         string TSF_view_logline="";
         switch( TSF_style ){
-            case 'O':  TSF_view_logline=format("%s\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
-            case 'T':  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
-            case 'N': default:  TSF_view_logline=format("%s\n\t%s\n",TSF_the,join(TSF_stackD[TSF_the],"\n\t"));  break;
+            case 'O':  TSF_view_logline="%s\t%s\n".format(TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
+            case 'T':  TSF_view_logline="%s\n\t%s\n".format(TSF_the,join(TSF_stackD[TSF_the],"\t"));  break;
+            case 'N': default:  TSF_view_logline="%s\n\t%s\n".format(TSF_the,join(TSF_stackD[TSF_the],"\n\t"));  break;
         }
         TSF_view_log=(TSF_view_io)?TSF_Io_printlog(TSF_view_logline,TSF_view_log):TSF_view_log~TSF_view_logline;
     }
@@ -1058,11 +1058,11 @@ string TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。ソース表示やロ�
         TSF_sample_logsw=true;
     }
     if( TSF_sample_sepalete.length ){
-        TSF_sample_log=TSF_Io_printlog(format("-- %s source --",TSF_sample_sepalete),TSF_sample_log);
+        TSF_sample_log=TSF_Io_printlog("-- %s source --".format(TSF_sample_sepalete),TSF_sample_log);
         foreach(string TSF_the;TSF_stackO){
             TSF_sample_log=TSF_Forth_view(TSF_the,true,TSF_sample_log);
         }
-       TSF_sample_log=TSF_Io_printlog(format("-- %s run --",TSF_sample_sepalete),TSF_sample_log);
+       TSF_sample_log=TSF_Io_printlog("-- %s run --".format(TSF_sample_sepalete),TSF_sample_log);
     }
     if( TSF_sample_logsw ){
         TSF_sample_log=TSF_Forth_run(TSF_sample_log);
@@ -1071,7 +1071,7 @@ string TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。ソース表示やロ�
         TSF_Forth_run();
     }
     if( TSF_sample_viewthey ){
-        TSF_sample_log=TSF_Io_printlog(format("-- %s viewthey --",TSF_sample_sepalete),TSF_sample_log);
+        TSF_sample_log=TSF_Io_printlog("-- %s viewthey --".format(TSF_sample_sepalete),TSF_sample_log);
         foreach(string TSF_the;TSF_stackO){
             TSF_sample_log=TSF_Forth_view(TSF_the,true,TSF_sample_log);
         }

@@ -111,7 +111,7 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
     string TSF_daytimeformat=daytimeformat;
     string[] TSF_tfList=TSF_daytimeformat.split("@@");
     foreach(size_t TSF_tfcount,string TSF_tf;TSF_tfList){
-        TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y",format("%04d",TSF_Time_meridian_Year()));
+        TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y","%04d".format(TSF_Time_meridian_Year()));
         TSF_tfList[TSF_tfcount]=TSF_tf;
     }
     TSF_daytimeformat=join(TSF_tfList,"@");
@@ -122,12 +122,29 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Time_Initcards];
 void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Time.log";
-    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("--- %s ---".format(__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "timecount:","#TSF_this","#TSF_fin."],"\t"),'T');
+    TSF_Forth_setTSF("timecount:",join([
+        "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("timejump:",join([
+        "#exit","timepop:"],"\t"),'T');
+    TSF_Forth_setTSF("timepop:",join([
+        "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
+    TSF_Forth_setTSF("timesample:",join([
+        "0|0",
+        "0|0,",
+        "0/0",
+        "0,0/",
+        ",0",
+        "@000y"],"\t"),'N');
+    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 
 unittest {
-//    TSF_Time_debug(TSF_Io_argvs(["dmd","TSF_Time.d"]));
+    TSF_Time_debug(TSF_Io_argvs(["dmd","TSF_Time.d"]));
 }
 
 

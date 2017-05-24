@@ -548,7 +548,7 @@ string TSF_Calc_LCM(string TSF_calcN,string TSF_calcD){    //#TSF_doc:最小公�
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Calc_Initcards];
 void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Calc.log";
-    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("--- %s ---".format(__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "calccount:","#TSF_this","#TSF_fin."],"\t"),'T');

@@ -112,6 +112,23 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Time.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "timecount:","#TSF_this","#TSF_fin."]),'T')
+    TSF_Forth_setTSF("timecount:","\t".join([
+        "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"]),'T')
+    TSF_Forth_setTSF("timejump:","\t".join([
+        "#exit","timepop:"]),'T')
+    TSF_Forth_setTSF("timepop:","\t".join([
+        "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
+    TSF_Forth_setTSF("timesample:","\t".join([
+        "0|0",
+        "0|0,",
+        "0/0",
+        "0,0/",
+        ",0",
+        "@000y"]),'N')
+    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
     TSF_Time_debug(TSF_Io_argvs(["python","TSF_Time.py"]))

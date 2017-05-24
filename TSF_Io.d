@@ -440,32 +440,32 @@ void TSF_Io_writetext(string TSF_path,string TSF_addtext){    //#TSFdoc:TSF_path
 
 void TSF_Io_debug(string[] TSF_argvs){
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Io.log";
-    std.stdio.writeln(format("--- %s ---",__FILE__));
+    std.stdio.writeln("--- %s ---".format(__FILE__));
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",join(["UTF-8",":TSF_encoding","0",":TSF_fin."],"\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(join(["UTF-8",":TSF_encoding","0",":TSF_fin."],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_argvs:",TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",join(TSF_argvs,"\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(join(TSF_argvs,"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_d:",TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",join([format("D(%s)%s.%s",vendor,version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(join([format("D(%s)%s.%s",vendor,version_major,version_minor),text(os),"UTF-8"],"\t")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug_tsv:",TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s","helloワールド\u5496\u55B1"),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen(TSF_debug_log,"\n")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitlen("csv\ttsv\tLTSV\tL:Tsv\tTSF","\t")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format("helloワールド\u5496\u55B1"),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_ESCencode("csv\ttsv\tLTSV\tL:Tsv\tTSF")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_ESCdecode("csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitlen(TSF_debug_log,"\n")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitlen("csv\ttsv\tLTSV\tL:Tsv\tTSF","\t")),TSF_debug_log);
     string TSF_debug_PPPP="this:Peek\tthat:Poke\tthe:Pull\tthey:Push";
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekN(TSF_debug_PPPP,"\t",0)),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpeekL(TSF_debug_PPPP,"\t","this:")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeN(TSF_debug_PPPP,"\t",1,"poked")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","that:","poked")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","cards:","poked")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2)),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpullL(TSF_debug_PPPP,"\t","the:")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",-1,"pushed")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",3,"pushed")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
-    TSF_debug_log=TSF_Io_printlog(format("\t%s",TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpeekN(TSF_debug_PPPP,"\t",0)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpeekL(TSF_debug_PPPP,"\t","this:")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpokeN(TSF_debug_PPPP,"\t",1,"poked")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","that:","poked")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpokeL(TSF_debug_PPPP,"\t","cards:","poked")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpullN(TSF_debug_PPPP,"\t",2)),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpullL(TSF_debug_PPPP,"\t","the:")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushN(TSF_debug_PPPP,"\t",-1,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushN(TSF_debug_PPPP,"\t",3,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushN(TSF_debug_PPPP,"\t",10,"pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushL(TSF_debug_PPPP,"\t","they:","pushed")),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_debug_log);
     foreach(string debug_rpn;[
         "0","0.0","U+p128","$ffff","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
@@ -473,7 +473,7 @@ void TSF_Io_debug(string[] TSF_argvs){
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
-    std.stdio.writeln(format("--- fin. > %s ---",TSF_debug_savefilename));
+    std.stdio.writeln("--- fin. > %s ---".format(TSF_debug_savefilename));
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 

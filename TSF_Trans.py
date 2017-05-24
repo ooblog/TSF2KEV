@@ -44,7 +44,6 @@ def TSF_Trans_generator_python(TSF_tsfpath=None,TSF_pyhonpath=None):    #TSFdoc:
     TSF_text+="\nTSF_sysargvs=TSF_Io_argvs(sys.argv)\n"
     TSF_text+="TSF_Initcallrun=["+TSF_card.rstrip(',')+"]\n"
     TSF_text+="TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)\n"
-#    TSF_text+="TSF_Forth_mainfilepath(os.path.abspath(\"{0}\"))\n\n".format(TSF_Forth_mainfilepath())
     TSF_text+="TSF_Forth_mainfilepath(os.path.abspath(__file__))\n\n"
     for TSF_the in TSF_Forth_stackO():
         TSF_text=TSF_Trans_view_python(TSF_the,False,TSF_text)
@@ -87,7 +86,6 @@ def TSF_Trans_generator_dlang(TSF_tsfpath=None,TSF_dlangpath=None):    #TSFdoc:T
     TSF_text+="    string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);\n"
     TSF_text+="    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=["+TSF_card.rstrip(',')+"];\n"
     TSF_text+="    TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);\n"
-#    TSF_text+="    TSF_Forth_mainfilepath(absolutePath(\"{0}\"));\n\n".format(TSF_Forth_mainfilepath())
     TSF_text+="    TSF_Forth_mainfilepath(absolutePath(__FILE__));\n\n"
     for TSF_the in TSF_Forth_stackO():
         TSF_text=TSF_Trans_view_dlang(TSF_the,False,TSF_text)

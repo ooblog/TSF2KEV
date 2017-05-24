@@ -39,7 +39,7 @@ string TSF_Urlpath_fileext_api(string TSF_filepath){    //#TSFdoc:ファイル�
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Urlpath_Initcards];
 void TSF_Urlpath_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Urlpath」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Urlpath.log";
-    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("--- %s ---".format(__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
 }
 

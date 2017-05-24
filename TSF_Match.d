@@ -136,12 +136,12 @@ string TSF_Match_docsQ(){    //#TSFdoc:stackTをテキストとみなしてstack
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];
 void TSF_Match_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Match」単体テスト風デバッグ。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Match.log";
-    TSF_debug_log=TSF_Io_printlog(format("--- %s ---",__FILE__),TSF_debug_log);
+    TSF_debug_log=TSF_Io_printlog("--- %s ---".format(__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
 }
 
 unittest {
-    TSF_Match_debug(TSF_Io_argvs(["dmd","TSF_Match.d"]));
+//    TSF_Match_debug(TSF_Io_argvs(["dmd","TSF_Match.d"]));
 }
 
 
