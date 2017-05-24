@@ -6,7 +6,7 @@ TSFdocs_files:
 TSFdocs_basedoc:
 	{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}
 TSFdocs_tags:
-	{?BR}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}
+	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}
 {?TSFreadmehead}
 	{$TSFreadmehead}	{$TSFreadmehead}	
 {$TSFreadmehead}
@@ -17,13 +17,19 @@ TSFdocs_tags:
 	未実装の機能の一部は「TSF1KEV」も参考。{?BR}
 	{?/P}
 	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
+	{?CODE}
+	
 {?TSFabout}
 	{$TSFabout}
 {$TSFabout}
-	#! /usr/bin/env TSF
+	{?INDENT}#! /usr/bin/env TSF
+	{?INDENT}TSF_Tab-Separated-Forth:
+	{?INDENT}{?TAB}echoTSF:{?TAB}#TSF_this{?TAB}#TSF_fin.
 {?TSFreadmebuttom}
 	{$TSFreadmebuttom}	{$TSFreadmebuttom}	
 {$TSFreadmebuttom}
+	
+	{?/CODE}
 	{?H2}「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。{?H2}
 {?H1}
 	#	<h1>	
@@ -37,5 +43,13 @@ TSFdocs_tags:
 		<p>	
 {?/P}
 		</p>	
+{?CODE}
+		<pre><code>	
+{?/CODE}
+		</code></pre>	
 {?BR}
 		<br />	
+{?INDENT}
+	    		
+{?TAB}
+	@T

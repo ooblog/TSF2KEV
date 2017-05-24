@@ -4,4 +4,10 @@
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「LTsv10kanedit」をお使いください。
 未実装の機能の一部は「TSF1KEV」も参考。
 
-##簡易版TSF解説「sample_aboutTSF.tsf」。#! /usr/bin/env TSF##「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。##
+##簡易版TSF解説「sample_aboutTSF.tsf」。
+
+    #! /usr/bin/env TSF
+    TSF_Tab-Separated-Forth:
+    @TechoTSF:@T#TSF_this@T#TSF_fin.
+
+##「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。##

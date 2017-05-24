@@ -5,6 +5,8 @@ import std.string;
 import std.conv;
 import std.math;
 import std.datetime;
+import std.typecons;
+import core.vararg;
 
 import TSF_Io;
 import TSF_Forth;
@@ -14,12 +16,31 @@ void TSF_Time_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     TSF_Forth_importlist("TSF_Time");
     string function()[string] TSF_Forth_cards=[
         "#TSF_calender":&TSF_Time_calender, "#日時等に置換":&TSF_Time_calender,
+        "#TSF_overhour":&TSF_Time_overhour, "#徹夜設定":&TSF_Time_overhour,
+        "#TSF_nowdaytime":&TSF_Time_nowdaytime, "#日時取得":&TSF_Time_nowdaytime,
+        "#TSF_calender":&TSF_Time_calender, "#日時置換":&TSF_Time_calender,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
             TSF_cardsD[cardkey]=cardfunc; TSF_cardsO~=[cardkey];
         }
     } 
+    TSF_earlier_now=Clock.currTime();
+}
+
+string TSF_Time_diffminute(){    //#TSFdoc:時差を設定する。現在時刻も更新。1枚[diffminute]ドロー。
+    TSF_Time_setdaytime(TSF_Io_RPNzero(TSF_Forth_drawthat()));
+    return "";
+}
+
+string TSF_Time_overhour(){    //#TSFdoc:徹夜時間を設定する。現在時刻も更新。1枚[overhour]ドロー。
+    TSF_Time_setdaytime(TSF_Io_RPNzero(TSF_Forth_drawthat()));
+    return "";
+}
+
+string TSF_Time_nowdaytime(){    //#TSFdoc:徹現在時刻の更新のみ。0枚[]ドロー。
+    TSF_Time_setdaytime();
+    return "";
 }
 
 string TSF_Time_calender(){    //#TSFdoc:現在日時の取得。1枚[daytimeformat]ドローして1枚[daytime]リターン。
@@ -48,26 +69,52 @@ string[] TSF_ampmjp= ["午前","午後","徹夜"];
 string[] TSF_ampmenl=["am",  "pm", "an"];
 string[] TSF_ampmenu=["AM",  "PM", "AN"];
 
-long TSF_earlier_diffminute=0,TSF_earlier_overhour=24;
+long TSF_earlier_diffminute=0,TSF_earlier_overhour=30;
 SysTime TSF_earlier_now;
-//auto TSF_meridian_now;
-//auto TSF_allnight_now;
 enum TSF_meridian {
     Year,Yearlower,YearZodiac,Yeardays,YearIso,WeekNumberYearIso,WeekDayIso,
     Month,Monthdays,
+    Daymonth,Dayyear,Weekday,Weeknumber,yearWeeksiso,
+    Hour,HourAP,
     EnumLen,};
 long[TSF_meridian.EnumLen] TSF_meridian_Enum;
 enum TSF_allnight {
     Year,Yearlower,YearZodiac,Yeardays,YearIso,WeekNumberYearIso,WeekDayIso,
     Month,Monthdays,carryMonth,
+    Daymonth,Dayyear,Weekday,Weeknumber,yearWeeksiso,carryDay,
+    Hour,HourAPO,carryHour,
+    miNute,Second,miLlisecond,micRosecond,
+    Beat,
     EnumLen,};
 long[TSF_allnight.EnumLen] TSF_allnight_Enum;
+long TSF_Time_EnumNULL=-10000;
 
-void TSF_time_setdaytime(...){
+void TSF_Time_setdaytime(...){
+    if( _arguments.length>0 && _arguments[0]==typeid(long) ){
+        TSF_earlier_diffminute=va_arg!(long)(_argptr);
+    }
+    if( _arguments.length>1 && _arguments[1]==typeid(long) ){
+        long TSF_overhour=va_arg!(long)(_argptr);
+        TSF_earlier_overhour=to!long(fmin(fmax(TSF_overhour,24),48));
+    }
     TSF_earlier_now=Clock.currTime();
+    foreach(long Enum;0..TSF_meridian.EnumLen){ TSF_meridian_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
+    foreach(long Enum;0..TSF_allnight.EnumLen){ TSF_allnight_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
 }
 
-string TSF_Time_getdaytime(string TSF_daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
+long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
+    TSF_meridian_Enum[TSF_meridian.Year]=TSF_meridian_Enum[TSF_meridian.Year]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Year]:TSF_Time_EnumNULL;
+    return TSF_meridian_Enum[TSF_meridian.Year];
+}
+
+string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
+    string TSF_daytimeformat=daytimeformat;
+    string[] TSF_tfList=TSF_daytimeformat.split("@@");
+    foreach(size_t TSF_tfcount,string TSF_tf;TSF_tfList){
+        TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y",format("%04d",TSF_Time_meridian_Year()));
+        TSF_tfList[TSF_tfcount]=TSF_tf;
+    }
+    TSF_daytimeformat=join(TSF_tfList,"@");
     return TSF_daytimeformat;
 }
 

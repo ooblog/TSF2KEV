@@ -1,1 +1,3 @@
 #! /usr/bin/env TSF
+TSF_Tab-Separated-Forth:
+@TechoTSF:@T#TSF_this@T#TSF_fin.
