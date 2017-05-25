@@ -112,17 +112,15 @@ def TSF_Forth_fin():    #TSFdoc:TSFを終了する。0枚[]ドロー。
     TSF_callptrD={};  TSF_callptrO=[];
     return "#exit:"
 
-TSF_runagain="";  TSF_runagainN=[];
+TSF_runagainN=[""];
 def TSF_Forth_runagain():    #TSFdoc:TSFを終了せず、次のTSFを読み込んで実行。1枚[tsf]ドロー。
-    global TSF_runagain
-    TSF_runagain=TSF_Forth_drawthe()
-    TSF_runagainN=[]
+    global TSF_runagainN
+    TSF_runagainN=[TSF_Forth_drawthe()]
     TSF_Forth_fin()
     return "#exit:"
 
-def TSF_Forth_runagainN():    #TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータ付けて実行。カード枚数+1枚+1枚[cardN…cardA,N,tsf]ドロー。
-    global TSF_runagain
-    TSF_runagain=TSF_Forth_drawthe()
+def TSF_Forth_runagainN():    #TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータも付けて実行。カード枚数+1枚[cardN…cardA,N]ドロー。
+    global TSF_runagainN
     TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_runagainN=[]
     if TSF_len > 0:
@@ -631,7 +629,7 @@ TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
 TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
 TSF_cardscount=0
 def TSF_Forth_initTSF(TSF_sysargvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-    global TSF_mainandargvs
+#    global TSF_mainandargvs
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     TSF_cardD={}
@@ -642,7 +640,8 @@ def TSF_Forth_initTSF(TSF_sysargvs=[],TSF_addcards=[]):    #TSFdoc:スタック�
     TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
     TSF_cardscount=0
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.",'T')
-    TSF_mainandargvs=TSF_sysargvs
+#    TSF_mainandargvs=TSF_sysargvs
+    TSF_Forth_mainandargvs(TSF_sysargvs)
     TSF_Initcards=[TSF_Forth_Initcards]+TSF_addcards
     for TSF_Initcall in TSF_Initcards:
         TSF_cardD,TSF_cardO=TSF_Initcall(TSF_cardD,TSF_cardO)
@@ -716,7 +715,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     global TSF_echo,TSF_echo_log
-    global TSF_runagain,TSF_runagainN;
+    global TSF_runagainN
     if TSF_run_log != None:
         TSF_echo,TSF_echo_log=True,TSF_run_log
     else:
@@ -753,11 +752,11 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
                 TSF_callptrD.pop(TSF_callptrO.pop())
             else:
                 break
-        if os.path.isfile(TSF_runagain) and len(TSF_Forth_loadtext(TSF_runagain,TSF_runagain)):
-            TSF_Forth_merge(TSF_runagain,[],True)
-            os.chdir(os.path.dirname(os.path.abspath(TSF_runagain)))
-            TSF_Forth_mainfilepath(os.path.abspath(TSF_runagain))
-            TSF_runagain="";  TSF_runagainN=[];
+        if os.path.isfile(TSF_runagainN[0]) and len(TSF_Forth_loadtext(TSF_runagainN[0],TSF_runagainN[0])):
+            TSF_Forth_merge(TSF_runagainN[0],[],True)
+            os.chdir(os.path.dirname(os.path.abspath(TSF_runagainN[0])))
+            TSF_Forth_mainfilepath(os.path.abspath(TSF_runagainN[0]))
+            TSF_Forth_mainandargvs(TSF_runagainN);  TSF_runagainN=[""];
             TSF_Forth_run(TSF_echo_log)
         else:
             break
@@ -804,7 +803,10 @@ def TSF_Forth_return(TSF_the,TSF_card):    #TSFdoc:theスタックに1枚リタ�
         TSF_stackD[TSF_the]=[]
     TSF_stackD[TSF_the].append(TSF_card)
 
-def TSF_Forth_mainandargvs():    #TSFdoc:argvsの取得。(TSFAPI)
+def TSF_Forth_mainandargvs(TSF_argvs=None):    #TSFdoc:argvsの取得。(TSFAPI)
+    global TSF_mainandargvs
+    if TSF_argvs != None:
+        TSF_mainandargvs=TSF_argvs
     return TSF_mainandargvs
 
 TSF_mainfilepath=""

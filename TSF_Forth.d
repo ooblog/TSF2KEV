@@ -127,17 +127,15 @@ string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定す�
     return "#exit:";
 }
 
-string TSF_runagain="";  string[] TSF_runagainN;
+string[] TSF_runagainN=[""];
 string TSF_Forth_runagain(){    //#TSFdoc:TSFを終了せず、次のTSFを読み込んで実行。1枚[tsf]ドロー。
-    TSF_runagain=TSF_Forth_drawthe();
-    TSF_runagainN=[];
+    TSF_runagainN=[TSF_Forth_drawthe()];
     TSF_Forth_fin();
     return "#exit:";
 }
 
-string TSF_Forth_runagainN(){    //#TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータ付けて実行。カード枚数+1枚+1枚[cardN…cardA,N,tsf]ドロー。
-    TSF_runagain=TSF_Forth_drawthe();
-    TSF_runagainN=[];
+string TSF_Forth_runagainN(){    //#TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータも付けて実行。カード枚数+1枚[cardN…cardA,N]ドロー。
+    TSF_runagainN=null;
     long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
     if( TSF_len>0 ){
         foreach(long TSF_count;0..TSF_len){
@@ -802,7 +800,8 @@ void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_cardscount=0;
     TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.",'T');
-    TSF_mainandargvs=TSF_sysargvs;
+//    TSF_mainandargvs=TSF_sysargvs;
+    TSF_Forth_mainandargvs(TSF_sysargvs);
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards]~TSF_addcalls;
     foreach(void function(ref string function()[string],ref string[]) TSF_Initcard;TSF_Initcards){
         TSF_Initcard(TSF_cardD,TSF_cardO);
@@ -951,11 +950,11 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
                 break;
             }
         }
-        if( exists(TSF_runagain) && TSF_Forth_loadtext(TSF_runagain,TSF_runagain).length>0 ){
-            TSF_Forth_merge(TSF_runagain,null,true);
-            chdir(dirName(absolutePath(TSF_runagain)));
-            TSF_Forth_mainfilepath(absolutePath(TSF_runagain));
-            TSF_runagain="";  TSF_runagainN=[];
+        if( exists(TSF_runagainN[0]) && TSF_Forth_loadtext(TSF_runagainN[0],TSF_runagainN[0]).length>0 ){
+            TSF_Forth_merge(TSF_runagainN[0],null,true);
+            chdir(dirName(absolutePath(TSF_runagainN[0])));
+            TSF_Forth_mainfilepath(absolutePath(TSF_runagainN[0]));
+            TSF_Forth_mainandargvs(TSF_runagainN);  TSF_runagainN=[""];
             TSF_Forth_samplerun(TSF_echo_log);
         }
         else{
@@ -1018,7 +1017,10 @@ void TSF_Forth_return(string TSF_the,string TSF_card){    //#TSFdoc:theスタッ
     TSF_stackD[TSF_the]~=[TSF_card];
 }
 
-string[] TSF_Forth_mainandargvs(){    //#TSFdoc:argvsの取得。(TSFAPI)
+string[] TSF_Forth_mainandargvs(...){    //#TSFdoc:argvsの取得。(TSFAPI)
+    if( _arguments.length>0 && _arguments[0]==typeid(string[]) ){
+        TSF_mainandargvs=va_arg!(string[])(_argptr);
+    }
     return TSF_mainandargvs;
 }
 
