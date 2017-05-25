@@ -4,9 +4,10 @@ TSF_Tab-Separated-Forth:
 TSFdocs_files:
 	READMEtest.md	READMEtest.html	sample_aboutTSFtest.tsf
 TSFdocs_basedoc:
-	{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}
+	{?TSFhtmlhead}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlbuttom}
 TSFdocs_tags:
-	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}
+	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{?TSFhtmlhead}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlhead}
 {?TSFreadmehead}
 	{$TSFreadmehead}	{$TSFreadmehead}	
 {$TSFreadmehead}
