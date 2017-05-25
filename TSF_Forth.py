@@ -21,7 +21,8 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
     TSF_Forth_importlist("TSF_Forth")
     TSF_Forth_cards={
         "#TSF_fin.":TSF_Forth_fin, "#TSFを終了。":TSF_Forth_fin,
-        "#TSF_runagain":TSF_Forth_runagain, "#TSFを再走。":TSF_Forth_runagain,
+        "#TSF_runagain":TSF_Forth_runagain, "#TSFを再走":TSF_Forth_runagain,
+        "#TSF_runagainN":TSF_Forth_runagainN, "#TSFをコマンド付き再走":TSF_Forth_runagainN,
         "#TSF_countmax":TSF_Forth_countmax, "#カード数え上げ上限":TSF_Forth_countmax,
         "#TSF_this":TSF_Forth_this, "#スタック実行":TSF_Forth_this,
         "#TSF_that":TSF_Forth_that, "#スタック積込":TSF_Forth_that,
@@ -111,10 +112,22 @@ def TSF_Forth_fin():    #TSFdoc:TSFを終了する。0枚[]ドロー。
     TSF_callptrD={};  TSF_callptrO=[];
     return "#exit:"
 
-TSF_runagain=""
-def TSF_Forth_runagain():    #TSFdoc:TSFを終了する。1枚[tsf]ドロー。
+TSF_runagain="";  TSF_runagainN=[];
+def TSF_Forth_runagain():    #TSFdoc:TSFを終了せず、次のTSFを読み込んで実行。1枚[tsf]ドロー。
     global TSF_runagain
-    TSF_runagain=TSF_Forth_drawthe();
+    TSF_runagain=TSF_Forth_drawthe()
+    TSF_runagainN=[]
+    TSF_Forth_fin()
+    return "#exit:"
+
+def TSF_Forth_runagainN():    #TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータ付けて実行。カード枚数+1枚+1枚[cardN…cardA,N,tsf]ドロー。
+    global TSF_runagain
+    TSF_runagain=TSF_Forth_drawthe()
+    TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_runagainN=[]
+    if TSF_len > 0:
+        for TSF_count in range(TSF_len):
+           TSF_runagainN+=[TSF_Forth_drawthe()]
     TSF_Forth_fin()
     return "#exit:"
 
@@ -204,7 +217,7 @@ def TSF_Forth_argvs():    #TSFdoc:コマンドを積込む。0枚[]ドローし�
     TSF_Forth_return(TSF_Forth_drawthat(),str(TSF_len))
     return ""
 
-def TSF_Forth_argvsthe():    #TSFdoc:指定スタックを積込む。1枚[the]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthe():    #TSFdoc:指定スタックを積込む。1枚[the]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthe()
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
@@ -214,7 +227,7 @@ def TSF_Forth_argvsthe():    #TSFdoc:指定スタックを積込む。1枚[the]�
         TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
-def TSF_Forth_argvsthis():    #TSFdoc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthis():    #TSFdoc:実行中スタックを積込む。0枚[]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthis()
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
@@ -224,7 +237,7 @@ def TSF_Forth_argvsthis():    #TSFdoc:実行中スタックを積込む。0枚[]
         TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
-def TSF_Forth_argvsthat():    #TSFdoc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthat():    #TSFdoc:積込先スタックを積込む。0枚[]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     TSF_the=TSF_Forth_drawthat()
     if TSF_the in TSF_stackD:
         for TSF_card in reversed(TSF_stackD[TSF_the]):
@@ -234,7 +247,7 @@ def TSF_Forth_argvsthat():    #TSFdoc:積込先スタックを積込む。0枚[]
         TSF_Forth_return(TSF_Forth_drawthat(),"0")
     return ""
 
-def TSF_Forth_argvsthey():    #TSFdoc:スタック一覧を積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+def TSF_Forth_argvsthey():    #TSFdoc:スタック一覧を積込む。0枚[]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     if len(TSF_stackO) > 0:
         for TSF_card in reversed(TSF_stackO):
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
@@ -703,7 +716,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     global TSF_echo,TSF_echo_log
-    global TSF_runagain
+    global TSF_runagain,TSF_runagainN;
     if TSF_run_log != None:
         TSF_echo,TSF_echo_log=True,TSF_run_log
     else:
@@ -744,7 +757,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
             TSF_Forth_merge(TSF_runagain,[],True)
             os.chdir(os.path.dirname(os.path.abspath(TSF_runagain)))
             TSF_Forth_mainfilepath(os.path.abspath(TSF_runagain))
-            TSF_runagain=""
+            TSF_runagain="";  TSF_runagainN=[];
             TSF_Forth_run(TSF_echo_log)
         else:
             break

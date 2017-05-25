@@ -174,17 +174,15 @@ def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
         "calcdef:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_calcJA","#TSF_echo"]),'T')
     TSF_Forth_setTSF("calcdef:","\t".join([
         "1/3-m1|2"]),'N')
-    TSF_Forth_samplerun("TSF_sample_calc")
+    TSF_Forth_samplerun("TSF_sample_calcJA")
 
 def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "FBsetup:","#TSF_this","#TSF_fin."]),'T')
-    TSF_Forth_setTSF("FBsetup:","\t".join([
-        "FZcount:","#TSF_that","#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","FZcount:","4","#TSF_pokeNthe","FBloop:","#TSF_this"]),'T')
+        "#TSF_argvs","#TSF_pullFthat","FZcount:","#TSF_pushFthe","FBloop:","#TSF_this","#TSF_fin.","20"]),'T')
     TSF_Forth_setTSF("FBloop:","\t".join([
         "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("FZcount:","\t".join([
-        "0","Fizz","Buzz","Fizz&Buzz","20"]),'T')
+        "0","Fizz","Buzz","Fizz&Buzz"]),'T')
     TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
 def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。

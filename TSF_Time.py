@@ -102,6 +102,9 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
     TSF_tfList=TSF_daytimeformat.split("@@")
     for TSF_tfcount,TSF_tf in enumerate(TSF_tfList):
         TSF_tf=TSF_tf if not "@000y" in TSF_tf else TSF_tf.replace("@000y","{0:0>4}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
+        TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
+        TSF_tf=TSF_tf if not "@Z" in TSF_tf else TSF_tf.replace("@Z","")
         TSF_tfList[TSF_tfcount]=TSF_tf
     TSF_daytimeformat="@".join(TSF_tfList)
     return TSF_daytimeformat

@@ -35,6 +35,7 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     string function()[string] TSF_Forth_cards=[
         "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
         "#TSF_runagain":&TSF_Forth_runagain, "#TSFを再走。":&TSF_Forth_runagain,
+        "#TSF_runagainN":&TSF_Forth_runagainN, "#TSFをコマンド付き再走":&TSF_Forth_runagainN,
         "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
         "#TSF_this":&TSF_Forth_this, "#スタック実行":&TSF_Forth_this,
         "#TSF_that":&TSF_Forth_that, "#スタック積込":&TSF_Forth_that,
@@ -126,9 +127,23 @@ string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定す�
     return "#exit:";
 }
 
-string TSF_runagain="";
-string TSF_Forth_runagain(){    //#TSFdoc:TSF終了時のオプションを指定する。1枚[tsf]ドロー。
+string TSF_runagain="";  string[] TSF_runagainN;
+string TSF_Forth_runagain(){    //#TSFdoc:TSFを終了せず、次のTSFを読み込んで実行。1枚[tsf]ドロー。
     TSF_runagain=TSF_Forth_drawthe();
+    TSF_runagainN=[];
+    TSF_Forth_fin();
+    return "#exit:";
+}
+
+string TSF_Forth_runagainN(){    //#TSFdoc:TSFを終了せず、次のTSFを読み込んでパラメータ付けて実行。カード枚数+1枚+1枚[cardN…cardA,N,tsf]ドロー。
+    TSF_runagain=TSF_Forth_drawthe();
+    TSF_runagainN=[];
+    long TSF_len=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    if( TSF_len>0 ){
+        foreach(long TSF_count;0..TSF_len){
+            TSF_runagainN~=[TSF_Forth_drawthe()];
+        }
+    }
     TSF_Forth_fin();
     return "#exit:";
 }
@@ -246,7 +261,7 @@ string TSF_Forth_argvs(){    //#TSFdoc:コマンドを積込む。0枚[]ドロ�
     return "";
 }
 
-string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[the]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[the]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthe();
     if( TSF_the in TSF_stackD ){
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
@@ -259,7 +274,7 @@ string TSF_Forth_argvsthe(){    //#TSFdoc:指定スタックを積込む。1枚[
     }
     return "";
 }
-string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0枚[]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthis();
     if( TSF_the in TSF_stackD ){
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
@@ -272,7 +287,7 @@ string TSF_Forth_argvsthis(){    //#TSFdoc:実行中スタックを積込む。0
     }
     return "";
 }
-string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0枚[]ドローしてスタック枚数+1枚[cardN…cardA,N]リターン。
+string TSF_Forth_argvsthat(){    //#TSFdoc:積込先スタックを積込む。0枚[]ドローしてカード枚数+1枚[cardN…cardA,N]リターン。
     string TSF_the=TSF_Forth_drawthat();
     if( TSF_the in TSF_stackD ){
         foreach_reverse(string TSF_card;TSF_stackD[TSF_the]){
@@ -940,7 +955,7 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
             TSF_Forth_merge(TSF_runagain,null,true);
             chdir(dirName(absolutePath(TSF_runagain)));
             TSF_Forth_mainfilepath(absolutePath(TSF_runagain));
-            TSF_runagain="";
+            TSF_runagain="";  TSF_runagainN=[];
             TSF_Forth_samplerun(TSF_echo_log);
         }
         else{

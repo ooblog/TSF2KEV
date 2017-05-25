@@ -8,6 +8,9 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 
     #! /usr/bin/env TSF
     TSF_Tab-Separated-Forth:
-    @TechoTSF:@T#TSF_this@T#TSF_fin.
+    
+echoTSF:
+#TSF_this
+#TSF_fin.
 
 ##「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。##

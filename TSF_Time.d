@@ -112,6 +112,9 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
     string[] TSF_tfList=TSF_daytimeformat.split("@@");
     foreach(size_t TSF_tfcount,string TSF_tf;TSF_tfList){
         TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y","%04d".format(TSF_Time_meridian_Year()));
+        TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
+        TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
+        TSF_tf=!count(TSF_tf,"@Z")?TSF_tf:TSF_tf.replace("@Z","");
         TSF_tfList[TSF_tfcount]=TSF_tf;
     }
     TSF_daytimeformat=join(TSF_tfList,"@");
