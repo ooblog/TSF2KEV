@@ -123,7 +123,7 @@ def TSF_Match_replaceRAD(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RAD):    #TSFdoc:repla
 #        elif TSF_QIRHL == 'H':
 #        elif TSF_QIRHL == 'L':
     if TSF_SDOpoke == 'S':
-        TSF_Forth_setTSF(TSF_theT,TSF_Text,'N')
+        TSF_Forth_setTSF(TSF_theT,TSF_Text,'@')
     elif TSF_SDOpoke == 'D':
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text)
 

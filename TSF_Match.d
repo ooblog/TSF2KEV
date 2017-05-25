@@ -108,7 +108,7 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
     }
     switch( TSF_SDOpoke ){
         case 'S':
-            TSF_Forth_setTSF(TSF_theT,TSF_Text,'N'); break;
+            TSF_Forth_setTSF(TSF_theT,TSF_Text,'@'); break;
         case 'D':
             TSF_Forth_return(TSF_Forth_drawthat(),TSF_Text); break;
         default: break;

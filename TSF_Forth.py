@@ -125,7 +125,7 @@ def TSF_Forth_runagainN():    #TSFdoc:TSFを終了せず、次のTSFを読み込
     TSF_runagainN=[]
     if TSF_len > 0:
         for TSF_count in range(TSF_len):
-           TSF_runagainN+=[TSF_Forth_drawthe()]
+           TSF_runagainN.append(TSF_Forth_drawthe())
     TSF_Forth_fin()
     return "#exit:"
 
@@ -668,9 +668,12 @@ def TSF_Forth_setTSF(TSF_the,TSF_text=None,TSF_style=None):    #TSFdoc:TSFの外
     if TSF_text != None:
         if not TSF_the in TSF_stackD:
             TSF_stackO.append(TSF_the);  TSF_styleO.append(TSF_the);
-#        TSF_stackD[TSF_the]=TSF_text.rstrip('\n').replace('\t','\n').split('\n')
-        TSF_stackD[TSF_the]=TSF_text.rstrip("\n").replace("\t","\n").split("\n")
-        TSF_styleD[TSF_the]=TSF_style
+        if TSF_style == '@':
+            TSF_stackD[TSF_the]=TSF_text.rstrip("\n").split("\n")
+            TSF_styleD[TSF_the]='N'
+        else:
+            TSF_stackD[TSF_the]=TSF_text.rstrip("\n").replace("\t","\n").split("\n")
+            TSF_styleD[TSF_the]=TSF_style
     else:
         if TSF_the in TSF_stackD:  del TSF_stackD[TSF_the]
         if TSF_the in TSF_styleD:  del TSF_styleD[TSF_the]

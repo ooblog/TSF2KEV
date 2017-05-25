@@ -843,8 +843,14 @@ void TSF_Forth_setTSF(string TSF_the, ...){    //#TSFdoc:スタックやカー�
         if( TSF_the !in TSF_stackD ){
             TSF_stackO~=[TSF_the];  TSF_styleO~=[TSF_the];
         }
-        TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("\t","\n").split('\n');
-        TSF_styleD[TSF_the]=TSF_style;
+        if( TSF_style=='@' ){
+            TSF_stackD[TSF_the]=TSF_text.stripRight('\n').split('\n');
+            TSF_styleD[TSF_the]='N';
+        }
+        else{
+            TSF_stackD[TSF_the]=TSF_text.stripRight('\n').replace("\t","\n").split('\n');
+            TSF_styleD[TSF_the]=TSF_style;
+        }
     }
     else{
         if( TSF_the in TSF_stackD ){ TSF_stackD.remove(TSF_the); }
