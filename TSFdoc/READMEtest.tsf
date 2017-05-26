@@ -4,10 +4,18 @@ TSF_Tab-Separated-Forth:
 TSFdocs_files:
 	READMEtest.md	READMEtest.html	sample_aboutTSFtest.tsf
 TSFdocs_basedoc:
-	{?TSFhtmlhead}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlbuttom}
+	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_tags:
 	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
-	{?TSFhtmlhead}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlhead}
+	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlheader}
+{?TSFhtmlheader}
+		{$TSFFhtmlheader}	
+{$TSFFhtmlheader}
+	<html lang="ja"><head>
+	 <meta charset="UTF-8" />
+	 <title>README.md</title>
+	</head><body>
+	
 {?TSFreadmehead}
 	{$TSFreadmehead}	{$TSFreadmehead}	
 {$TSFreadmehead}
@@ -26,12 +34,139 @@ TSFdocs_tags:
 	{?INDENT}#! /usr/bin/env TSF
 	{?INDENT}TSF_Tab-Separated-Forth:
 	{?INDENT}{?TAB}echoTSF:{?TAB}#TSF_this{?TAB}#TSF_fin.
+	{?INDENT}echoTSF:
+	{?INDENT}{?TAB}aboutTSF:{?TAB}#TSF_argvsthe{?TAB}#TSF_echoN{?TAB}echoRPNcalc:{?TAB}#TSF_this
+	{?INDENT}aboutTSF:
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　Forth風インタプリタ。単位はtsv文字列。文字列の事をカードと呼称。カードの束をスタックと呼称。スタックの集まりをデッキと呼称。
+	{?INDENT}{?TAB}　ソースコード.tsfで文字から始まる行はスタック名、タブで始まる行はカード。スタック名の宣言とカードの積み込みはワンライナー記述も可能。
+	{?INDENT}{?TAB}　改行のみもしくは「#」で始まる行は読み飛ばし。「#」は「#関数カード」として使うので「#」で始まるスタック名は予約ワード扱い。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○TSFには4つの「th」、スタック代名詞「this」「that」「the」「they」という概念が存在する(theは厳密には冠詞だが便宜上代名詞扱い)。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。
+	{?INDENT}{?TAB}　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。
+	{?INDENT}{?TAB}　オーバーフローもしくは「#exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。
+	{?INDENT}{?TAB}　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。
+	{?INDENT}{?TAB}　TSFにはIF構文も存在しないけど「#TSF_this」に「#TSF_calc」「#TSF_peekNthe」「#TSF_aliasQON」などで呼び出し先変更を組み合わせる事で分岐は可能。
+	{?INDENT}{?TAB}　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。
+	{?INDENT}{?TAB}　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。
+	{?INDENT}{?TAB}　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○TSFのスタック操作に4つの「p」、スタック動詞「peek」「poke」「pull」「push」が存在する。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　「peek」スタックからカードを読み込む。読込先スタックはそのままに「that」スタックにカードが積まれるのでカードが増殖る形になる。
+	{?INDENT}{?TAB}　「poke」スタックにカードを書き込む。スタックのカードは上書きされるので上書きされたカードが消失する形になる。
+	{?INDENT}{?TAB}　「pull」スタックからカードを引き抜く。引抜先スタックから「that」スタックにカードが移動する形になる。
+	{?INDENT}{?TAB}　「push」スタックにカードを差し込む。引抜先スタックに「that」スタックからカードが移動する形になる。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　※ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」などを用意する予定。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　「F」(Front)スタックから表択、一番上に積まれたカード(tsv表現では末尾の文字列)を選択。
+	{?INDENT}{?TAB}　「N」(Number)スタックから順択、一番下のカード(tsv表現では右端の文字列)をゼロとして数値指定で選択。
+	{?INDENT}{?TAB}　「C」(Cycle)スタックから周択、「N」のカウント数がスタックを上回る場合、ゼロから数え直す。
+	{?INDENT}{?TAB}　「M」(liMit)スタックから囲択、「N」のカウント数がスタックを上回る場合、「F」と同様。下回る場合ゼロ。
+	{?INDENT}{?TAB}　「V」(reVerse)スタックから逆択、「N」のカウントが逆順になる。一番上のカード(tsv表現では左端の文字列)をゼロとして数値指定で選択。
+	{?INDENT}{?TAB}　「A」(rAndom)スタックから乱択、ランダムに選択。乱数の定義が絡む場合は「N」を用いて別な所から乱数を準備すべき。
+	{?INDENT}{?TAB}　「Q」(eQual)スタックから同択、文字列と同じカードを選択。カードの枚数は動詞による。
+	{?INDENT}{?TAB}　「I」(In)スタックから含択、文字列が含まれるカードを選択。カードの枚数は動詞による。
+	{?INDENT}{?TAB}　「R」(Regex)スタックから規択、正規表現に該当するカードを選択。カードの枚数は動詞による。TSFを実装する言語毎に正規表現の方言が存在する問題。
+	{?INDENT}{?TAB}　「H」(matcHer)スタックから似択、文字列の一致度が一定数以上のカードを選択。カードの枚数は動詞による。Python以外の言語で一致度の基準が未定義。
+	{?INDENT}{?TAB}　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○TSFの文字列置換などでは多重副詞(副詞の組み合わせ)が発生します。加えてスタック名なのかカード名なのかを指定する数量詞が加わります。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　「S」(Stack)スタックを用意、同名のカードが存在しても、スタックを用います。
+	{?INDENT}{?TAB}　「D」(carD)カードを用意、同名のスタックが存在しても、スタック名そのものを1枚のカード束とみなします。
+	{?INDENT}{?TAB}　「O」(stack Or card)スタックまたはカードを用意、スタックが存在すればスタックを用い、スタックが存在しなければスタック名そのものを1枚のカード束とみなします。
+	{?INDENT}{?TAB}
+	{?INDENT}echoRPNcalc:
+	{?INDENT}{?TAB}aboutRPNtest:{?TAB}#TSF_this{?TAB}aboutRPNcalc:{?TAB}#TSF_argvsthe{?TAB}#TSF_echoN{?TAB}echoTIME:{?TAB}#TSF_this
+	{?INDENT}aboutRPNtest:
+	{?INDENT}{?TAB}▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→{?TAB}1{?TAB}3{?TAB}m1|2{?TAB}[2],[1]/[0]-{?TAB}#TSF_join[]{?TAB}#TSF_RPN{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→{?TAB}1{?TAB},{?TAB}3{?TAB}/{?TAB}m1|2{?TAB}-{?TAB}6{?TAB}#TSF_joinN{?TAB}#TSF_RPN{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→{?TAB}1{?TAB}3{?TAB}m1|2{?TAB}[2]/[1]-[0]{?TAB}#TSF_join[]{?TAB}#TSF_calc{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→{?TAB}1{?TAB}/{?TAB}3{?TAB}-{?TAB}m1|2{?TAB}5{?TAB}#TSF_joinN{?TAB}#TSF_calc{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→{?TAB}[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]{?TAB}#TSF_calc{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽漢数字テスト「億千万」を「#TSF_calcJA」→{?TAB}億千万{?TAB}#TSF_calcJA{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}{?TAB}▽漢数字テスト「六分の五」を「#TSF_calcJA」→{?TAB}６分の５{?TAB}#TSF_calcJA{?TAB}2{?TAB}#TSF_joinN{?TAB}#TSF_echo
+	{?INDENT}aboutCALCdata:
+	{?INDENT}{?TAB}1{?TAB}3{?TAB}m1|2
+	{?INDENT}aboutRPNcalc:
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○「#TSF_RPN」逆ポーランド小数電卓の概要。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　TSFの数式に高速処理を目指すRPNと多機能を備えるcalcの2種類の電卓を用意。
+	{?INDENT}{?TAB}　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。
+	{?INDENT}{?TAB}　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」も「1,m2-」と表記する。
+	{?INDENT}{?TAB}　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。
+	{?INDENT}{?TAB}　通常の割り算の他にも1未満を切り捨てる「\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。
+	{?INDENT}{?TAB}　計算結果が整数になる場合、および小数の丸めで整数になってしまった場合は整数表記になる。
+	{?INDENT}{?TAB}　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。
+	{?INDENT}{?TAB}　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。
+	{?INDENT}{?TAB}　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。
+	{?INDENT}{?TAB}　条件演算子とスタック名(演算を抑止する「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます(IF構文の代替)。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○「#TSF_calc」系分数電卓の概要(RPNと共通する内容は圧縮)。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　calcは括弧や分数なども使えます。RPN電卓も混在できます。分数を用いる事で桁溢れや丸め誤差をなるだけ回避する事を目標とします。
+	{?INDENT}{?TAB}　分数を小数に変換するには「,(1|3)」のように括弧の外側でコンマを使う事でcalcの計算結果をRPNで処理する形になります。
+	{?INDENT}{?TAB}　calcではRPNとは事なり、括弧が無くても「小数の分数化＞掛け算系＞足し算系＞条件演算子」のような計算順序が存在します。
+	{?INDENT}{?TAB}　calcでは式に直接スタック名を「[data:2]/[data:1]-[data:0]」できるので、「#TSF_peekNthe」「#TSF_join[]」をショートカットできます。
+	{?INDENT}{?TAB}　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と条件演算子にチルダ追加。「N~」は「n|0」のチェック用途。
+	{?INDENT}{?TAB}　「#TSF_-calc」を用いると計算結果の符号を「p」「m」から「-」のみに変更できる。
+	{?INDENT}{?TAB}　「#TSF_calcJA」を用いると億千万円銭など通貨的な助数詞を扱う。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、1万分の1(‱)は「毛」表記。
+	{?INDENT}{?TAB}
+	{?INDENT}echoTIME:
+	{?INDENT}{?TAB}aboutTIMEtest:{?TAB}#TSF_this{?TAB}aboutTIME:{?TAB}#TSF_argvsthe{?TAB}#TSF_echoN
+	{?INDENT}aboutTIMEtest:
+	{?INDENT}{?TAB}▽「time」系は準備中{?TAB}#TSF_echo
+	{?INDENT}aboutTIME:
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}○「time」系分数電卓も再開発中につき説明不足になります。
+	{?INDENT}{?TAB}
+	{?INDENT}{?TAB}　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。
+	{?INDENT}{?TAB}　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
+	{?INDENT}{?TAB}　「@T」でタブ、「@N」で改行に置換されます。
 {?TSFreadmebuttom}
 	{$TSFreadmebuttom}	{$TSFreadmebuttom}	
 {$TSFreadmebuttom}
 	
 	{?/CODE}
-	{?H2}「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。{?H2}
+	{?H2}「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。{?/H2}
+	{?CODE}
+	{?INDENT}▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
+	{?INDENT}▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
+	{?INDENT}▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→p5|6
+	{?INDENT}▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→p5|6
+	{?INDENT}▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
+	{?INDENT}▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
+	{?/CODE}
+	{?H2}aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。{?/H2}
+	{?P}
+	・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
+	・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。{?BR}
+	・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
+	・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。{?BR}
+	・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。{?BR}
+	・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。{?BR}
+	・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。{?BR}
+	・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
+	・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
+	・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
+	・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
+	・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。{?BR}
+	・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。{?BR}
+	{?/P}
+{?TSFhtmlfooter}
+		{$TSFhtmlfooter}	
+{$TSFhtmlfooter}
+	
+	</body></html>
 {?H1}
 	#	<h1>	
 {?/H1}
