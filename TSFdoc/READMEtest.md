@@ -1,8 +1,8 @@
 #プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「LTsv10kanedit」の「LTsv/kanedit.vim」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
-TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「LTsv10kanedit」をお使いください。
-未実装の機能の一部は「TSF1KEV」も参考。
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
+TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。
+未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV"ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。
 
 ##簡易版TSF解説「sample_aboutTSF.tsf」。
 
@@ -130,5 +130,27 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。
 ・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。
+・Calcの動作がそもそも重いorz
 ・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。
 ・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。
+
+##Vimシンタックスの設定など。
+
+ シンタックスファイル「vimsyntax/tsf.vim」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。
+「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。
+Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。
+ついでに「kanedit.vim」の設定もおまけで書いてみた。
+
+
+    syntax on
+    au BufRead,BufNewFile *.tsf set filetype=tsf
+    autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
+    command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
+
+##動作環境。
+「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および
+「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。
+##ライセンス・著作権など。
+Copyright (c) 2017 ooblog
+License: MIT
+https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

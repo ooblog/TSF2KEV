@@ -6,7 +6,10 @@ TSFdocs_files:
 TSFdocs_basedoc:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_tags:
-	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{?&lt}	{?&gt}	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
+	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
+	{$A_A_TSF1KEV_text}	{$A_A_TSF1KEV_href}	{$A_A_TSF1KEV_title}	{?A_TSF1KEV}
 	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlheader}
 {?TSFhtmlheader}
 		{$TSFFhtmlheader}	
@@ -21,9 +24,9 @@ TSFdocs_tags:
 {$TSFreadmehead}
 	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
 	{?P}
-	目標は「LTsv10kanedit」の「LTsv/kanedit.vim」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
-	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「LTsv10kanedit」をお使いください。{?BR}
-	未実装の機能の一部は「TSF1KEV」も参考。{?BR}
+	目標は「{?A_LTsv10kanedit}」の「{?A_LTsv10kev}」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
+	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「{?A_LTsv10kanedit}」をお使いください。{?BR}
+	未実装の機能の一部は「{?A_TSF1KEV}」も参考。{?BR}
 	{?/P}
 	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
 	{?CODE}
@@ -159,14 +162,59 @@ TSFdocs_tags:
 	・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
 	・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
 	・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
+	・Calcの動作がそもそも重いorz{?BR}
 	・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。{?BR}
 	・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。{?BR}
 	{?/P}
+	{?H2}Vimシンタックスの設定など。{?/H2}
+	{?P}
+	 シンタックスファイル「vimsyntax/tsf.vim」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。{?BR}
+	「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。{?BR}
+	Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。{?BR}
+	ついでに「kanedit.vim」の設定もおまけで書いてみた。{?BR}
+	{?/P}
+	{?CODE}
+	{?INDENT}syntax on
+	{?INDENT}au BufRead,BufNewFile *.tsf set filetype=tsf
+	{?INDENT}autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
+	{?INDENT}command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
+	{?/CODE}
+	{?H2}動作環境。{?/H2}
+	「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
+	「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
+	{?H2}ライセンス・著作権など。{?/H2}
+	Copyright (c) 2017 ooblog{?BR}
+	License: MIT{?BR}
+	https://github.com/ooblog/TSF2KEV/blob/master/LICENSE{?BR}
 {?TSFhtmlfooter}
 		{$TSFhtmlfooter}	
 {$TSFhtmlfooter}
 	
 	</body></html>
+{?A_LTsv10kanedit}
+	[{$A_LTsv10kanedit_text}]({$A_LTsv10kanedit_href} "{$A_LTsv10kanedit_title}")	<a href="{$A_LTsv10kanedit_href}" title="{$A_LTsv10kanedit_title}">{$A_LTsv10kanedit_text}</a>	
+{$A_LTsv10kanedit_text}
+	LTsv10kanedit
+{$A_LTsv10kanedit_href}
+	https://github.com/ooblog/LTsv10kanedit
+{$A_LTsv10kanedit_title}
+	ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。
+{?A_LTsv10kev}
+	[{$A_LTsv10kev_text}]({$A_LTsv10kev_href}"{$A_LTsv10kev_title}")	<a href="{$A_LTsv10kev_href}" title="{$A_LTsv10kev_title}">{$A_LTsv10kev_text}</a>	
+{$A_LTsv10kev_text}
+	LTsv/kanedit.vim
+{$A_LTsv10kev_href}
+	https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim
+{$A_LTsv10kev_title}
+	LTsv/kanedit.vim ooblog/LTsv10kanedit
+{?A_TSF1KEV}
+	[{$A_A_TSF1KEV_text}]({$A_A_TSF1KEV_href}"{$A_A_TSF1KEV_title}")	<a href="https://github.com/ooblog/TSF1KEV" title="ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。">{$A_A_TSF1KEV_text}</a>	
+{$A_A_TSF1KEV_text}
+	TSF1KEV
+{$A_A_TSF1KEV_href}
+	https://github.com/ooblog/TSF1KEV
+{$A_A_TSF1KEV_title}
+	ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。
 {?H1}
 	#	<h1>	
 {?/H1}
@@ -189,3 +237,7 @@ TSFdocs_tags:
 	    		
 {?TAB}
 	@T
+{?&lt}
+	<	&lt;	
+{?&gt}
+	>	&gt;	

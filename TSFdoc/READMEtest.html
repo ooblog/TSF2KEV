@@ -4,9 +4,9 @@
 </head><body>
 <h1>プログラミング言語「TSF_Tab-Separated-Forth」開発中。</h1>
 <p>
-目標は「LTsv10kanedit」の「LTsv/kanedit.vim」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<br />
-TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「LTsv10kanedit」をお使いください。<br />
-未実装の機能の一部は「TSF1KEV」も参考。<br />
+目標は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」の「<a href="https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim" title="LTsv/kanedit.vim ooblog/LTsv10kanedit">LTsv/kanedit.vim</a>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<br />
+TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」をお使いください。<br />
+未実装の機能の一部は「<a href="https://github.com/ooblog/TSF1KEV" title="ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。">TSF1KEV</a>」も参考。<br />
 </p>
 <h2>簡易版TSF解説「sample_aboutTSF.tsf」。</h2>
 <pre><code>
@@ -134,7 +134,28 @@ aboutTIME:
 ・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。<br />
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。<br />
 ・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。<br />
+・Calcの動作がそもそも重いorz<br />
 ・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。<br />
 ・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。<br />
 </p>
+<h2>Vimシンタックスの設定など。</h2>
+<p>
+ シンタックスファイル「vimsyntax/tsf.vim」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。<br />
+「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。<br />
+Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。<br />
+ついでに「kanedit.vim」の設定もおまけで書いてみた。<br />
+</p>
+<pre><code>
+syntax on
+au BufRead,BufNewFile *.tsf set filetype=tsf
+autocmd BufNewFile,BufRead *.tsf nnoremap &lt;F5&gt; :!TSF %&lt;CR&gt;
+command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
+</code></pre>
+<h2>動作環境。</h2>
+「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および<br />
+「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。<br />
+<h2>ライセンス・著作権など。</h2>
+Copyright (c) 2017 ooblog<br />
+License: MIT<br />
+https://github.com/ooblog/TSF2KEV/blob/master/LICENSE<br />
 </body></html>
