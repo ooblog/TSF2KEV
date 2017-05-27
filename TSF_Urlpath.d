@@ -7,6 +7,7 @@ import std.math;
 import std.bigint;
 import std.regex;
 import std.path;
+import std.file;
 
 import TSF_Io;
 import TSF_Forth;
@@ -16,6 +17,10 @@ void TSF_Urlpath_Initcards(ref string function()[string] TSF_cardsD,ref string[]
     TSF_Forth_importlist("TSF_Urlpath");
     string function()[string] TSF_Forth_cards=[
         "#TSF_fileext":&TSF_Urlpath_fileext, "#ファイルの拡張子":&TSF_Urlpath_fileext,
+        "#TSF_abspath":&TSF_Urlpath_abspath, "#ファイルの絶対パス":&TSF_Urlpath_abspath,
+        "#TSF_dirpath":&TSF_Urlpath_dirpath, "#ファイルのディレクトリ":&TSF_Urlpath_dirpath,
+        "#TSF_chpath":&TSF_Urlpath_chpath, "#ディレクトリ移動":&TSF_Urlpath_chpath,
+        "#TSF_basepath":&TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":&TSF_Urlpath_basepath,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -33,6 +38,42 @@ string TSF_Urlpath_fileext(){    //#TSFdoc:現在日時の取得。1枚[daytimef
 string TSF_Urlpath_fileext_api(string TSF_filepath){    //#TSFdoc:ファイルの拡張子を取得。(TSFAPI)
 //    writeln(format("TSF_Urlpath_fileext_api %s %s",TSF_filepath,extension(TSF_filepath)));
     return extension(TSF_filepath);
+}
+
+string TSF_Urlpath_abspath(){    //#TSFdoc:ファイルの絶対パスを取得する。1枚[path]ドローして1枚[abspath]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_abspath_api(TSF_Forth_drawthe()));
+    return "";
+}
+
+string TSF_Urlpath_abspath_api(string TSF_filepath){    //#TSFdoc:ファイルの絶対パスを取得。(TSFAPI)
+    return exists(TSF_filepath)?absolutePath(TSF_filepath):"";
+}
+
+string TSF_Urlpath_dirpath(){    //#TSFdoc:ディレクトリパスを取得する。1枚[path]ドローして1枚[dirpath]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_dirpath_api(TSF_Forth_drawthe()));
+    return "";
+}
+
+string TSF_Urlpath_dirpath_api(string TSF_filepath){    //#TSFdoc:ディレクトリパスを取得。(TSFAPI)
+    return exists(TSF_filepath)?dirName(TSF_filepath):"";
+}
+
+string TSF_Urlpath_chpath(){    //#TSFdoc:ディレクトリに移動する。1枚[path]ドロー。
+    TSF_Urlpath_chpath_api(TSF_Forth_drawthe());
+    return "";
+}
+
+void TSF_Urlpath_chpath_api(string TSF_dirpath){    //#TSFdoc:ディレクトリに移動。(TSFAPI)
+    if( exists(TSF_dirpath) ){ chdir(TSF_dirpath); }
+}
+
+string TSF_Urlpath_basepath(){    //#TSFdoc:ファイルのあるディレクトリに移動する。1枚[path]ドロー。
+    TSF_Urlpath_basepath_api(TSF_Forth_drawthe());
+    return "";
+}
+
+void TSF_Urlpath_basepath_api(string TSF_filepath){    //#TSFdoc:ファイルのあるディレクトリパスを取得。(TSFAPI)
+    if( exists(TSF_filepath) ){ chdir(dirName(absolutePath(TSF_filepath))); }
 }
 
 

@@ -781,7 +781,8 @@ def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタ�
 def TSF_Forth_draw(TSF_the):    #TSFdoc:スタックから1枚ドロー。(TSFAPI)
     global TSF_stackD,TSF_stackO
     TSF_draw=""
-    if len(TSF_stackD[TSF_the]) and len(TSF_the) and TSF_the in TSF_stackD:
+#    if len(TSF_stackD[TSF_the]) and len(TSF_the) and TSF_the in TSF_stackD:
+    if TSF_the in TSF_stackD and len(TSF_stackD[TSF_the]):
         TSF_draw=TSF_stackD[TSF_the].pop()
     return TSF_draw
 

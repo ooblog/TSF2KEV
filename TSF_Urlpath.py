@@ -10,6 +10,10 @@ def TSF_Urlpath_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに�
     TSF_Forth_importlist(TSF_import="TSF_Urlpath")
     TSF_Forth_cards={
         "#TSF_fileext":TSF_Urlpath_fileext, "#ファイルの拡張子":TSF_Urlpath_fileext,
+        "#TSF_abspath":TSF_Urlpath_abspath, "#ファイルの絶対パス":TSF_Urlpath_abspath,
+        "#TSF_dirpath":TSF_Urlpath_dirpath, "#ファイルのディレクトリ":TSF_Urlpath_dirpath,
+        "#TSF_chpath":TSF_Urlpath_chpath, "#ディレクトリ移動":TSF_Urlpath_chpath,
+        "#TSF_basepath":TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":TSF_Urlpath_basepath,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -23,6 +27,34 @@ def TSF_Urlpath_fileext():    #TSFdoc:ファイルの拡張子を取得する。
 
 def TSF_Urlpath_fileext_api(TSF_filepath):    #TSFdoc:ファイルの拡張子を取得。(TSFAPI)
     return os.path.splitext(TSF_filepath)[1]
+
+def TSF_Urlpath_abspath():    #TSFdoc:ファイルの絶対パスを取得する。1枚[path]ドローして1枚[abspath]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_abspath_api(TSF_Forth_drawthe()));
+    return ""
+
+def TSF_Urlpath_abspath_api(TSF_filepath):    #TSFdoc:ファイルの絶対パスを取得。(TSFAPI)
+    return os.path.abspath(TSF_filepath) if( os.path.isfile(TSF_filepath) ) else ""
+
+def TSF_Urlpath_dirpath():    #TSFdoc:ディレクトリパスを取得する。1枚[path]ドローして1枚[dirpath]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_dirpath_api(TSF_Forth_drawthe()));
+    return ""
+
+def TSF_Urlpath_dirpath_api(TSF_filepath):    #TSFdoc:ディレクトリパスを取得。(TSFAPI)
+    return os.path.dirname(TSF_filepath) if( os.path.isfile(TSF_filepath) ) else ""
+
+def TSF_Urlpath_chpath():    #TSFdoc:ディレクトリに移動する。1枚[path]ドロー。
+    TSF_Urlpath_chpath_api(TSF_Forth_drawthe());
+    return ""
+
+def TSF_Urlpath_chpath_api(TSF_dirpath):    #TSFdoc:ディレクトリパスに移動。(TSFAPI)
+    if( os.path.isdir(TSF_dirpath) ): os.chdir(TSF_dirpath);
+
+def TSF_Urlpath_basepath():    #TSFdoc:ファイルのあるディレクトリに移動する。1枚[path]ドロー。
+    TSF_Urlpath_basepath_api(TSF_Forth_drawthe());
+    return ""
+
+def TSF_Urlpath_basepath_api(TSF_filepath):    #TSFdoc:ファイルのあるディレクトリパスを取得。(TSFAPI)
+    if( os.path.isfile(TSF_filepath) ): os.chdir(os.path.dirname(os.path.abspath(TSF_filepath)));
 
 
 TSF_Initcalldebug=[TSF_Urlpath_Initcards]
