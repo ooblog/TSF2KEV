@@ -196,8 +196,8 @@ TSFdocs_tags:
 	{?/CODE}
 	{?H2}動作環境。{?/H2}
 	{?P}
-	「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
-	「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
+	「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
+	「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
 	{?/P}
 	{?U_Tahrpup}
 	{?U_Python344}

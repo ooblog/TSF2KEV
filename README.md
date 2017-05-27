@@ -153,8 +153,8 @@ Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc�
 
 ## 動作環境。
 
-「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および  
-「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。  
+「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および  
+「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。  
 
 * Tahrpup6.0.5(Puppy Linux)
     * [http://puppylinux.com/](http://puppylinux.com/ "Puppy Linux Home")
