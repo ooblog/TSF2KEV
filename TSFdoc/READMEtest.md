@@ -1,8 +1,8 @@
 #プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
-TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。
-未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV"ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
+TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
+未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV"ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
 
 ##簡易版TSF解説「sample_aboutTSF.tsf」。
 
@@ -119,27 +119,27 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 
 ##aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。
 
-・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。
-・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。
-・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。
-・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。
-・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。
-・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。
-・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。
-・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。
-・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。
-・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。
-・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。
-・Calcの動作がそもそも重いorz
-・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf"TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」が動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/"「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。
-・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。
+・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
+・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
+・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。  
+・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。  
+・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。  
+・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。  
+・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。  
+・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。  
+・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
+・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
+・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
+・Calcの動作がそもそも重いorz  
+・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf"TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」が動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/"「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
+・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
 
 ##Vimシンタックスの設定など。
 
- シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim"TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。
-「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。
-Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。
-ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。
+ シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim"TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
+「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
+Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
+ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。  
 
 
     syntax on
@@ -149,14 +149,14 @@ Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を
 
 ##動作環境。
 
-「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および
-「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。
+「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および  
+「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。  
 
-Tahrpup6.0.5(PuppyLinux)
-:  [Tahrpup6.0.5(PuppyLinux)](http://puppylinux.com/"Puppy Linux Home")
+* Tahrpup6.0.5(PuppyLinux)
+    * [Tahrpup6.0.5(PuppyLinux)](http://puppylinux.com/"Puppy Linux Home")
 
 ##ライセンス・著作権など。
 
-Copyright (c) 2017 ooblog
-License: MIT
-https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+Copyright (c) 2017 ooblog  
+License: MIT  
+https://github.com/ooblog/TSF2KEV/blob/master/LICENSE  
