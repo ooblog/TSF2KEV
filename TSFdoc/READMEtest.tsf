@@ -10,10 +10,17 @@ TSFdocs_tags:
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
 	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
 	{$A_TSF1KEV_text}	{$A_TSF1KEV_href}	{$A_TSF1KEV_title}	{?A_TSF1KEV}
+	{$A_syntaximage_title}	{$A_syntaximage_img}	{$A_syntaximage_href}	{$A_syntaximage_text}	{?A_syntaximage}
+	{$A_aboutTSF_text}	{$A_aboutTSF_href}	{$A_aboutTSF_title}	{?A_aboutTSF}
 	{$A_TSFdoc_text}	{$A_TSFdoc_href}	{$A_TSFdoc_title}	{?A_TSFdoc}
 	{$A_yakuyon_text}	{$A_yakuyon_href}	{$A_yakuyon_title}	{?A_yakuyon}
 	{$A_vimsyntax_text}	{$A_vimsyntax_href}	{$A_vimsyntax_title}	{?A_vimsyntax}
-	{$D_Tahrpup_title}	{$D_Tahrpup_href}	{$D_Tahrpup_text}	{?D_Tahrpup}
+	{$U_Tahrpup_title}	{$U_Tahrpup_href}	{$U_Tahrpup_text}	{?U_Tahrpup}
+	{$U_Python344_title}	{$U_Python344_href}	{$U_Python344_text}	{?U_Python344}
+	{$U_dmd_title}	{$U_dmd_href}	{$U_dmd_text}	{?U_dmd}
+	{$U_vim-trusty_title}	{$U_vim-trusty_href}	{$U_vim-trusty_text}	{?U_vim-trusty}
+	{$U_vim-kaoriya_title}	{$U_vim-kaoriya_href}	{$U_vim-kaoriya_text}	{?U_vim-kaoriya}
+	{$U_wine_title}	{$U_wine_href}	{$U_wine_text}	{?U_wine}
 	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlheader}
 {?TSFhtmlheader}
 		{$TSFFhtmlheader}	
@@ -31,8 +38,10 @@ TSFdocs_tags:
 	目標は「{?A_LTsv10kanedit}」の「{?A_LTsv10kev}」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
 	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「{?A_LTsv10kanedit}」をお使いください。{?BR}
 	未実装の機能の一部は「{?A_TSF1KEV}」も参考。{?BR}
+	{?A_syntaximage}{?BR}
 	{?/P}
 	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
+	「{?A_aboutTSF}」は「./TSF.d --about」「./TSF.py --about」でも確認できます。{?BR}
 	{?CODE}
 	
 {?TSFabout}
@@ -144,7 +153,7 @@ TSFdocs_tags:
 {$TSFreadmebuttom}
 	
 	{?/CODE}
-	{?H2}「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。{?/H2}
+	{?H2}「TSF. --about」の「RPN」「Calc」テスト部分の抜粋。{?/H2}
 	{?CODE}
 	{?INDENT}▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
 	{?INDENT}▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -155,20 +164,22 @@ TSFdocs_tags:
 	{?/CODE}
 	{?H2}aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。{?/H2}
 	{?P}
-	・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
-	・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。{?BR}
-	・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
-	・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。{?BR}
-	・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。{?BR}
-	・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。{?BR}
-	・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。{?BR}
-	・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
-	・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
-	・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
-	・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
-	・Calcの動作がそもそも重いorz{?BR}
-	・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「{?A_TSFdoc}」が動き出したのでTSFドキュメントの整備とか「{?A_yakuyon}」のサイトジェネレーターとか置き換えたい。{?BR}
-	・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。{?BR}
+	☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
+	☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。{?BR}
+	☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。{?BR}
+	☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
+	☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。{?BR}
+	☐浮動小数でははない分数の小数変換専用の#関数カードも必要だけど未着手。{?BR}
+	☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。{?BR}
+	☐連想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。{?BR}
+	☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
+	☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
+	☐「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
+	☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
+	☐Calcの動作がそもそも重いorz{?BR}
+	☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「{?A_TSFdoc}」がひとまず動き出したのでTSFドキュメントの整備とか「{?A_yakuyon}」のサイトジェネレーターとか置き換えたい。{?BR}
+	☐CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。{?BR}
+	☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。{?BR}
 	{?/P}
 	{?H2}Vimシンタックスの設定など。{?/H2}
 	{?P}
@@ -188,7 +199,12 @@ TSFdocs_tags:
 	「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
 	「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
 	{?/P}
-	{?D_Tahrpup}
+	{?U_Tahrpup}
+	{?U_Python344}
+	{?U_dmd}
+	{?U_vim-trusty}
+	{?U_vim-kaoriya}
+	{?U_wine}
 	
 	{?H2}ライセンス・著作権など。{?/H2}
 	{?P}
@@ -225,6 +241,24 @@ TSFdocs_tags:
 	https://github.com/ooblog/TSF1KEV
 {$A_TSF1KEV_title}
 	ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。
+{?A_syntaximage}
+	![{$A_syntaximage_text}]({$A_syntaximage_href} "{$A_syntaximage_title}")	<a href="{$A_syntaximage_href}"><img src="{$A_syntaximage_img}" alt="{$A_syntaximage_text}" title="{$A_syntaximage_title}" width="512" height="384"></a>		
+{$A_syntaximage_text}
+	TSF syntax image
+{$A_syntaximage_href}
+	https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSF_512x384.png
+{$A_syntaximage_img}
+	https://github.com/ooblog/TSF2KEV/raw/master/TSFdoc/TSF_512x384.png
+{$A_syntaximage_title}
+	TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV
+{?A_aboutTSF}
+	[{$A_aboutTSF_text}]({$A_aboutTSF_href} "{$A_aboutTSF_title}")	<a href="{$A_aboutTSF_href}" title="{$A_aboutTSF_title}">{$A_aboutTSF_text}</a>	
+{$A_aboutTSF_text}
+	sample_aboutTSF.tsf
+{$A_aboutTSF_href}
+	https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf
+{$A_aboutTSF_title}
+	TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV
 {?A_TSFdoc}
 	[{$A_TSFdoc_text}]({$A_TSFdoc_href} "{$A_TSFdoc_title}")	<a href="{$A_TSFdoc_href}" title="{$A_TSFdoc_title}">{$A_TSFdoc_text}</a>	
 {$A_TSFdoc_text}
@@ -249,14 +283,54 @@ TSFdocs_tags:
 	https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim
 {$A_vimsyntax_title}
 	TSF2KEV/tsf.vim at master ooblog/TSF2KEV
-{?D_Tahrpup}
-	* {$D_Tahrpup_text}{?NL}    * [{$D_Tahrpup_text}]({$D_Tahrpup_href} "{$D_Tahrpup_title}")	<dl><dt>{$D_Tahrpup_text}</dt><dd><a href="{$D_Tahrpup_href}" title="{$D_Tahrpup_title}">{$D_Tahrpup_href}</a></dd></dl>		
-{$D_Tahrpup_text}
-	Tahrpup6.0.5(PuppyLinux)
-{$D_Tahrpup_href}
+{?U_Tahrpup}
+	* {$U_Tahrpup_text}{?NL}    * [{$U_Tahrpup_href}]({$U_Tahrpup_href} "{$U_Tahrpup_title}")	<ul><li>{$U_Tahrpup_text}<ul><li><a href="{$U_Tahrpup_href}" title="{$U_Tahrpup_title}">{$U_Tahrpup_href}</a></li></ul></li></ul>	
+{$U_Tahrpup_text}
+	Tahrpup6.0.5(Puppy Linux)
+{$U_Tahrpup_href}
 	http://puppylinux.com/
-{$D_Tahrpup_title}
+{$U_Tahrpup_title}
 	Puppy Linux Home
+{?U_Python344}
+	* {$U_Python344_text}{?NL}    * [{$U_Python344_href}]({$U_Python344_href} "{$U_Python344_title}")	<ul><li>{$U_Python344_text}<ul><li><a href="{$U_Python344_href}" title="{$U_Python344_title}">{$U_Python344_href}</a></li></ul></li></ul>	
+{$U_Python344_text}
+	Python 3.4.4
+{$U_Python344_href}
+	https://www.python.org/downloads/release/python-344/
+{$U_Python344_title}
+	Python Release Python 3.4.4 | Python.org
+{?U_dmd}
+	* {$U_dmd_text}{?NL}    * [{$U_dmd_href}]({$U_dmd_href} "{$U_dmd_title}")	<ul><li>{$U_dmd_text}<ul><li><a href="{$U_dmd_href}" title="{$U_dmd_title}">{$U_dmd_href}</a></li></ul></li></ul>	
+{$U_dmd_text}
+	DMD 2.074.0
+{$U_dmd_href}
+	https://dlang.org/download.html
+{$U_dmd_title}
+	Downloads - D Programming Language
+{?U_vim-trusty}
+	* {$U_vim-trusty_text}{?NL}    * [{$U_vim-trusty_href}]({$U_vim-trusty_href} "{$U_vim-trusty_title}")	<ul><li>{$U_vim-trusty_text}<ul><li><a href="{$U_vim-trusty_href}" title="{$U_vim-trusty_title}">{$U_vim-trusty_href}</a></li></ul></li></ul>	
+{$U_vim-trusty_text}
+	vim-gtk(Ubuntu trusty)
+{$U_vim-trusty_href}
+	https://packages.ubuntu.com/trusty/vim-gtk
+{$U_vim-trusty_title}
+	Ubuntu – trusty の vim-gtk パッケージに関する詳細
+{?U_vim-kaoriya}
+	* {$U_vim-kaoriya_text}{?NL}    * [{$U_vim-kaoriya_href}]({$U_vim-kaoriya_href} "{$U_vim-kaoriya_title}")	<ul><li>{$U_vim-kaoriya_text}<ul><li><a href="{$U_vim-kaoriya_href}" title="{$U_vim-kaoriya_title}">{$U_vim-kaoriya_href}</a></li></ul></li></ul>	
+{$U_vim-kaoriya_text}
+	Vim — KaoriYa
+{$U_vim-kaoriya_href}
+	https://www.kaoriya.net/software/vim/
+{$U_vim-kaoriya_title}
+	Vim — KaoriYa
+{?U_wine}
+	* {$U_wine_text}{?NL}    * [{$U_wine_href}]({$U_wine_href} "{$U_wine_title}")	<ul><li>{$U_wine_text}<ul><li><a href="{$U_wine_href}" title="{$U_wine_title}">{$U_wine_href}</a></li></ul></li></ul>	
+{$U_wine_text}
+	Portable Wine(shinobar.server-on.net)
+{$U_wine_href}
+	http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html
+{$U_wine_title}
+	Portable Wine
 {?H1}
 	# 	<h1>	
 {?/H1}

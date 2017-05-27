@@ -7,8 +7,10 @@
 目標は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」の「<a href="https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim" title="LTsv/kanedit.vim at master ooblog/LTsv10kanedit">LTsv/kanedit.vim</a>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<br />
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」をお使いください。<br />
 未実装の機能の一部は「<a href="https://github.com/ooblog/TSF1KEV" title="ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。">TSF1KEV</a>」も参考。<br />
+<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSF_512x384.png"><img src="https://github.com/ooblog/TSF2KEV/raw/master/TSFdoc/TSF_512x384.png" alt="TSF syntax image" title="TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV" width="512" height="384"></a><br />
 </p>
 <h2>簡易版TSF解説「sample_aboutTSF.tsf」。</h2>
+「<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf" title="TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV">sample_aboutTSF.tsf</a>」は「./TSF.d --about」「./TSF.py --about」でも確認できます。<br />
 <pre><code>
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
@@ -112,7 +114,7 @@ aboutTIME:
 	　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
 	　「@T」でタブ、「@N」で改行に置換されます。
 </code></pre>
-<h2>「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。</h2>
+<h2>「TSF. --about」の「RPN」「Calc」テスト部分の抜粋。</h2>
 <pre><code>
 ▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
 ▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -123,20 +125,22 @@ aboutTIME:
 </code></pre>
 <h2>aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。</h2>
 <p>
-・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。<br />
-・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。<br />
-・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。<br />
-・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。<br />
-・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。<br />
-・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。<br />
-・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。<br />
-・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。<br />
-・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。<br />
-・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。<br />
-・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。<br />
-・Calcの動作がそもそも重いorz<br />
-・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf" title="TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV">TSFdoc.tsf</a>」が動き出したのでTSFドキュメントの整備とか「<a href="https://ooblog.github.io/" title="「約四文字」(http://ooblog.github.io/)">約四文字</a>」のサイトジェネレーターとか置き換えたい。<br />
-・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。<br />
+☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。<br />
+☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。<br />
+☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。<br />
+☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。<br />
+☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。<br />
+☐浮動小数でははない分数の小数変換専用の#関数カードも必要だけど未着手。<br />
+☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。<br />
+☐連想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。<br />
+☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。<br />
+☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。<br />
+☐「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。<br />
+☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。<br />
+☐Calcの動作がそもそも重いorz<br />
+☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf" title="TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV">TSFdoc.tsf</a>」がひとまず動き出したのでTSFドキュメントの整備とか「<a href="https://ooblog.github.io/" title="「約四文字」(http://ooblog.github.io/)">約四文字</a>」のサイトジェネレーターとか置き換えたい。<br />
+☐CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。<br />
+☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。<br />
 </p>
 <h2>Vimシンタックスの設定など。</h2>
 <p>
@@ -156,7 +160,12 @@ command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および<br />
 「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。<br />
 </p>
-<dl><dt>Tahrpup6.0.5(PuppyLinux)</dt><dd><a href="http://puppylinux.com/" title="Puppy Linux Home">http://puppylinux.com/</a></dd></dl>
+<ul><li>Tahrpup6.0.5(Puppy Linux)<ul><li><a href="http://puppylinux.com/" title="Puppy Linux Home">http://puppylinux.com/</a></li></ul></li></ul>
+<ul><li>Python 3.4.4<ul><li><a href="https://www.python.org/downloads/release/python-344/" title="Python Release Python 3.4.4 | Python.org">https://www.python.org/downloads/release/python-344/</a></li></ul></li></ul>
+<ul><li>DMD 2.074.0<ul><li><a href="https://dlang.org/download.html" title="Downloads - D Programming Language">https://dlang.org/download.html</a></li></ul></li></ul>
+<ul><li>vim-gtk(Ubuntu trusty)<ul><li><a href="https://packages.ubuntu.com/trusty/vim-gtk" title="Ubuntu – trusty の vim-gtk パッケージに関する詳細">https://packages.ubuntu.com/trusty/vim-gtk</a></li></ul></li></ul>
+<ul><li>Vim — KaoriYa<ul><li><a href="https://www.kaoriya.net/software/vim/" title="Vim — KaoriYa">https://www.kaoriya.net/software/vim/</a></li></ul></li></ul>
+<ul><li>Portable Wine(shinobar.server-on.net)<ul><li><a href="http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html" title="Portable Wine">http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html</a></li></ul></li></ul>
 
 <h2>ライセンス・著作権など。</h2>
 <p>
