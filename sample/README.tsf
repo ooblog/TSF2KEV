@@ -2,7 +2,7 @@
 TSF_Tab-Separated-Forth:
 	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
 TSFdocs_files:
-	../README.md	README.html	../sample/sample_aboutTSF.tsf
+	../README.md	../debug/README.html	sample_aboutTSF.tsf
 TSFdocs_basedoc:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_tags:
@@ -246,9 +246,9 @@ TSFdocs_tags:
 {$A_syntaximage_text}
 	TSF syntax image
 {$A_syntaximage_href}
-	https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSF_512x384.png
+	https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png
 {$A_syntaximage_img}
-	https://github.com/ooblog/TSF2KEV/raw/master/TSFdoc/TSF_512x384.png
+	https://github.com/ooblog/TSF2KEV/raw/master/docs/TSF_512x384.png
 {$A_syntaximage_title}
 	TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV
 {?A_aboutTSF}
@@ -264,7 +264,7 @@ TSFdocs_tags:
 {$A_TSFdoc_text}
 	TSFdoc.tsf
 {$A_TSFdoc_href}
-	https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf
+	https://github.com/ooblog/TSF2KEV/blob/master/sample/TSFdoc.tsf
 {$A_TSFdoc_title}
 	TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV
 {?A_yakuyon}

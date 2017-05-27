@@ -3,7 +3,7 @@
 目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
 未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
-![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
+![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
 
 ## 簡易版TSF解説「sample_aboutTSF.tsf」。
 「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」は「./TSF.d --about」「./TSF.py --about」でも確認できます。  
@@ -134,7 +134,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ☐「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
 ☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
 ☐Calcの動作がそもそも重いorz  
-☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf "TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」がひとまず動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
+☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/TSFdoc.tsf "TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」がひとまず動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
 ☐CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
 ☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。  
 
