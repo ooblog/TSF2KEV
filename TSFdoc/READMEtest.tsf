@@ -210,7 +210,7 @@ TSFdocs_tags:
 {$A_LTsv10kanedit_title}
 	ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。
 {?A_LTsv10kev}
-	[{$A_LTsv10kev_text}]({$A_LTsv10kev_href}"{$A_LTsv10kev_title}")	<a href="{$A_LTsv10kev_href}" title="{$A_LTsv10kev_title}">{$A_LTsv10kev_text}</a>	
+	[{$A_LTsv10kev_text}]({$A_LTsv10kev_href} "{$A_LTsv10kev_title}")	<a href="{$A_LTsv10kev_href}" title="{$A_LTsv10kev_title}">{$A_LTsv10kev_text}</a>	
 {$A_LTsv10kev_text}
 	LTsv/kanedit.vim
 {$A_LTsv10kev_href}
@@ -218,7 +218,7 @@ TSFdocs_tags:
 {$A_LTsv10kev_title}
 	LTsv/kanedit.vim at master ooblog/LTsv10kanedit
 {?A_TSF1KEV}
-	[{$A_TSF1KEV_text}]({$A_TSF1KEV_href}"{$A_TSF1KEV_title}")	<a href="{$A_TSF1KEV_href}" title="{$A_TSF1KEV_title}">{$A_TSF1KEV_text}</a>	
+	[{$A_TSF1KEV_text}]({$A_TSF1KEV_href} "{$A_TSF1KEV_title}")	<a href="{$A_TSF1KEV_href}" title="{$A_TSF1KEV_title}">{$A_TSF1KEV_text}</a>	
 {$A_TSF1KEV_text}
 	TSF1KEV
 {$A_TSF1KEV_href}
@@ -226,7 +226,7 @@ TSFdocs_tags:
 {$A_TSF1KEV_title}
 	ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。
 {?A_TSFdoc}
-	[{$A_TSFdoc_text}]({$A_TSFdoc_href}"{$A_TSFdoc_title}")	<a href="{$A_TSFdoc_href}" title="{$A_TSFdoc_title}">{$A_TSFdoc_text}</a>	
+	[{$A_TSFdoc_text}]({$A_TSFdoc_href} "{$A_TSFdoc_title}")	<a href="{$A_TSFdoc_href}" title="{$A_TSFdoc_title}">{$A_TSFdoc_text}</a>	
 {$A_TSFdoc_text}
 	TSFdoc.tsf
 {$A_TSFdoc_href}
@@ -234,7 +234,7 @@ TSFdocs_tags:
 {$A_TSFdoc_title}
 	TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV
 {?A_yakuyon}
-	[{$A_yakuyon_text}]({$A_yakuyon_href}"{$A_yakuyon_title}")	<a href="{$A_yakuyon_href}" title="{$A_yakuyon_title}">{$A_yakuyon_text}</a>	
+	[{$A_yakuyon_text}]({$A_yakuyon_href} "{$A_yakuyon_title}")	<a href="{$A_yakuyon_href}" title="{$A_yakuyon_title}">{$A_yakuyon_text}</a>	
 {$A_yakuyon_text}
 	約四文字
 {$A_yakuyon_href}
@@ -242,7 +242,7 @@ TSFdocs_tags:
 {$A_yakuyon_title}
 	「約四文字」(http://ooblog.github.io/)
 {?A_vimsyntax}
-	[{$A_vimsyntax_text}]({$A_vimsyntax_href}"{$A_vimsyntax_title}")	<a href="{$A_vimsyntax_href}" title="{$A_vimsyntax_title}">{$A_vimsyntax_text}</a>	
+	[{$A_vimsyntax_text}]({$A_vimsyntax_href} "{$A_vimsyntax_title}")	<a href="{$A_vimsyntax_href}" title="{$A_vimsyntax_title}">{$A_vimsyntax_text}</a>	
 {$A_vimsyntax_text}
 	vimsyntax/tsf.vim
 {$A_vimsyntax_href}
@@ -250,7 +250,7 @@ TSFdocs_tags:
 {$A_vimsyntax_title}
 	TSF2KEV/tsf.vim at master ooblog/TSF2KEV
 {?D_Tahrpup}
-	* {$D_Tahrpup_text}{?NL}    * [{$D_Tahrpup_text}]({$D_Tahrpup_href}"{$D_Tahrpup_title}")	<dl><dt>{$D_Tahrpup_text}</dt><dd><a href="{$D_Tahrpup_href}" title="{$D_Tahrpup_title}">{$D_Tahrpup_href}</a></dd></dl>		
+	* {$D_Tahrpup_text}{?NL}    * [{$D_Tahrpup_text}]({$D_Tahrpup_href} "{$D_Tahrpup_title}")	<dl><dt>{$D_Tahrpup_text}</dt><dd><a href="{$D_Tahrpup_href}" title="{$D_Tahrpup_title}">{$D_Tahrpup_href}</a></dd></dl>		
 {$D_Tahrpup_text}
 	Tahrpup6.0.5(PuppyLinux)
 {$D_Tahrpup_href}
@@ -258,11 +258,11 @@ TSFdocs_tags:
 {$D_Tahrpup_title}
 	Puppy Linux Home
 {?H1}
-	#	<h1>	
+	# 	<h1>	
 {?/H1}
 		</h1>	
 {?H2}
-	##	<h2>	
+	## 	<h2>	
 {?/H2}
 		</h2>	
 {?P}

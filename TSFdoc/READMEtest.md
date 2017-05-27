@@ -1,10 +1,10 @@
-#プログラミング言語「TSF_Tab-Separated-Forth」開発中。
+# プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
-未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV"ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
+未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
 
-##簡易版TSF解説「sample_aboutTSF.tsf」。
+## 簡易版TSF解説「sample_aboutTSF.tsf」。
 
     #! /usr/bin/env TSF
     TSF_Tab-Separated-Forth:
@@ -108,7 +108,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
     	　「@T」でタブ、「@N」で改行に置換されます。
 
-##「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。
+## 「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。
 
     ▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
     ▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -117,7 +117,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     ▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
     ▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
 
-##aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。
+## aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。
 
 ・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
 ・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
@@ -131,15 +131,15 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
 ・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
 ・Calcの動作がそもそも重いorz  
-・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf"TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」が動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/"「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
+・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf "TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」が動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
 ・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
 
-##Vimシンタックスの設定など。
+## Vimシンタックスの設定など。
 
- シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim"TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
+ シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
 「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
 Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
-ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。  
+ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。  
 
 
     syntax on
@@ -147,15 +147,15 @@ Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc�
     autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
     command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 
-##動作環境。
+## 動作環境。
 
 「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および  
 「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。  
 
 * Tahrpup6.0.5(PuppyLinux)
-    * [Tahrpup6.0.5(PuppyLinux)](http://puppylinux.com/"Puppy Linux Home")
+    * [Tahrpup6.0.5(PuppyLinux)](http://puppylinux.com/ "Puppy Linux Home")
 
-##ライセンス・著作権など。
+## ライセンス・著作権など。
 
 Copyright (c) 2017 ooblog  
 License: MIT  
