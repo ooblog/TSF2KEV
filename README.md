@@ -1,12 +1,12 @@
 # プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](LTsv/kanedit.vim "LTsv/kanedit.vim")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
-未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
-![TSF syntax image](TSFdoc/TSF_512x384.png "TSF syntax image")  
-
+未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
+![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
 
 ## 簡易版TSF解説「sample_aboutTSF.tsf」。
+「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」は「./TSF.d --about」「./TSF.py --about」でも確認できます。  
 
     #! /usr/bin/env TSF
     TSF_Tab-Separated-Forth:
@@ -25,9 +25,9 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	
     	　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。
     	　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。
-    	　オーバーフローもしくは「#exit #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。
+    	　オーバーフローもしくは「#exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。
     	　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。
-    	　TSFにはif構文も存在しないけど「#TSF_calc」の条件演算子や「#TSF_this」の飛び先に「#TSF_peekNthe」などを組み合わせる事で分岐は可能。
+    	　TSFにはIF構文も存在しないけど「#TSF_this」に「#TSF_calc」「#TSF_peekNthe」「#TSF_aliasQON」などで呼び出し先変更を組み合わせる事で分岐は可能。
     	　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。
     	　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。
     	　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。
@@ -39,7 +39,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　「pull」スタックからカードを引き抜く。引抜先スタックから「that」スタックにカードが移動する形になる。
     	　「push」スタックにカードを差し込む。引抜先スタックに「that」スタックからカードが移動する形になる。
     	
-    	　※ドローは「pullFthat」、リターンは「pushFthat」、してるとも言える。
+    	　※ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
     	
     	○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」などを用意する予定。
     	
@@ -70,13 +70,14 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→	1	/	3	-	m1|2	5	#TSF_joinN	#TSF_calc	2	#TSF_joinN	#TSF_echo
     	▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→	[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]	#TSF_calc	2	#TSF_joinN	#TSF_echo
     	▽漢数字テスト「億千万」を「#TSF_calcJA」→	億千万	#TSF_calcJA	2	#TSF_joinN	#TSF_echo
+    	▽漢数字テスト「六分の五」を「#TSF_calcJA」→	６分の５	#TSF_calcJA	2	#TSF_joinN	#TSF_echo
     aboutCALCdata:
     	1	3	m1|2
     aboutRPNcalc:
     	
     	○「#TSF_RPN」逆ポーランド小数電卓の概要。
     	
-    	　TSFでは高速処理を目指すRPNと多機能に備えるcalcの2種類の電卓を用意。
+    	　TSFの数式に高速処理を目指すRPNと多機能を備えるcalcの2種類の電卓を用意。
     	　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。
     	　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」も「1,m2-」と表記する。
     	　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。
@@ -85,7 +86,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。
     	　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。
     	　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。
-    	　条件演算子とスタック名(演算を行わない「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます。
+    	　条件演算子とスタック名(演算を抑止する「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます(IF構文の代替)。
     	
     	○「#TSF_calc」系分数電卓の概要(RPNと共通する内容は圧縮)。
     	
@@ -107,9 +108,9 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	
     	　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。
     	　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
-    	
+    	　「@T」でタブ、「@N」で改行に置換されます。
 
-## 「./TSF sample/sample_aboutTSF.tsf」もしくは「./TSF.d --about」「./TSF.py --about」実行結果より抜粋。
+## 「TSF. --about」の「RPN」「Calc」テスト部分の抜粋。
 
     ▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
     ▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -118,45 +119,58 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     ▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
     ▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
 
-
 ## aboutTSFに書いてない細かい話やTSF2KEVで未実装な箇所とかTSF1KEVからの仕様差分など(予定)。
 
-・文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
-・アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
-・ハウリング対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。  
-・言語毎(D言語のbigintとPythonのdecimal)に10進数に有効桁数の有無や端数処理そもそも小数不可やなどの差異があるので「#TSF_calcRO」の扱いがどうなるか未定。  
-・分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは0.333…の桁数は言語やCPUの小数実装で異なるというか、極論1|3と3|10がどちらも0.3になる問題。  
-・制度の高い分数の小数変換専用の#関数カードが必要だけど未着手。  
-・文想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。  
-・字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。  
-・自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
-・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
-・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
-・TimeとかMatchとかShuffleとかUrlpathモジュールも用意しないと「TSF_doc」が作れないのではがゆい。「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターを「TSF_doc」で置き換えTSFドキュメントも含めたい。  
-
+☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
+☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。  
+☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
+☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限)という安全装置は付けているけどいまいちスマートじゃない。  
+☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。  
+☐浮動小数でははない分数の小数変換専用の#関数カードも必要だけど未着手。  
+☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。  
+☐連想配列すらない言語を今時想定する必要があるのか不明なので優先度は低いが、TSFテキストを「L:Tsv」の時の様に直接書き替えるAPIも作って置きたい(未定)。  
+☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。  
+☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
+☐「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
+☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
+☐Calcの動作がそもそも重いorz  
+☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf "TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」がひとまず動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
+☐CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
+☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。  
 
 ## Vimシンタックスの設定など。
 
-シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「&#126;/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
-「[./TSF_DMDcompile.sh](https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh "TSF2KEV/TSF_DMDcompile.sh at master ooblog/TSF2KEV")」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
+ シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
+「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
 Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
-ついでに「kanedit.vim」の設定もおまけで書いてみた。  
+ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。  
+
 
     syntax on
     au BufRead,BufNewFile *.tsf set filetype=tsf
     autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
     command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 
-
-
 ## 動作環境。
 
-「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52&#40;vim-gtk&#41;」および「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134&#40;KaoriYa&#41;」で開発中。  
+「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および  
+「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。  
 
+* Tahrpup6.0.5(Puppy Linux)
+    * [http://puppylinux.com/](http://puppylinux.com/ "Puppy Linux Home")
+* Python 3.4.4
+    * [https://www.python.org/downloads/release/python-344/](https://www.python.org/downloads/release/python-344/ "Python Release Python 3.4.4 | Python.org")
+* DMD 2.074.0
+    * [https://dlang.org/download.html](https://dlang.org/download.html "Downloads - D Programming Language")
+* vim-gtk(Ubuntu trusty)
+    * [https://packages.ubuntu.com/trusty/vim-gtk](https://packages.ubuntu.com/trusty/vim-gtk "Ubuntu – trusty の vim-gtk パッケージに関する詳細")
+* Vim — KaoriYa
+    * [https://www.kaoriya.net/software/vim/](https://www.kaoriya.net/software/vim/ "Vim — KaoriYa")
+* Portable Wine(shinobar.server-on.net)
+    * [http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html](http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html "Portable Wine")
 
 ## ライセンス・著作権など。
 
 Copyright (c) 2017 ooblog  
 License: MIT  
-[https://github.com/ooblog/TSF2KEV/blob/master/LICENSE](LICENSE "https://github.com/ooblog/TSF2KEV/blob/master/LICENSE")  
-
+https://github.com/ooblog/TSF2KEV/blob/master/LICENSE  

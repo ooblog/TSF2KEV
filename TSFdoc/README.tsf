@@ -2,7 +2,7 @@
 TSF_Tab-Separated-Forth:
 	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
 TSFdocs_files:
-	READMEtest.md	READMEtest.html	sample_aboutTSFtest.tsf
+	../README.md	README.html	../sample/sample_aboutTSF.tsf
 TSFdocs_basedoc:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_tags:

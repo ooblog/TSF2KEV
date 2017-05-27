@@ -62,9 +62,9 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "",
         "　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。",
         "　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。",
-        "　オーバーフローもしくは「#exit #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。",
+        "　オーバーフローもしくは「#exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。",
         "　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。",
-        "　TSFにはif構文も存在しないけど「#TSF_calc」の条件演算子や「#TSF_this」の飛び先に「#TSF_peekNthe」などを組み合わせる事で分岐は可能。",
+        "　TSFにはIF構文も存在しないけど「#TSF_this」に「#TSF_calc」「#TSF_peekNthe」「#TSF_aliasQON」などで呼び出し先変更を組み合わせる事で分岐は可能。",
         "　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。",
         "　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。",
         "　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。",
@@ -76,7 +76,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　「pull」スタックからカードを引き抜く。引抜先スタックから「that」スタックにカードが移動する形になる。",
         "　「push」スタックにカードを差し込む。引抜先スタックに「that」スタックからカードが移動する形になる。",
         "",
-        "　※ドローは「pullFthat」、リターンは「pushFthat」、してるとも言える。",
+        "　※ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。",
         "",
         "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」などを用意する予定。",
         "",
@@ -101,14 +101,14 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
     TSF_Forth_setTSF("echoRPNcalc:",join([
         "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("aboutRPNtest:",join([
-        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo"],"\t"),'T');
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「六分の五」を「#TSF_calcJA」→","６分の５","#TSF_calcJA","2","#TSF_joinN","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("aboutCALCdata:",join([
         "1","3","m1|2"],"\t"),'T');
     TSF_Forth_setTSF("aboutRPNcalc:",join([
         "",
         "○「#TSF_RPN」逆ポーランド小数電卓の概要。",
         "",
-        "　TSFでは高速処理を目指すRPNと多機能に備えるcalcの2種類の電卓を用意。",
+        "　TSFの数式に高速処理を目指すRPNと多機能を備えるcalcの2種類の電卓を用意。",
         "　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。",
         "　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」も「1,m2-」と表記する。",
         "　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。",
@@ -117,7 +117,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。",
         "　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。",
         "　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。",
-        "　条件演算子とスタック名(演算を行わない「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます。",
+        "　条件演算子とスタック名(演算を抑止する「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます(IF構文の代替)。",
         "",
         "○「#TSF_calc」系分数電卓の概要(RPNと共通する内容は圧縮)。",
         "",
@@ -139,7 +139,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "",
         "　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。",
         "　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。",
-        ""],"\t"),'N');
+        "　「@T」でタブ、「@N」で改行に置換されます。"],"\t"),'N');
     TSF_Forth_samplerun("TSF_sample_about");
 }
 
