@@ -6,10 +6,14 @@ TSFdocs_files:
 TSFdocs_basedoc:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_tags:
-	{?&lt}	{?&gt}	{?TAB}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
 	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
-	{$A_A_TSF1KEV_text}	{$A_A_TSF1KEV_href}	{$A_A_TSF1KEV_title}	{?A_TSF1KEV}
+	{$A_TSF1KEV_text}	{$A_TSF1KEV_href}	{$A_TSF1KEV_title}	{?A_TSF1KEV}
+	{$A_TSFdoc_text}	{$A_TSFdoc_href}	{$A_TSFdoc_title}	{?A_TSFdoc}
+	{$A_yakuyon_text}	{$A_yakuyon_href}	{$A_yakuyon_title}	{?A_yakuyon}
+	{$A_vimsyntax_text}	{$A_vimsyntax_href}	{$A_vimsyntax_title}	{?A_vimsyntax}
+	{$D_Tahrpup_title}	{$D_Tahrpup_href}	{$D_Tahrpup_text}	{?D_Tahrpup}
 	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlheader}
 {?TSFhtmlheader}
 		{$TSFFhtmlheader}	
@@ -163,15 +167,15 @@ TSFdocs_tags:
 	・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
 	・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
 	・Calcの動作がそもそも重いorz{?BR}
-	・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。{?BR}
+	・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「{?A_TSFdoc}」が動き出したのでTSFドキュメントの整備とか「{?A_yakuyon}」のサイトジェネレーターとか置き換えたい。{?BR}
 	・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。{?BR}
 	{?/P}
 	{?H2}Vimシンタックスの設定など。{?/H2}
 	{?P}
-	 シンタックスファイル「vimsyntax/tsf.vim」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。{?BR}
+	 シンタックスファイル「{?A_vimsyntax}」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。{?BR}
 	「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。{?BR}
 	Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。{?BR}
-	ついでに「kanedit.vim」の設定もおまけで書いてみた。{?BR}
+	ついでに「{?A_LTsv10kev}」の設定もおまけで書いてみた。{?BR}
 	{?/P}
 	{?CODE}
 	{?INDENT}syntax on
@@ -180,12 +184,18 @@ TSFdocs_tags:
 	{?INDENT}command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 	{?/CODE}
 	{?H2}動作環境。{?/H2}
+	{?P}
 	「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
 	「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
+	{?/P}
+	{?D_Tahrpup}
+	
 	{?H2}ライセンス・著作権など。{?/H2}
+	{?P}
 	Copyright (c) 2017 ooblog{?BR}
 	License: MIT{?BR}
 	https://github.com/ooblog/TSF2KEV/blob/master/LICENSE{?BR}
+	{?/P}
 {?TSFhtmlfooter}
 		{$TSFhtmlfooter}	
 {$TSFhtmlfooter}
@@ -206,15 +216,47 @@ TSFdocs_tags:
 {$A_LTsv10kev_href}
 	https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim
 {$A_LTsv10kev_title}
-	LTsv/kanedit.vim ooblog/LTsv10kanedit
+	LTsv/kanedit.vim at master ooblog/LTsv10kanedit
 {?A_TSF1KEV}
-	[{$A_A_TSF1KEV_text}]({$A_A_TSF1KEV_href}"{$A_A_TSF1KEV_title}")	<a href="https://github.com/ooblog/TSF1KEV" title="ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。">{$A_A_TSF1KEV_text}</a>	
-{$A_A_TSF1KEV_text}
+	[{$A_TSF1KEV_text}]({$A_TSF1KEV_href}"{$A_TSF1KEV_title}")	<a href="{$A_TSF1KEV_href}" title="{$A_TSF1KEV_title}">{$A_TSF1KEV_text}</a>	
+{$A_TSF1KEV_text}
 	TSF1KEV
-{$A_A_TSF1KEV_href}
+{$A_TSF1KEV_href}
 	https://github.com/ooblog/TSF1KEV
-{$A_A_TSF1KEV_title}
+{$A_TSF1KEV_title}
 	ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。
+{?A_TSFdoc}
+	[{$A_TSFdoc_text}]({$A_TSFdoc_href}"{$A_TSFdoc_title}")	<a href="{$A_TSFdoc_href}" title="{$A_TSFdoc_title}">{$A_TSFdoc_text}</a>	
+{$A_TSFdoc_text}
+	TSFdoc.tsf
+{$A_TSFdoc_href}
+	https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf
+{$A_TSFdoc_title}
+	TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV
+{?A_yakuyon}
+	[{$A_yakuyon_text}]({$A_yakuyon_href}"{$A_yakuyon_title}")	<a href="{$A_yakuyon_href}" title="{$A_yakuyon_title}">{$A_yakuyon_text}</a>	
+{$A_yakuyon_text}
+	約四文字
+{$A_yakuyon_href}
+	https://ooblog.github.io/
+{$A_yakuyon_title}
+	「約四文字」(http://ooblog.github.io/)
+{?A_vimsyntax}
+	[{$A_vimsyntax_text}]({$A_vimsyntax_href}"{$A_vimsyntax_title}")	<a href="{$A_vimsyntax_href}" title="{$A_vimsyntax_title}">{$A_vimsyntax_text}</a>	
+{$A_vimsyntax_text}
+	vimsyntax/tsf.vim
+{$A_vimsyntax_href}
+	https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim
+{$A_vimsyntax_title}
+	TSF2KEV/tsf.vim at master ooblog/TSF2KEV
+{?D_Tahrpup}
+	{$D_Tahrpup_text}{?NL}:  [{$D_Tahrpup_text}]({$D_Tahrpup_href}"{$D_Tahrpup_title}")	<dl><dt>{$D_Tahrpup_text}</dt><dd><a href="{$D_Tahrpup_href}" title="{$D_Tahrpup_title}">{$D_Tahrpup_href}</a></dd></dl>		
+{$D_Tahrpup_text}
+	Tahrpup6.0.5(PuppyLinux)
+{$D_Tahrpup_href}
+	http://puppylinux.com/
+{$D_Tahrpup_title}
+	Puppy Linux Home
 {?H1}
 	#	<h1>	
 {?/H1}
@@ -237,6 +279,8 @@ TSFdocs_tags:
 	    		
 {?TAB}
 	@T
+{?NL}
+	@E
 {?&lt}
 	<	&lt;	
 {?&gt}

@@ -1,6 +1,6 @@
 #プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
+目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。
 未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV"ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。
 
@@ -131,15 +131,15 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ・「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。
 ・「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。
 ・Calcの動作がそもそも重いorz
-・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「TSFdoc.tsf」が動き出したのでTSFドキュメントの整備とかしたい。
+・Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/TSFdoc/TSFdoc.tsf"TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」が動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/"「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。
 ・CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。
 
 ##Vimシンタックスの設定など。
 
- シンタックスファイル「vimsyntax/tsf.vim」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。
+ シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim"TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。
 「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「~/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。
 Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。
-ついでに「kanedit.vim」の設定もおまけで書いてみた。
+ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim"LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。
 
 
     syntax on
@@ -148,9 +148,15 @@ Vimの「メニュー→編集(E)→起動時の設定(S)」で「~/.vimrc」を
     command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
 
 ##動作環境。
+
 「Tahrpup6.0.5,Python2.7.6,dmd2.073.0,vim.gtk7.4.52(vim-gtk)」および
 「Wine1.7.18,Python3.4.4,dmd2.073.0,gvim8.0.134(KaoriYa)」で開発中。
+
+Tahrpup6.0.5(PuppyLinux)
+:  [Tahrpup6.0.5(PuppyLinux)](http://puppylinux.com/"Puppy Linux Home")
+
 ##ライセンス・著作権など。
+
 Copyright (c) 2017 ooblog
 License: MIT
 https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
