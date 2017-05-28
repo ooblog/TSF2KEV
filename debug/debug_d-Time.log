@@ -19,9 +19,9 @@ timesample:
 「@000y」→「2017」
 「@___y」→「2017」
 「@4y」→「2017」
-「@0y」→「@0y」
-「@_y」→「@_y」
-「@2y」→「@2y」
+「@0y」→「17」
+「@_y」→「17」
+「@2y」→「17」
 -- TSF_Time.d viewthey --
 TSF_Tab-Separated-Forth:
 	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.

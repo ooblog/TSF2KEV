@@ -92,18 +92,17 @@ def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時�
     TSF_earlier_overhour=min(max(TSF_overhour,24),48) if TSF_overhour != None else TSF_earlier_overhour
     global TSF_earlier_now,TSF_diff_now,TSF_meridian_Enum,TSF_allnight_Enum
     TSF_earlier_now=datetime.datetime.now()
-    TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=TSF_diffminute)
+    TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=TSF_earlier_diffminute)
     TSF_meridian_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_meridian_EnumLen)]
     TSF_allnight_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_allnight_EnumLen)]
 
 def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
-    global TSF_meridian_Year
     TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_earlier_now.year
     return TSF_meridian_Enum[TSF_meridian_Year]
-def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
-    global TSF_meridian_Year
-    TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_earlier_now.year
-    return TSF_meridian_Enum[TSF_meridian_Year]
+
+def TSF_time_meridian_Yearlower():    #TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
+    TSF_meridian_Enum[TSF_meridian_Yearlower]=TSF_meridian_Enum[TSF_meridian_Yearlower] if TSF_meridian_Enum[TSF_meridian_Yearlower] != TSF_Time_EnumNULL else TSF_earlier_now.year%100
+    return TSF_meridian_Enum[TSF_meridian_Yearlower]
 
 def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き。(TSFAPI)
     TSF_tfList=TSF_daytimeformat.split("@@")
@@ -111,9 +110,9 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
         TSF_tf=TSF_tf if not "@000y" in TSF_tf else TSF_tf.replace("@000y","{0:0>4}".format(TSF_Time_meridian_Year()))
         TSF_tf=TSF_tf if not "@___y" in TSF_tf else TSF_tf.replace("@___y","{0: >4}".format(TSF_Time_meridian_Year()))
         TSF_tf=TSF_tf if not "@4y" in TSF_tf else TSF_tf.replace("@4y","{0}".format(TSF_Time_meridian_Year()))
-        TSF_tf=TSF_tf if not "@0y" in TSF_tf else TSF_tf.replace("@0y","{0:0>2}".format(TSF_Time_meridian_Year()))
-        TSF_tf=TSF_tf if not "@_y" in TSF_tf else TSF_tf.replace("@_y","{0: >2}".format(TSF_Time_meridian_Year()))
-        TSF_tf=TSF_tf if not "@2y" in TSF_tf else TSF_tf.replace("@2y","{0}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@0y" in TSF_tf else TSF_tf.replace("@0y","{0:0>2}".format(TSF_time_meridian_Yearlower()))
+        TSF_tf=TSF_tf if not "@_y" in TSF_tf else TSF_tf.replace("@_y","{0: >2}".format(TSF_time_meridian_Yearlower()))
+        TSF_tf=TSF_tf if not "@2y" in TSF_tf else TSF_tf.replace("@2y","{0}".format(TSF_time_meridian_Yearlower()))
         TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
         TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
         TSF_tf=TSF_tf if not "@Z" in TSF_tf else TSF_tf.replace("@Z","")

@@ -110,6 +110,11 @@ long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理�
     return TSF_meridian_Enum[TSF_meridian.Year];
 }
 
+long TSF_time_meridian_Yearlower(){    //#TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
+    TSF_meridian_Enum[TSF_meridian.Yearlower]=TSF_meridian_Enum[TSF_meridian.Yearlower]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Yearlower]:TSF_earlier_now.year%100;
+    return TSF_meridian_Enum[TSF_meridian.Yearlower];
+}
+
 string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
     string TSF_daytimeformat=daytimeformat;
     string[] TSF_tfList=TSF_daytimeformat.split("@@");
@@ -117,6 +122,9 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
         TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y","%04d".format(TSF_Time_meridian_Year()));
         TSF_tf=!count(TSF_tf,"@___y")?TSF_tf:TSF_tf.replace("@___y","%4d".format(TSF_Time_meridian_Year()));
         TSF_tf=!count(TSF_tf,"@4y")?TSF_tf:TSF_tf.replace("@4y","%d".format(TSF_Time_meridian_Year()));
+        TSF_tf=!count(TSF_tf,"@0y")?TSF_tf:TSF_tf.replace("@0y","%02d".format(TSF_time_meridian_Yearlower()));
+        TSF_tf=!count(TSF_tf,"@_y")?TSF_tf:TSF_tf.replace("@_y","%2d".format(TSF_time_meridian_Yearlower()));
+        TSF_tf=!count(TSF_tf,"@2y")?TSF_tf:TSF_tf.replace("@2y","%d".format(TSF_time_meridian_Yearlower()));
         TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
         TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
         TSF_tf=!count(TSF_tf,"@Z")?TSF_tf:TSF_tf.replace("@Z","");
