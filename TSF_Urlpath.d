@@ -21,6 +21,8 @@ void TSF_Urlpath_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_dirpath":&TSF_Urlpath_dirpath, "#ファイルのディレクトリ":&TSF_Urlpath_dirpath,
         "#TSF_chpath":&TSF_Urlpath_chpath, "#ディレクトリ移動":&TSF_Urlpath_chpath,
         "#TSF_basepath":&TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":&TSF_Urlpath_basepath,
+        "#TSF_existfile":&TSF_Urlpath_existfile, "#ファイル名の有無":&TSF_Urlpath_existfile,
+        "#TSF_existdir":&TSF_Urlpath_existdir, "#ディレクトリ名の有無":&TSF_Urlpath_existdir,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -64,7 +66,7 @@ string TSF_Urlpath_chpath(){    //#TSFdoc:ディレクトリに移動する。1�
 }
 
 void TSF_Urlpath_chpath_api(string TSF_dirpath){    //#TSFdoc:ディレクトリに移動。(TSFAPI)
-    if( exists(TSF_dirpath) ){ chdir(TSF_dirpath); }
+    if( exists(TSF_dirpath) && isDir(TSF_dirpath) ){ chdir(TSF_dirpath); }
 }
 
 string TSF_Urlpath_basepath(){    //#TSFdoc:ファイルのあるディレクトリに移動する。1枚[path]ドロー。
@@ -73,7 +75,25 @@ string TSF_Urlpath_basepath(){    //#TSFdoc:ファイルのあるディレクト
 }
 
 void TSF_Urlpath_basepath_api(string TSF_filepath){    //#TSFdoc:ファイルのあるディレクトリパスを取得。(TSFAPI)
-    if( exists(TSF_filepath) ){ chdir(dirName(absolutePath(TSF_filepath))); }
+    if( exists(TSF_filepath) && isFile(TSF_filepath) ){ chdir(dirName(absolutePath(TSF_filepath))); }
+}
+
+string TSF_Urlpath_existfile(){    //#TSFdoc:ファイルの有無を確認する。1枚[path]ドローして1枚[0or1]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_existfile_api(TSF_Forth_drawthe()));
+    return "";
+}
+
+string TSF_Urlpath_existfile_api(string TSF_filepath){    //#TSFdoc:ファイルの有無を確認。(TSFAPI)
+    return ( exists(TSF_filepath) && isFile(TSF_filepath) )?"1":"0";
+}
+
+string TSF_Urlpath_existdir(){    //#TSFdoc:フォルダの有無を確認する。1枚[path]ドローして1枚[0or1]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_existdir_api(TSF_Forth_drawthe()));
+    return "";
+}
+
+string TSF_Urlpath_existdir_api(string TSF_dirpath){    //#TSFdoc:フォルダの有無を確認。(TSFAPI)
+    return ( exists(TSF_dirpath) && isFile(TSF_dirpath) )?"1":"0";
 }
 
 

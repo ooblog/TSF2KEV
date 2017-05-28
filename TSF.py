@@ -23,12 +23,13 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
         "  --help        this commands view",
+        "  --about       about TSF mini guide",
+        "  --doc         TSF and more documentation tool",
         "  --python      TSF to Python",
         "  --dlang       TSF to D",
-        "  --about       about TSF mini guide",
-        "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
+        "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
@@ -45,9 +46,10 @@ def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド�
     TSF_Forth_samplerun("TSF_sample_Helloworld")
 
 def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版。
-    pass
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "#TSF_argvs","#TSF_pullFthat","TSFdocs_merge:","#TSF_this","#TSF_fin.","sample/README.tsf"]),'T')
+        "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","sample/README.tsf"]),'T')
+    TSF_Forth_setTSF("TSFdocs_help:","\t".join([
+        "usage: ./TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."]),'T')
     TSF_Forth_setTSF("TSFdocs_merge:","\t".join([
         "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_loop:","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFdocs_loop:","\t".join([
@@ -255,6 +257,8 @@ elif TSF_bootcommand in ["--py","--python","--Python"]:
     elif len(TSF_sysargvs) >= 3:
         TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[2]))
         TSF_Trans_generator_python(TSF_sysargvs[2])
+    else:
+        print("usage: ./TSF --py base.tsf [output.py]")
 elif TSF_bootcommand in ["--d","--D","--dlang"]:
     if len(TSF_sysargvs) >= 4:
         TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[3]))
@@ -262,6 +266,8 @@ elif TSF_bootcommand in ["--d","--D","--dlang"]:
     elif len(TSF_sysargvs) >= 3:
         TSF_Forth_mainfilepath(os.path.abspath(TSF_sysargvs[2]))
         TSF_Trans_generator_dlang(TSF_sysargvs[2])
+    else:
+        print("usage: ./TSF --d base.tsf [output.d]")
 elif TSF_bootcommand in ["--doc","--TSFdoc"]:
     TSF_sample_TSFdoc()
 elif TSF_bootcommand in ["--help","--commands"]:

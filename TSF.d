@@ -26,12 +26,13 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
         "  --help        this commands view",
+        "  --about       about TSF mini guide",
+        "  --doc         TSF and more documentation tool",
         "  --python      TSF to Python",
         "  --dlang       TSF to D",
-        "  --about       about TSF mini guide",
-        "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
+        "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
@@ -43,6 +44,20 @@ void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマン�
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "Hello world","#TSF_echo"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_Helloworld");
+}
+
+void TSF_sample_TSFdoc(){    //#TSFdoc:「TSFdoc.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","sample/README.tsf"],"\t"),'T');
+    TSF_Forth_setTSF("TSFdocs_help:",join([
+        "usage: ./TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."],"\t"),'T');
+    TSF_Forth_setTSF("TSFdocs_merge:",join([
+        "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_loop:","#TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("TSFdocs_loop:",join([
+        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","#TSF_echo","TSF_carbondoc:","TSFdocs_basedoc:","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("TSFtags_loop:",join([
+        "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
+    TSF_Forth_samplerun("TSF_sample_TSFdoc");
 }
 
 void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版。
@@ -255,6 +270,9 @@ void main(string[] sys_argvs){
             TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[2]));
             TSF_Trans_generator_python(TSF_sysargvs[2]);
         }
+        else{
+            writeln("usage: ./TSF --py base.tsf [output.py]");
+        }
     }
     else if( count(["--d","--D","--dlang"],TSF_bootcommand) ){
         if( TSF_sysargvs.length>=4 ){
@@ -265,6 +283,12 @@ void main(string[] sys_argvs){
             TSF_Forth_mainfilepath(absolutePath(TSF_sysargvs[2]));
             TSF_Trans_generator_dlang(TSF_sysargvs[2]);
         }
+        else{
+            writeln("usage: ./TSF --d base.tsf [output.d]");
+        }
+    }
+    else if( count(["--doc","--TSFdoc"],TSF_bootcommand) ){
+        TSF_sample_TSFdoc();
     }
     else if( count(["--help","--commands"],TSF_bootcommand) ){
         TSF_sample_help();

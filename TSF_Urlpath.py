@@ -14,6 +14,8 @@ def TSF_Urlpath_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに�
         "#TSF_dirpath":TSF_Urlpath_dirpath, "#ファイルのディレクトリ":TSF_Urlpath_dirpath,
         "#TSF_chpath":TSF_Urlpath_chpath, "#ディレクトリ移動":TSF_Urlpath_chpath,
         "#TSF_basepath":TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":TSF_Urlpath_basepath,
+        "#TSF_existfile":TSF_Urlpath_existfile, "#ファイル名の有無":TSF_Urlpath_existfile,
+        "#TSF_existdir":TSF_Urlpath_existdir, "#ディレクトリ名の有無":TSF_Urlpath_existdir,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -55,6 +57,20 @@ def TSF_Urlpath_basepath():    #TSFdoc:ファイルのあるディレクトリ�
 
 def TSF_Urlpath_basepath_api(TSF_filepath):    #TSFdoc:ファイルのあるディレクトリパスを取得。(TSFAPI)
     if( os.path.isfile(TSF_filepath) ): os.chdir(os.path.dirname(os.path.abspath(TSF_filepath)));
+
+def TSF_Urlpath_existfile():    #TSFdoc:ファイルの有無を確認する。1枚[path]ドローして1枚[0or1]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_existfile_api(TSF_Forth_drawthe()));
+    return ""
+
+def TSF_Urlpath_existfile_api(TSF_filepath):    #TSFdoc:ファイルの有無を確認。(TSFAPI)
+    return "1" if( os.path.isfile(TSF_filepath) ) else "0"
+
+def TSF_Urlpath_existdir():    #TSFdoc:フォルダの有無を確認する。1枚[path]ドローして1枚[0or1]リターン。
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_existdir_api(TSF_Forth_drawthe()));
+    return ""
+
+def TSF_Urlpath_existdir_api(TSF_dirpath):    #TSFdoc:フォルダの有無を確認。(TSFAPI)
+    return "1" if( os.path.isdir(TSF_dirpath) ) else "0"
 
 
 TSF_Initcalldebug=[TSF_Urlpath_Initcards]
