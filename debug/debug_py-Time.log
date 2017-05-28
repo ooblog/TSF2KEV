@@ -18,6 +18,19 @@ timesample:
 	@0m
 	@_m
 	@m
+	@wd
+	@0dm
+	@_dm
+	@dm
+	@0h
+	@_h
+	@h
+	@0n
+	@_n
+	@n
+	@0s
+	@_s
+	@s
 -- TSF_Time.py run --
 「@000y」→「2017」
 「@___y」→「2017」
@@ -28,6 +41,19 @@ timesample:
 「@0m」→「05」
 「@_m」→「 5」
 「@m」→「5」
+「@wd」→「0」
+「@0dm」→「29」
+「@_dm」→「29」
+「@dm」→「29」
+「@0h」→「07」
+「@_h」→「 7」
+「@h」→「7」
+「@0n」→「44」
+「@_n」→「44」
+「@n」→「44」
+「@0s」→「45」
+「@_s」→「45」
+「@s」→「45」
 -- TSF_Time.py viewthey --
 TSF_Tab-Separated-Forth:
 	timecount:	#TSF_this	#TSF_fin.

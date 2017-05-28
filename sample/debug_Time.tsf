@@ -10,3 +10,8 @@ timepop:
 timesample:
 	@000y	@___y	@4y	@0y	@_y	@2y
 	@0m	@_m	@m
+	@wd
+	@0dm	@_dm	@dm
+	@0h	@_h	@h
+	@0m	@_m	@m
+	@0s	@_s	@s

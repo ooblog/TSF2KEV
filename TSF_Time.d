@@ -77,6 +77,8 @@ enum TSF_meridian {
     Month,Monthdays,
     Daymonth,Dayyear,Weekday,Weeknumber,yearWeeksiso,
     Hour,HourAP,
+    miNute,Second,miLlisecond,micRosecond,
+    Beat,
     EnumLen,};
 long[TSF_meridian.EnumLen] TSF_meridian_Enum;
 enum TSF_allnight {
@@ -84,8 +86,6 @@ enum TSF_allnight {
     Month,Monthdays,carryMonth,
     Daymonth,Dayyear,Weekday,Weeknumber,yearWeeksiso,carryDay,
     Hour,HourAPO,carryHour,
-    miNute,Second,miLlisecond,micRosecond,
-    Beat,
     EnumLen,};
 long[TSF_allnight.EnumLen] TSF_allnight_Enum;
 long TSF_Time_EnumNULL=-10000;
@@ -105,18 +105,35 @@ void TSF_Time_setdaytime(...){
 }
 
 long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
-    TSF_meridian_Enum[TSF_meridian.Year]=TSF_meridian_Enum[TSF_meridian.Year]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Year]:TSF_earlier_now.year;
-    return TSF_meridian_Enum[TSF_meridian.Year];
+    return TSF_meridian_Enum[TSF_meridian.Year]=TSF_meridian_Enum[TSF_meridian.Year]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Year]:to!long(TSF_diff_now.year);
 }
 
 long TSF_Time_meridian_Yearlower(){    //#TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
-    TSF_meridian_Enum[TSF_meridian.Yearlower]=TSF_meridian_Enum[TSF_meridian.Yearlower]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Yearlower]:TSF_earlier_now.year%100;
-    return TSF_meridian_Enum[TSF_meridian.Yearlower];
+    return TSF_meridian_Enum[TSF_meridian.Yearlower]=TSF_meridian_Enum[TSF_meridian.Yearlower]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Yearlower]:to!long(TSF_diff_now.year%100);
 }
 
 long TSF_Time_meridian_Month(){    //#TSF_doc:現在時刻月2桁の遅延処理。(TSFAPI)
-    TSF_meridian_Enum[TSF_meridian.Month]=TSF_meridian_Enum[TSF_meridian.Month]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Month]:TSF_earlier_now.month;
-    return TSF_meridian_Enum[TSF_meridian.Month];
+    return TSF_meridian_Enum[TSF_meridian.Month]=TSF_meridian_Enum[TSF_meridian.Month]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Month]:to!long(TSF_diff_now.month);
+}
+
+long TSF_Time_meridian_Weekday(){    //#TSF_doc:現在時刻曜1桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.Weekday]=TSF_meridian_Enum[TSF_meridian.Weekday]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Weekday]:to!long((TSF_diff_now.dayOfWeek+6)%7);
+}
+
+long TSF_Time_meridian_Daymonth(){    //#TSF_doc:現在時刻日2桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.Daymonth]=TSF_meridian_Enum[TSF_meridian.Daymonth]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Daymonth]:to!long(TSF_diff_now.day);
+}
+
+long TSF_Time_meridian_Hour(){    //#TSF_doc:現在時刻時2桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.Hour]=TSF_meridian_Enum[TSF_meridian.Hour]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Hour]:to!long(TSF_diff_now.hour);
+}
+
+long TSF_Time_meridian_miNute(){    //#TSF_doc:現在時刻時2桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.miNute]=TSF_meridian_Enum[TSF_meridian.miNute]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.miNute]:to!long(TSF_diff_now.minute);
+}
+
+long TSF_Time_meridian_Second(){    //#TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.Second]=TSF_meridian_Enum[TSF_meridian.Second]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Second]:to!long(TSF_diff_now.second);
 }
 
 string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
@@ -133,6 +150,24 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
         TSF_tf=!count(TSF_tf,"@0m")?TSF_tf:TSF_tf.replace("@0m","%02d".format(TSF_Time_meridian_Month()));
         TSF_tf=!count(TSF_tf,"@_m")?TSF_tf:TSF_tf.replace("@_m","%2d".format(TSF_Time_meridian_Month()));
         TSF_tf=!count(TSF_tf,"@m")?TSF_tf:TSF_tf.replace("@m","%d".format(TSF_Time_meridian_Month()));
+
+        TSF_tf=!count(TSF_tf,"@wd")?TSF_tf:TSF_tf.replace("@wd","%d".format(TSF_Time_meridian_Weekday()));
+
+        TSF_tf=!count(TSF_tf,"@0dm")?TSF_tf:TSF_tf.replace("@0dm","%02d".format(TSF_Time_meridian_Daymonth()));
+        TSF_tf=!count(TSF_tf,"@_dm")?TSF_tf:TSF_tf.replace("@_dm","%2d".format(TSF_Time_meridian_Daymonth()));
+        TSF_tf=!count(TSF_tf,"@dm")?TSF_tf:TSF_tf.replace("@dm","%d".format(TSF_Time_meridian_Daymonth()));
+
+        TSF_tf=!count(TSF_tf,"@0h")?TSF_tf:TSF_tf.replace("@0h","%02d".format(TSF_Time_meridian_Hour()));
+        TSF_tf=!count(TSF_tf,"@_h")?TSF_tf:TSF_tf.replace("@_h","%2d".format(TSF_Time_meridian_Hour()));
+        TSF_tf=!count(TSF_tf,"@h")?TSF_tf:TSF_tf.replace("@h","%d".format(TSF_Time_meridian_Hour()));
+
+        TSF_tf=!count(TSF_tf,"@0n")?TSF_tf:TSF_tf.replace("@0n","%02d".format(TSF_Time_meridian_miNute()));
+        TSF_tf=!count(TSF_tf,"@_n")?TSF_tf:TSF_tf.replace("@_n","%02d".format(TSF_Time_meridian_miNute()));
+        TSF_tf=!count(TSF_tf,"@n")?TSF_tf:TSF_tf.replace("@n","%02d".format(TSF_Time_meridian_miNute()));
+
+        TSF_tf=!count(TSF_tf,"@0s")?TSF_tf:TSF_tf.replace("@0s","%02d".format(TSF_Time_meridian_Second()));
+        TSF_tf=!count(TSF_tf,"@_s")?TSF_tf:TSF_tf.replace("@_s","%02d".format(TSF_Time_meridian_Second()));
+        TSF_tf=!count(TSF_tf,"@s")?TSF_tf:TSF_tf.replace("@s","%02d".format(TSF_Time_meridian_Second()));
 
         TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
         TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
@@ -160,6 +195,11 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timesample:",join([
         "@000y","@___y","@4y","@0y","@_y","@2y",
         "@0m","@_m","@m",
+        "@wd",
+        "@0dm","@_dm","@dm",
+        "@0h","@_h","@h",
+        "@0n","@_n","@n",
+        "@0s","@_s","@s",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);

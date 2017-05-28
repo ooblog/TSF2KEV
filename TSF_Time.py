@@ -96,17 +96,42 @@ def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時�
 
 def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
-    TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_earlier_now.year
+    TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_diff_now.year
     return TSF_meridian_Enum[TSF_meridian_Year]
 def TSF_Time_meridian_Yearlower():    #TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
-    TSF_meridian_Enum[TSF_meridian_Yearlower]=TSF_meridian_Enum[TSF_meridian_Yearlower] if TSF_meridian_Enum[TSF_meridian_Yearlower] != TSF_Time_EnumNULL else TSF_earlier_now.year%100
+    TSF_meridian_Enum[TSF_meridian_Yearlower]=TSF_meridian_Enum[TSF_meridian_Yearlower] if TSF_meridian_Enum[TSF_meridian_Yearlower] != TSF_Time_EnumNULL else TSF_diff_now.year%100
     return TSF_meridian_Enum[TSF_meridian_Yearlower]
 
 def TSF_Time_meridian_Month():    #TSF_doc:現在時刻月2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
-    TSF_meridian_Enum[TSF_allnight_Month]=TSF_meridian_Enum[TSF_allnight_Month] if TSF_meridian_Enum[TSF_allnight_Month] != TSF_Time_EnumNULL else TSF_earlier_now.month
-    return TSF_meridian_Enum[TSF_allnight_Month]
+    TSF_meridian_Enum[TSF_meridian_Month]=TSF_meridian_Enum[TSF_meridian_Month] if TSF_meridian_Enum[TSF_meridian_Month] != TSF_Time_EnumNULL else TSF_diff_now.month
+    return TSF_meridian_Enum[TSF_meridian_Month]
+
+def TSF_Time_meridian_Weekday():    #TSF_doc:現在時刻曜1桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_Weekday]=TSF_meridian_Enum[TSF_meridian_Weekday] if TSF_meridian_Enum[TSF_meridian_Weekday] != TSF_Time_EnumNULL else TSF_diff_now.weekday()
+    return TSF_meridian_Enum[TSF_meridian_Weekday]
+
+def TSF_Time_meridian_Daymonth():    #TSF_doc:現在時刻日2桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_Daymonth]=TSF_meridian_Enum[TSF_meridian_Daymonth] if TSF_meridian_Enum[TSF_meridian_Daymonth] != TSF_Time_EnumNULL else TSF_diff_now.day
+    return TSF_meridian_Enum[TSF_meridian_Daymonth]
+
+def TSF_Time_meridian_Hour():    #TSF_doc:現在時刻時2桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_Hour]=TSF_meridian_Enum[TSF_meridian_Hour] if TSF_meridian_Enum[TSF_meridian_Hour] != TSF_Time_EnumNULL else TSF_diff_now.hour
+    return TSF_meridian_Enum[TSF_meridian_Hour]
+
+def TSF_Time_meridian_miNute():    #TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_miNute]=TSF_meridian_Enum[TSF_meridian_miNute] if TSF_meridian_Enum[TSF_meridian_miNute] != TSF_Time_EnumNULL else TSF_diff_now.minute
+    return TSF_meridian_Enum[TSF_meridian_miNute]
+
+def TSF_Time_meridian_Second():    #TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_Second]=TSF_meridian_Enum[TSF_meridian_Second] if TSF_meridian_Enum[TSF_meridian_Second] != TSF_Time_EnumNULL else TSF_diff_now.second
+    return TSF_meridian_Enum[TSF_meridian_Second]
 
 def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き。(TSFAPI)
     TSF_tfList=TSF_daytimeformat.split("@@")
@@ -121,6 +146,24 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
         TSF_tf=TSF_tf if not "@0m" in TSF_tf else TSF_tf.replace("@0m","{0:0>2}".format(TSF_Time_meridian_Month()))
         TSF_tf=TSF_tf if not "@_m" in TSF_tf else TSF_tf.replace("@_m","{0: >2}".format(TSF_Time_meridian_Month()))
         TSF_tf=TSF_tf if not "@m" in TSF_tf else TSF_tf.replace("@m",str(TSF_Time_meridian_Month()))
+
+        TSF_tf=TSF_tf if not "@wd" in TSF_tf else TSF_tf.replace("@wd",str(TSF_Time_meridian_Weekday()))
+
+        TSF_tf=TSF_tf if not "@0dm" in TSF_tf else TSF_tf.replace("@0dm","{0:0>2}".format(TSF_Time_meridian_Daymonth()))
+        TSF_tf=TSF_tf if not "@_dm" in TSF_tf else TSF_tf.replace("@_dm","{0: >2}".format(TSF_Time_meridian_Daymonth()))
+        TSF_tf=TSF_tf if not "@dm" in TSF_tf else TSF_tf.replace("@dm",str(TSF_Time_meridian_Daymonth()))
+
+        TSF_tf=TSF_tf if not "@0h" in TSF_tf else TSF_tf.replace("@0h","{0:0>2}".format(TSF_Time_meridian_Hour()))
+        TSF_tf=TSF_tf if not "@_h" in TSF_tf else TSF_tf.replace("@_h","{0: >2}".format(TSF_Time_meridian_Hour()))
+        TSF_tf=TSF_tf if not "@h" in TSF_tf else TSF_tf.replace("@h",str(TSF_Time_meridian_Hour()))
+
+        TSF_tf=TSF_tf if not "@0n" in TSF_tf else TSF_tf.replace("@0n","{0:0>2}".format(TSF_Time_meridian_miNute()))
+        TSF_tf=TSF_tf if not "@_n" in TSF_tf else TSF_tf.replace("@_n","{0: >2}".format(TSF_Time_meridian_miNute()))
+        TSF_tf=TSF_tf if not "@n" in TSF_tf else TSF_tf.replace("@n",str(TSF_Time_meridian_miNute()))
+
+        TSF_tf=TSF_tf if not "@0s" in TSF_tf else TSF_tf.replace("@0s","{0:0>2}".format(TSF_Time_meridian_Second()))
+        TSF_tf=TSF_tf if not "@_s" in TSF_tf else TSF_tf.replace("@_s","{0: >2}".format(TSF_Time_meridian_Second()))
+        TSF_tf=TSF_tf if not "@s" in TSF_tf else TSF_tf.replace("@s",str(TSF_Time_meridian_Second()))
 
         TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
         TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
@@ -146,6 +189,11 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timesample:","\t".join([
         "@000y","@___y","@4y","@0y","@_y","@2y",
         "@0m","@_m","@m",
+        "@wd",
+        "@0dm","@_dm","@dm",
+        "@0h","@_h","@h",
+        "@0n","@_n","@n",
+        "@0s","@_s","@s",
         ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
