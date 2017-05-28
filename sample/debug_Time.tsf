@@ -9,3 +9,4 @@ timepop:
 	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 timesample:
 	@000y	@___y	@4y	@0y	@_y	@2y
+	@0m	@_m	@m

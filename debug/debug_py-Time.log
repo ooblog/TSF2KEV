@@ -1,7 +1,7 @@
 --- TSF_Time.py ---
 -- TSF_Time.py source --
 TSF_Tab-Separated-Forth:
-	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.
+	timecount:	#TSF_this	#TSF_fin.
 timecount:
 	timejump:	timesample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	timecount:	#TSF_this
 timejump:
@@ -15,6 +15,9 @@ timesample:
 	@0y
 	@_y
 	@2y
+	@0m
+	@_m
+	@m
 -- TSF_Time.py run --
 「@000y」→「2017」
 「@___y」→「2017」
@@ -22,9 +25,12 @@ timesample:
 「@0y」→「17」
 「@_y」→「17」
 「@2y」→「17」
+「@0m」→「05」
+「@_m」→「 5」
+「@m」→「5」
 -- TSF_Time.py viewthey --
 TSF_Tab-Separated-Forth:
-	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.
+	timecount:	#TSF_this	#TSF_fin.
 timecount:
 	timejump:	timesample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	timecount:	#TSF_this
 timejump:
