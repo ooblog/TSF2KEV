@@ -1,6 +1,6 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	timecount:	#TSF_this	#TSF_fin.
+	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.
 timecount:
 	timejump:	timesample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	timecount:	#TSF_this
 timejump:
@@ -8,5 +8,4 @@ timejump:
 timepop:
 	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 timesample:
-	0|0	0|0,	0/0	0,0/	,0
-	@000y
+	@000y	@___y	@4y	@0y	@_y	@2y

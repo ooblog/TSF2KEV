@@ -21,8 +21,9 @@ def TSF_Time_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
-    global TSF_earlier_now
+    global TSF_earlier_now,TSF_diff_now
     TSF_earlier_now=datetime.datetime.now()
+    TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=0)
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Time_diffminute():    #TSFdoc:時差を設定する。現在時刻も更新。1枚[diffminute]ドロー。
@@ -64,6 +65,7 @@ TSF_ampmenu=("AM",  "PM", "AN")
 
 TSF_earlier_diffminute,TSF_earlier_overhour=0,30
 TSF_earlier_now=datetime.datetime.now()
+TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=0)
 TSF_meridian_EnumLen=7+2+5+2+4+1;  (
     TSF_meridian_Year,TSF_meridian_Yearlower,TSF_meridian_YearZodiac,TSF_meridian_Yeardays,TSF_meridian_YearIso,TSF_meridian_WeekNumberYearIso,TSF_meridian_WeekDayIso,
     TSF_meridian_Month,TSF_meridian_Monthdays,
@@ -88,11 +90,16 @@ def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時�
     global TSF_earlier_diffminute,TSF_earlier_overhour
     TSF_earlier_diffminute=TSF_diffminute if TSF_diffminute != None else TSF_earlier_diffminute
     TSF_earlier_overhour=min(max(TSF_overhour,24),48) if TSF_overhour != None else TSF_earlier_overhour
-    global TSF_earlier_now,TSF_meridian_Enum,TSF_allnight_Enum
+    global TSF_earlier_now,TSF_diff_now,TSF_meridian_Enum,TSF_allnight_Enum
     TSF_earlier_now=datetime.datetime.now()
+    TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=TSF_diffminute)
     TSF_meridian_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_meridian_EnumLen)]
     TSF_allnight_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_allnight_EnumLen)]
 
+def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Year
+    TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_earlier_now.year
+    return TSF_meridian_Enum[TSF_meridian_Year]
 def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
     global TSF_meridian_Year
     TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_earlier_now.year
@@ -102,6 +109,11 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
     TSF_tfList=TSF_daytimeformat.split("@@")
     for TSF_tfcount,TSF_tf in enumerate(TSF_tfList):
         TSF_tf=TSF_tf if not "@000y" in TSF_tf else TSF_tf.replace("@000y","{0:0>4}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@___y" in TSF_tf else TSF_tf.replace("@___y","{0: >4}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@4y" in TSF_tf else TSF_tf.replace("@4y","{0}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@0y" in TSF_tf else TSF_tf.replace("@0y","{0:0>2}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@_y" in TSF_tf else TSF_tf.replace("@_y","{0: >2}".format(TSF_Time_meridian_Year()))
+        TSF_tf=TSF_tf if not "@2y" in TSF_tf else TSF_tf.replace("@2y","{0}".format(TSF_Time_meridian_Year()))
         TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
         TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
         TSF_tf=TSF_tf if not "@Z" in TSF_tf else TSF_tf.replace("@Z","")
@@ -116,7 +128,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "timecount:","#TSF_this","#TSF_fin."]),'T')
+        "#TSF_nowdaytime","timecount:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("timecount:","\t".join([
         "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"]),'T')
     TSF_Forth_setTSF("timejump:","\t".join([
@@ -124,12 +136,8 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timepop:","\t".join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("timesample:","\t".join([
-        "0|0",
-        "0|0,",
-        "0/0",
-        "0,0/",
-        ",0",
-        "@000y"]),'N')
+        "@000y","@___y","@4y","@0y","@_y","@2y",
+        ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 

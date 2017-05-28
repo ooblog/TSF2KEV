@@ -5,6 +5,7 @@ import std.string;
 import std.conv;
 import std.math;
 import std.datetime;
+import core.time;
 import std.typecons;
 import core.vararg;
 
@@ -26,6 +27,7 @@ void TSF_Time_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
         }
     } 
     TSF_earlier_now=Clock.currTime();
+    TSF_diff_now=TSF_earlier_now+dur!"minutes"(0);
 }
 
 string TSF_Time_diffminute(){    //#TSFdoc:時差を設定する。現在時刻も更新。1枚[diffminute]ドロー。
@@ -70,7 +72,7 @@ string[] TSF_ampmenl=["am",  "pm", "an"];
 string[] TSF_ampmenu=["AM",  "PM", "AN"];
 
 long TSF_earlier_diffminute=0,TSF_earlier_overhour=30;
-SysTime TSF_earlier_now;
+SysTime TSF_earlier_now,TSF_diff_now;
 enum TSF_meridian {
     Year,Yearlower,YearZodiac,Yeardays,YearIso,WeekNumberYearIso,WeekDayIso,
     Month,Monthdays,
@@ -98,12 +100,13 @@ void TSF_Time_setdaytime(...){
         TSF_earlier_overhour=to!long(fmin(fmax(TSF_overhour,24),48));
     }
     TSF_earlier_now=Clock.currTime();
+    TSF_diff_now=TSF_earlier_now+dur!"minutes"(TSF_earlier_diffminute);
     foreach(long Enum;0..TSF_meridian.EnumLen){ TSF_meridian_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
     foreach(long Enum;0..TSF_allnight.EnumLen){ TSF_allnight_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
 }
 
 long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
-    TSF_meridian_Enum[TSF_meridian.Year]=TSF_meridian_Enum[TSF_meridian.Year]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Year]:TSF_Time_EnumNULL;
+    TSF_meridian_Enum[TSF_meridian.Year]=TSF_meridian_Enum[TSF_meridian.Year]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Year]:TSF_earlier_now.year;
     return TSF_meridian_Enum[TSF_meridian.Year];
 }
 
@@ -112,6 +115,8 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
     string[] TSF_tfList=TSF_daytimeformat.split("@@");
     foreach(size_t TSF_tfcount,string TSF_tf;TSF_tfList){
         TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y","%04d".format(TSF_Time_meridian_Year()));
+        TSF_tf=!count(TSF_tf,"@___y")?TSF_tf:TSF_tf.replace("@___y","%4d".format(TSF_Time_meridian_Year()));
+        TSF_tf=!count(TSF_tf,"@4y")?TSF_tf:TSF_tf.replace("@4y","%d".format(TSF_Time_meridian_Year()));
         TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
         TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
         TSF_tf=!count(TSF_tf,"@Z")?TSF_tf:TSF_tf.replace("@Z","");
@@ -128,7 +133,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_debug_log=TSF_Io_printlog("--- %s ---".format(__FILE__),TSF_debug_log);
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "timecount:","#TSF_this","#TSF_fin."],"\t"),'T');
+        "#TSF_nowdaytime","timecount:","#TSF_this","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("timecount:",join([
         "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("timejump:",join([
@@ -136,12 +141,8 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timepop:",join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("timesample:",join([
-        "0|0",
-        "0|0,",
-        "0/0",
-        "0,0/",
-        ",0",
-        "@000y"],"\t"),'N');
+        "@000y","@___y","@4y","@0y","@_y","@2y",
+        ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
