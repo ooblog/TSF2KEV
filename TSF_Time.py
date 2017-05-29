@@ -128,12 +128,22 @@ def TSF_Time_meridian_miNute():    #TSF_doc:現在時刻分2桁の遅延処理�
     TSF_meridian_Enum[TSF_meridian_miNute]=TSF_meridian_Enum[TSF_meridian_miNute] if TSF_meridian_Enum[TSF_meridian_miNute] != TSF_Time_EnumNULL else TSF_diff_now.minute
     return TSF_meridian_Enum[TSF_meridian_miNute]
 
-def TSF_Time_meridian_Second():    #TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Second():    #TSF_doc:現在時刻秒2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Second]=TSF_meridian_Enum[TSF_meridian_Second] if TSF_meridian_Enum[TSF_meridian_Second] != TSF_Time_EnumNULL else TSF_diff_now.second
     return TSF_meridian_Enum[TSF_meridian_Second]
 
-def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き。(TSFAPI)
+def TSF_Time_meridian_miLlisecond():    #TSF_doc:現在時刻ミリ秒3桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_miLlisecond]=TSF_meridian_Enum[TSF_meridian_miLlisecond] if TSF_meridian_Enum[TSF_meridian_miLlisecond] != TSF_Time_EnumNULL else TSF_Time_meridian_micRosecond()//1000
+    return TSF_meridian_Enum[TSF_meridian_miLlisecond]
+
+def TSF_Time_meridian_micRosecond():    #TSF_doc:現在時刻マイクロ秒6桁の遅延処理。(TSFAPI)
+    global TSF_meridian_Enum
+    TSF_meridian_Enum[TSF_meridian_micRosecond]=TSF_meridian_Enum[TSF_meridian_micRosecond] if TSF_meridian_Enum[TSF_meridian_micRosecond] != TSF_Time_EnumNULL else TSF_diff_now.microsecond
+    return TSF_meridian_Enum[TSF_meridian_micRosecond]
+
+def TSF_Time_getdaytime(TSF_daytimeformat="@000y@0m@0dm@wdec@0h@0n@0s"):    #TSFdoc:現在日時で上書き。(TSFAPI)
     TSF_tfList=TSF_daytimeformat.split("@@")
     for TSF_tfcount,TSF_tf in enumerate(TSF_tfList):
         TSF_tf=TSF_tf if not "@000y" in TSF_tf else TSF_tf.replace("@000y","{0:0>4}".format(TSF_Time_meridian_Year()))
@@ -147,6 +157,8 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
         TSF_tf=TSF_tf if not "@_m" in TSF_tf else TSF_tf.replace("@_m","{0: >2}".format(TSF_Time_meridian_Month()))
         TSF_tf=TSF_tf if not "@m" in TSF_tf else TSF_tf.replace("@m",str(TSF_Time_meridian_Month()))
 
+        TSF_tf=TSF_tf if not "@wdj" in TSF_tf else TSF_tf.replace("@wdj",TSF_weekdayjp[TSF_Time_meridian_Weekday()])
+        TSF_tf=TSF_tf if not "@wdec" in TSF_tf else TSF_tf.replace("@wdec",TSF_weekdayenc[TSF_Time_meridian_Weekday()])
         TSF_tf=TSF_tf if not "@wd" in TSF_tf else TSF_tf.replace("@wd",str(TSF_Time_meridian_Weekday()))
 
         TSF_tf=TSF_tf if not "@0dm" in TSF_tf else TSF_tf.replace("@0dm","{0:0>2}".format(TSF_Time_meridian_Daymonth()))
@@ -164,6 +176,14 @@ def TSF_Time_getdaytime(TSF_daytimeformat):    #TSFdoc:現在日時で上書き�
         TSF_tf=TSF_tf if not "@0s" in TSF_tf else TSF_tf.replace("@0s","{0:0>2}".format(TSF_Time_meridian_Second()))
         TSF_tf=TSF_tf if not "@_s" in TSF_tf else TSF_tf.replace("@_s","{0: >2}".format(TSF_Time_meridian_Second()))
         TSF_tf=TSF_tf if not "@s" in TSF_tf else TSF_tf.replace("@s",str(TSF_Time_meridian_Second()))
+
+        TSF_tf=TSF_tf if not "@00ls" in TSF_tf else TSF_tf.replace("@00ls","{0:0>3}".format(TSF_Time_meridian_miLlisecond()))
+        TSF_tf=TSF_tf if not "@__ls" in TSF_tf else TSF_tf.replace("@__ls","{0: >3}".format(TSF_Time_meridian_miLlisecond()))
+        TSF_tf=TSF_tf if not "@ls" in TSF_tf else TSF_tf.replace("@ls",str(TSF_Time_meridian_miLlisecond()))
+
+        TSF_tf=TSF_tf if not "@00000rs" in TSF_tf else TSF_tf.replace("@00000rs","{0:0>6}".format(TSF_Time_meridian_micRosecond()))
+        TSF_tf=TSF_tf if not "@_____rs" in TSF_tf else TSF_tf.replace("@_____rs","{0: >6}".format(TSF_Time_meridian_micRosecond()))
+        TSF_tf=TSF_tf if not "@rs" in TSF_tf else TSF_tf.replace("@rs",str(TSF_Time_meridian_micRosecond()))
 
         TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
         TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
@@ -189,11 +209,13 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timesample:","\t".join([
         "@000y","@___y","@4y","@0y","@_y","@2y",
         "@0m","@_m","@m",
-        "@wd",
+        "@wd","@wdj","@wdec",
         "@0dm","@_dm","@dm",
         "@0h","@_h","@h",
         "@0n","@_n","@n",
         "@0s","@_s","@s",
+        "@00ls","@__ls","@ls",
+        "@00000rs","@_____rs","@rs",
         ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)

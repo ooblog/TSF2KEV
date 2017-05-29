@@ -15,3 +15,5 @@ timesample:
 	@0h	@_h	@h
 	@0m	@_m	@m
 	@0s	@_s	@s
+	@0ls	@_ls	@ls
+	@0rs	@_rs	@rs

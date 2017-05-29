@@ -19,6 +19,8 @@ timesample:
 	@_m
 	@m
 	@wd
+	@wdj
+	@wdec
 	@0dm
 	@_dm
 	@dm
@@ -31,6 +33,12 @@ timesample:
 	@0s
 	@_s
 	@s
+	@00ls
+	@__ls
+	@ls
+	@00000rs
+	@_____rs
+	@rs
 -- TSF_Time.d run --
 「@000y」→「2017」
 「@___y」→「2017」
@@ -42,18 +50,26 @@ timesample:
 「@_m」→「 5」
 「@m」→「5」
 「@wd」→「0」
+「@wdj」→「月」
+「@wdec」→「M」
 「@0dm」→「29」
 「@_dm」→「29」
 「@dm」→「29」
-「@0h」→「08」
-「@_h」→「 8」
-「@h」→「8」
-「@0n」→「16」
-「@_n」→「16」
-「@n」→「16」
-「@0s」→「59」
-「@_s」→「59」
-「@s」→「59」
+「@0h」→「11」
+「@_h」→「11」
+「@h」→「11」
+「@0n」→「28」
+「@_n」→「28」
+「@n」→「28」
+「@0s」→「17」
+「@_s」→「17」
+「@s」→「17」
+「@00ls」→「000」
+「@__ls」→「  0」
+「@ls」→「0」
+「@00000rs」→「000000」
+「@_____rs」→「     0」
+「@rs」→「0」
 -- TSF_Time.d viewthey --
 TSF_Tab-Separated-Forth:
 	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.

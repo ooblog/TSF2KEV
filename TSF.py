@@ -152,7 +152,9 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "",
         "　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。",
         "　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。",
-        "　「@T」でタブ、「@N」で改行に置換されます。"]),'N')
+        "　一週間の曜日「@wd」は月曜0~日曜7、ISOの曜日「@iw」は月曜1~日曜7の予定。",
+        "　「@T」でタブ、「@N」で改行に置換されます。",
+        ]),'N')
     TSF_Forth_samplerun("TSF_sample_about")
 
 def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。

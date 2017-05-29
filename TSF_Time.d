@@ -35,7 +35,7 @@ string TSF_Time_diffminute(){    //#TSFdoc:時差を設定する。現在時刻�
 }
 
 string TSF_Time_overhour(){    //#TSFdoc:徹夜時間を設定する。現在時刻も更新。1枚[overhour]ドロー。
-    TSF_Time_setdaytime(TSF_Io_RPNzero(TSF_Forth_drawthat()));
+    TSF_Time_setdaytime(TSF_earlier_diffminute,TSF_Io_RPNzero(TSF_Forth_drawthat()));
     return "";
 }
 
@@ -109,7 +109,7 @@ long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理�
 }
 
 long TSF_Time_meridian_Yearlower(){    //#TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
-    return TSF_meridian_Enum[TSF_meridian.Yearlower]=TSF_meridian_Enum[TSF_meridian.Yearlower]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Yearlower]:to!long(TSF_diff_now.year%100);
+    return TSF_meridian_Enum[TSF_meridian.Yearlower]=TSF_meridian_Enum[TSF_meridian.Yearlower]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Yearlower]:TSF_Time_meridian_Year()%100;
 }
 
 long TSF_Time_meridian_Month(){    //#TSF_doc:現在時刻月2桁の遅延処理。(TSFAPI)
@@ -132,12 +132,23 @@ long TSF_Time_meridian_miNute(){    //#TSF_doc:現在時刻時2桁の遅延処�
     return TSF_meridian_Enum[TSF_meridian.miNute]=TSF_meridian_Enum[TSF_meridian.miNute]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.miNute]:to!long(TSF_diff_now.minute);
 }
 
-long TSF_Time_meridian_Second(){    //#TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+long TSF_Time_meridian_Second(){    //#TSF_doc:現在時刻秒2桁の遅延処理。(TSFAPI)
     return TSF_meridian_Enum[TSF_meridian.Second]=TSF_meridian_Enum[TSF_meridian.Second]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.Second]:to!long(TSF_diff_now.second);
 }
 
-string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で上書き。(TSFAPI)
-    string TSF_daytimeformat=daytimeformat;
+long TSF_Time_meridian_miLlisecond(){    //#TSF_doc:現在時刻ミリ秒3桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.miLlisecond]=TSF_meridian_Enum[TSF_meridian.miLlisecond]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.miLlisecond]:TSF_Time_meridian_micRosecond()/1000;
+}
+
+long TSF_Time_meridian_micRosecond(){    //#TSF_doc:現在時刻マイクロ秒6桁の遅延処理。(TSFAPI)
+    return TSF_meridian_Enum[TSF_meridian.micRosecond]=TSF_meridian_Enum[TSF_meridian.micRosecond]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.micRosecond]:0;
+}
+
+string TSF_Time_getdaytime(...){    //#TSFdoc:現在日時で上書き。(TSFAPI)
+    string TSF_daytimeformat="@000y@0m@0dm@wdec@0h@0n@0s";
+    if( _arguments.length>0 && _arguments[0]==typeid(string) ){
+        TSF_daytimeformat=va_arg!(string)(_argptr);
+    }
     string[] TSF_tfList=TSF_daytimeformat.split("@@");
     foreach(size_t TSF_tfcount,string TSF_tf;TSF_tfList){
         TSF_tf=!count(TSF_tf,"@000y")?TSF_tf:TSF_tf.replace("@000y","%04d".format(TSF_Time_meridian_Year()));
@@ -151,6 +162,8 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
         TSF_tf=!count(TSF_tf,"@_m")?TSF_tf:TSF_tf.replace("@_m","%2d".format(TSF_Time_meridian_Month()));
         TSF_tf=!count(TSF_tf,"@m")?TSF_tf:TSF_tf.replace("@m","%d".format(TSF_Time_meridian_Month()));
 
+        TSF_tf=!count(TSF_tf,"@wdj")?TSF_tf:TSF_tf.replace("@wdj",TSF_weekdayjp[to!size_t(TSF_Time_meridian_Weekday())]);
+        TSF_tf=!count(TSF_tf,"@wdec")?TSF_tf:TSF_tf.replace("@wdec",TSF_weekdayenc[to!size_t(TSF_Time_meridian_Weekday())]);
         TSF_tf=!count(TSF_tf,"@wd")?TSF_tf:TSF_tf.replace("@wd","%d".format(TSF_Time_meridian_Weekday()));
 
         TSF_tf=!count(TSF_tf,"@0dm")?TSF_tf:TSF_tf.replace("@0dm","%02d".format(TSF_Time_meridian_Daymonth()));
@@ -162,12 +175,20 @@ string TSF_Time_getdaytime(string daytimeformat){    //#TSFdoc:現在日時で�
         TSF_tf=!count(TSF_tf,"@h")?TSF_tf:TSF_tf.replace("@h","%d".format(TSF_Time_meridian_Hour()));
 
         TSF_tf=!count(TSF_tf,"@0n")?TSF_tf:TSF_tf.replace("@0n","%02d".format(TSF_Time_meridian_miNute()));
-        TSF_tf=!count(TSF_tf,"@_n")?TSF_tf:TSF_tf.replace("@_n","%02d".format(TSF_Time_meridian_miNute()));
-        TSF_tf=!count(TSF_tf,"@n")?TSF_tf:TSF_tf.replace("@n","%02d".format(TSF_Time_meridian_miNute()));
+        TSF_tf=!count(TSF_tf,"@_n")?TSF_tf:TSF_tf.replace("@_n","%2d".format(TSF_Time_meridian_miNute()));
+        TSF_tf=!count(TSF_tf,"@n")?TSF_tf:TSF_tf.replace("@n","%d".format(TSF_Time_meridian_miNute()));
 
         TSF_tf=!count(TSF_tf,"@0s")?TSF_tf:TSF_tf.replace("@0s","%02d".format(TSF_Time_meridian_Second()));
-        TSF_tf=!count(TSF_tf,"@_s")?TSF_tf:TSF_tf.replace("@_s","%02d".format(TSF_Time_meridian_Second()));
-        TSF_tf=!count(TSF_tf,"@s")?TSF_tf:TSF_tf.replace("@s","%02d".format(TSF_Time_meridian_Second()));
+        TSF_tf=!count(TSF_tf,"@_s")?TSF_tf:TSF_tf.replace("@_s","%2d".format(TSF_Time_meridian_Second()));
+        TSF_tf=!count(TSF_tf,"@s")?TSF_tf:TSF_tf.replace("@s","%d".format(TSF_Time_meridian_Second()));
+
+        TSF_tf=!count(TSF_tf,"@00ls")?TSF_tf:TSF_tf.replace("@00ls","%03d".format(TSF_Time_meridian_miLlisecond()));
+        TSF_tf=!count(TSF_tf,"@__ls")?TSF_tf:TSF_tf.replace("@__ls","%3d".format(TSF_Time_meridian_miLlisecond()));
+        TSF_tf=!count(TSF_tf,"@ls")?TSF_tf:TSF_tf.replace("@ls","%d".format(TSF_Time_meridian_miLlisecond()));
+
+        TSF_tf=!count(TSF_tf,"@00000rs")?TSF_tf:TSF_tf.replace("@00000rs","%06d".format(TSF_Time_meridian_micRosecond()));
+        TSF_tf=!count(TSF_tf,"@_____rs")?TSF_tf:TSF_tf.replace("@_____rs","%6d".format(TSF_Time_meridian_micRosecond()));
+        TSF_tf=!count(TSF_tf,"@rs")?TSF_tf:TSF_tf.replace("@rs","%d".format(TSF_Time_meridian_micRosecond()));
 
         TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
         TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
@@ -195,11 +216,13 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timesample:",join([
         "@000y","@___y","@4y","@0y","@_y","@2y",
         "@0m","@_m","@m",
-        "@wd",
+        "@wd","@wdj","@wdec",
         "@0dm","@_dm","@dm",
         "@0h","@_h","@h",
         "@0n","@_n","@n",
         "@0s","@_s","@s",
+        "@00ls","@__ls","@ls",
+        "@00000rs","@_____rs","@rs",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
