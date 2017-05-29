@@ -43,18 +43,43 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
         }
     }
     else{
-        if( TSF_SDO=='D' || TSF_SDO=='O' ){
-            TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
-            TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
-            TSF_Text=TSF_theT;  TSF_SDOpoke='D';
+        switch( TSF_SDO ){
+            case 'D':
+                TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
+                TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
+                TSF_Text=TSF_theT;  TSF_SDOpoke='D';
+                break;
+            case 'O':
+                TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[TSF_theN]);  TSF_cardsN_len=TSF_cardsN.length;
+                TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[TSF_theO]);  TSF_cardsO_len=TSF_cardsO.length;
+                if( TSF_theT in TSF_Forth_stackD() ){
+                    TSF_Text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));  TSF_SDOpoke='S';
+                }
+                else{
+                    TSF_Text=TSF_theT;  TSF_SDOpoke='D';
+                }
+                break;
+            case 'S':
+                TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=TSF_cardsN.length;
+                TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=TSF_cardsO.length;
+                if( TSF_theT in TSF_Forth_stackD() ){
+                    TSF_Text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));  TSF_SDOpoke='S';
+                }
+                break;
+            default: break;
         }
-        if( TSF_SDO=='S' || TSF_SDO=='O' ){
-            TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=TSF_cardsN.length;
-            TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=TSF_cardsO.length;
-            if( TSF_theT in TSF_Forth_stackD() ){
-                TSF_Text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));  TSF_SDOpoke='S';
-            }
-        }
+//        if( TSF_SDO=='D' || TSF_SDO=='O' ){
+//            TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
+//            TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
+//            TSF_Text=TSF_theT;  TSF_SDOpoke='D';
+//        }
+//        if( TSF_SDO=='S' || TSF_SDO=='O' ){
+//            TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=TSF_cardsN.length;
+//            TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=TSF_cardsO.length;
+//            if( TSF_theT in TSF_Forth_stackD() ){
+//                TSF_Text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));  TSF_SDOpoke='S';
+//            }
+//        }
     }
     switch( TSF_FNCMVA ){
         case 'F': TSF_cardsI=null; 

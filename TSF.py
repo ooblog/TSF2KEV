@@ -18,7 +18,7 @@ from TSF_Trans import *
 
 def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),'T')
+        "replace:","#TSF_this","help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),'T')
     TSF_Forth_setTSF("help:","\t".join([
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
@@ -29,16 +29,18 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
         "  --dlang       TSF to D",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
+        "  --calender    \"@4y@0m@0dm@wdec@0h@0n@0s\"-> {calender}",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
         ]),'N')
+    TSF_Forth_setTSF("replace:","\t".join([
+        "help:","{calender}","@4y@0m@0dm@wdec@0h@0n@0s","#TSF_calender","#TSF_replacesQON"]),'T')
     TSF_Forth_samplerun("TSF_sample_help")
 #        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
 #        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
 #        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
-#        "  --calender    \"@000y@0m@0dm@wdec@0h@0n@0s\"-> TSF_time_getdaytime() sample"]),
 
 def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
@@ -194,7 +196,7 @@ def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
 
 def TSF_sample_calender():    #TSFdoc:「sample_calender.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@000y@0m@0dm@wdec@0h@0n@0s"]),'T')
+        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@4y@0m@0dm@wdec@0h@0n@0s"]),'T')
     TSF_Forth_setTSF("calender:","\t".join([
         "#TSF_calender","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_calender")

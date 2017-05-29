@@ -145,7 +145,7 @@ long TSF_Time_meridian_micRosecond(){    //#TSF_doc:現在時刻マイクロ秒6
 }
 
 string TSF_Time_getdaytime(...){    //#TSFdoc:現在日時で上書き。(TSFAPI)
-    string TSF_daytimeformat="@000y@0m@0dm@wdec@0h@0n@0s";
+    string TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s";
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_daytimeformat=va_arg!(string)(_argptr);
     }
@@ -223,7 +223,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
         "@0s,@_s,@s",
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
-        "@000y@0m@0dm@wdec@0h@0n@0s",
+        "@4y@0m@0dm@wdec@0h@0n@0s",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
@@ -237,5 +237,3 @@ unittest {
 // Copyright (c) 2017 ooblog
 // License: MIT
 // https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
-
-

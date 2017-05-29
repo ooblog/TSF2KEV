@@ -21,7 +21,7 @@ import TSF_Trans;
 
 void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),'T');
+        "replace:","#TSF_this","help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("help:",join([
         "usage: ./TSF [command|file.tsf] [argvs] ...",
         "commands & samples:",
@@ -32,11 +32,14 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
         "  --dlang       TSF to D",
         "  --RPN         decimal RPN calculator \"1,3/m1|2-\"-> 0.8333... ",
         "  --calc        fraction calculator \"1/3-m1|2\"-> p5|6",
+        "  --calender    \"@4y@0m@0dm@wdec@0h@0n@0s\"-> {calender}",
         "  --helloworld  \"Hello world  #TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
         ],"\t"),'N');
+    TSF_Forth_setTSF("replace:",join([
+        "help:","{calender}","@4y@0m@0dm@wdec@0h@0n@0s","#TSF_calender","#TSF_replacesQON"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
@@ -200,7 +203,7 @@ void TSF_sample_calcJA(){    //#TSFdoc:「sample_calcJA.tsf」コマンド版。
 
 void TSF_sample_calender(){    //#TSFdoc:「sample_calender.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@000y@0m@0dm@wdec@0h@0n@0s"],"\t"),'T');
+        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@4y@0m@0dm@wdec@0h@0n@0s"],"\t"),'T');
     TSF_Forth_setTSF("calender:",join([
         "#TSF_calender","#TSF_echo"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_calender");

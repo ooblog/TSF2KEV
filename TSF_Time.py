@@ -143,7 +143,7 @@ def TSF_Time_meridian_micRosecond():    #TSF_doc:現在時刻マイクロ秒6桁
     TSF_meridian_Enum[TSF_meridian_micRosecond]=TSF_meridian_Enum[TSF_meridian_micRosecond] if TSF_meridian_Enum[TSF_meridian_micRosecond] != TSF_Time_EnumNULL else TSF_diff_now.microsecond
     return TSF_meridian_Enum[TSF_meridian_micRosecond]
 
-def TSF_Time_getdaytime(TSF_daytimeformat="@000y@0m@0dm@wdec@0h@0n@0s"):    #TSFdoc:現在日時で上書き。(TSFAPI)
+def TSF_Time_getdaytime(TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s"):    #TSFdoc:現在日時で上書き。(TSFAPI)
     TSF_tfList=TSF_daytimeformat.split("@@")
     for TSF_tfcount,TSF_tf in enumerate(TSF_tfList):
         TSF_tf=TSF_tf if not "@000y" in TSF_tf else TSF_tf.replace("@000y","{0:0>4}".format(TSF_Time_meridian_Year()))
@@ -216,7 +216,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
         "@0s,@_s,@s",
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
-        "@000y@0m@0dm@wdec@0h@0n@0s",
+        "@4y@0m@0dm@wdec@0h@0n@0s",
         ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)

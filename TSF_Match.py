@@ -70,11 +70,18 @@ def TSF_Match_replaceRAD(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RAD):    #TSFdoc:repla
         if TSF_theT in TSF_Forth_stackD():
             TSF_Text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]));  TSF_SDOpoke='S';
     else:
-        if TSF_SDO == 'D' or TSF_SDO == 'O':
+        if TSF_SDO == 'D':
             TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
             TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
             TSF_Text=TSF_theT;  TSF_SDOpoke='D';
-        if TSF_SDO == 'S' or TSF_SDO == 'O':
+        elif TSF_SDO == 'O':
+            TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[TSF_theN]);  TSF_cardsN_len=len(TSF_cardsN);
+            TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[TSF_theO]);  TSF_cardsO_len=len(TSF_cardsO);
+            if TSF_theT in TSF_Forth_stackD():
+                TSF_Text=TSF_Io_ESCdecode("\n".join(TSF_Forth_stackD()[TSF_theT]));  TSF_SDOpoke='S';
+            else:
+                TSF_Text=TSF_theT;  TSF_SDOpoke='D';
+        elif TSF_SDO == 'S':
             TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=len(TSF_cardsN);
             TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=len(TSF_cardsO);
             if TSF_theT in TSF_Forth_stackD():
