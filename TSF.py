@@ -192,6 +192,13 @@ def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
         "1/3-m1|2"]),'N')
     TSF_Forth_samplerun("TSF_sample_calcJA")
 
+def TSF_sample_calender():    #TSFdoc:「sample_calender.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@000y@0m@0dm@wdec@0h@0n@0s"]),'T')
+    TSF_Forth_setTSF("calender:","\t".join([
+        "#TSF_calender","#TSF_echo"]),'T')
+    TSF_Forth_samplerun("TSF_sample_calender")
+
 def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","FZcount:","#TSF_pushFthe","FBloop:","#TSF_this","#TSF_fin.","20"]),'T')
@@ -284,6 +291,8 @@ elif TSF_bootcommand in ["--CALC","--Calc","--calc"]:
     TSF_sample_calc()
 elif TSF_bootcommand in ["--calcJA"]:
     TSF_sample_calcJA()
+elif TSF_bootcommand in ["--calender","--time","--date"]:
+    TSF_sample_calender()
 elif TSF_bootcommand in ["--fizz","--buzz","--fizzbuzz","--FizzBuzz"]:
     TSF_sample_FizzBuzz()
 elif TSF_bootcommand in ["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"]:

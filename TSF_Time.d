@@ -214,15 +214,16 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timepop:",join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("timesample:",join([
-        "@000y","@___y","@4y","@0y","@_y","@2y",
-        "@0m","@_m","@m",
-        "@wd","@wdj","@wdec",
-        "@0dm","@_dm","@dm",
-        "@0h","@_h","@h",
-        "@0n","@_n","@n",
-        "@0s","@_s","@s",
-        "@00ls","@__ls","@ls",
-        "@00000rs","@_____rs","@rs",
+        "@000y,@___y,@4y,@0y,@_y,@2y",
+        "@0m,@_m,@m",
+        "@wd",
+        "@0dm,@_dm,@dm",
+        "@0h,@_h,@h",
+        "@0m,@_m,@m",
+        "@0s,@_s,@s",
+        "@00ls,@__ls,@ls",
+        "@00000rs,@_____rs,@rs",
+        "@000y@0m@0dm@wdec@0h@0n@0s",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);

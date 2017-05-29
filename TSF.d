@@ -198,6 +198,14 @@ void TSF_sample_calcJA(){    //#TSFdoc:「sample_calcJA.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_calcJA");
 }
 
+void TSF_sample_calender(){    //#TSFdoc:「sample_calender.tsf」コマンド版。
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@000y@0m@0dm@wdec@0h@0n@0s"],"\t"),'T');
+    TSF_Forth_setTSF("calender:",join([
+        "#TSF_calender","#TSF_echo"],"\t"),'T');
+    TSF_Forth_samplerun("TSF_sample_calender");
+}
+
 void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "#TSF_argvs","#TSF_pullFthat","FZcount:","#TSF_pushFthe","FBloop:","#TSF_this","#TSF_fin.","20"],"\t"),'T');
@@ -309,6 +317,9 @@ void main(string[] sys_argvs){
     }
     else if( count(["--calcJA"],TSF_bootcommand) ){
         TSF_sample_calcJA();
+    }
+    else if( count(["--calender","--time","--date"],TSF_bootcommand) ){
+        TSF_sample_calender();
     }
     else if( count(["--fizz","--buzz","--fizzbuzz","--FizzBuzz"],TSF_bootcommand) ){
         TSF_sample_FizzBuzz();
