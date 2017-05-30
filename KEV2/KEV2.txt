@@ -1,0 +1,8 @@
+「KEV2」はVimスクリプトでできてる漢字直接入力です。開発中です。
+「KEV」フォルダに入ってる「kanedit.vim」などは「LTsv10kanedit」からのコピーです。
+「KEV2」フォルダの「kanedit.vim」は操作方法や漢字配列や辞書の内容を変える予定です(詳細は未定です)。
+
+
+# Copyright (c) 2016 ooblog
+# License: MIT
+# https://github.com/ooblog/LTsv10kanedit/blob/master/LICENSE
