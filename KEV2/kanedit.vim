@@ -15,9 +15,9 @@ function! KEV2setup()
     let s:KEV2_commandkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ",'゛','゜', "ち","と","し","は","き","く","ま","の","り","れ","け","む", "つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
     let s:KEV2_commandkanas += ["ヌ","フ","ア","ウ","エ","オ","ヤ","ユ","ヨ","ワ","ホ","ヘ","タ","テ","イ","ス","カ","ン","ナ","ニ","ラ","セ","ヶ","ヵ","チ","ト","シ","ハ","キ","ク","マ","ノ","リ","レ","ケ","ム","ツ","サ","ソ","ヒ","コ","ミ","モ","ネ","ル","メ","ロ"]
     let s:KEV2_commandganas = ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","ゎ","ゐ","っ","ゑ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","…","「","」","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","、","。","ぺ","〜"]
-    let s:KEV2_commandganas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ヮ","ヰ","ッ","ヱ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","・","『","』","ゲ","プ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","、","。","ペ","ー"]
-    let s:KEV2_inputESCs = {"\t":"<Tab>",' ':"<Space>",'<':"<lt>",'\':"<Bslash>",'|':"<Bar>"}
-    let s:KEV2_choicekana = "1(ぬ)"
+    let s:KEV2_commandganas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ヮ","ヰ","ッ","ヱ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","・","『","』","ゲ","プ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","，","．","ペ","ー"]
+    let s:KEV2_inputESCs = {"\t":"<Tab>",' ':"<Space>",'<':"<lt>",'\':"<Bslash>",'|':"<Bar>",'-':"<kMinus>",'.':"<kPoint>"}
+    let s:KEV2_choicekana = "@(＠)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     let s:KEV2_dickana = "　"
     let s:KEV2_menuESCs = "\t\\:|< >.-"
@@ -70,7 +70,6 @@ function! KEV2setup()
     imap <silent> <S-Space><Space> <C-V><Tab>
     imap <silent> <S-Space><S-Space> <C-V><Space>
     call KEV2pushmenu()
-    call KEV2imap("@(＠)")
 endfunction
 
 "鍵盤変更。
@@ -78,7 +77,6 @@ function! KEV2imap(KEV2_choicekana)
     let s:KEV2_choicekana = a:KEV2_choicekana
     call KEV2pullmenu(1)
     call KEV2pushmenu()
-"    s:KEV2_kanmap[s:KEV2_choicekana]
 endfunction
 
 "辞書変更。
@@ -106,7 +104,16 @@ function! KEV2pushmenu()
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2imap_" . s:commandkana . ")"
     :endfor
     let s:KEV2_choicedicmenuname = escape(s:KEV2_choicekana . "{" . s:KEV2_dickana . "}",s:KEV2_menuESCs)
-    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . ".test <Plug>(KEV2help)"
+    :for s:inputkey in range(s:KEV2_keyslen)
+        let s:KEV2_kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
+        let s:KEV2_kanVchar = " <C-V>U" . printf("%08x",char2nr(s:KEV2_kanchar))
+        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
+        execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . "." . get(s:KEV2_inputESCs,s:KEV2_kanchar,s:KEV2_kanchar) . s:KEV2_kanVchar
+        execute "imap <silent> " . s:KEV2_inputESC . s:KEV2_kanVchar
+        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
+        execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . s:KEV2_kanchar . "<Enter>"
+        execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . s:KEV2_kanchar . "<Enter>"
+    :endfor
 endfunction
 
 "メニューの撤去。
