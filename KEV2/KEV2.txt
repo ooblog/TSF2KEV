@@ -3,21 +3,20 @@
 「KEV」フォルダに入ってる「kanedit.vim」などは「LTsv10kanedit」からのコピーです。
 「KEV2」フォルダの「kanedit.vim」は操作方法や漢字配列や辞書の内容を変える予定です(詳細は未定です)。
 「KEV2」は「ltsv10」との互換性は無くなる予定です。
+α鍵盤の替わりに濁音鍵盤の導入で漢字配列が広くなり配列だけの単純計算で4*47*47=8836の文字が扱える予定。
+
 
 マップコマンドの予定表
-<Space><Space>		Vimのモード切替
-<S-Space><S-Space>	半角スペース入力
-<Space><S-Space>	全角スペース入力
-<S-Space><Space>	タブ入力
-a-z						文字入力
-<Space>a-z				鍵盤変更
-<Space>A~Z			鍵盤変更(かなカタ変換)
-A~Z						一文字検索
-<S-Space>A~Z			一文字検索(巻き戻し)
-<S-Space>a-z			辞書変更
-
-
-
+☑<Space><Space>		Vimのモード切替
+☑<S-Space><S-Space>	半角スペース入力
+☑<Space><S-Space>		全角スペース入力
+☑<S-Space><Space>		タブ入力
+☑a-z							文字入力
+☐<Space>a-z				鍵盤変更(かなカタ)
+☐<Space>A~Z				鍵盤変更(清濁)
+☑A~Z							一文字検索
+☑<S-Space>A~Z			一文字検索(巻き戻し)
+☐<S-Space>a-z			辞書変更
 
 
 # Copyright (c) 2016 ooblog

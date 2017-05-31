@@ -10,14 +10,16 @@ function! KEV2setup()
     let s:KEV2_menuid = 10000
     let s:KEV2_inputkeys = ['1','2','3','4','5','6','7','8','9','0','-','^', 'q','w','e','r','t','y','u','i','o','p','@','[', 'a','s','d','f','g','h','j','k','l',';',':',']', 'z','x','c','v','b','n','m',',','.','/','\']
     let s:KEV2_inputkeys += ['!','"','#','$','%','&',"'",'(',')','~','=','|', 'Q','W','E','R','T','Y','U','I','O','P','`','{', 'A','S','D','F','G','H','J','K','L','+','*','}', 'Z','X','C','V','B','N','M','<','>','?','_']
-    let s:KEV2_inputkanas = ["1(ぬ)","2(ふ)","3(あ)","4(う)","5(え)","6(お)","7(や)","8(ゆ)","9(よ)","0(わ)","-(ほ)","^(へ)","q(た)","s(て)","e(い)","r(す)","t(か)","y(ん)","u(な)","i(に)","o(ら)","p(せ)","@(＠)","[(ぷ)","a(ち)","s(と)","d(し)","f(は)","g(き)","h(く)","j(ま)","k(の)","l(り)",";(れ)",":(け)","](む)","z(つ)","x(さ)","c(そ)","v(ひ)","b(こ)","n(み)","m(も)","<(ね)",">(る)","/(め)","_(ろ)"]
-    let s:KEV2_inputkanas += ["1(ヌ)","2(フ)","3(ア)","4(ウ)","5(エ)","6(オ)","7(ヤ)","8(ユ)","9(ヨ)","0(ワ)","-(ホ)","^(ヘ)","q(タ)","w(テ)","e(イ)","r(ス)","t(カ)","y(ン)","u(ナ)","i(ニ)","o(ラ)","p(セ)","@(｀)","[(プ)","a(チ)","s(ト)","d(シ)","f(ハ)","g(キ)","h(ク)","j(マ)","k(ノ)","l(リ)",";(レ)",":(ケ)","](ム)","z(ツ)","x(サ)","c(ソ)","v(ヒ)","b(コ)","n(ミ)","m(モ)","<(ネ)",">(ル)","/(メ)","_(ロ)"]
-    let s:KEV2_commandkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ",'゛','゜', "ち","と","し","は","き","く","ま","の","り","れ","け","む", "つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
+    let s:KEV2_inputkanas = ["1(ぬ)","2(ふ)","3(あ)","4(う)","5(え)","6(お)","7(や)","8(ゆ)","9(よ)","0(わ)","-(ほ)","^(へ)","q(た)","s(て)","e(い)","r(す)","t(か)","y(ん)","u(な)","i(に)","o(ら)","p(せ)","@(゛)","[(゜)","a(ち)","s(と)","d(し)","f(は)","g(き)","h(く)","j(ま)","k(の)","l(り)",";(れ)",":(け)","](む)","z(つ)","x(さ)","c(そ)","v(ひ)","b(こ)","n(み)","m(も)",",(ね)",".(る)","/(め)","_(ろ)"]
+    let s:KEV2_inputkanas += ["1(ヌ)","2(フ)","3(ア)","4(ウ)","5(エ)","6(オ)","7(ヤ)","8(ユ)","9(ヨ)","0(ワ)","-(ホ)","^(ヘ)","q(タ)","w(テ)","e(イ)","r(ス)","t(カ)","y(ン)","u(ナ)","i(ニ)","o(ラ)","p(セ)","@(ヶ)","[(ヵ)","a(チ)","s(ト)","d(シ)","f(ハ)","g(キ)","h(ク)","j(マ)","k(ノ)","l(リ)",";(レ)",":(ケ)","](ム)","z(ツ)","x(サ)","c(ソ)","v(ヒ)","b(コ)","n(ミ)","m(モ)",",(ネ)",".(ル)","/(メ)","_(ロ)"]
+    let s:KEV2_inputkanas += ["1(ゔ)","2(ぶ)","3(ぁ)","4(ぅ)","5(ぇ)","6(ぉ)","7(ゃ)","8(ゅ)","9(ょ)","0(を)","-(ぼ)","^(べ)","q(だ)","s(で)","e(ぃ)","r(ず)","t(が)","y(ゎ)","u(ゐ)","i(っ)","o(ゑ)","p(ぜ)","@(ゞ)","[(ゝ)","a(ぢ)","s(ど)","d(じ)","f(ば)","g(…)","h(「)","j(」)","k(げ)","l(り)",";(れ)",":(け)","](ぷ)","z(づ)","x(ざ)","c(ぞ)","v(び)","b(ご)","n(ぴ)","m(ぽ)",",(、)",".(。)","/(ぺ)","_(〜)"]
+    let s:KEV2_inputkanas += ["1(ヴ)","2(ブ)","3(ァ)","4(ゥ)","5(ェ)","6(ォ)","7(ャ)","8(ュ)","9(ョ)","0(ヲ)","-(ボ)","^(ベ)","q(ダ)","w(デ)","e(ィ)","r(ズ)","t(ガ)","y(ヮ)","u(ヰ)","i(ッ)","o(ヱ)","p(ゼ)","@(ヾ)","[(ヽ)","a(ヂ)","s(ド)","d(ジ)","f(パ)","g(・)","h(『)","j(』)","k(ゲ)","l(リ)",";(レ)",":(ケ)","](ぷ)","z(ヅ)","x(ザ)","c(ゾ)","v(ビ)","b(ゴ)","n(ピ)","m(ポ)",",(，)",".(．)","/(ペ)","_(ー)"]
+    let s:KEV2_commandkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ","゛","゜", "ち","と","し","は","き","く","ま","の","り","れ","け","む", "つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
     let s:KEV2_commandkanas += ["ヌ","フ","ア","ウ","エ","オ","ヤ","ユ","ヨ","ワ","ホ","ヘ","タ","テ","イ","ス","カ","ン","ナ","ニ","ラ","セ","ヶ","ヵ","チ","ト","シ","ハ","キ","ク","マ","ノ","リ","レ","ケ","ム","ツ","サ","ソ","ヒ","コ","ミ","モ","ネ","ル","メ","ロ"]
-    let s:KEV2_commandganas = ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","ゎ","ゐ","っ","ゑ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","…","「","」","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","、","。","ぺ","〜"]
-    let s:KEV2_commandganas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ヮ","ヰ","ッ","ヱ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","・","『","』","ゲ","プ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","，","．","ペ","ー"]
-    let s:KEV2_inputESCs = {"\t":"<Tab>",' ':"<Space>",'<':"<lt>",'\':"<Bslash>",'|':"<Bar>",'-':"<kMinus>",'.':"<kPoint>"}
-    let s:KEV2_choicekana = "@(＠)"
+    let s:KEV2_commandkanas += ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","ゎ","ゐ","っ","ゑ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","…","「","」","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","、","。","ぺ","〜"]
+    let s:KEV2_commandkanas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ヮ","ヰ","ッ","ヱ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","・","『","』","ゲ","ぷ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","，","．","ペ","ー"]
+    let s:KEV2_inputESCs = {"\t":"<Tab>",' ':"<Space>",'<':"<lt>",'\':"<Bslash>",'|':"<Bar>",'-':"<Minus>",'.':"<Point>"}
+    let s:KEV2_choicekana = "@(゛)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     let s:KEV2_dickana = "　"
     let s:KEV2_menuESCs = "\t\\:|< >.-"
@@ -42,13 +44,13 @@ function! KEV2setup()
             :endif
         :endfor
     :else
-        let s:KEV2_kanmap["1(ぬ)"]=s:KEV2_commandkanas[:s:KEV2_keyslen-1]
-        let s:KEV2_kanmap["1(ヌ)"]=s:KEV2_commandkanas[s:KEV2_keyslen-1:]
-        let s:KEV2_kanmap["@(＠)"]=s:KEV2_commandkanas[:s:KEV2_keyslen-1]
-        let s:KEV2_kanmap["@(｀)"]=s:KEV2_commandkanas[s:KEV2_keyslen-1:]
+        let s:KEV2_kanmap["1(ぬ)"]=s:KEV2_commandkanas[s:KEV2_keyslen*0:s:KEV2_keyslen*1-1]
+        let s:KEV2_kanmap["1(ヌ)"]=s:KEV2_commandkanas[s:KEV2_keyslen*1:s:KEV2_keyslen*2-1]
+        let s:KEV2_kanmap["[(゜)"]=s:KEV2_commandkanas[s:KEV2_keyslen*2:s:KEV2_keyslen*3-1]
+        let s:KEV2_kanmap["[(ヵ)"]=s:KEV2_commandkanas[s:KEV2_keyslen*3:s:KEV2_keyslen*4-1]
         :for s:inputkey in range(len(s:KEV2_inputkeys))
             let s:KEV2_inputkana=s:KEV2_inputkanas[s:inputkey]
-            :if count(["1(ぬ)","1(ヌ)","@(＠)","@(｀)"],s:KEV2_inputkana) == 0
+            :if count(["1(ぬ)","1(ヌ)","[(゜)","[(ヵ)"],s:KEV2_inputkana) == 0
                 :if s:inputkey < s:KEV2_keyslen
                     let s:KEV2_kanmap[s:KEV2_inputkana]=s:KEV2_inputkeys[:s:KEV2_keyslen-1]
                 :else
@@ -59,12 +61,14 @@ function! KEV2setup()
     :endif
     execute "noremap <Plug>(KEV2setup) :call KEV2setup()<Enter>"
     execute "noremap <Plug>(KEV2help) :call KEV2help()<Enter>"
+    execute "noremap <Plug>(KEV2filer) :call KEV2filer()<Enter>"
     execute "noremap <Plug>(KEV2exit) :call KEV2exit()<Enter>"
     :for s:inputkey in range(len(s:KEV2_inputkeys))
         let s:commandkana = s:KEV2_inputkanas[s:inputkey]
         execute "noremap <Plug>(KEV2imap_" . s:commandkana . ") :call KEV2imap(\"" . s:commandkana . "\")<Enter>"
     :endfor
     map <silent> <Space><Space> a
+    vmap <silent> <Space><Space> <Esc>
     imap <silent> <Space><Space> <Esc>
     imap <silent> <Space><S-Space> <C-V>　
     imap <silent> <S-Space><Space> <C-V><Tab>
@@ -88,7 +92,10 @@ endfunction
 
 "メニューなどの構築。
 function! KEV2pushmenu()
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_helpmenuname . ".ヘルプ(KEV\\.txt) <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_helpmenuname . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_helpmenuname . ".-sep_find- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".10 " . s:KEV2_helpmenuname . ".履歴からファイルを開く <Plug>(KEV2filer)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".19 " . s:KEV2_helpmenuname . ".-sep_filer- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".99 " . s:KEV2_helpmenuname . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     :for s:inputkey in range(s:KEV2_keyslen)
@@ -109,7 +116,7 @@ function! KEV2pushmenu()
         let s:KEV2_kanVchar = " <C-V>U" . printf("%08x",char2nr(s:KEV2_kanchar))
         let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
         execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . "." . get(s:KEV2_inputESCs,s:KEV2_kanchar,s:KEV2_kanchar) . s:KEV2_kanVchar
-        execute "imap <silent> " . s:KEV2_inputESC . s:KEV2_kanVchar
+        execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:KEV2_kanVchar
         let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . s:KEV2_kanchar . "<Enter>"
         execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . s:KEV2_kanchar . "<Enter>"
@@ -149,6 +156,7 @@ endfunction
 "「KEV2」の撤去(helpコマンド類は残す)。
 function! KEV2exit()
     call KEV2pullmenu(0)
+    vunmap <silent> <Space><Space>
     unmap <silent> <Space><Space>
     iunmap <silent> <Space><Space>
     iunmap <silent> <Space><S-Space>
@@ -159,6 +167,39 @@ function! KEV2exit()
         execute "iunmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
     :endfor
 endfunction
+
+"履歴などからファイルを開く簡易ファイラー。
+function! KEV2filer()
+    cd $HOME
+    let s:dirline = expand('%:p:h')
+    execute "cd " . s:dirline
+    let s:filelines = ["",s:dirline] + v:oldfiles
+    let s:filelabels = ["ファイル履歴(01でフォルダ選択)※履歴はウィンドウの高さに合わせます。"]
+    :for s:labelno in range(1,len(s:filelines)-2)
+         let s:filelabels = s:filelabels + [ printf("%02d",s:labelno) . ":" . s:filelines[s:labelno] ]
+    :endfor
+    let s:filechoice = inputlist(s:filelabels[:max([1,min([&lines-2,len(s:filelabels)])])])
+    :while 0 < s:filechoice && s:filechoice < len(s:filelines)
+        echo "\n"
+        :if isdirectory(s:filelines[s:filechoice])
+            execute "cd " . s:filelines[s:filechoice]
+            let s:dirline = getcwd()
+        :elseif filereadable(s:filelines[s:filechoice])
+            execute "enew"
+            execute "e " . s:filelines[s:filechoice]
+            :break
+        :else
+            echo "リーダブルではないファイルです「" . s:filelines[s:filechoice] . "」"
+        :endif
+        let s:filelines = ["",".."] + split(expand("./*"),"\n")
+        let s:filelabels = ["「" . s:dirline . "」(01で親フォルダ選択)※ファイルクリックはズレるので注意。"]
+        :for s:labelno in range(1,len(s:filelines)-1)
+             let s:filelabels = s:filelabels + [ printf("%02d",s:labelno) . ":" . s:filelines[s:labelno] ]
+        :endfor
+        let s:filechoice = inputlist(s:filelabels)
+    :endwhile
+endfunction
+
 
 call KEV2setup()
 finish
