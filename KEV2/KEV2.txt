@@ -4,6 +4,27 @@
 「KEV2」フォルダの「kanedit.vim」は操作方法や漢字配列や辞書の内容を変える予定です(詳細は未定です)。
 「KEV2」は「ltsv10」との互換性は無くなる予定です。
 
+マップコマンドの予定表
+<Space><Space>		Vimのモード切替
+<Space><S-Space>	全角スペース入力
+<S-Space><Space>	辞書名の代入
+<S-Space><S-Space>	半角スペース入力
+a-z						文字入力
+A~Z						一文字検索
+<Space>a-z				鍵盤変更
+<Space>A~Z			一文字検索(巻き戻し)
+<S-Space>a-z			鍵盤変更(かなカタ切替)
+<S-Space>A~Z			辞書変更
+
+マップコマンドの予定表(簡易版)
+<Space><Space>		Vimのモード切替
+<S-Space><S-Space>	半角スペース入力
+a-z						文字入力
+A~Z						一文字検索
+<Space>a-z				鍵盤変更
+<S-Space>A~Z			辞書変更
+
+
 
 
 # Copyright (c) 2016 ooblog
