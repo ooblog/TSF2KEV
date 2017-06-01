@@ -33,18 +33,6 @@ function! KEV2setup()
         let s:KEV2_key2ESC[s:KEV2_inputkeys[s:inputkey]] = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
     :endfor
     let s:KEV2_kanmap = {}
-    let s:KEV2_kanmapfilepath = s:kev_scriptdir . "/kanmap.tsf"
-    :if filereadable(s:KEV2_kanmapfilepath)
-        :for s:KEV2_kanmapfileline in readfile(s:KEV2_kanmapfilepath)
-            let s:KEV2_kanmaplinelist = split(s:KEV2_kanmapfileline,"\t")
-            :if len(s:KEV2_kanmaplinelist) >= 2
-                let s:KEV2_kanmap[s:KEV2_kanmaplinelist[0]] = s:KEV2_kanmaplinelist[1:]
-                :if len(s:KEV2_kanmaplinelist) < s:KEV2_keyslen
-                    let s:KEV2_kanmap[s:KEV2_kanmaplinelist[0]] += s:KEV2_inputkeys[s:KEV2_keyslen-len(s:KEV2_kanmaplinelist):s:KEV2_keyslen]
-                :endif
-            :endif
-        :endfor
-    :else
         let s:KEV2_kanmap["1(ぬ)"]=s:KEV2_commandkanas[(s:KEV2_keyslen*0):(s:KEV2_keyslen*1-1)]
         let s:KEV2_kanmap["1(ヌ)"]=s:KEV2_commandkanas[(s:KEV2_keyslen*1):(s:KEV2_keyslen*2-1)]
         let s:KEV2_kanmap["[(゜)"]=s:KEV2_commandkanas[(s:KEV2_keyslen*2):(s:KEV2_keyslen*3-1)]
@@ -63,6 +51,17 @@ function! KEV2setup()
                     let s:KEV2_kanmap[s:KEV2_inputkana][s:widekey] = nr2char(char2nr(s:KEV2_kanmap[s:KEV2_inputkana][s:widekey])+0xfee0)
                 :endfor
            :endif
+        :endfor
+    let s:KEV2_kanmapfilepath = s:kev_scriptdir . "/kanmap.tsf"
+    :if filereadable(s:KEV2_kanmapfilepath)
+        :for s:KEV2_kanmapfileline in readfile(s:KEV2_kanmapfilepath)
+            let s:KEV2_kanmaplinelist = split(s:KEV2_kanmapfileline,"\t")
+            :if len(s:KEV2_kanmaplinelist) >= 2
+                let s:KEV2_kanmap[s:KEV2_kanmaplinelist[0]] = s:KEV2_kanmaplinelist[1:]
+                :if len(s:KEV2_kanmaplinelist) < s:KEV2_keyslen
+                    let s:KEV2_kanmap[s:KEV2_kanmaplinelist[0]] += s:KEV2_inputkeys[s:KEV2_keyslen-len(s:KEV2_kanmaplinelist):s:KEV2_keyslen]
+                :endif
+            :endif
         :endfor
     :endif
     execute "noremap <Plug>(KEV2setup) :call KEV2setup()<Enter>"
@@ -124,20 +123,8 @@ function! KEV2pushmenu()
         execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . "." . get(s:KEV2_inputESCs,s:KEV2_kanchar,s:KEV2_kanchar) . s:KEV2_kanVchar
         execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:KEV2_kanVchar
         let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
-"        echo s:KEV2_inputESC
-"        :if s:KEV2_kanchar == "|"
-"            execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/<bar><Enter>"
-"            execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?<bar><Enter>"
-"        :else
-"            execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . s:KEV2_kanchar . "<Enter>"
-"            execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . s:KEV2_kanchar . "<Enter>"
-"        :endif
-"        execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . (s:KEV2_kanchar != "|" ? s:KEV2_kanchar : "<bar>") . "<Enter>"
-"        execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? s:KEV2_kanchar : "<bar>") . "<Enter>"
         execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
         execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-"        execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . escape(s:KEV2_kanchar,s:KEV2_findESCs) . "<Enter>"
-"        execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . escape(s:KEV2_kanchar,s:KEV2_findESCs) . "<Enter>"
     :endfor
 endfunction
 
