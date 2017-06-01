@@ -875,7 +875,9 @@ void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...){    //#TSFdo
     if( TSF_path in TSF_stackD ){
         string TSF_the=TSF_Forth_1ststack(); string TSF_line="";  string[] TSF_lineL=null;
         foreach(string TSF_card;TSF_stackD[TSF_path]){
-            if( TSF_card.length==0 || TSF_card.front=='#' ){ continue; }
+//            if( TSF_card.length==0 || TSF_card.front=='#' ){ continue; }
+            if( TSF_card.length==0 ){ continue; }
+            if( TSF_card.length>=2 && TSF_card[0..2]=="#!" ){ continue; }
             TSF_line=TSF_Io_ESCdecode(TSF_card);
             if( TSF_line.front!='\t' ){
                 TSF_lineL=TSF_line.split("\t");

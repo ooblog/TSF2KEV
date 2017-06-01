@@ -692,7 +692,9 @@ def TSF_Forth_merge(TSF_path,TSF_ESCstack=[],TSF_mergedel=False):    #TSFdoc:ス
     if TSF_path in TSF_stackD:
         TSF_the=TSF_Forth_1ststack()
         for TSF_card in TSF_stackD[TSF_path]:
-            if len(TSF_card) == 0 or TSF_card.startswith("#"): continue;
+#            if len(TSF_card) == 0 or TSF_card.startswith("#"): continue;
+            if len(TSF_card) == 0: continue;
+            if len(TSF_card) >= 2 and TSF_card.startswith("#!"): continue;
             TSF_line=TSF_Io_ESCdecode(TSF_card)
             if not TSF_line.startswith('\t'):
                 TSF_lineL=TSF_line.split('\t')
