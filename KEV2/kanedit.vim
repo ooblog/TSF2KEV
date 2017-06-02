@@ -114,15 +114,19 @@ function! KEV2pushmenu()
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     let s:KEV2_choicedanapos = s:KEV2_keyslen*(s:KEV2_choicekanaidx/s:KEV2_keyslen)
     :for s:inputkey in range(s:KEV2_keyslen)
+        let s:menukey=s:KEV2_choicedanapos+s:inputkey
+        let s:ganakey=(s:KEV2_choicedanapos/len(s:KEV2_inputkeys) ? 0 : len(s:KEV2_inputkeys))+(s:menukey%len(s:KEV2_inputkeys))
         :if s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey
              let s:menukey=s:KEV2_choicedanapos+( (s:KEV2_choicedanapos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )
-        :else
-             let s:menukey=s:KEV2_choicedanapos+s:inputkey
         :endif
         let s:commandkana = s:KEV2_inputkanas[s:menukey]
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".01 " . s:KEV2_choicekanamenuname . "."  . escape(s:commandkana,s:KEV2_menuESCs) . ( s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2imap_" . s:commandkana . ")"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2imap_" . s:commandkana . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2imap_" . s:commandkana . ")"
+        let s:commandgana = s:KEV2_inputkanas[s:ganakey]
+        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
+        execute "map <silent> <Space>" . s:KEV2_inputESC . " <Plug>(KEV2imap_" . s:commandgana . ")a"
+        execute "imap <silent> <Space>" . s:KEV2_inputESC . " <C-o><Plug>(KEV2imap_" . s:commandgana . ")"
     :endfor
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_choicekanamenuname . ".-sep_filer- :"
     :if s:KEV2_choicekanaidx < s:KEV2_keyslen*2
@@ -191,6 +195,8 @@ function! KEV2exit()
         let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         execute "iunmap <silent> " . s:KEV2_inputESC
         execute "iunmap <silent> <S-Space>" . s:KEV2_inputESC
+        execute "unmap <silent> <Space>" . s:KEV2_inputESC
+        execute "iunmap <silent> <Space>" . s:KEV2_inputESC
     :endfor
 endfunction
 
