@@ -68,10 +68,11 @@ function! KEV2setup()
     execute "noremap <Plug>(KEV2help) :call KEV2help()<Enter>"
     execute "noremap <Plug>(KEV2filer) :call KEV2filer()<Enter>"
     execute "noremap <Plug>(KEV2exit) :call KEV2exit()<Enter>"
-    :for s:inputkey in range(len(s:KEV2_inputkeys))
-        let s:commandkana = s:KEV2_inputkanas[s:inputkey]
-        execute "noremap <Plug>(KEV2imap_" . s:commandkana . ") :call KEV2imap(\"" . s:commandkana . "\")<Enter>"
+    :for s:inputkey in range(len(s:KEV2_inputkanas))
+        execute "noremap <Plug>(KEV2imap_" . s:KEV2_inputkanas[s:inputkey] . ") :call KEV2imap(\"" . s:KEV2_inputkanas[s:inputkey] . "\")<Enter>"
     :endfor
+    execute "noremap <Plug>(KEV2kanagana0) :call KEV2kanagana(0)<Enter>"
+    execute "noremap <Plug>(KEV2kanagana1) :call KEV2kanagana(1)<Enter>"
     map <silent> <Space><Space> a
     vmap <silent> <Space><Space> <Esc>
     imap <silent> <Space><Space> <Esc>
@@ -81,9 +82,17 @@ function! KEV2setup()
     call KEV2pushmenu()
 endfunction
 
-"鍵盤変更。
+"鍵盤直接変更。
 function! KEV2imap(KEV2_choicekana)
     let s:KEV2_choicekana = a:KEV2_choicekana
+    call KEV2pullmenu(1)
+    call KEV2pushmenu()
+endfunction
+
+"鍵盤間接変更。
+function! KEV2kanagana(KEV2_seidaku)
+    let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
+    let s:KEV2_choicekana=s:KEV2_inputkanas[(a:KEV2_seidaku%2)*(s:KEV2_keyslen*2)+(s:KEV2_choicekanaidx%(s:KEV2_keyslen*2))]
     call KEV2pullmenu(1)
     call KEV2pushmenu()
 endfunction
@@ -99,27 +108,28 @@ endfunction
 function! KEV2pushmenu()
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_helpmenuname . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_helpmenuname . ".-sep_find- :"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".15 " . s:KEV2_helpmenuname . ".静音ひらがな <Plug>(KEV2help)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".16 " . s:KEV2_helpmenuname . ".静音カタカナ <Plug>(KEV2help)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".15 " . s:KEV2_helpmenuname . ".濁音ひらがな <Plug>(KEV2help)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".16 " . s:KEV2_helpmenuname . ".濁音カタカナ <Plug>(KEV2help)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".19 " . s:KEV2_helpmenuname . ".-sep_kana- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_helpmenuname . ".履歴からファイルを開く <Plug>(KEV2filer)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_helpmenuname . ".-sep_filer- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".95 " . s:KEV2_helpmenuname . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
+    let s:KEV2_choicedanapos = s:KEV2_keyslen*(s:KEV2_choicekanaidx/s:KEV2_keyslen)
     :for s:inputkey in range(s:KEV2_keyslen)
-        :if s:KEV2_choicekanaidx < s:KEV2_keyslen
-            let s:menukey = s:inputkey+(  s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey ? s:KEV2_keyslen : 0 )
+        :if s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey
+             let s:menukey=s:KEV2_choicedanapos+( (s:KEV2_choicedanapos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )
         :else
-            let s:menukey = s:inputkey+(  s:KEV2_choicekanaidx%s:KEV2_keyslen != s:inputkey ? s:KEV2_keyslen : 0 )
+             let s:menukey=s:KEV2_choicedanapos+s:inputkey
         :endif
         let s:commandkana = s:KEV2_inputkanas[s:menukey]
-        let s:KEV2_kbdnamemenu = escape(s:KEV2_key2kana[s:KEV2_inputkeys[s:menukey]],s:KEV2_menuESCs)
-        execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".01 " . s:KEV2_choicekanamenuname . "."  . s:KEV2_kbdnamemenu . ( s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2imap_" . s:commandkana . ")"
+        execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".01 " . s:KEV2_choicekanamenuname . "."  . escape(s:commandkana,s:KEV2_menuESCs) . ( s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2imap_" . s:commandkana . ")"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2imap_" . s:commandkana . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2imap_" . s:commandkana . ")"
     :endfor
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_choicekanamenuname . ".-sep_filer- :"
+    :if s:KEV2_choicekanaidx < s:KEV2_keyslen*2
+        execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".90 " . s:KEV2_choicekanamenuname . ".静音→濁音 <Plug>(KEV2kanagana1)"
+    :else
+        execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".90 " . s:KEV2_choicekanamenuname . ".濁音→静音 <Plug>(KEV2kanagana0)"
+    :endif
     let s:KEV2_choicedicmenuname = escape(s:KEV2_choicekana . "{" . s:KEV2_dickana . "}",s:KEV2_menuESCs)
     :for s:inputkey in range(s:KEV2_keyslen)
         let s:KEV2_kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
@@ -175,6 +185,12 @@ function! KEV2exit()
     :for s:inputkey in range(s:KEV2_keyslen)
         execute "unmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
         execute "iunmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
+        let s:KEV2_kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
+        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
+        execute "iunmap <silent> " . s:KEV2_inputkeys[s:inputkey]
+        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
+        execute "iunmap <silent> " . s:KEV2_inputESC
+        execute "iunmap <silent> <S-Space>" . s:KEV2_inputESC
     :endfor
 endfunction
 
