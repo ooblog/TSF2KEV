@@ -99,9 +99,14 @@ endfunction
 function! KEV2pushmenu()
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_helpmenuname . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_helpmenuname . ".-sep_find- :"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".10 " . s:KEV2_helpmenuname . ".履歴からファイルを開く <Plug>(KEV2filer)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".19 " . s:KEV2_helpmenuname . ".-sep_filer- :"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".99 " . s:KEV2_helpmenuname . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".15 " . s:KEV2_helpmenuname . ".静音ひらがな <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".16 " . s:KEV2_helpmenuname . ".静音カタカナ <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".15 " . s:KEV2_helpmenuname . ".濁音ひらがな <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".16 " . s:KEV2_helpmenuname . ".濁音カタカナ <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".19 " . s:KEV2_helpmenuname . ".-sep_kana- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_helpmenuname . ".履歴からファイルを開く <Plug>(KEV2filer)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_helpmenuname . ".-sep_filer- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".95 " . s:KEV2_helpmenuname . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     :for s:inputkey in range(s:KEV2_keyslen)
         :if s:KEV2_choicekanaidx < s:KEV2_keyslen
