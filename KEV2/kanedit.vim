@@ -70,6 +70,7 @@ function! KEV2setup()
     execute "noremap <Plug>(KEV2exit) :call KEV2exit()<Enter>"
     :for s:inputkey in range(len(s:KEV2_inputkanas))
         execute "noremap <Plug>(KEV2imap_" . s:KEV2_inputkanas[s:inputkey] . ") :call KEV2imap(\"" . s:KEV2_inputkanas[s:inputkey] . "\")<Enter>"
+        execute "noremap <Plug>(KEV2dic_" . s:KEV2_inputkanas[s:inputkey] . ") :call KEV2dic(\"" . s:KEV2_inputkanas[s:inputkey] . "\")<Enter>"
     :endfor
     execute "noremap <Plug>(KEV2kanagana0) :call KEV2kanagana(0)<Enter>"
     execute "noremap <Plug>(KEV2kanagana1) :call KEV2kanagana(1)<Enter>"
@@ -99,6 +100,9 @@ endfunction
 
 "辞書変更。
 function! KEV2dic(KEV2_choicekana)
+    echo a:KEV2_choicekana
+    echo a:KEV2_choicekana
+    echo a:KEV2_choicekana
     let s:KEV2_dickana = a:KEV2_choicekana
     call KEV2pullmenu(1)
     call KEV2pushmenu()
@@ -143,6 +147,7 @@ function! KEV2pushmenu()
         execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:KEV2_kanVchar
         let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
+        execute "map <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
         execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
     :endfor
 endfunction
@@ -189,14 +194,13 @@ function! KEV2exit()
     :for s:inputkey in range(s:KEV2_keyslen)
         execute "unmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
         execute "iunmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
-        let s:KEV2_kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
-        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
         execute "iunmap <silent> " . s:KEV2_inputkeys[s:inputkey]
-        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
-        execute "iunmap <silent> " . s:KEV2_inputESC
-        execute "iunmap <silent> <S-Space>" . s:KEV2_inputESC
-        execute "unmap <silent> <Space>" . s:KEV2_inputESC
-        execute "iunmap <silent> <Space>" . s:KEV2_inputESC
+        let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
+        execute "iunmap <silent> " . s:inputESC
+        execute "unmap <silent> <Space>" . s:inputESC
+        execute "iunmap <silent> <Space>" . s:inputESC
+        execute "unmap <silent> <S-Space>" . s:inputESC
+        execute "iunmap <silent> <S-Space>" . s:inputESC
     :endfor
 endfunction
 
