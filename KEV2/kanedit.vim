@@ -26,12 +26,6 @@ function! KEV2setup()
     let s:KEV2_dickana = "　"
     let s:KEV2_choicedicmenuname = escape(s:KEV2_choicekana . "{" . s:KEV2_dickana . "}",s:KEV2_menuESCs)
     let s:KEV2_keyslen = len(s:KEV2_inputkeys)/2
-    let s:KEV2_key2kana = {}
-    let s:KEV2_key2ESC = {}
-    :for s:inputkey in range(len(s:KEV2_inputkeys))
-        let s:KEV2_key2kana[s:KEV2_inputkeys[s:inputkey]] = s:KEV2_inputkanas[s:inputkey]
-        let s:KEV2_key2ESC[s:KEV2_inputkeys[s:inputkey]] = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
-    :endfor
     let s:KEV2_kanmap = {}
         let s:KEV2_kanmap["1(ぬ)"]=s:KEV2_commandkanas[(s:KEV2_keyslen*0):(s:KEV2_keyslen*1-1)]
         let s:KEV2_kanmap["1(ヌ)"]=s:KEV2_commandkanas[(s:KEV2_keyslen*1):(s:KEV2_keyslen*2-1)]
