@@ -90,7 +90,7 @@ function! KEV2imap(KEV2_choicekana)
     call KEV2pushmenu()
 endfunction
 
-"鍵盤間接変更。
+"鍵盤静音濁音変更。
 function! KEV2kanagana(KEV2_seidaku)
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     let s:KEV2_choicekana=s:KEV2_inputkanas[(a:KEV2_seidaku%2)*(s:KEV2_keyslen*2)+(s:KEV2_choicekanaidx%(s:KEV2_keyslen*2))]
@@ -117,7 +117,10 @@ function! KEV2pushmenu()
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".95 " . s:KEV2_helpmenuname . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     let s:KEV2_choicekanaidx = index(s:KEV2_inputkanas,s:KEV2_choicekana)
     let s:KEV2_choicedanapos = s:KEV2_keyslen*(s:KEV2_choicekanaidx/s:KEV2_keyslen)
+    let s:KEV2_choicedicmenuname = escape(s:KEV2_choicekana . "{" . s:KEV2_dickana . "}",s:KEV2_menuESCs)
     :for s:inputkey in range(s:KEV2_keyslen)
+        let s:kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
+        let s:kanVchar = " <C-V>U" . printf("%08x",char2nr(s:kanchar))
         let s:menukey=s:KEV2_choicedanapos+s:inputkey
         let s:ganakey=(s:KEV2_choicedanapos/len(s:KEV2_inputkeys) ? 0 : len(s:KEV2_inputkeys))+(s:menukey%len(s:KEV2_inputkeys))
         :if s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey
@@ -127,10 +130,15 @@ function! KEV2pushmenu()
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".01 " . s:KEV2_choicekanamenuname . "."  . escape(s:commandkana,s:KEV2_menuESCs) . ( s:KEV2_choicekanaidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2imap_" . s:commandkana . ")"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2imap_" . s:commandkana . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2imap_" . s:commandkana . ")"
+        execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . "." . get(s:KEV2_inputESCs,s:kanchar,s:kanchar) . s:kanVchar
+        execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:kanVchar
+        let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         let s:commandgana = s:KEV2_inputkanas[s:ganakey]
-        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
-        execute "map <silent> <Space>" . s:KEV2_inputESC . " <Plug>(KEV2imap_" . s:commandgana . ")a"
-        execute "imap <silent> <Space>" . s:KEV2_inputESC . " <C-o><Plug>(KEV2imap_" . s:commandgana . ")"
+        execute "map <silent> <Space>" . s:inputESC . " <Plug>(KEV2imap_" . s:commandgana . ")a"
+        execute "imap <silent> <Space>" . s:inputESC . " <C-o><Plug>(KEV2imap_" . s:commandgana . ")"
+        execute "imap <silent> " . s:inputESC . " <C-o>/" . (s:kanchar != "|" ? escape(s:kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
+        execute "map <silent> <S-Space>" . s:inputESC . " ?" . (s:kanchar != "|" ? escape(s:kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
+        execute "imap <silent> <S-Space>" . s:inputESC . " <C-o>?" . (s:kanchar != "|" ? escape(s:kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
     :endfor
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_choicekanamenuname . ".-sep_filer- :"
     :if s:KEV2_choicekanaidx < s:KEV2_keyslen*2
@@ -138,18 +146,6 @@ function! KEV2pushmenu()
     :else
         execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".90 " . s:KEV2_choicekanamenuname . ".濁音→静音 <Plug>(KEV2kanagana0)"
     :endif
-    let s:KEV2_choicedicmenuname = escape(s:KEV2_choicekana . "{" . s:KEV2_dickana . "}",s:KEV2_menuESCs)
-    :for s:inputkey in range(s:KEV2_keyslen)
-        let s:KEV2_kanchar = s:KEV2_kanmap[s:KEV2_choicekana][s:inputkey]
-        let s:KEV2_kanVchar = " <C-V>U" . printf("%08x",char2nr(s:KEV2_kanchar))
-        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey],s:KEV2_inputkeys[s:inputkey])
-        execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".01 " . s:KEV2_choicedicmenuname . "." . get(s:KEV2_inputESCs,s:KEV2_kanchar,s:KEV2_kanchar) . s:KEV2_kanVchar
-        execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:KEV2_kanVchar
-        let s:KEV2_inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
-        execute "imap <silent> " . s:KEV2_inputESC . " <C-o>/" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-        execute "map <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-        execute "imap <silent> <S-Space>" . s:KEV2_inputESC . " <C-o>?" . (s:KEV2_kanchar != "|" ? escape(s:KEV2_kanchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-    :endfor
 endfunction
 
 "メニューの撤去。
