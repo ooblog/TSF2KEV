@@ -91,6 +91,8 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#TSF_clonethey":TSF_Forth_clonethey, "#スタック一覧の複製":TSF_Forth_clonethey,
         "#TSF_readtext":TSF_Forth_readtext, "#テキストを読込":TSF_Forth_readtext,
         "#TSF_mergethe":TSF_Forth_mergethe, "#TSFに合成":TSF_Forth_mergethe,
+#        "#TSF_mergeUSE":TSF_Forth_mergeUSE, "#ユーズリストを用いてTSFに合成":TSF_Forth_mergeUSE,
+#        "#TSF_mergeESC":TSF_Forth_mergeESC, "#エスケープリストを用いてTSFに合成":TSF_Forth_mergeESC,
         "#TSF_publishthe":TSF_Forth_publishthe, "#指定スタックをテキスト化":TSF_Forth_publishthe,
         "#TSF_publishthis":TSF_Forth_publishthis, "#実行中スタックをテキスト化":TSF_Forth_publishthis,
         "#TSF_publishthat":TSF_Forth_publishthat, "#積込先スタックをテキスト化":TSF_Forth_publishthat,
