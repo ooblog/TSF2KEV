@@ -64,7 +64,7 @@ function! KEV2setup()
         :for s:kancharfileline in readfile(s:KEV2_kancharfilepath)
             :if stridx(s:kancharfileline,"\t") >= 0
                 let s:kancharlinelist = split(s:kancharfileline,"\t")
-                let s:KEV2_kanchar[s:kancharlinelist[0]] = join(s:kancharlinelist[1:],"\t")
+                let s:KEV2_kanchar[s:kancharlinelist[0]] = join(s:kancharlinelist,"\t")
             :endif
         :endfor
     :endif
@@ -219,13 +219,13 @@ function! KEV2pushmenu()
     let s:mapkanasdaku = s:mapkanasidx/s:KEV2_inputkeyslen
     :for s:inputkey in range(s:KEV2_keyslen)
         :if s:mapkanasidx%s:KEV2_keyslen == s:inputkey
-            let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+( (s:mapkanaspos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )]
+            :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+( (s:mapkanaspos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )]
         :else
-            let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
+            :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
         let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
-        :if s:KEV2_menudic != "　"
-"            s:dicchar=KEV2splitpeekL(KEV2_ltsv,KEV2_label)
+        :if s:KEV2_dickana != "　"
+            :let s:dicchar=KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
         :endif
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
@@ -265,9 +265,19 @@ function! KEV2pushmenu()
     execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".99 " . s:KEV2_menudic . ".汎用辞書を検索 <C-o><Plug>(KEV2dicFIND)"
 endfunction
 
-"LTSVラベル読込(辞書取得)
-function! KEV2splitpeekL(KEV2_ltsv,KEV2_label)
-    
+"単漢字辞書読込(辞書取得)
+function! KEV2kancharpeekL(dicchar,diclabel)
+    let s:dicltsv = get(s:KEV2_kanchar,a:dicchar,a:dicchar)
+    let s:kanposL = stridx(s:dicltsv,"\t" . a:diclabel . ":")
+    :if 0 < s:kanposL
+        let s:kanposL = stridx(s:dicltsv,":",s:kanposL)+1
+        let s:kanposR = stridx(s:dicltsv,"\t",s:kanposL)
+        let s:dicchar = strpart(s:dicltsv,s:kanposL,s:kanposR-s:kanposL)
+    :elseif a:dicchar == "照"
+        let s:dicchar = printf("&#%d;",char2nr(a:dicchar)
+    :else
+        let s:dicchar = a:dicchar
+    :endif
     :return s:dicchar
 endfunction
 
