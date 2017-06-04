@@ -114,9 +114,9 @@ endfunction
 function! KEV2mapFIND()
     :let s:inputtext = input("鍵盤検索:")
     :let s:hitkana = ""
-    :for s:mapkana in split(s:inputtext, '\zs')
+    :for s:inputkana in split(s:inputtext, '\zs')
         :for s:mapkana in s:KEV2_mapkanas
-            :if count(s:KEV2_kanmap[s:mapkana],s:hitkana)
+            :if count(s:KEV2_kanmap[s:mapkana],s:inputkana)
                 :let s:hitkana = s:mapkana
                 :break
             :endif
@@ -125,8 +125,11 @@ function! KEV2mapFIND()
             :break
         :endif
     :endfor
-    echo s:hitkana
-    echo s:hitkana
+    :if s:hitkana != ""
+        let s:KEV2_mapkana = s:hitkana
+        call KEV2pullmenu(0)
+        call KEV2pushmenu()
+    :endif
 endfunction
 
 "辞書任意変更。
