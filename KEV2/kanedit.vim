@@ -113,9 +113,20 @@ endfunction
 "鍵盤検索。
 function! KEV2mapFIND()
     :let s:inputtext = input("鍵盤検索:")
-"    :let s:curline = getline(".")
-"    :let s:dicline = s:curline[:col(".")] . s:inputtext . s:curline[col("."):]
-"    :call setline(".",s:dicline)
+    :let s:hitkana = ""
+    :for s:mapkana in split(s:inputtext, '\zs')
+        :for s:mapkana in s:KEV2_mapkanas
+            :if count(s:KEV2_kanmap[s:mapkana],s:hitkana)
+                :let s:hitkana = s:mapkana
+                :break
+            :endif
+        :endfor
+        :if s:hitkana != ""
+            :break
+        :endif
+    :endfor
+    echo s:hitkana
+    echo s:hitkana
 endfunction
 
 "辞書任意変更。
@@ -135,15 +146,17 @@ function! KEV2dictype(KEV2_dickana)
     call KEV2pushmenu()
 endfunction
 
-"汎用辞書。
+"汎用辞書項目。
 function! KEV2dicFIND()
     :let s:inputtext = input("汎用辞書項目:")
-    let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
+    :let s:inputhira = KEV2hirakata(s:inputtext,0)
+    :let s:inputkata = KEV2hirakata(s:inputtext,1)
+    :let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
     :if filereadable(s:KEV2_kanwordfilepath)
         :for s:kanwordfileline in readfile(s:KEV2_kanwordfilepath)
             let s:kanwordlinelist = split(s:kanwordfileline,"\t")
             :if len(s:kanwordlinelist) >= 2
-                :if s:inputtext == s:kanwordlinelist[0]
+                :if (s:inputhira == s:kanwordlinelist[0]) || (s:inputkata == s:kanwordlinelist[0])
                     call KEV2strinput(join(s:kanwordlinelist[1:]))
                     :break
                 :endif
@@ -151,6 +164,24 @@ function! KEV2dicFIND()
         :endfor
     :endif
 endfunction
+
+"ひらがなカタカナ置換。
+function! KEV2hirakata(inputtext,hirakata)
+    :let s:outputtext = a:inputtext
+    :let s:KEV2_patkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ","ち","と","し","は","き","く","ま","の","り","れ","け","む","つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
+    :let s:KEV2_patkanas += ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","っ","ゑ","ゐ","ゎ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","ぺ"]
+    :let s:KEV2_patkatas = ["ヌ","フ","ア","ウ","エ","オ","ヤ","ユ","ヨ","ワ","ホ","ヘ","タ","テ","イ","ス","カ","ン","ナ","ニ","ラ","セ","チ","ト","シ","ハ","キ","ク","マ","ノ","リ","レ","ケ","ム","ツ","サ","ソ","ヒ","コ","ミ","モ","ネ","ル","メ","ロ"]
+    :let s:KEV2_patkatas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ッ","ヱ","ヰ","ヮ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","ゲ","ぷ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","ペ"]
+    :for s:widekey in range(len(s:KEV2_patkanas))
+        :if a:hirakata
+            :let s:outputtext = substitute(s:outputtext,s:KEV2_patkanas[s:widekey],s:KEV2_patkatas[s:widekey],"g")
+        :else
+            :let s:outputtext = substitute(s:outputtext,s:KEV2_patkatas[s:widekey],s:KEV2_patkanas[s:widekey],"g")
+        :endif
+    :endfor
+    :return s:outputtext
+endfunction
+
 
 "カーソル位置に文字列入力。行末挿入が失敗するorz
 function! KEV2strinput(inputtext)

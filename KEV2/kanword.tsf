@@ -1231,7 +1231,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 むぎ	麦
 コムギ	小麦
 コムギコ	小麦粉
-フ	麩
+フ※穀物	麩
 パン	麺麭
 アンパン	餡麺麭
 カレーパン	咖喱麺麭
@@ -1277,10 +1277,10 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 ウォッカ	伏特加
 シャンパン	三変酒/三鞭酒/香檳酒
 シャンペン	三変酒/三鞭酒/香檳酒
-み	実
+み※植物	実
 クリ	栗
 クルミ	胡桃
-め	芽
+め※植物	芽
 ツクシ	土筆
 タケノコ	筍
 アスパラガス	石刁柏/竜髭菜
@@ -1937,7 +1937,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 エクボ	靨
 ヒゲ	髭
 くち	口
-ハ	歯
+ハ※体	歯
 ケンシ	犬歯
 キュウシ	臼歯
 オヤシラズ	親知らず
@@ -3271,7 +3271,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 キノト	乙
 ツリバリ	乚
 ハネボウ	亅
-ニ	二
+ニ※部首	二
 ケイサンカンムリ	亠
 ヒト	人
 ニンベン	亻
@@ -3296,7 +3296,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 フシヅクリ	卩
 マゲワリフ	⺋
 ガンダレ	厂
-ム	厶
+ム※部首	厶
 マタ	又
 クチヘン	口
 クニガマエ	囗
@@ -3336,7 +3336,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 リッシンベン	忄
 シタゴコロ	㣺
 ホコガマエ	戈
-ト	戸
+ト※部首	戸
 テ※部首	手
 テヘン	扌
 シニョウ	支
@@ -3363,7 +3363,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 ミズ	水
 サンズイ	氵
 シタミズ	氺
-ヒ	火
+ヒ※部首	火
 レンガ	灬
 チチ	父
 コウ	爻
@@ -3525,7 +3525,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 ムギ	麦
 アサ	麻
 キ※康熙	黃
-キ	黄
+キ※部首	黄
 キビ	黍
 クロ※康熙	黑
 クロ	黒
@@ -3538,7 +3538,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 セイ※部首	齊
 セイ	斉
 ハヘン	齒
-ハ	歯
+ハ※部首	歯
 タツ	龍
 リュウ	竜
 カメ※康熙	龜
@@ -3576,7 +3576,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 プライム１	′
 ダブルプライム	′
 プライム２	′
-ド	°
+ド※記号	°
 オンド	°
 セッシ	℃
 セッシオンド	℃
@@ -3663,7 +3663,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 カクキゴウ	∠
 チョッカクキゴウ	∟
 スイチョクキゴウ	⊥
-コ	⌒
+コ※記号	⌒
 コキゴウ	⌒
 ゼンショウキゴウ	∀
 ソンザイキゴウ	∃
@@ -3718,7 +3718,7 @@ base85	0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+-;
 すうじ	数字
 だいすう	大数
 イチ	一
-ニ	二
+ニ※数字	二
 サン	三
 ヨン	四
 ゴ	五
