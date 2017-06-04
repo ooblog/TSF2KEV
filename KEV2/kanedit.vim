@@ -71,7 +71,8 @@ function! KEV2setup()
     :for s:dickana in s:KEV2_dickanas
         execute "noremap <Plug>(KEV2dictype_" . s:dickana . ") :call KEV2dictype(\"" . s:dickana . "\")<Enter>"
     :endfor
-    execute "noremap <Plug>(KEV2dic_　) :call KEV2dic(\"　\")<Enter>"
+    execute "noremap <Plug>(KEV2mapFIND) :call KEV2mapFIND()<Enter>"
+    execute "noremap <Plug>(KEV2dicFIND) :call KEV2dicFIND()<Enter>"
     map <silent> <Space><Space> a
     vmap <silent> <Space><Space> <Esc>
     imap <silent> <Space><Space> <Esc>
@@ -101,6 +102,14 @@ function! KEV2kanagana(KEV2_seidaku)
     call KEV2pushmenu()
 endfunction
 
+"鍵盤検索。
+function! KEV2mapFIND()
+    :let s:inputtext = input("鍵盤検索")
+"    :let s:curline = getline(".")
+"    :let s:dicline = s:curline[:col(".")] . s:inputtext . s:curline[col("."):]
+"    :call setline(".",s:dicline)
+endfunction
+
 "辞書任意変更。
 function! KEV2dic(KEV2_commandkana)
     :if count(s:KEV2_commandkanas,a:KEV2_commandkana)
@@ -116,6 +125,14 @@ function! KEV2dictype(KEV2_dickana)
     let s:KEV2_dickana = s:KEV2_dickana != a:KEV2_dickana ? a:KEV2_dickana : "　"
     call KEV2pullmenu(0)
     call KEV2pushmenu()
+endfunction
+
+"汎用辞書。
+function! KEV2dicFIND()
+    :let s:inputtext = input("汎用辞書項目")
+"    :let s:curline = getline(".")
+"    :let s:dicline = s:curline[:col(".")] . s:inputtext . s:curline[col("."):]
+"    :call setline(".",s:dicline)
 endfunction
 
 "メニューなどの構築。
@@ -159,11 +176,16 @@ function! KEV2pushmenu()
     :else
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".90 " . s:KEV2_menumap . ".濁音→静音 <Plug>(KEV2kanagana0)"
     :endif
-    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".89 " . s:KEV2_menudic . ".-sep_dic- :"
-    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".辞書を入力" . s:KEV2_menudic . " <C-V>U" . printf("%08x",char2nr(s:KEV2_dickana))
+    execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".95 " . s:KEV2_menumap . ".-sep_exist- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".99 " . s:KEV2_menumap . ".鍵盤を検索 <Plug>(KEV2mapFIND)"
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".89 " . s:KEV2_menudic . ".-sep_chardic- :"
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書項目を入力" . s:KEV2_menudic . " <C-V>U" . printf("%08x",char2nr(s:KEV2_dickana))
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書で検索" . s:KEV2_menudic . " <C-o>?" . (s:KEV2_dickana != "|" ? escape(s:KEV2_dickana,s:KEV2_findESCs) : "<bar>") . "<Enter>"
     :for s:dickana in s:KEV2_dickanas
-        execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".95 " . s:KEV2_menudic . ".辞書を選択『." . s:dickana . "』" . ( s:KEV2_dickana == s:dickana ? "✓" : "" ) . " <C-o><Plug>(KEV2dictype_" . s:dickana . ")"
+        execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".93 " . s:KEV2_menudic . ".単漢字辞書の選択『." . s:dickana . "』" . ( s:KEV2_dickana == s:dickana ? "✓" : "" ) . " <C-o><Plug>(KEV2dictype_" . s:dickana . ")"
     :endfor
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".95 " . s:KEV2_menudic . ".-sep_worddic- :"
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".99 " . s:KEV2_menudic . ".汎用辞書を検索 <C-o><Plug>(KEV2dicFIND)"
 endfunction
 
 "メニューの撤去。
