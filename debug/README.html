@@ -4,7 +4,7 @@
 </head><body>
 <h1>プログラミング言語「TSF_Tab-Separated-Forth」開発中。</h1>
 <p>
-目標は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」の「<a href="https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim" title="LTsv/kanedit.vim at master ooblog/LTsv10kanedit">LTsv/kanedit.vim</a>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<br />
+目標は「<a href="https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim" title="TSF2KEV/kanedit.vim at master ooblog/TSF2KEV">TSF2KEV/kanedit.vim</a>」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。<br />
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「<a href="https://github.com/ooblog/LTsv10kanedit" title="ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。">LTsv10kanedit</a>」をお使いください。<br />
 未実装の機能の一部は「<a href="https://github.com/ooblog/TSF1KEV" title="ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。">TSF1KEV</a>」も参考。<br />
 <a href="https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png"><img src="https://github.com/ooblog/TSF2KEV/raw/master/docs/TSF_512x384.png" alt="TSF syntax image" title="TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV" width="512" height="384"></a><br />
@@ -149,13 +149,13 @@ aboutTIME:
  シンタックスファイル「<a href="https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim" title="TSF2KEV/tsf.vim at master ooblog/TSF2KEV">vimsyntax/tsf.vim</a>」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。<br />
 「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。<br />
 Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。<br />
-ついでに「<a href="https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim" title="LTsv/kanedit.vim at master ooblog/LTsv10kanedit">LTsv/kanedit.vim</a>」の設定もおまけで書いてみた。<br />
+ついでに「<a href="https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim" title="TSF2KEV/kanedit.vim at master ooblog/TSF2KEV">TSF2KEV/kanedit.vim</a>」の設定もおまけで書いてみた。<br />
 </p>
 <pre><code>
 syntax on
 au BufRead,BufNewFile *.tsf set filetype=tsf
 autocmd BufNewFile,BufRead *.tsf nnoremap &lt;F5&gt; :!TSF %&lt;CR&gt;
-command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
+command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
 </code></pre>
 <h2>動作環境。</h2>
 <p>

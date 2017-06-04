@@ -224,13 +224,17 @@ function! KEV2pushmenu()
             :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
         let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
-        :if s:KEV2_dickana != "　"
-            :let s:dicchar=KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
-        :endif
+"        :if s:KEV2_dickana != "　"
+"            :let s:dicchar=KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
+"        :endif
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
         let s:dicVchar = " <C-V>U" . printf("%08x",char2nr(s:dicchar))
+"        let s:dicVchar = " "
+"        :for s:Vchar in split(s:dicchar, '\zs')
+"            let s:dicVchar = s:dicVchar . "<C-V>U" . printf("%08x",char2nr(s:Vchar))
+"        :endfor
         let s:dicMchar = (s:dicchar != "|" ? (s:dicchar != "-" ? escape(s:dicchar,s:KEV2_menuESCs) : "<Minus>") : "<bar>")
         let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         let s:inputFIND = (s:dicchar != "|" ? escape(s:dicchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"

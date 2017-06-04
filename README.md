@@ -1,6 +1,6 @@
 # プログラミング言語「TSF_Tab-Separated-Forth」開発中。
 
-目標は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」の「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
+目標は「[TSF2KEV/kanedit.vim](https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim "TSF2KEV/kanedit.vim at master ooblog/TSF2KEV")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
 TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
 未実装の機能の一部は「[TSF1KEV](https://github.com/ooblog/TSF1KEV "ooblog/TSF1KEV: プログラミング言語「TSF_Tab-Separated-Forth」試作。開発の舞台は「TSF2KEV」以降に移行。")」も参考。  
 ![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
@@ -145,13 +145,13 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
  シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
 「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
 Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。  
-ついでに「[LTsv/kanedit.vim](https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim "LTsv/kanedit.vim at master ooblog/LTsv10kanedit")」の設定もおまけで書いてみた。  
+ついでに「[TSF2KEV/kanedit.vim](https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim "TSF2KEV/kanedit.vim at master ooblog/TSF2KEV")」の設定もおまけで書いてみた。  
 
 
     syntax on
     au BufRead,BufNewFile *.tsf set filetype=tsf
     autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
-    command KEVtsf  :source &#126;/TSF2KEV/KEV/kanedit.vim
+    command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
 
 ## 動作環境。
 
