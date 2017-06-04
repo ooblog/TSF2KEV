@@ -65,6 +65,7 @@ function! KEV2setup()
         execute "noremap <Plug>(KEV2map_" . s:commandkana . ") :call KEV2map(\"" . s:commandkana . "\")<Enter>"
         execute "noremap <Plug>(KEV2dic_" . s:commandkana . ") :call KEV2dic(\"" . s:commandkana . "\")<Enter>"
     :endfor
+    execute "noremap <Plug>(KEV2dic_　) :call KEV2dic(\"　\")<Enter>"
     map <silent> <Space><Space> a
     vmap <silent> <Space><Space> <Esc>
     imap <silent> <Space><Space> <Esc>
@@ -96,7 +97,11 @@ endfunction
 
 "辞書変更。
 function! KEV2dic(KEV2_commandkana)
-    let s:KEV2_dickana = s:KEV2_kanmap[s:KEV2_mapkana][index(s:KEV2_commandkanas,a:KEV2_commandkana)%s:KEV2_keyslen]
+    :if count(s:KEV2_commandkanas,a:KEV2_commandkana)
+        let s:KEV2_dickana = s:KEV2_kanmap[s:KEV2_mapkana][index(s:KEV2_commandkanas,a:KEV2_commandkana)%s:KEV2_keyslen]
+    :else
+        let s:KEV2_dickana = "　"
+    :endif
     call KEV2pullmenu(0)
     call KEV2pushmenu()
 endfunction
@@ -110,20 +115,20 @@ function! KEV2pushmenu()
     let s:mapkanaskata = (s:mapkanasidx/s:KEV2_keyslen)%2
     let s:mapkanasdaku = s:mapkanasidx/s:KEV2_inputkeyslen
     :for s:inputkey in range(s:KEV2_keyslen)
-        let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         :if s:mapkanasidx%s:KEV2_keyslen == s:inputkey
             let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+( (s:mapkanaspos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )]
         :else
             let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
+        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
-        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
         let s:dicVchar = " <C-V>U" . printf("%08x",char2nr(s:dicchar))
         let s:dicMchar = (s:dicchar != "|" ? (s:dicchar != "-" ? escape(s:dicchar,s:KEV2_menuESCs) : "<Minus>") : "<bar>")
+        let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         let s:inputFIND = (s:dicchar != "|" ? escape(s:dicchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-        execute "amenu  <silent> " . (s:KEV2_menuid+0) . "." . (s:inputkey+1) . " " . s:KEV2_menumap . "." . s:mapMchar . ( s:mapkanasidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2map_" . s:mapchar . ")"
+        execute "amenu  <silent> " . (s:KEV2_menuid+0) . "." . (s:inputkey+1) . " " . s:KEV2_menumap . "." . s:mapMchar . ( s:mapkanasidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2map_" . s:mapchar . ")a"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2map_" . s:mapchar . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:inputESC . " <Plug>(KEV2map_" . s:mapGchar . ")a"
@@ -136,12 +141,15 @@ function! KEV2pushmenu()
         execute "map <silent> <S-Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2dic_" . s:mapDchar . ")a"
         execute "imap <silent> <S-Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2dic_" . s:mapDchar . ")"
     :endfor
-    execute "menu  <silent> " . (s:KEV2_menuid+0) . ".89 " . s:KEV2_menumap . ".-sep_find- :"
+    execute "menu  <silent> " . (s:KEV2_menuid+0) . ".89 " . s:KEV2_menumap . ".-sep_kanagana- :"
     :if s:mapkanasidx < s:KEV2_inputkeyslen
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".90 " . s:KEV2_menumap . ".静音→濁音 <Plug>(KEV2kanagana1)"
     :else
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".90 " . s:KEV2_menumap . ".濁音→静音 <Plug>(KEV2kanagana0)"
     :endif
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".89 " . s:KEV2_menudic . ".-sep_dic- :"
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".辞書を入力" . s:KEV2_menudic . " <C-V>U" . printf("%08x",char2nr(s:KEV2_dickana))
+    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".95 " . s:KEV2_menudic . ".辞書を空白『　』 <C-o><Plug>(KEV2dic_　)"
 endfunction
 
 "メニューの撤去。
