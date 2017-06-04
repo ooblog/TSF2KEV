@@ -49,12 +49,22 @@ function! KEV2setup()
     let s:KEV2_kanmapfilepath = s:KEV2_scriptdir . "/kanmap.tsf"
     :if filereadable(s:KEV2_kanmapfilepath)
         :for s:kanmapfileline in readfile(s:KEV2_kanmapfilepath)
-            let s:kanmaplinelist = split(s:kanmapfileline,"\t")
-            :if len(s:kanmaplinelist) >= 2
+            :if stridx(s:kanmapfileline,"\t")  >= 0
+                let s:kanmaplinelist = split(s:kanmapfileline,"\t")
                 let s:KEV2_kanmap[s:kanmaplinelist[0]] = s:kanmaplinelist[1:]
                 :if len(s:kanmaplinelist) < s:KEV2_keyslen
                     let s:KEV2_kanmap[s:kanmaplinelist[0]] += s:KEV2_inputkeys[(s:KEV2_keyslen-len(s:kanmaplinelist)):(s:KEV2_keyslen-1)]
                 :endif
+            :endif
+        :endfor
+    :endif
+    let s:KEV2_kanchar = {}
+    let s:KEV2_kancharfilepath = s:KEV2_scriptdir . "/kanchar.tsf"
+    :if filereadable(s:KEV2_kancharfilepath)
+        :for s:kancharfileline in readfile(s:KEV2_kancharfilepath)
+            :if stridx(s:kancharfileline,"\t") >= 0
+                let s:kancharlinelist = split(s:kancharfileline,"\t")
+                let s:KEV2_kanchar[s:kancharlinelist[0]] = join(s:kancharlinelist[1:],"\t")
             :endif
         :endfor
     :endif
@@ -157,8 +167,8 @@ function! KEV2dicFIND()
     :let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
     :if filereadable(s:KEV2_kanwordfilepath)
         :for s:kanwordfileline in readfile(s:KEV2_kanwordfilepath)
-            let s:kanwordlinelist = split(s:kanwordfileline,"\t")
-            :if len(s:kanwordlinelist) >= 2
+            :if stridx(s:kanwordfileline,"\t")  >= 0
+                let s:kanwordlinelist = split(s:kanwordfileline,"\t")
                 :if (s:inputhira == s:kanwordlinelist[0]) || (s:inputkata == s:kanwordlinelist[0])
                     call KEV2strinput(join(s:kanwordlinelist[1:]))
                     :break
@@ -184,7 +194,6 @@ function! KEV2hirakata(inputtext,hirakata)
     :endfor
     :return s:outputtext
 endfunction
-
 
 "カーソル位置に文字列入力。行末挿入が失敗するorz
 function! KEV2strinput(inputtext)
@@ -215,6 +224,9 @@ function! KEV2pushmenu()
             let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
         let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
+        :if s:KEV2_menudic != "　"
+"            s:dicchar=KEV2splitpeekL(KEV2_ltsv,KEV2_label)
+        :endif
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
@@ -251,6 +263,12 @@ function! KEV2pushmenu()
     :endfor
     execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".95 " . s:KEV2_menudic . ".-sep_worddic- :"
     execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".99 " . s:KEV2_menudic . ".汎用辞書を検索 <C-o><Plug>(KEV2dicFIND)"
+endfunction
+
+"LTSVラベル読込(辞書取得)
+function! KEV2splitpeekL(KEV2_ltsv,KEV2_label)
+    
+    :return s:dicchar
 endfunction
 
 "メニューの撤去。
