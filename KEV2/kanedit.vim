@@ -1,6 +1,6 @@
 set encoding=utf-8
 scriptencoding utf-8
-let s:kev_scriptdir = expand('<sfile>:p:h')
+let s:KEV2_scriptdir = expand('<sfile>:p:h')
 
 "「KanEditVim2」の初期化。
 function! KEV2setup()
@@ -46,7 +46,7 @@ function! KEV2setup()
             let s:KEV2_kanmap["@(ヾ)"][s:widekey] = nr2char(char2nr(s:KEV2_kanmap["@(ヾ)"][s:widekey])+0xfee0)
             let s:KEV2_kanmap["@(ゞ)"][s:widekey] = nr2char(char2nr(s:KEV2_kanmap["@(ゞ)"][s:widekey])+0xfee0)
         :endfor
-    let s:KEV2_kanmapfilepath = s:kev_scriptdir . "/kanmap.tsf"
+    let s:KEV2_kanmapfilepath = s:KEV2_scriptdir . "/kanmap.tsf"
     :if filereadable(s:KEV2_kanmapfilepath)
         :for s:kanmapfileline in readfile(s:KEV2_kanmapfilepath)
             let s:kanmaplinelist = split(s:kanmapfileline,"\t")
@@ -79,6 +79,14 @@ function! KEV2setup()
     imap <silent> <Space><S-Space> <C-V>　
     imap <silent> <S-Space><Space> <C-V><Tab>
     imap <silent> <S-Space><S-Space> <C-V><Space>
+    map <silent> <Space><Enter> <Plug>(KEV2dicFIND)
+    map <silent> <Space><S-Enter> <Plug>(KEV2dicFIND)
+    map <silent> <S-Space><Enter> <Plug>(KEV2mapFIND)
+    map <silent> <S-Space><S-Enter> <Plug>(KEV2mapFIND)
+    imap <silent> <Space><Enter> <C-o><Plug>(KEV2dicFIND)
+    imap <silent> <Space><S-Enter> <C-o><Plug>(KEV2dicFIND)
+    imap <silent> <S-Space><Enter> <C-o><Plug>(KEV2mapFIND)
+    imap <silent> <S-Space><S-Enter> <C-o><Plug>(KEV2mapFIND)
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_menuhelp . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_menuhelp . ".-sep_find- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_menuhelp . ".履歴からファイルを開く <Plug>(KEV2filer)"
@@ -104,7 +112,7 @@ endfunction
 
 "鍵盤検索。
 function! KEV2mapFIND()
-    :let s:inputtext = input("鍵盤検索")
+    :let s:inputtext = input("鍵盤検索:")
 "    :let s:curline = getline(".")
 "    :let s:dicline = s:curline[:col(".")] . s:inputtext . s:curline[col("."):]
 "    :call setline(".",s:dicline)
@@ -129,10 +137,33 @@ endfunction
 
 "汎用辞書。
 function! KEV2dicFIND()
-    :let s:inputtext = input("汎用辞書項目")
-"    :let s:curline = getline(".")
-"    :let s:dicline = s:curline[:col(".")] . s:inputtext . s:curline[col("."):]
-"    :call setline(".",s:dicline)
+    :let s:inputtext = input("汎用辞書項目:")
+    let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
+    :if filereadable(s:KEV2_kanwordfilepath)
+        :for s:kanwordfileline in readfile(s:KEV2_kanwordfilepath)
+            let s:kanwordlinelist = split(s:kanwordfileline,"\t")
+            :if len(s:kanwordlinelist) >= 2
+                :if s:inputtext == s:kanwordlinelist[0]
+                    call KEV2strinput(join(s:kanwordlinelist[1:]))
+                    :break
+                :endif
+            :endif
+        :endfor
+    :endif
+endfunction
+
+"カーソル位置に文字列入力。行末挿入が失敗するorz
+function! KEV2strinput(inputtext)
+    :let s:curline = getline(".")
+    :let s:curcol = col(".")-1
+    :if s:curcol == 0
+        :let s:dicline = a:inputtext . s:curline
+    :elseif col(".") == col("$")-1
+        :let s:dicline = s:curline . a:inputtext
+    :else
+        :let s:dicline = s:curline[:(s:curcol-1)] . a:inputtext . s:curline[(s:curcol):]
+    :endif
+    :call setline(".",s:dicline)
 endfunction
 
 "メニューなどの構築。
@@ -233,7 +264,7 @@ endfunction
 
 "ヘルプファイル「KEV.txt」読込。
 function! KEV2help()
-    let s:KEV2_helpfilepath = s:kev_scriptdir . "/KEV2.txt"
+    let s:KEV2_helpfilepath = s:KEV2_scriptdir . "/KEV2.txt"
     :if filereadable(s:KEV2_helpfilepath)
         execute "enew"
         execute "e " . s:KEV2_helpfilepath . " | :se ro"
