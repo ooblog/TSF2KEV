@@ -25,8 +25,8 @@ function! KEV2setup()
     let s:KEV2_inputESCs = {"\t":"<Tab>",' ':"<Space>",'<':"<lt>",'\':"<Bslash>",'|':"<Bar>",'-':"<Minus>",'.':"<Point>"}
     let s:KEV2_menuESCs = "\t\\:|< >.-"
     let s:KEV2_findESCs = ".*[]^%/\?~$"
-    let s:KEV2_mapkana = s:KEV2_mapkanas[0]
-    let s:KEV2_dickana = " "
+    let s:KEV2_mapkana = "@(゛)"
+    let s:KEV2_dickana = "　"
     let s:KEV2_kanmap = {}
         :for s:mapkana in s:KEV2_mapkanas
             let s:KEV2_kanmap[s:mapkana]=(index(s:KEV2_mapkanas,s:mapkana)%2?s:KEV2_inputkeys[(s:KEV2_keyslen):]:s:KEV2_inputkeys[:(s:KEV2_keyslen-1)])
@@ -71,6 +71,11 @@ function! KEV2setup()
     imap <silent> <Space><S-Space> <C-V>　
     imap <silent> <S-Space><Space> <C-V><Tab>
     imap <silent> <S-Space><S-Space> <C-V><Space>
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_menuhelp . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_menuhelp . ".-sep_find- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_menuhelp . ".履歴からファイルを開く <Plug>(KEV2filer)"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_menuhelp . ".-sep_filer- :"
+    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".95 " . s:KEV2_menuhelp . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     call KEV2pushmenu()
 endfunction
 
@@ -100,11 +105,6 @@ endfunction
 function! KEV2pushmenu()
     let s:KEV2_menumap = escape("「" . s:KEV2_mapkana,s:KEV2_menuESCs)
     let s:KEV2_menudic = escape("『" . s:KEV2_dickana . "』",s:KEV2_menuESCs)
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_menuhelp . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_menuhelp . ".-sep_find- :"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_menuhelp . ".履歴からファイルを開く <Plug>(KEV2filer)"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".89 " . s:KEV2_menuhelp . ".-sep_filer- :"
-    execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".95 " . s:KEV2_menuhelp . ".終了(「call\\ KEV2setup()」で再開) <Plug>(KEV2exit)"
     let s:mapkanasidx = index(s:KEV2_mapkanas,s:KEV2_mapkana)
     let s:mapkanaspos = s:KEV2_keyslen*(s:mapkanasidx/s:KEV2_keyslen)
     let s:mapkanaskata = (s:mapkanasidx/s:KEV2_keyslen)%2
@@ -116,22 +116,25 @@ function! KEV2pushmenu()
         :else
             let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
+        let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
+        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
+        let s:dicVchar = " <C-V>U" . printf("%08x",char2nr(s:dicchar))
+        let s:dicMchar = (s:dicchar != "|" ? (s:dicchar != "-" ? escape(s:dicchar,s:KEV2_menuESCs) : "<Minus>") : "<bar>")
+        let s:inputFIND = (s:dicchar != "|" ? escape(s:dicchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
         execute "amenu  <silent> " . (s:KEV2_menuid+0) . "." . (s:inputkey+1) . " " . s:KEV2_menumap . "." . s:mapMchar . ( s:mapkanasidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2map_" . s:mapchar . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:inputESC . " <Plug>(KEV2map_" . s:mapGchar . ")a"
         execute "imap <silent> <Space>" . s:inputESC . " <C-o><Plug>(KEV2map_" . s:mapGchar . ")"
-        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
-        let s:dicVchar = " <C-V>U" . printf("%08x",char2nr(s:dicchar))
-        let s:dicMchar = (s:dicchar != "|" ? (s:dicchar != "-" ? escape(s:dicchar,s:KEV2_menuESCs) : "<Minus>") : "<bar>")
-        let s:inputFIND = (s:dicchar != "|" ? escape(s:dicchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
         execute "imenu  <silent> " . (s:KEV2_menuid+1) . "." . (s:inputkey+1) . " " . s:KEV2_menudic . "." . s:dicMchar . s:dicVchar
         execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:dicVchar
         execute "imap <silent> " . s:inputESC . " <C-o>/" . s:inputFIND
         execute "map <silent> <S-Space>" . s:inputESC . " ?" . s:inputFIND . "a"
         execute "imap <silent> <S-Space>" . s:inputESC . " <C-o>?" . s:inputFIND
+        execute "map <silent> <S-Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2dic_" . s:mapDchar . ")a"
+        execute "imap <silent> <S-Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2dic_" . s:mapDchar . ")"
     :endfor
     execute "menu  <silent> " . (s:KEV2_menuid+0) . ".89 " . s:KEV2_menumap . ".-sep_find- :"
     :if s:mapkanasidx < s:KEV2_inputkeyslen
@@ -224,8 +227,6 @@ function! KEV2filer()
         let s:filechoice = inputlist(s:filelabels)
     :endwhile
 endfunction
-
-
 
 call KEV2setup()
 finish
