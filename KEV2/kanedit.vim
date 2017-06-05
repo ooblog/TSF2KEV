@@ -224,21 +224,22 @@ function! KEV2pushmenu()
             :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
         let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
-"        :if s:KEV2_dickana != "　"
-"            :let s:dicchar=KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
-"        :endif
+        :if len(s:dicchar) == 0
+            :let s:dicchar = "　"
+        :else
+            :let s:dicchar = KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
+        :endif
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
-        let s:dicVchar = " <C-V>U" . printf("%08x",char2nr(s:dicchar))
-"        let s:dicVchar = " "
-"        :for s:Vchar in split(s:dicchar, '\zs')
-"            let s:dicVchar = s:dicVchar . "<C-V>U" . printf("%08x",char2nr(s:Vchar))
-"        :endfor
-        let s:dicMchar = (s:dicchar != "|" ? (s:dicchar != "-" ? escape(s:dicchar,s:KEV2_menuESCs) : "<Minus>") : "<bar>")
+        let s:dicVchar = " "
+        :for s:Vchar in split(s:dicchar, '\zs')
+            let s:dicVchar = s:dicVchar . printf("<C-V>U%08x",char2nr(s:Vchar))
+        :endfor
+        let s:dicMchar =  escape(substitute(substitute(s:dicchar,"-","<Minus>","g"),"|","<bar>","g"),s:KEV2_menuESCs)
         let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
-        let s:inputFIND = (s:dicchar != "|" ? escape(s:dicchar,s:KEV2_findESCs) : "<bar>") . "<Enter>"
-        execute "amenu  <silent> " . (s:KEV2_menuid+0) . "." . (s:inputkey+10) . " " . s:KEV2_menumap . "." . s:mapMchar . ( s:mapkanasidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2map_" . s:mapchar . ")a"
+        let s:inputFIND = escape(substitute(s:dicchar,"|","<bar>","g"),s:KEV2_menuESCs) . "<Enter>"
+        execute "amenu  <silent> " . (s:KEV2_menuid+0) . "." . (s:inputkey+10) . " " . s:KEV2_menumap . "." . s:mapMchar . ( s:mapkanasidx%s:KEV2_keyslen == s:inputkey ? "✓" : "" ) . " <Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <Plug>(KEV2map_" . s:mapchar . ")a"
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:inputESC . " <Plug>(KEV2map_" . s:mapGchar . ")a"
@@ -260,8 +261,8 @@ function! KEV2pushmenu()
     execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".95 " . s:KEV2_menumap . ".-sep_exist- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+0) . ".99 " . s:KEV2_menumap . ".鍵盤を検索 <Plug>(KEV2mapFIND)"
     execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".89 " . s:KEV2_menudic . ".-sep_chardic- :"
-    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書項目を入力" . s:KEV2_menudic . " <C-V>U" . printf("%08x",char2nr(s:KEV2_dickana))
-    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書で検索" . s:KEV2_menudic . " <C-o>?" . (s:KEV2_dickana != "|" ? escape(s:KEV2_dickana,s:KEV2_findESCs) : "<bar>") . "<Enter>"
+"    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書項目を入力" . s:KEV2_menudic . printf(" <C-V>U%08x",char2nr(s:KEV2_dickana))
+"    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書で検索" . s:KEV2_menudic . " <C-o>?" . (s:KEV2_dickana != "|" ? escape(s:KEV2_dickana,s:KEV2_findESCs) : "<bar>") . "<Enter>"
     :for s:dickana in s:KEV2_dickanas
         execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".93 " . s:KEV2_menudic . ".単漢字辞書の選択『." . s:dickana . "』" . ( s:KEV2_dickana == s:dickana ? "✓" : "" ) . " <C-o><Plug>(KEV2dictype_" . s:dickana . ")"
     :endfor
@@ -277,6 +278,9 @@ function! KEV2kancharpeekL(dicchar,diclabel)
         let s:kanposL = stridx(s:dicltsv,":",s:kanposL)+1
         let s:kanposR = stridx(s:dicltsv,"\t",s:kanposL)
         let s:dicchar = strpart(s:dicltsv,s:kanposL,s:kanposR-s:kanposL)
+        :if len(s:dicchar) ==0
+            let s:dicchar = a:dicchar
+        :endif
     :elseif a:dicchar == "照"
         let s:dicchar = printf("&#%d;",char2nr(a:dicchar)
     :else

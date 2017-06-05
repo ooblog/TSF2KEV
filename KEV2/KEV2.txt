@@ -9,8 +9,7 @@
 ☑<S-Space><S-Space>	半角スペース入力
 ☑<Space><S-Space>	全角スペース入力
 ☑<S-Space><Space>	タブ入力
-☑a-z						文字入力
-☐a-z						字引入力(単漢字辞書)
+☑a-z						文字入力/字引入力(単漢字辞書)
 ☑<Space>a-z				鍵盤変更(かなカタ)
 ☑<Space>A~Z			鍵盤変更(清濁)
 ☑A~Z						一文字検索
