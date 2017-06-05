@@ -275,13 +275,15 @@ function! KEV2kancharpeekL(dicchar,diclabel)
         let s:kanposL = stridx(s:dicltsv,":",s:kanposL)+1
         let s:kanposR = stridx(s:dicltsv,"\t",s:kanposL)
         let s:dicchar = strpart(s:dicltsv,s:kanposL,s:kanposR-s:kanposL)
-        :if len(s:dicchar) ==0
+    :else
+        let s:dicchar = ""
+    :endif
+    :if len(s:dicchar) ==0
+        :if a:diclabel == "照"
+            let s:dicchar = printf("&#%d;",char2nr(a:dicchar))
+        :else
             let s:dicchar = a:dicchar
         :endif
-    :elseif a:dicchar == "照"
-        let s:dicchar = printf("&#%d;",char2nr(a:dicchar)
-    :else
-        let s:dicchar = a:dicchar
     :endif
     :return s:dicchar
 endfunction
