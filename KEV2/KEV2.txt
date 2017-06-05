@@ -6,16 +6,16 @@
 
 マップコマンドの予定表
 ☑<Space><Space>		Vimのモード切替
+☑<Space><S-Space>	タブ入力
 ☑<S-Space><S-Space>	半角スペース入力
-☑<Space><S-Space>	全角スペース入力
-☑<S-Space><Space>	タブ入力
+☑<S-Space><Space>	全角スペース入力/単漢字辞書項目を入力
 ☑a-z						文字入力/字引入力(単漢字辞書)
 ☑<Space>a-z				鍵盤変更(かなカタ)
 ☑<Space>A~Z			鍵盤変更(清濁)
 ☑A~Z						一文字検索
 ☑<S-Space>A~Z			一文字検索(巻き戻し)
-☑<S-Space>a-z			単漢字辞書変更(kanchar.tsf)
-☑<Space><Enter>		汎用辞書項目(kanword.tsf)
+☑<S-Space>a-z			単漢字辞書項目変更(kanchar.tsf)
+☑<Space><Enter>		汎用辞書検索(kanword.tsf)
 ☑<S-Space><S-Enter>	鍵盤検索(kanmap.tsf)
 
 

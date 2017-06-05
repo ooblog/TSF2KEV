@@ -86,17 +86,13 @@ function! KEV2setup()
     map <silent> <Space><Space> a
     vmap <silent> <Space><Space> <Esc>
     imap <silent> <Space><Space> <Esc>
-    imap <silent> <Space><S-Space> <C-V>　
-    imap <silent> <S-Space><Space> <C-V><Tab>
+    imap <silent> <Space><S-Space> <C-V><Tab>
+"    imap <silent> <S-Space><Space> <C-V>　
     imap <silent> <S-Space><S-Space> <C-V><Space>
     map <silent> <Space><Enter> <Plug>(KEV2dicFIND)
     map <silent> <Space><S-Enter> <Plug>(KEV2dicFIND)
     map <silent> <S-Space><Enter> <Plug>(KEV2mapFIND)
     map <silent> <S-Space><S-Enter> <Plug>(KEV2mapFIND)
-    imap <silent> <Space><Enter> <C-o><Plug>(KEV2dicFIND)
-    imap <silent> <Space><S-Enter> <C-o><Plug>(KEV2dicFIND)
-    imap <silent> <S-Space><Enter> <C-o><Plug>(KEV2mapFIND)
-    imap <silent> <S-Space><S-Enter> <C-o><Plug>(KEV2mapFIND)
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_menuhelp . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_menuhelp . ".-sep_find- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_menuhelp . ".履歴からファイルを開く <Plug>(KEV2filer)"
@@ -263,6 +259,7 @@ function! KEV2pushmenu()
     execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".89 " . s:KEV2_menudic . ".-sep_chardic- :"
 "    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書項目を入力" . s:KEV2_menudic . printf(" <C-V>U%08x",char2nr(s:KEV2_dickana))
 "    execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".90 " . s:KEV2_menudic . ".単漢字辞書で検索" . s:KEV2_menudic . " <C-o>?" . (s:KEV2_dickana != "|" ? escape(s:KEV2_dickana,s:KEV2_findESCs) : "<bar>") . "<Enter>"
+    execute "imap <silent> <S-Space><Space> " . printf(" <C-V>U%08x",char2nr(s:KEV2_dickana))
     :for s:dickana in s:KEV2_dickanas
         execute "imenu  <silent> " . (s:KEV2_menuid+1) . ".93 " . s:KEV2_menudic . ".単漢字辞書の選択『." . s:dickana . "』" . ( s:KEV2_dickana == s:dickana ? "✓" : "" ) . " <C-o><Plug>(KEV2dictype_" . s:dickana . ")"
     :endfor
@@ -319,6 +316,10 @@ function! KEV2exit()
     iunmap <silent> <Space><S-Space>
     iunmap <silent> <S-Space><Space>
     iunmap <silent> <S-Space><S-Space>
+    unmap <silent> <Space><Enter>
+    unmap <silent> <Space><S-Enter>
+    unmap <silent> <S-Space><Enter>
+    unmap <silent> <S-Space><S-Enter>
     :for s:inputkey in range(s:KEV2_keyslen)
         let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         execute "unmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
