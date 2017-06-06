@@ -30,6 +30,7 @@ function! KEV2setup()
     let s:KEV2_findESCs = ".*[]^%/\?~$"
     let s:KEV2_mapkana = "@(゛)"
     let s:KEV2_dickana = "　"
+    let s:KEV2_findkana = ""
     let s:KEV2_kanmap = {}
         :for s:mapkana in s:KEV2_mapkanas
             let s:KEV2_kanmap[s:mapkana]=(index(s:KEV2_mapkanas,s:mapkana)%2?s:KEV2_inputkeys[(s:KEV2_keyslen):]:s:KEV2_inputkeys[:(s:KEV2_keyslen-1)])
@@ -93,6 +94,10 @@ function! KEV2setup()
     map <silent> <Space><S-Enter> <Plug>(KEV2dicFIND)
     map <silent> <S-Space><Enter> <Plug>(KEV2mapFIND)
     map <silent> <S-Space><S-Enter> <Plug>(KEV2mapFIND)
+    imap <silent> <Space><Enter> <C-o><Plug>(KEV2dicFIND)
+    imap <silent> <Space><S-Enter> <C-o><Plug>(KEV2dicFIND)
+    imap <silent> <S-Space><Enter> <C-o><Plug>(KEV2mapFIND)
+    imap <silent> <S-Space><S-Enter> <C-o><Plug>(KEV2mapFIND)
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".01 " . s:KEV2_menuhelp . ".ヘルプ(KEV2\\.txt) <Plug>(KEV2help)"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".09 " . s:KEV2_menuhelp . ".-sep_find- :"
     execute "amenu  <silent> " . (s:KEV2_menuid+2) . ".80 " . s:KEV2_menuhelp . ".履歴からファイルを開く <Plug>(KEV2filer)"
@@ -103,6 +108,7 @@ endfunction
 
 "鍵盤変更。
 function! KEV2map(KEV2_commandkana)
+    let s:KEV2_findkana = ""
     let s:KEV2_mapkana = s:KEV2_mapkanas[index(s:KEV2_commandkanas,a:KEV2_commandkana)]
     call KEV2pullmenu(0)
     call KEV2pushmenu()
@@ -110,6 +116,7 @@ endfunction
 
 "鍵盤静音濁音変更。
 function! KEV2kanagana(KEV2_seidaku)
+    let s:KEV2_findkana = ""
     let s:mapkanasidx = index(s:KEV2_mapkanas,s:KEV2_mapkana)
     let s:KEV2_mapkana=s:KEV2_mapkanas[(a:KEV2_seidaku%2)*(s:KEV2_keyslen*2)+(s:mapkanasidx%(s:KEV2_keyslen*2))]
     call KEV2pullmenu(0)
@@ -118,12 +125,14 @@ endfunction
 
 "鍵盤検索。
 function! KEV2mapFIND()
-    :let s:inputtext = input("鍵盤検索:")
-    :let s:hitkana = ""
+    let s:KEV2_findkana = ""
+    let s:inputtext = input("鍵盤検索:")
+    let s:hitkana = ""
     :for s:inputkana in split(s:inputtext, '\zs')
         :for s:mapkana in s:KEV2_mapkanas
             :if count(s:KEV2_kanmap[s:mapkana],s:inputkana)
-                :let s:hitkana = s:mapkana
+                let s:hitkana = s:mapkana
+                let s:KEV2_findkana = s:inputkana
                 :break
             :endif
         :endfor
@@ -157,10 +166,10 @@ endfunction
 
 "汎用辞書項目。
 function! KEV2dicFIND()
-    :let s:inputtext = input("汎用辞書項目:")
-    :let s:inputhira = KEV2hirakata(s:inputtext,0)
-    :let s:inputkata = KEV2hirakata(s:inputtext,1)
-    :let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
+    let s:inputtext = input("汎用辞書項目:")
+    let s:inputhira = KEV2hirakata(s:inputtext,0)
+    let s:inputkata = KEV2hirakata(s:inputtext,1)
+    let s:KEV2_kanwordfilepath = s:KEV2_scriptdir . "/kanword.tsf"
     :if filereadable(s:KEV2_kanwordfilepath)
         :for s:kanwordfileline in readfile(s:KEV2_kanwordfilepath)
             :if stridx(s:kanwordfileline,"\t")  >= 0
@@ -176,16 +185,16 @@ endfunction
 
 "ひらがなカタカナ置換。
 function! KEV2hirakata(inputtext,hirakata)
-    :let s:outputtext = a:inputtext
-    :let s:KEV2_patkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ","ち","と","し","は","き","く","ま","の","り","れ","け","む","つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
-    :let s:KEV2_patkanas += ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","っ","ゑ","ゐ","ゎ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","ぺ"]
-    :let s:KEV2_patkatas = ["ヌ","フ","ア","ウ","エ","オ","ヤ","ユ","ヨ","ワ","ホ","ヘ","タ","テ","イ","ス","カ","ン","ナ","ニ","ラ","セ","チ","ト","シ","ハ","キ","ク","マ","ノ","リ","レ","ケ","ム","ツ","サ","ソ","ヒ","コ","ミ","モ","ネ","ル","メ","ロ"]
-    :let s:KEV2_patkatas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ッ","ヱ","ヰ","ヮ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","ゲ","ぷ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","ペ"]
+    let s:outputtext = a:inputtext
+    let s:KEV2_patkanas = ["ぬ","ふ","あ","う","え","お","や","ゆ","よ","わ","ほ","へ", "た","て","い","す","か","ん","な","に","ら","せ","ち","と","し","は","き","く","ま","の","り","れ","け","む","つ","さ","そ","ひ","こ","み","も","ね","る","め","ろ"]
+    let s:KEV2_patkanas += ["ゔ","ぶ","ぁ","ぅ","ぇ","ぉ","ゃ","ゅ","ょ","を","ぼ","べ","だ","で","ぃ","ず","が","っ","ゑ","ゐ","ゎ","ぜ","ゞ","ゝ","ぢ","ど","じ","ば","ぎ","ぐ","ぱ","げ","ぷ","づ","ざ","ぞ","び","ご","ぴ","ぽ","ぺ"]
+    let s:KEV2_patkatas = ["ヌ","フ","ア","ウ","エ","オ","ヤ","ユ","ヨ","ワ","ホ","ヘ","タ","テ","イ","ス","カ","ン","ナ","ニ","ラ","セ","チ","ト","シ","ハ","キ","ク","マ","ノ","リ","レ","ケ","ム","ツ","サ","ソ","ヒ","コ","ミ","モ","ネ","ル","メ","ロ"]
+    let s:KEV2_patkatas += ["ヴ","ブ","ァ","ゥ","ェ","ォ","ャ","ュ","ョ","ヲ","ボ","ベ","ダ","デ","ィ","ズ","ガ","ッ","ヱ","ヰ","ヮ","ゼ","ヾ","ヽ","ヂ","ド","ジ","バ","ギ","グ","パ","ゲ","ぷ","ヅ","ザ","ゾ","ビ","ゴ","ピ","ポ","ペ"]
     :for s:widekey in range(len(s:KEV2_patkanas))
         :if a:hirakata
-            :let s:outputtext = substitute(s:outputtext,s:KEV2_patkanas[s:widekey],s:KEV2_patkatas[s:widekey],"g")
+            let s:outputtext = substitute(s:outputtext,s:KEV2_patkanas[s:widekey],s:KEV2_patkatas[s:widekey],"g")
         :else
-            :let s:outputtext = substitute(s:outputtext,s:KEV2_patkatas[s:widekey],s:KEV2_patkanas[s:widekey],"g")
+            let s:outputtext = substitute(s:outputtext,s:KEV2_patkatas[s:widekey],s:KEV2_patkanas[s:widekey],"g")
         :endif
     :endfor
     :return s:outputtext
@@ -193,14 +202,14 @@ endfunction
 
 "カーソル位置に文字列入力。行末挿入が失敗するorz
 function! KEV2strinput(inputtext)
-    :let s:curline = getline(".")
-    :let s:curcol = col(".")-1
+    let s:curline = getline(".")
+    let s:curcol = col(".")-1
     :if s:curcol == 0
-        :let s:dicline = a:inputtext . s:curline
+        let s:dicline = a:inputtext . s:curline
     :elseif col(".") == col("$")-1
-        :let s:dicline = s:curline . a:inputtext
+        let s:dicline = s:curline . a:inputtext
     :else
-        :let s:dicline = s:curline[:(s:curcol-1)] . a:inputtext . s:curline[(s:curcol):]
+        let s:dicline = s:curline[:(s:curcol-1)] . a:inputtext . s:curline[(s:curcol):]
     :endif
     :call setline(".",s:dicline)
 endfunction
@@ -215,19 +224,19 @@ function! KEV2pushmenu()
     let s:mapkanasdaku = s:mapkanasidx/s:KEV2_inputkeyslen
     :for s:inputkey in range(s:KEV2_keyslen)
         :if s:mapkanasidx%s:KEV2_keyslen == s:inputkey
-            :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+( (s:mapkanaspos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )]
+            let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+( (s:mapkanaspos/s:KEV2_keyslen)%2 ? s:inputkey-s:KEV2_keyslen : s:inputkey+s:KEV2_keyslen )]
         :else
-            :let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
-        :endif
-        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
-        :if len(s:dicchar) == 0
-            :let s:dicchar = "　"
-        :else
-            :let s:dicchar = KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
+            let s:mapchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         :endif
         let s:mapDchar = s:KEV2_commandkanas[s:mapkanaspos+s:inputkey]
         let s:mapGchar = s:KEV2_commandkanas[(s:mapkanasdaku ? 0: s:KEV2_inputkeyslen)+s:mapkanaskata*s:KEV2_keyslen+s:inputkey]
         let s:mapMchar = escape(s:KEV2_mapkanas[index(s:KEV2_commandkanas,s:mapchar)],s:KEV2_menuESCs)
+        let s:dicchar = s:KEV2_kanmap[s:KEV2_mapkana][s:inputkey]
+        :if len(s:dicchar) == 0
+            let s:dicchar = "　"
+        :else
+            let s:dicchar = KEV2kancharpeekL(s:dicchar,s:KEV2_dickana)
+        :endif
         let s:dicVchar = " "
         :for s:Vchar in split(s:dicchar, '\zs')
             let s:dicVchar = s:dicVchar . printf("<C-V>U%08x",char2nr(s:Vchar))
@@ -240,7 +249,7 @@ function! KEV2pushmenu()
         execute "imap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey] . " <C-o><Plug>(KEV2map_" . s:mapchar . ")"
         execute "map <silent> <Space>" . s:inputESC . " <Plug>(KEV2map_" . s:mapGchar . ")a"
         execute "imap <silent> <Space>" . s:inputESC . " <C-o><Plug>(KEV2map_" . s:mapGchar . ")"
-        execute "imenu  <silent> " . (s:KEV2_menuid+1) . "." . (s:inputkey+10) . " " . s:KEV2_menudic . "." . s:dicMchar . s:dicVchar
+        execute "imenu  <silent> " . (s:KEV2_menuid+1) . "." . (s:inputkey+10) . " " . s:KEV2_menudic . "." . s:dicMchar . ( s:dicchar == s:KEV2_findkana ? "✓" : "" ) . s:dicVchar
         execute "imap <silent> " . s:KEV2_inputkeys[s:inputkey] . s:dicVchar
         execute "imap <silent> " . s:inputESC . " <C-o>/" . s:inputFIND
         execute "map <silent> <S-Space>" . s:inputESC . " ?" . s:inputFIND . "a"
@@ -322,6 +331,10 @@ function! KEV2exit()
     unmap <silent> <Space><S-Enter>
     unmap <silent> <S-Space><Enter>
     unmap <silent> <S-Space><S-Enter>
+    iunmap <silent> <Space><Enter>
+    iunmap <silent> <Space><S-Enter>
+    iunmap <silent> <S-Space><Enter>
+    iunmap <silent> <S-Space><S-Enter>
     :for s:inputkey in range(s:KEV2_keyslen)
         let s:inputESC = get(s:KEV2_inputESCs,s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen],s:KEV2_inputkeys[s:inputkey+s:KEV2_keyslen])
         execute "unmap <silent> <Space>" . s:KEV2_inputkeys[s:inputkey]
