@@ -88,6 +88,7 @@ enum TSF_allnight {
     Hour,HourAPO,carryHour,
     EnumLen,};
 long[TSF_allnight.EnumLen] TSF_allnight_Enum;
+long TSF_counter_Counter=0;
 long TSF_Time_EnumNULL=-10000;
 
 void TSF_Time_setdaytime(...){
@@ -102,6 +103,7 @@ void TSF_Time_setdaytime(...){
     TSF_diff_now=TSF_earlier_now+dur!"minutes"(TSF_earlier_diffminute);
     foreach(long Enum;0..TSF_meridian.EnumLen){ TSF_meridian_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
     foreach(long Enum;0..TSF_allnight.EnumLen){ TSF_allnight_Enum[to!size_t(Enum)]=TSF_Time_EnumNULL; }
+    TSF_counter_Counter=0;
 }
 
 long TSF_Time_meridian_Year(){    //#TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
@@ -142,6 +144,11 @@ long TSF_Time_meridian_miLlisecond(){    //#TSF_doc:現在時刻ミリ秒3桁の
 
 long TSF_Time_meridian_micRosecond(){    //#TSF_doc:現在時刻マイクロ秒6桁の遅延処理。(TSFAPI)
     return TSF_meridian_Enum[TSF_meridian.micRosecond]=TSF_meridian_Enum[TSF_meridian.micRosecond]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.micRosecond]:0;
+}
+
+long TSF_Time_Counter(){    //#TSF_doc:カウンターを数える。(TSFAPI)
+    TSF_counter_Counter++;
+    return TSF_counter_Counter;
 }
 
 string TSF_Time_getdaytime(...){    //#TSFdoc:現在日時で上書き。(TSFAPI)
@@ -193,6 +200,15 @@ string TSF_Time_getdaytime(...){    //#TSFdoc:現在日時で上書き。(TSFAPI
         TSF_tf=!count(TSF_tf,"@T")?TSF_tf:TSF_tf.replace("@T","\t");
         TSF_tf=!count(TSF_tf,"@E")?TSF_tf:TSF_tf.replace("@E","\n");
         TSF_tf=!count(TSF_tf,"@Z")?TSF_tf:TSF_tf.replace("@Z","");
+
+        TSF_tf=!count(TSF_tf,"@000c")?TSF_tf:TSF_tf.replace("@000c","%4d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@___c")?TSF_tf:TSF_tf.replace("@___c","%4d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@00c")?TSF_tf:TSF_tf.replace("@00c","%03d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@__c")?TSF_tf:TSF_tf.replace("@__c","%3d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@0c")?TSF_tf:TSF_tf.replace("@0c","%02d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@_c")?TSF_tf:TSF_tf.replace("@_c","%2d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@c")?TSF_tf:TSF_tf.replace("@c","%d".format(TSF_Time_Counter()));
+
         TSF_tfList[TSF_tfcount]=TSF_tf;
     }
     TSF_daytimeformat=join(TSF_tfList,"@");
@@ -214,6 +230,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timepop:",join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("timesample:",join([
+        "@c",
         "@000y,@___y,@4y,@0y,@_y,@2y",
         "@0m,@_m,@m",
         "@wd",
@@ -224,6 +241,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
         "@4y@0m@0dm@wdec@0h@0n@0s",
+        "@c",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);

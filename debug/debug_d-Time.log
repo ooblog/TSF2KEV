@@ -9,6 +9,7 @@ timejump:
 timepop:
 	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 timesample:
+	@c
 	@000y,@___y,@4y,@0y,@_y,@2y
 	@0m,@_m,@m
 	@wd
@@ -19,17 +20,20 @@ timesample:
 	@00ls,@__ls,@ls
 	@00000rs,@_____rs,@rs
 	@4y@0m@0dm@wdec@0h@0n@0s
+	@c
 -- TSF_Time.d run --
+「@c」→「1」
 「@000y,@___y,@4y,@0y,@_y,@2y」→「2017,2017,2017,17,17,17」
-「@0m,@_m,@m」→「05, 5,5」
-「@wd」→「0」
-「@0dm,@_dm,@dm」→「29,29,29」
-「@0h,@_h,@h」→「14,14,14」
-「@0m,@_m,@m」→「05, 5,5」
-「@0s,@_s,@s」→「20,20,20」
+「@0m,@_m,@m」→「06, 6,6」
+「@wd」→「2」
+「@0dm,@_dm,@dm」→「07, 7,7」
+「@0h,@_h,@h」→「00, 0,0」
+「@0m,@_m,@m」→「06, 6,6」
+「@0s,@_s,@s」→「56,56,56」
 「@00ls,@__ls,@ls」→「000,  0,0」
 「@00000rs,@_____rs,@rs」→「000000,     0,0」
-「@4y@0m@0dm@wdec@0h@0n@0s」→「20170529M144020」
+「@4y@0m@0dm@wdec@0h@0n@0s」→「20170607W004556」
+「@c」→「2」
 -- TSF_Time.d viewthey --
 TSF_Tab-Separated-Forth:
 	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.

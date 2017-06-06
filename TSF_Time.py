@@ -80,6 +80,7 @@ TSF_allnight_EnumLen=7+3+6+3;  (
     TSF_allnight_Hour,TSF_allnight_HourAPO,TSF_allnight_carryHour,
 )=range(0,TSF_allnight_EnumLen)
 TSF_allnight_Enum=[0]*TSF_allnight_EnumLen;
+TSF_counter_Counter=0
 TSF_Time_EnumNULL=None
 
 #TSF_time_Counter,TSF_time_randOm=0,random.random()
@@ -93,6 +94,8 @@ def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時�
     TSF_diff_now=TSF_earlier_now+datetime.timedelta(minutes=TSF_earlier_diffminute)
     TSF_meridian_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_meridian_EnumLen)]
     TSF_allnight_Enum=[TSF_Time_EnumNULL for Enum in range(TSF_allnight_EnumLen)]
+    global TSF_counter_Counter
+    TSF_counter_Counter=0
 
 def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
@@ -143,6 +146,11 @@ def TSF_Time_meridian_micRosecond():    #TSF_doc:現在時刻マイクロ秒6桁
     TSF_meridian_Enum[TSF_meridian_micRosecond]=TSF_meridian_Enum[TSF_meridian_micRosecond] if TSF_meridian_Enum[TSF_meridian_micRosecond] != TSF_Time_EnumNULL else TSF_diff_now.microsecond
     return TSF_meridian_Enum[TSF_meridian_micRosecond]
 
+def TSF_Time_Counter():    #TSF_doc:カウンターを数える。(TSFAPI)
+    global TSF_counter_Counter
+    TSF_counter_Counter+=1
+    return TSF_counter_Counter
+
 def TSF_Time_getdaytime(TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s"):    #TSFdoc:現在日時で上書き。(TSFAPI)
     TSF_tfList=TSF_daytimeformat.split("@@")
     for TSF_tfcount,TSF_tf in enumerate(TSF_tfList):
@@ -188,6 +196,15 @@ def TSF_Time_getdaytime(TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s"):    #TSFdo
         TSF_tf=TSF_tf if not "@T" in TSF_tf else TSF_tf.replace("@T","\t")
         TSF_tf=TSF_tf if not "@E" in TSF_tf else TSF_tf.replace("@E","\n")
         TSF_tf=TSF_tf if not "@Z" in TSF_tf else TSF_tf.replace("@Z","")
+
+        TSF_tf=TSF_tf if not "@000c" in TSF_tf else TSF_tf.replace("@000c","{0:0>4}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@___c" in TSF_tf else TSF_tf.replace("@___c","{0: >4}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@00c" in TSF_tf else TSF_tf.replace("@00c","{0:0>3}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@__c" in TSF_tf else TSF_tf.replace("@__c","{0: >3}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@0c" in TSF_tf else TSF_tf.replace("@0c","{0:0>2}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@_c" in TSF_tf else TSF_tf.replace("@_c","{0: >2}".format(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@c" in TSF_tf else TSF_tf.replace("@c",str(TSF_Time_Counter()))
+
         TSF_tfList[TSF_tfcount]=TSF_tf
     TSF_daytimeformat="@".join(TSF_tfList)
     return TSF_daytimeformat
@@ -207,6 +224,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timepop:","\t".join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("timesample:","\t".join([
+        "@c",
         "@000y,@___y,@4y,@0y,@_y,@2y",
         "@0m,@_m,@m",
         "@wd",
@@ -217,6 +235,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
         "@4y@0m@0dm@wdec@0h@0n@0s",
+        "@c",
         ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)

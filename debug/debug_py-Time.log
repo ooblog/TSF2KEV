@@ -9,6 +9,7 @@ timejump:
 timepop:
 	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
 timesample:
+	@c
 	@000y,@___y,@4y,@0y,@_y,@2y
 	@0m,@_m,@m
 	@wd
@@ -19,17 +20,20 @@ timesample:
 	@00ls,@__ls,@ls
 	@00000rs,@_____rs,@rs
 	@4y@0m@0dm@wdec@0h@0n@0s
+	@c
 -- TSF_Time.py run --
+「@c」→「1」
 「@000y,@___y,@4y,@0y,@_y,@2y」→「2017,2017,2017,17,17,17」
-「@0m,@_m,@m」→「05, 5,5」
-「@wd」→「0」
-「@0dm,@_dm,@dm」→「29,29,29」
-「@0h,@_h,@h」→「14,14,14」
-「@0m,@_m,@m」→「05, 5,5」
-「@0s,@_s,@s」→「30,30,30」
-「@00ls,@__ls,@ls」→「882,882,882」
-「@00000rs,@_____rs,@rs」→「882963,882963,882963」
-「@4y@0m@0dm@wdec@0h@0n@0s」→「20170529M144030」
+「@0m,@_m,@m」→「06, 6,6」
+「@wd」→「2」
+「@0dm,@_dm,@dm」→「07, 7,7」
+「@0h,@_h,@h」→「00, 0,0」
+「@0m,@_m,@m」→「06, 6,6」
+「@0s,@_s,@s」→「06, 6,6」
+「@00ls,@__ls,@ls」→「866,866,866」
+「@00000rs,@_____rs,@rs」→「866803,866803,866803」
+「@4y@0m@0dm@wdec@0h@0n@0s」→「20170607W004406」
+「@c」→「2」
 -- TSF_Time.py viewthey --
 TSF_Tab-Separated-Forth:
 	timecount:	#TSF_this	#TSF_fin.
