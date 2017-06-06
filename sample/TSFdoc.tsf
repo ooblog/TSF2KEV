@@ -9,7 +9,6 @@ TSFdocs_merge:
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_loop:	#TSF_this
 TSFdocs_loop:
 	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	#TSF_echo
-#!	TSF_carbondoc:	TSFdocs_basedoc:	#TSF_clonethe
 	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
 	TSF_carbontags:	TSFdocs_tags:	#TSF_clonethe	TSFtags_loop:	#TSF_this
 	#TSF_peekFthat	TSF_carbondoc:	#TSF_savetext

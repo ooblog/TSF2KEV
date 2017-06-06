@@ -1,0 +1,41 @@
+#! /usr/bin/env TSF
+TSF_Tab-Separated-Forth:
+	../docs/TSFindex.tsf	../sample/TSFdoc.tsf	2	#TSF_runagainN	#TSF_fin.
+TSFdocs_files:
+	../docs/index.html	../docs/404.html
+TSFdocs_basedocs:
+	index_html:	404_html:
+TSFdocs_baseMD:
+	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFabout}{?TSFbodyfooter}{?TSFhtmlfooter}
+TSFdocs_baseHTML:
+	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFabout}{?TSFbodyfooter}{?TSFhtmlfooter}
+TSFdocs_tags:
+	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+{?H1}
+	<h1>
+{?/H1}
+	</h1>
+{?H2}
+	<h2>
+{?/H2}
+	</h2>
+{?P}
+	<p>
+{?/P}
+	</p>
+{?CODE}
+	<pre><code>
+{?/CODE}
+	</code></pre>
+{?BR}
+	<br />
+{?INDENT}
+	    	
+{?TAB}
+	@T
+{?NL}
+	@E
+{?&lt}
+	&lt;
+{?&gt}
+	&gt;

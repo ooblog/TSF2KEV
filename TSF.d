@@ -51,13 +51,13 @@ void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマン�
 
 void TSF_sample_TSFdoc(){    //#TSFdoc:「TSFdoc.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","sample/README.tsf"],"\t"),'T');
+        "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","README.tsf"],"\t"),'T');
     TSF_Forth_setTSF("TSFdocs_help:",join([
         "usage: ./TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("TSFdocs_merge:",join([
         "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_loop:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("TSFdocs_loop:",join([
-        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","#TSF_echo","TSF_carbondoc:","TSFdocs_basedoc:","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
+        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("TSFtags_loop:",join([
         "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_TSFdoc");

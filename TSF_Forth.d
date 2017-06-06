@@ -962,7 +962,8 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
             TSF_Forth_merge(TSF_runagainN[0],null,true);
             chdir(dirName(absolutePath(TSF_runagainN[0])));
             TSF_Forth_mainfilepath(absolutePath(TSF_runagainN[0]));
-            TSF_Forth_mainandargvs(TSF_runagainN);  TSF_runagainN=[""];
+            TSF_Forth_mainandargvs(TSF_runagainN.length<2?[]:TSF_runagainN[1..$-1]);
+            TSF_runagainN=[""];
             TSF_Forth_samplerun(TSF_echo_log);
         }
         else{

@@ -631,7 +631,6 @@ TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO=[],[],[],[]
 TSF_stackthis,TSF_stackthat=TSF_Forth_1ststack(),TSF_Forth_1ststack()
 TSF_cardscount=0
 def TSF_Forth_initTSF(TSF_sysargvs=[],TSF_addcards=[]):    #TSFdoc:スタックやカードなどをまとめて初期化する(TSFAPI)。
-#    global TSF_mainandargvs
     global TSF_cardD,TSF_stackD,TSF_styleD,TSF_callptrD,TSF_cardO,TSF_stackO,TSF_styleO,TSF_callptrO
     global TSF_stackthis,TSF_stackthat,TSF_cardscount
     TSF_cardD={}
@@ -763,7 +762,7 @@ def TSF_Forth_run(TSF_run_log=None):    #TSFdoc:TSFデッキを走らせる。
             TSF_Forth_merge(TSF_runagainN[0],[],True)
             os.chdir(os.path.dirname(os.path.abspath(TSF_runagainN[0])))
             TSF_Forth_mainfilepath(os.path.abspath(TSF_runagainN[0]))
-            TSF_Forth_mainandargvs(TSF_runagainN);  TSF_runagainN=[""];
+            TSF_Forth_mainandargvs([] if len(TSF_runagainN) < 2 else TSF_runagainN[1:]);  TSF_runagainN=[""];
             TSF_Forth_run(TSF_echo_log)
         else:
             break
