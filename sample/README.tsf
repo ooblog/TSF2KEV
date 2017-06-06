@@ -30,8 +30,8 @@ TSFdocs_tags:
 	{$U_wine_title}	{$U_wine_href}	{$U_wine_text}	{?U_wine}
 	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFabout}	{?TSFreadmehead}	{?TSFhtmlheader}
 {?TSFhtmlheader}
-		{$TSFFhtmlheader}	
-{$TSFFhtmlheader}
+		{$TSFhtmlheader}	
+{$TSFhtmlheader}
 	<html lang="ja"><head>
 	 <meta charset="UTF-8" />
 	 <title>README.md</title>
