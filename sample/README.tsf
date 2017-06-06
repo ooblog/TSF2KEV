@@ -3,8 +3,14 @@ TSF_Tab-Separated-Forth:
 	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
 TSFdocs_files:
 	../README.md	../debug/README.html	sample_aboutTSF.tsf
-TSFdocs_basedoc:
+TSFdocs_basedocs:
+	TSFdocs_baseMD:	TSFdocs_baseHTML:	TSFdocs_baseTSF:
+TSFdocs_baseMD:
+	{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}
+TSFdocs_baseHTML:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
+TSFdocs_baseTSF:
+	{?TSFabout}
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
@@ -213,9 +219,8 @@ TSFdocs_tags:
 	
 	{?H2}ライセンス・著作権など。{?/H2}
 	{?P}
-	Copyright (c) 2017 ooblog{?BR}
-	License: MIT{?BR}
-	https://github.com/ooblog/TSF2KEV/blob/master/LICENSE{?BR}
+	&#35;! -- Copyright (c) 2017 ooblog --{?BR}
+	&#35;! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE{?BR}
 	{?/P}
 {?TSFhtmlfooter}
 		{$TSFhtmlfooter}	
@@ -372,3 +377,6 @@ TSFdocs_tags:
 	<	&lt;	
 {?&gt}
 	>	&gt;	
+
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT	https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

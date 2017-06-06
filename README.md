@@ -173,6 +173,5 @@ Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc�
 
 ## ライセンス・著作権など。
 
-Copyright (c) 2017 ooblog  
-License: MIT  
-https://github.com/ooblog/TSF2KEV/blob/master/LICENSE  
+&#35;! -- Copyright (c) 2017 ooblog --  
+&#35;! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE  
