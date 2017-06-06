@@ -1,0 +1,162 @@
+@charset "utf-8";
+@font-face{
+  font-family: "kan5x5comic";
+  src: url("https://ooblog.github.io/kan5x5comic.woff") format('woff');
+}
+.kan5x5comic{
+  font-family: "kan5x5comic";
+}
+@font-face{
+  font-family: "kan5x5";
+  src: url("https://ooblog.github.io/kan5x5.woff") format('woff');
+}
+.kan5x5{
+  font-family: "kan5x5";
+}
+body{
+  background-color: white;
+}
+mark{
+  background-color: white;
+  border: 1px pink solid;
+}
+mark.applogo{
+  border: 0px;
+}
+ mark.applogo > img{
+   margin: -1rem 0rem -1rem;
+   vertical-align: middle;
+   border: 1px pink solid;
+ }
+header{
+  border: 1px gray dotted;
+  padding: 1rem;
+}
+ .yonmoji_root{
+   font-family: "kan5x5comic";  font-size: 1rem;
+   line-height: 1rem;
+   float: left;
+   margin-top: -0.5rem;
+   padding-right: 0.5rem;
+ }
+ .yonmoji_root > a:nth-child(odd){
+   text-decoration: none;
+ }
+ .yonmoji_sitemap{
+   float: right;
+ }
+ yonmoji_both{
+   clear: both;
+ }
+section,aside,article{
+  margin-top: 1rem;
+  border: 2px black solid;
+  padding: 1rem;
+}
+input.yonmoji_entry{
+  border: solid 1px orange;
+  width: 12rem;
+}
+input.yonmoji_entry:focus{
+  border: solid 2px IndianRed;
+}
+ .yonmoji{
+   width: 100%;  margin: 0 auto;
+   text-align: center;
+   padding-top: 1rem;
+   padding-bottom: 0rem;
+ }
+ .yonmoji_logo{
+   font-family: "kan5x5comic";  font-size: 5rem;
+   line-height: 5rem;
+   width: 10rem;
+   height: 10rem;
+   margin: 0 auto;
+ }
+ .yonmoji_word{
+   font-family: "kan5x5comic";  font-size: 2rem;
+   line-height: 2rem;
+   float: left;
+   margin: 0rem;
+ }
+ .sidepages{
+  width: 20%; min-width: 200px;
+  padding: 0rem;
+  text-align: center;
+  float: right;
+ }
+ .sidepages ul{
+  margin-left: -2rem
+ }
+ .sidepages li{
+  margin-left: 0rem;
+  list-style-type: none;
+  display: inline-block;
+ }
+ article > div{
+  margin-top: 0.5rem;
+  border: 1px gray solid;
+  padding: 1rem;
+ }
+span.kan5x5comic{
+ font-family: "kan5x5comic";
+}
+p.capcenter{
+  text-align: center;
+}
+footer{
+  margin-top:1rem;
+  float: both;
+  border: 0px;
+  text-align: center;
+}
+ .gotop{
+  margin-top:1rem;
+  padding: 0rem;
+  width: 7rem;
+  height: 2rem;
+  float: right;
+  border: 0px;
+  text-align: right;
+  background-image: linear-gradient(to top right, transparent 48%, gray 50%, transparent 51%);
+ }
+p.ooblog{
+  margin-top:-1rem;
+  text-align: left;
+  padding: 1rem 1rem 0em;
+}
+dt{
+  font-weight: bold;
+  word-wrap: break-word; word-break: break-all;
+}
+ dl.faqlink > dt{
+  margin-left: 3rem;
+ }
+ dl.inputstroke > dt{
+  width: 15rem;
+  float: left;
+ }
+dd{
+  word-wrap: break-word; word-break: break-all;
+}
+ dl.faq > dd{
+  margin-left: 0px;
+ }
+ dl.faqlink > dd{
+  margin-left: 3rem;
+ }
+ dl.inputstroke > dd{
+  margin-left: 15rem;
+ }
+h1{ font-size: 2.0rem; margin: 1rem 0.5rem 0.5rem; }
+h2{ font-size: 1.8rem; margin: 1rem 0.5rem 0.5rem; }
+h3{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem; }
+h4{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem; }
+h5{ font-size: 1.2rem; margin: 1rem 0.5rem 0.5rem; }
+h6{ font-size: 1.0rem; margin: 1rem 0.5rem 0.5rem; }
+
+/*
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+*/
+
