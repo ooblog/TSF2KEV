@@ -146,8 +146,11 @@ long TSF_Time_meridian_micRosecond(){    //#TSF_doc:現在時刻マイクロ秒6
     return TSF_meridian_Enum[TSF_meridian.micRosecond]=TSF_meridian_Enum[TSF_meridian.micRosecond]!=TSF_Time_EnumNULL?TSF_meridian_Enum[TSF_meridian.micRosecond]:0;
 }
 
-long TSF_Time_Counter(){    //#TSF_doc:カウンターを数える。(TSFAPI)
+long TSF_Time_Counter(...){    //#TSF_doc:カウンターを数える。(TSFAPI)
     TSF_counter_Counter++;
+    if( _arguments.length>0 && _arguments[0]==typeid(long) ){
+        TSF_counter_Counter=va_arg!(long)(_argptr);
+    }
     return TSF_counter_Counter;
 }
 
@@ -208,6 +211,9 @@ string TSF_Time_getdaytime(...){    //#TSFdoc:現在日時で上書き。(TSFAPI
         TSF_tf=!count(TSF_tf,"@0c")?TSF_tf:TSF_tf.replace("@0c","%02d".format(TSF_Time_Counter()));
         TSF_tf=!count(TSF_tf,"@_c")?TSF_tf:TSF_tf.replace("@_c","%2d".format(TSF_Time_Counter()));
         TSF_tf=!count(TSF_tf,"@c")?TSF_tf:TSF_tf.replace("@c","%d".format(TSF_Time_Counter()));
+        TSF_tf=!count(TSF_tf,"@-1C")?TSF_tf:TSF_tf.replace("@-1C","%d".format(TSF_Time_Counter(-1)));
+        TSF_tf=!count(TSF_tf,"@0C")?TSF_tf:TSF_tf.replace("@0C","%d".format(TSF_Time_Counter(0)));
+        TSF_tf=!count(TSF_tf,"@C")?TSF_tf:TSF_tf.replace("@C","%d".format(TSF_Time_Counter(TSF_Time_Counter())));
 
         TSF_tfList[TSF_tfcount]=TSF_tf;
     }
@@ -230,7 +236,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timepop:",join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("timesample:",join([
-        "@c",
+        "{$TSFcounter@c}",
         "@000y,@___y,@4y,@0y,@_y,@2y",
         "@0m,@_m,@m",
         "@wd",
@@ -241,7 +247,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
         "@4y@0m@0dm@wdec@0h@0n@0s",
-        "@c",
+        "{$TSFcounter@c}",
         ],"\t"),'N');
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);

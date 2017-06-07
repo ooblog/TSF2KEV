@@ -136,8 +136,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。  
 ☐Calcの動作がそもそも重いorz  
 ☐D言語で現在時刻(StopWatchではなく「現在時刻」)のミリ秒以下を取得する方法が不明oxL ので「@ls」「@rs」系が0を返す。  
-☐Calc以外にもTimeとかMatchとかShuffleとかUrlpathモジュールなどまだまだ未完成だけど「[TSFdoc.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/TSFdoc.tsf "TSF2KEV/TSFdoc.tsf at master ooblog/TSF2KEV")」がひとまず動き出したのでTSFドキュメントの整備とか「[約四文字](https://ooblog.github.io/ "「約四文字」(http://ooblog.github.io/)")」のサイトジェネレーターとか置き換えたい。  
-☐CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
+☐「docs」フォルダでTSFドキュメントの整備中。CalcとTimeのフォーマット仕様解説はaboutではなくTSFドキュメントのhtmlに用意する予定。  
 ☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。  
 
 ## Vimシンタックスの設定など。

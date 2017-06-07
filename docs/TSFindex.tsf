@@ -15,6 +15,7 @@ KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
+	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
 	{?TITLE_index}	{?TITLE_404}	{?TITLE_TSFdoc}	{?TITLE_KEV2}	{?TITLE}	{?MODIFY}
 	{?TSFhtmlheader}	{?TSFbodyheader}	{?TSFasidenav}	{?TSFsections}	{?TSFbodyfooter}	{?TSFhtmlfooter}
 {?TSFhtmlheader}
@@ -48,11 +49,27 @@ TSFdocs_tags:
 	 <section class="mainpages">
 	  <h1>{?TITLE}</h1>
 	  <p>
-	   version(branch):20170528U134416{?MODIFY}<br />
+	   version(branch):20170528U134416{?MODIFY}(執筆途中です)<br>
 	  </p>
 {?TSFsections}
 	{$TSFsection_index}	{$TSFsection_404}	{$TSFsection_TSFdoc}	{$TSFsection_KEV2}
 {$TSFsection_index}
+	{?TSFlicense00}
+	  <p>
+	   ※D言語もしくはPythonがインストールされているものとします(Linuxの場合Python2系が最初から入ってる場合があります)。<br>
+	  </p>
+	  <dl><dt>Downloads - D Programming Language</dt><dd><a href="http://choosealicense.com/licenses/mit/" title="Downloads - D Programming Language">https://dlang.org/download.html</a></dd></dl>
+	  <dl><dt>Python Release Python 3.4.4 | Python.org</dt><dd><a href="https://www.python.org/downloads/release/python-344/" title="Python Release Python 3.4.4 | Python.org">https://www.python.org/downloads/release/python-344/</a></dd></dl>
+	  <p>
+	   ※Puppy Linux以外のOSでも動作すると思いますが開発環境関連リンクも併記。<br>
+	  </p>
+	  <dl><dt>Puppy Linux Home</dt><dd><a href="http://puppylinux.com/" title="Puppy Linux Home">http://puppylinux.com/</a></dd></dl>
+	  <dl><dt>Portable Wine</dt><dd><a href="http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html" title="Portable Wine">http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html</a></dd></dl>
+	 </section>
+	{?TSFlicense02}
+	 </section>
+	 <section>
+	  <h2 id="License-3">{?TSFlicense03title}</h2>
 	 </section>
 {$TSFsection_404}
 	  <ul>
@@ -62,9 +79,81 @@ TSFdocs_tags:
 	  </ul>
 	 </section>
 {$TSFsection_TSFdoc}
+	{?TSFlicense00}
+	  <p>
+	   ※TSFdocはTSFの一部として組み込まれています。<br>
+	  </p>
+	  <dl><dt>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</dt><dd><a href="https://ooblog.github.io/TSF2KEV/index.html" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。">https://ooblog.github.io/TSF2KEV/index.html</a></dd></dl>
+	 </section>
+	{?TSFlicense02}
+	 </section>
+	 <section>
+	  <h2 id="License-3">{?TSFlicense03title}</h2>
 	 </section>
 {$TSFsection_KEV2}
+	{?TSFlicense00}
+	  <p>
+	   ※Vimが別途インストールされているものとします(Vimのバージョン等は環境毎に差異があります)。<br>
+	  </p>
+	  <dl><dt>Ubuntu – trusty の vim-gtk パッケージに関する詳細</dt><dd><a href="https://packages.ubuntu.com/trusty/vim-gtk" title="Ubuntu – trusty の vim-gtk パッケージに関する詳細">https://packages.ubuntu.com/trusty/vim-gtk</a></dd></dl>
+	  <dl><dt>Vim — KaoriYa</dt><dd><a href="https://www.kaoriya.net/software/vim/](https://www.kaoriya.net/software/vim/" title="Vim — KaoriYa">https://www.kaoriya.net/software/vim/](https://www.kaoriya.net/software/vim/</a></dd></dl>
 	 </section>
+	{?TSFlicense02}
+	 </section>
+	 <section>
+	  <h2 id="License-3">{?TSFlicense03title}</h2>
+	 </section>
+{?TSFlicense00title}
+	⓪-0．ライセンスの解説など
+{?TSFlicense00}
+	{$TSFlicense00}
+{$TSFlicense00}
+	  <ul>
+	   <li><a href="#License-0" title="{?TSFlicense00title}">{?TSFlicense00title}</a></li>
+	   <li><a href="#License-1" title="{?TSFlicense01title}">{?TSFlicense01title}</a></li>
+	   <li><a href="#License-2" title="{?TSFlicense02title}">{?TSFlicense02title}</a></li>
+	   <li><a href="#License-3" title="{?TSFlicense03title}">{?TSFlicense03title}</a></li>
+	  </ul>
+	 </section>
+	 <section>
+	  <h2 id="License-0">{?TSFlicense00title}</h2>
+	   <p>※「MIT License」準拠。<br></p>
+	   <dl><dt>MIT License - Choose a License</dt><dd><a href="http://choosealicense.com/licenses/mit/" title="MIT License - Choose a License">http://choosealicense.com/licenses/mit/</a></dd></dl>
+	   <dl><dt>licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN</dt><dd><a href="https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license" title="licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN">https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license</a></dd></dl>
+	   <dl><dt>MITライセンスを1行1行読んでいく | プログラミング | POSTD</dt><dd><a href="http://postd.cc/mit-license-line-by-line/" title="MITライセンスを1行1行読んでいく | プログラミング | POSTD">http://postd.cc/mit-license-line-by-line/</a></dd></dl>
+	 </section>
+	 <section>
+	  <h2 id="License-0">{?TSFlicense01title}</h2>
+	  <p>
+	  「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および<br>
+	  「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。<br> 
+	  </p>
+{?TSFlicense01title}
+	⓪-1．動作環境
+{?TSFlicense02title}
+	⓪-2．インストール＆セットアップ＆アンインストール
+{?TSFlicense02}
+	{$TSFlicense02}
+{$TSFlicense02}
+	 <section>
+	  <h2 id="License-2">{?TSFlicense02title}</h2>
+	   <p>
+	    gitでリポジトリ「https://github.com/ooblog/TSF2KEV.git」を「Clone」するか、<br>
+	    「https://github.com/ooblog/TSF2KEV/archive/master.zip」を「Download ZIP」して展開すると、<br>
+	    「TSF2KEV」フォルダが作成されます。<br>
+	   </p>
+	   <dl><dt>プログラミング言語「TSF_Tab-Separated-Forth」開発中。</dt><dd><a href="https://github.com/ooblog/TSF2KEV" title="プログラミング言語「TSF_Tab-Separated-Forth」開発中。">https://github.com/ooblog/TSF2KEV</a></dd></dl>
+	   <p>
+	    VimでTSFを編集する場合は「<a href="https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim" title="TSF2KEV/tsf.vim at master · ooblog/TSF2KEV">vimsyntax/tsf.vim</a>」を「~/.vim/syntax/tsf.vim」にコピー。<br>
+	   </p>
+	   {?CODE}
+	   syntax on
+	   au BufRead,BufNewFile *.tsf set filetype=tsf
+	   autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
+	   command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
+	   {?/CODE}
+{?TSFlicense03title}
+	⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン
 {?TSFbodyfooter}
 	{$TSFbodyfooter}
 {$TSFbodyfooter}

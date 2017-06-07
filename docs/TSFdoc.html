@@ -22,8 +22,53 @@
  <section class="mainpages">
   <h1>「TSFdoc」は「TSF2KEV」を用いたドキュメントジェネレーターです。</h1>
   <p>
-   version(branch):20170528U134416	modify:20170606T235433<br />
-  </p> </section>
+   version(branch):20170528U134416	modify:20170607W141323(執筆途中です)<br>
+  </p>  <ul>
+   <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
+   <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
+   <li><a href="#License-2" title="⓪-2．インストール＆セットアップ＆アンインストール">⓪-2．インストール＆セットアップ＆アンインストール</a></li>
+   <li><a href="#License-3" title="⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン</a></li>
+  </ul>
+ </section>
+ <section>
+  <h2 id="License-0">⓪-0．ライセンスの解説など</h2>
+   <p>※「MIT License」準拠。<br></p>
+   <dl><dt>MIT License - Choose a License</dt><dd><a href="http://choosealicense.com/licenses/mit/" title="MIT License - Choose a License">http://choosealicense.com/licenses/mit/</a></dd></dl>
+   <dl><dt>licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN</dt><dd><a href="https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license" title="licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN">https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license</a></dd></dl>
+   <dl><dt>MITライセンスを1行1行読んでいく | プログラミング | POSTD</dt><dd><a href="http://postd.cc/mit-license-line-by-line/" title="MITライセンスを1行1行読んでいく | プログラミング | POSTD">http://postd.cc/mit-license-line-by-line/</a></dd></dl>
+ </section>
+ <section>
+  <h2 id="License-0">⓪-1．動作環境</h2>
+  <p>
+  「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および<br>
+  「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。<br> 
+  </p>
+  <p>
+   ※TSFdocはTSFの一部として組み込まれています。<br>
+  </p>
+  <dl><dt>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</dt><dd><a href="https://ooblog.github.io/TSF2KEV/index.html" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。">https://ooblog.github.io/TSF2KEV/index.html</a></dd></dl>
+ </section>
+ <section>
+  <h2 id="License-2">⓪-2．インストール＆セットアップ＆アンインストール</h2>
+   <p>
+    gitでリポジトリ「https://github.com/ooblog/TSF2KEV.git」を「Clone」するか、<br>
+    「https://github.com/ooblog/TSF2KEV/archive/master.zip」を「Download ZIP」して展開すると、<br>
+    「TSF2KEV」フォルダが作成されます。<br>
+   </p>
+   <dl><dt>プログラミング言語「TSF_Tab-Separated-Forth」開発中。</dt><dd><a href="https://github.com/ooblog/TSF2KEV" title="プログラミング言語「TSF_Tab-Separated-Forth」開発中。">https://github.com/ooblog/TSF2KEV</a></dd></dl>
+   <p>
+    VimでTSFを編集する場合は「<a href="https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim" title="TSF2KEV/tsf.vim at master · ooblog/TSF2KEV">vimsyntax/tsf.vim</a>」を「~/.vim/syntax/tsf.vim」にコピー。<br>
+   </p>
+   <pre><code>
+   syntax on
+   au BufRead,BufNewFile *.tsf set filetype=tsf
+   autocmd BufNewFile,BufRead *.tsf nnoremap &lt;F5&gt; :!TSF %&lt;CR&gt;
+   command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
+   </code></pre>
+ </section>
+ <section>
+  <h2 id="License-3">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン</h2>
+ </section>
 <div class="gotop"><a href="#top">↑Top</a></div>
 <footer>
  <p>site generator "<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/TSFdoc.tsf" title="TSF2KEV/TSFdoc.tsf at master · ooblog/TSF2KEV">TSFdoc.tsf</a>" repository：<a href="https://github.com/ooblog/TSF2KEV" title="ooblog/TSF2KEV: プログラミング言語「TSF_Tab-Separated-Forth」開発中。">https://github.com/ooblog/TSF2KEV</a></p>

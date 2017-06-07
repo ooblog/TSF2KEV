@@ -146,9 +146,10 @@ def TSF_Time_meridian_micRosecond():    #TSF_doc:現在時刻マイクロ秒6桁
     TSF_meridian_Enum[TSF_meridian_micRosecond]=TSF_meridian_Enum[TSF_meridian_micRosecond] if TSF_meridian_Enum[TSF_meridian_micRosecond] != TSF_Time_EnumNULL else TSF_diff_now.microsecond
     return TSF_meridian_Enum[TSF_meridian_micRosecond]
 
-def TSF_Time_Counter():    #TSF_doc:カウンターを数える。(TSFAPI)
+def TSF_Time_Counter(TSF_Time_countset=None):    #TSF_doc:カウンターを数える。(TSFAPI)
     global TSF_counter_Counter
     TSF_counter_Counter+=1
+    if TSF_Time_countset != None:  TSF_counter_Counter=TSF_Time_countset
     return TSF_counter_Counter
 
 def TSF_Time_getdaytime(TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s"):    #TSFdoc:現在日時で上書き。(TSFAPI)
@@ -204,6 +205,9 @@ def TSF_Time_getdaytime(TSF_daytimeformat="@4y@0m@0dm@wdec@0h@0n@0s"):    #TSFdo
         TSF_tf=TSF_tf if not "@0c" in TSF_tf else TSF_tf.replace("@0c","{0:0>2}".format(TSF_Time_Counter()))
         TSF_tf=TSF_tf if not "@_c" in TSF_tf else TSF_tf.replace("@_c","{0: >2}".format(TSF_Time_Counter()))
         TSF_tf=TSF_tf if not "@c" in TSF_tf else TSF_tf.replace("@c",str(TSF_Time_Counter()))
+        TSF_tf=TSF_tf if not "@-1C" in TSF_tf else TSF_tf.replace("@-1C",str(TSF_Time_Counter(-1)))
+        TSF_tf=TSF_tf if not "@0C" in TSF_tf else TSF_tf.replace("@0C",str(TSF_Time_Counter(0)))
+        TSF_tf=TSF_tf if not "@C" in TSF_tf else TSF_tf.replace("@C",str(TSF_Time_Counter(TSF_Time_Counter())))
 
         TSF_tfList[TSF_tfcount]=TSF_tf
     TSF_daytimeformat="@".join(TSF_tfList)
@@ -224,7 +228,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timepop:","\t".join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("timesample:","\t".join([
-        "@c",
+        "{$TSFcounter@c}",
         "@000y,@___y,@4y,@0y,@_y,@2y",
         "@0m,@_m,@m",
         "@wd",
@@ -235,7 +239,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
         "@00ls,@__ls,@ls",
         "@00000rs,@_____rs,@rs",
         "@4y@0m@0dm@wdec@0h@0n@0s",
-        "@c",
+        "{$TSFcounter@c}",
         ]),'N')
     TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
