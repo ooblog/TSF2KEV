@@ -231,6 +231,15 @@ TSFdocs_tags:
 {?TSFbodyfooter}
 	{$TSFbodyfooter}
 {$TSFbodyfooter}
+	<section>
+	 <h2 id="address-0">{?TSFaddress00title}</h2>
+	 <p>
+	  更新情報はGitHubやブログを確認してください。<br>
+	 </p>
+	 <dl><dt>ooblog/TSF2KEV(GitHub)</dt><dd><a href="https://github.com/ooblog/TSF2KEV" title="ooblog/TSF2KEV(GitHub)">https://github.com/ooblog/TSF2KEV</a></dd></dl>
+	 <dl><dt>[TSF] - 大風呂ダ敷</dt><dd><a href="http://d.hatena.ne.jp/ooblog/searchdiary?word=*[TSF]" title="[TSF] - 大風呂ダ敷">http://d.hatena.ne.jp/ooblog/searchdiary?word=*[TSF]</a></dd></dl>
+	 <dl><dt>[kanedit] - 大風呂ダ敷</dt><dd><a href="http://d.hatena.ne.jp/ooblog/searchdiary?word=*[kanedit]" title="[kanedit] - 大風呂ダ敷">http://d.hatena.ne.jp/ooblog/searchdiary?word=*[kanedit]</a></dd></dl>
+	</section>
 	
 	<div class="gotop"><a href="#top">↑Top</a></div>
 	<footer>
@@ -239,7 +248,7 @@ TSFdocs_tags:
 	  #! -- Copyright (c) 2017 ooblog --<br>
 	  #! License: MIT　<a href="https://github.com/ooblog/TSF2KEV/blob/master/LICENSE" title="TSF2KEV/LICENSE at master · ooblog/TSF2KEV">https://github.com/ooblog/TSF2KEV/blob/master/LICENSE</a><br>
 	 </p>
-</footer>
+	</footer>
 {?TSFhtmlfooter}
 	{$TSFhtmlfooter}
 {$TSFhtmlfooter}

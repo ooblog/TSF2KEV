@@ -100,3 +100,6 @@ aboutTIME:
 	　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。
 	　一週間の曜日「@wd」は月曜0~日曜7、ISOの曜日「@iw」は月曜1~日曜7の予定。
 	　「@T」でタブ、「@N」で改行に置換されます。
+
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
