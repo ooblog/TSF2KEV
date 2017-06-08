@@ -193,7 +193,7 @@ TSFdocs_tags:
 	{?P}
 	 シンタックスファイル「{?A_vimsyntax}」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。{?BR}
 	「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。{?BR}
-	Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追加する。{?BR}
+	Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追記する。{?BR}
 	ついでに「{?A_TSF2kanedit}」の設定もおまけで書いてみた。{?BR}
 	{?/P}
 	{?CODE}

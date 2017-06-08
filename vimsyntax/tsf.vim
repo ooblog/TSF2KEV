@@ -7,7 +7,7 @@
 "syntax iskeyword	[,#,@,_,-,|,.,],48-57,192-255
 setlocal iskeyword=32-127,192-255
 
-syntax match tsfComment		"^#.*$"
+syntax match tsfComment		"^#!.*$"
 syntax match tsfIdentifier		"^[^\t^\n]*\ze\n"
 syntax match tsfIdentifier		"^[^\t^\n]*\ze\t"
 syntax match tsfStatement	"\t\zs\#[^\t^\n]*\ze\t"

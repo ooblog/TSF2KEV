@@ -104,6 +104,10 @@ span.kan5x5comic{
 p.capcenter{
   text-align: center;
 }
+pre{
+  margin-top:1rem;
+  border: 1px gray solid;
+}
 footer{
   margin-top:1rem;
   float: both;
@@ -148,12 +152,12 @@ dd{
  dl.inputstroke > dd{
   margin-left: 15rem;
  }
-h1{ font-size: 2.0rem; margin: 1rem 0.5rem 0.5rem; }
-h2{ font-size: 1.8rem; margin: 1rem 0.5rem 0.5rem; }
-h3{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem; }
-h4{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem; }
+h1{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem; }
+h2{ font-size: 1.5rem; margin: 1rem 0.5rem 0.5rem; }
+h3{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem; }
+h4{ font-size: 1.3rem; margin: 1rem 0.5rem 0.5rem; }
 h5{ font-size: 1.2rem; margin: 1rem 0.5rem 0.5rem; }
-h6{ font-size: 1.0rem; margin: 1rem 0.5rem 0.5rem; }
+h6{ font-size: 1.1rem; margin: 1rem 0.5rem 0.5rem; }
 
 /*
 #! -- Copyright (c) 2017 ooblog --
