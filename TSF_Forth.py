@@ -654,10 +654,11 @@ def TSF_Forth_importlist(TSF_import=None):    #TSFdoc:モジュール一覧を�
     return TSF_importlist
 
 def TSF_Forth_style(TSF_the,TSF_style=None):    #TSFdoc:スタックの表示スタイルを指定する(TSFAPI)。
-    global TSF_styles
+    global TSF_styleD
     if TSF_the in TSF_stackD:
         if TSF_style != None:
-            TSF_styleD[TSF_the]=TSF_style
+            if len(TSF_style)>0:
+                TSF_styleD[TSF_the]=TSF_style[0]
         TSF_style=TSF_styleD[TSF_the]
     else:
         TSF_style='T'

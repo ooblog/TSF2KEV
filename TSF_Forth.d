@@ -822,9 +822,16 @@ string[] TSF_Forth_importlist(...){    //#TSFdoc:モジュール一覧を管理�
 
 char TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示スタイルを指定する(TSFAPI)。
     char TSF_style='T';
-    if( TSF_the !in TSF_stackD ){
-        if( _arguments.length>0 && _arguments[0]==typeid(char) ){
-            TSF_styleD[TSF_the]=va_arg!(char)(_argptr);
+    if( TSF_the in TSF_stackD ){
+        if( _arguments.length>0 ){
+            if( _arguments[0]==typeid(char) ){
+                TSF_styleD[TSF_the]=va_arg!(char)(_argptr);
+            }
+            else if( _arguments[0]==typeid(string) ){
+                string TSF_stylestr=va_arg!(string)(_argptr);
+//                if( TSF_stylestr.length>0 ){ TSF_styleD[TSF_the]=TSF_stylestr[0]; }.front
+                if( TSF_stylestr.length>0 ){ TSF_styleD[TSF_the]=to!char(TSF_stylestr.front); }
+            }
         }
         TSF_style=TSF_styleD[TSF_the];
     }

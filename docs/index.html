@@ -22,7 +22,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170528U134416	modify:20170609F112555(執筆途中です)<br>
+   version(branch):20170528U134416	modify:20170609F132204(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
@@ -158,7 +158,8 @@
  <section>
   <h2 id="grammar-2">①-2．TSF式には変数の型どころか変数自体が存在しません。</h2>
   <p>
-   TSFは整数も小数も分数もカード(文字列)に置き換えます。<br>
+   TSFは整数も小数も分数もカード(文字列)に置き換えます。カードの束をスタックと呼び、スタックの集合をデッキと呼びます。<br>
+   「#TSF_calc」ではスタックを配列に見立てて直接式に組み込む事は可能ですが、演算結果をthatスタックに積み上げる行為を変数に代入と呼ぶかは微妙です。<br>
   </p>
  </section>
  <section>
