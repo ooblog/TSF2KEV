@@ -1,0 +1,6 @@
+TSF_Tab-Separated-Forth:
+	OTNtest:	#TSF_this	#TSF_fin.
+OTNtest:
+	O	#TSF_stylethis	#TSF_viewthis
+	T	#TSF_stylethis	#TSF_viewthis
+	N	#TSF_stylethis	#TSF_viewthis

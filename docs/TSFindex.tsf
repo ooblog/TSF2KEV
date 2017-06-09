@@ -16,6 +16,7 @@ KEV2_html:
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
 	{?TITLE}	{?MODIFY}
+	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
 	{?TSFhtmlheader}	{?TSFbodyheader}	{?TSFasidenav}	{?TSFsections}	{?TSFbodyfooter}	{?TSFhtmlfooter}
@@ -60,10 +61,10 @@ TSFdocs_tags:
 	   <li><a href="#License-1" title="{?TSFlicense01title}">{?TSFlicense01title}</a></li>
 	   <li><a href="#License-2" title="{?TSFlicense02title}">{?TSFlicense02title}</a></li>
 	   <li><a href="#License-3" title="{?TSFlicense03title}">{?TSFlicense03title}</a></li>
-	   <li>①-0．TSF言語の文法、Forthとの差異(ワードをカードと呼ぶ)など。</li>
-	   <li>①-1．変数の型どころか変数自体が存在しません。</li>
-	   <li>①-2．FOR文が無いので再帰がループです。</li>
-	   <li>①-3．IF文が無いので式(比較演算子)を用います。</li>
+	   <li><a href="#grammar-0" title="{?TSFgrammar00title}">{?TSFgrammar00title}</a></li>
+	   <li><a href="#grammar-1" title="{?TSFgrammar01title}">{?TSFgrammar01title}</a></li>
+	   <li><a href="#grammar-2" title="{?TSFgrammar02title}">{?TSFgrammar02title}</a></li>
+	   <li><a href="#grammar-3" title="{?TSFgrammar03title}">{?TSFgrammar03title}</a></li>
 	   <li>②-0．「TSF.d」「TSF.py」のAPI一覧。</li>
 	   <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンドでコマンド一覧表示。</li>
 	   <li>③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧<。/li>
@@ -111,11 +112,68 @@ TSFdocs_tags:
 	  <p>
 	   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「/root/my-applications/bin/TSF」など)にコピーするとLinuxの場合「*.tsf」が実行できるようになるはずです。<br>
 	  </p>
+	  <dl><dt>env - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Env" title="env - Wikipedia">https://ja.wikipedia.org/wiki/Env</a></dd></dl>
+	  <dl><dt>シバン (Unix) - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)" title="シバン (Unix) - Wikipedia">https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)</a></dd></dl>
 	 </section>
 	 <section>
 	  <h2 id="License-3">{?TSFlicense03title}</h2>
 	  <p>
 	   未実装の#関数カードや#関数カード内の未実装な機能などが存在します。<br>
+	  </p>
+	  <ul>
+	   <li>「#TSF_calender」でISO週番号や徹夜日時などが未実装。「TSF_Time」モジュールでタイマー系が未実装。</li>
+	   <li>「TSF_Calc」モジュールで分数の小数変換機能細かい版が未実装(RPN経由で高速に近似を求める事は可能)。</li>
+	   <li>「TSF_Shuffle」モジュールPPPP関連で「C」「V」「A」「Q」「I」「R」「H」「L」副詞が未実装。</li>
+	   <li>「TSF_Match」モジュールで「R」副詞が未実装。「count」動詞が未実装。</li>
+	  </ul>
+	 </section>
+	 <section>
+	  <h2 id="grammar-0">{?TSFgrammar00title}</h2>
+	  <p>
+	   そもそもForthとかRPN自体今聞いた人はwikipediaなどを軽く参考にしてもらって、<br>
+	   「TSF_Tab-Separated-Forth」ではForthとの違いを説明しながら構文や式の概要を説明していきます。<br>
+	  </p>
+	  <dl><dt>Forth - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Forth" title="Forth - Wikipedia">https://ja.wikipedia.org/wiki/Forth</a></dd></dl>
+	  <dl><dt>逆ポーランド記法 - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E9%80%86%E3%83%9D%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%E8%A8%98%E6%B3%95" title="逆ポーランド記法 - Wikipedia">https://ja.wikipedia.org/wiki/%E9%80%86%E3%83%9D%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%E8%A8%98%E6%B3%95</a></dd></dl>
+	  <dl><dt>Gforth マニュアル</dt><dd><a href="http://www.h7.dion.ne.jp/~samwyn/forth/gforth/index.html" title="Gforth マニュアル">http://www.h7.dion.ne.jp/~samwyn/forth/gforth/index.html</a></dd></dl>
+	  <p>
+	   あなたが知っている(もしくは今知った)Forthはコンパイラですが、TSFはインタプリタです。<br>
+	   Forthはワードを定義しますが、TSFはカードの束をスタックと呼び、スタックを呼び出す形になります(スタックの集合をデッキと呼びます)。<br>
+	   Forthの式は逆ポーランド記法ですが、TSFの式は「#TSF_RPN」と「#TSF_calc」系列の２種類あり、括弧や中置記法を用いた式の使用も可能です。<br>
+	   Forthのスタックには型が存在する(演算結果の型チェックが行われていないだけ)と思われるが、TSFは整数も小数も分数も文字列に置き換えます。<br>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="grammar-1">{?TSFgrammar01title}</h2>
+	  <p>
+	   TSFに存在する構文で用いる記号はタブ文字「\t」による区切りと「#!」によるコメントと、スタック名末尾「:」と関数カード先頭の「#」ぐらいです。
+	  </p>
+	  <dl>「\t(tab)」<dt></dt><dd>カード(文字列)はタブ文字で区切るので、タブ文字を視認しやすいエディタを用いてください。</dd></dl>
+	  <dl>「#!(shebang)」<dt></dt><dd>インタプリタ指定「#! /usr/bin/env TSF」を成立させるためにシバン「#!」で始まる行はコメント扱いにして読み飛ばします。</dd></dl>
+	  <dl>「:(coron)」<dt></dt><dd>スタック名に必須ではありませんが「#TSF_calc」内でスタック名を扱う際に必要。あとLTSVを読み込む「L」副詞で用いる予定。</dd></dl>
+	  <dl>「#(sharp)」<dt></dt><dd>関数カード名に必須ではありませんが視認性の関係でTSFの関数には頭にシャープが付いてます。</dd></dl>
+	  <p>
+	   漢直関連で「#」一文字のスタック名を扱うので「#」だけでコメントとか関数カードだとか「:」が無いからスタックじゃないなどと勘違いしないよう注意。<br>
+	  </p>
+	  <p>
+	   行頭がタブ文字「\t」でもシバン「#!」でもない場合はスタック名の宣言で、行頭がタブ文字の場合はスタックを構成するカード束です。<br>
+	   スタック名とカードの束をまとまて一行で記述(ワンライナー)する事も可能です。<br>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="grammar-2">{?TSFgrammar02title}</h2>
+	  <p>
+	   TSFは整数も小数も分数もカード(文字列)に置き換えます。<br>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="grammar-3">{?TSFgrammar03title}</h2>
+	  <p>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="grammar-4">{?TSFgrammar04title}</h2>
+	  <p>
 	  </p>
 	 </section>
 {$TSFsection_404}
@@ -131,7 +189,9 @@ TSFdocs_tags:
 	   <li><a href="#License-1" title="{?TSFlicense01title}">{?TSFlicense01title}</a></li>
 	   <li><a href="#License-2" title="{?TSFlicense02title}">{?TSFlicense02title}</a></li>
 	   <li><a href="#License-3" title="{?TSFlicense03title}">{?TSFlicense03title}</a></li>
-	   <li>①-0．「TSFdoc」の使い方</li>
+	   <li>①-0．「TSFdoc」の使い方。</li>
+	   <li>①-1．「TSFdoc」で必要になるスタックと上書きしてはいけないスタック。</li>
+	   <li>①-2．「TSFdoc」の文法っぽい慣習。</li>
 #!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li>{?TSFfaq00title}</li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
@@ -157,8 +217,11 @@ TSFdocs_tags:
 	   <li><a href="#License-1" title="{?TSFlicense01title}">{?TSFlicense01title}</a></li>
 	   <li><a href="#License-2" title="{?TSFlicense02title}">{?TSFlicense02title}</a></li>
 	   <li><a href="#License-3" title="{?TSFlicense03title}">{?TSFlicense03title}</a></li>
-	   <li>①-0．漢直入力と漢直検索の解説。漢字変換と何が違うのか。</li>
-	   <li>②-0．「KEV2」の使い方</li>
+	   <li>①-0．「KEV2」の使い方概要。漢字変換と漢直入力の違いや単漢字検索などの解説。</li>
+	   <li>①-1．「KEV2」がVimを拡張する操作(マッピング)</li>
+	   <li>①-2．「KEV2」がVimに追加するメニュー</li>
+	   <li>②-0．漢字配列の解説。</li>
+	   <li>②-1．都道府県国名などの字引。</li>
 #!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li>{?TSFfaq00title}</li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
@@ -288,6 +351,16 @@ TSFdocs_tags:
 	②-0．「TSFdoc」のＦＡＱ。
 {$TSFfaq00_KEV2}
 	③-0．「KEV2」のＦＡＱ。
+{?TSFgrammar00title}
+	①-0．TSF言語の文法、Forthとの差異(ワードをカードと呼ぶ)など。
+{?TSFgrammar01title}
+	①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。
+{?TSFgrammar02title}
+	①-2．TSF式には変数の型どころか変数自体が存在しません。
+{?TSFgrammar03title}
+	①-3．TSFにはFOR文が無いので再帰がループです。
+{?TSFgrammar04title}
+	①-4．TSFにはIF文が無いので式(比較演算子)を用います。
 {?CODE}
 	<pre><code>
 {?/CODE}
@@ -306,3 +379,6 @@ TSFdocs_tags:
 	&gt;
 {?MODIFY}
 	@Tmodify:@4y@0m@0dm@wdec@0h@0n@0s
+
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

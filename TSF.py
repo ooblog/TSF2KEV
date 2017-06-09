@@ -307,6 +307,5 @@ else:
 sys.exit(0)
 
 
-# Copyright (c) 2017 ooblog
-# License: MIT
-# https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

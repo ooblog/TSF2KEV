@@ -392,6 +392,5 @@ endfunction
 call KEV2setup()
 finish
 
-"# Copyright (c) 2016-2017 ooblog
-"# License: MIT
-"# https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+"#! -- Copyright (c) 2016-2017 ooblog --
+"#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

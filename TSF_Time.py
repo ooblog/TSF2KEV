@@ -248,6 +248,5 @@ if __name__=="__main__":
     TSF_Time_debug(TSF_Io_argvs(["python","TSF_Time.py"]))
 
 
-# Copyright (c) 2017 ooblog
-# License: MIT
-# https://github.com/ooblog/TSF1KEV/blob/master/LICENSE
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

@@ -870,6 +870,5 @@ if __name__=="__main__":
     TSF_Forth_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))
 
 
-# Copyright (c) 2017 ooblog
-# License: MIT
-# https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

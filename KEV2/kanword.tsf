@@ -1,5 +1,5 @@
 TSF_Tab-Separated-Forth:	TSF_fin.
-readme	Q.この[kanword.tsv]は何ですか。 A.漢直エディタ「kanedit」用の汎用辞書です。# Copyright (c) 2016-2017 ooblog # License: MIT # https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+readme	Q.この[kanword.tsv]は何ですか。 A.漢直入力「kanedit.vim」用の汎用辞書です。#! -- Copyright (c) 2016-2017 ooblog -- #! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
 かんちょく	漢直
 ハリツケ	貼付
 ひらがな	平仮名

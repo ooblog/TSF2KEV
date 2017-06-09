@@ -824,7 +824,7 @@ char TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示ス
     char TSF_style='T';
     if( TSF_the !in TSF_stackD ){
         if( _arguments.length>0 && _arguments[0]==typeid(char) ){
-            TSF_styleD[TSF_the]=TSF_style;
+            TSF_styleD[TSF_the]=va_arg!(string)(_argptr);
         }
         TSF_style=TSF_styleD[TSF_the];
     }
@@ -1110,6 +1110,5 @@ unittest {
 }
 
 
-// Copyright (c) 2017 ooblog
-// License: MIT
-// https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+//#! -- Copyright (c) 2017 ooblog --
+//#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

@@ -361,6 +361,5 @@ if __name__=="__main__":
     TSF_Io_debug(TSF_Io_argvs(sys.argv))
 
 
-# Copyright (c) 2017 ooblog
-# License: MIT
-# https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
+#! -- Copyright (c) 2017 ooblog --
+#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
