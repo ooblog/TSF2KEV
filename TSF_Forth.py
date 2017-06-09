@@ -833,10 +833,6 @@ def TSF_Forth_stackO(TSF_Shuffle_stackO=None):    #TSFdoc:TSF_stackOの取得。
         TSF_stackO=TSF_Shuffle_stackO
     return TSF_stackO
 
-def TSF_Forth_style():    #TSFdoc:TSF_stackDの取得。(TSFAPI)
-    global TSF_styleD
-    return TSF_styleD
-
 
 TSF_Initcalldebug=[TSF_Forth_Initcards]
 def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。

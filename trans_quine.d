@@ -27,11 +27,11 @@ void main(string[] sys_argvs){
     TSF_Forth_setTSF("quine_view:",join([
         "quine_TSF:","quine_Python:","quine_D:"],"\t"),'T');
     TSF_Forth_setTSF("quine_TSF:",join([
-        "#TSF_viewthey"],"\t"),'N');
+        "#TSF_viewthey"],"\t"),'T');
     TSF_Forth_setTSF("quine_Python:",join([
-        "#TSF_Python"],"\t"),'N');
+        "#TSF_Python"],"\t"),'T');
     TSF_Forth_setTSF("quine_D:",join([
-        "#TSF_D-lang"],"\t"),'N');
+        "#TSF_D-lang"],"\t"),'T');
 
     TSF_Forth_run();
 }

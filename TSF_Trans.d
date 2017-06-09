@@ -89,7 +89,8 @@ string TSF_Trans_view_python(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
             TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
-        TSF_style=TSF_Forth_style().get(TSF_the,'T');
+//        TSF_style=TSF_Forth_style().get(TSF_the,'T');
+        TSF_style=TSF_Forth_style(TSF_the);
         string TSF_view_logline="";
         switch( TSF_style ){
             case 'O':  TSF_view_logline="TSF_Forth_setTSF(\"%s\",\"\\t\".join([\"%s\"]),'O')\n".format(TSF_the,join(TSF_cards,"\",\""));  break;
@@ -155,7 +156,8 @@ string TSF_Trans_view_dlang(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:
         foreach(size_t TSF_count,string TSF_card;TSF_cards){
             TSF_cards[TSF_count]=TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n");
         }
-        TSF_style=TSF_Forth_style().get(TSF_the,'T');
+//        TSF_style=TSF_Forth_style().get(TSF_the,'T');
+        TSF_style=TSF_Forth_style(TSF_the);
         string TSF_view_logline="";
         switch( TSF_style ){
             case 'O':  TSF_view_logline="    TSF_Forth_setTSF(\"%s\",join([\"%s\"],\"\\t\"),'O');\n".format(TSF_the,join(TSF_stackD[TSF_the],"\",\""));  break;

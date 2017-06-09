@@ -25,10 +25,10 @@ TSF_Forth_setTSF("quine_ext:","\t".join([
 TSF_Forth_setTSF("quine_view:","\t".join([
     "quine_TSF:","quine_Python:","quine_D:"]),'T')
 TSF_Forth_setTSF("quine_TSF:","\t".join([
-    "#TSF_viewthey"]),'N')
+    "#TSF_viewthey"]),'T')
 TSF_Forth_setTSF("quine_Python:","\t".join([
-    "#TSF_Python"]),'N')
+    "#TSF_Python"]),'T')
 TSF_Forth_setTSF("quine_D:","\t".join([
-    "#TSF_D-lang"]),'N')
+    "#TSF_D-lang"]),'T')
 
 TSF_Forth_run()

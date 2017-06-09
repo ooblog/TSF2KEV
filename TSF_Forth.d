@@ -824,7 +824,7 @@ char TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示ス
     char TSF_style='T';
     if( TSF_the !in TSF_stackD ){
         if( _arguments.length>0 && _arguments[0]==typeid(char) ){
-            TSF_styleD[TSF_the]=va_arg!(string)(_argptr);
+            TSF_styleD[TSF_the]=va_arg!(char)(_argptr);
         }
         TSF_style=TSF_styleD[TSF_the];
     }
@@ -1050,10 +1050,6 @@ string[] TSF_Forth_stackO(...){    //#TSFdoc:TSF_stackOの取得。(TSFAPI)
         TSF_stackO=va_arg!(string[])(_argptr);
     }
     return TSF_stackO;
-}
-
-char[string] TSF_Forth_style(){    //#TSFdoc:TSF_styleDの取得。(TSFAPI)
-    return TSF_styleD;
 }
 
 

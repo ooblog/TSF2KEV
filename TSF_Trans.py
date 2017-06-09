@@ -59,7 +59,8 @@ def TSF_Trans_view_python(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:
     if TSF_view_log == None: TSF_view_log=""
     if TSF_the in TSF_Forth_stackD():
         TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n") for TSF_card in TSF_Forth_stackD()[TSF_the]]
-        TSF_style=TSF_Forth_style().get(TSF_the,"T")
+#        TSF_style=TSF_Forth_style().get(TSF_the,"T")
+        TSF_style=TSF_Forth_style(TSF_the)
         if TSF_style == "O":
             TSF_view_logline='TSF_Forth_setTSF("{0}","\\t".join(["{1}"]),\'O\')\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
@@ -102,7 +103,8 @@ def TSF_Trans_view_dlang(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:ã
     if TSF_view_log == None: TSF_view_log=""
     if TSF_the in TSF_Forth_stackD():
         TSF_cards=[TSF_Io_ESCdecode(TSF_card).replace("\\","\\\\").replace("\"","\\\"").replace("\t","\\t").replace("\n","\\n") for TSF_card in TSF_Forth_stackD()[TSF_the]]
-        TSF_style=TSF_Forth_style().get(TSF_the,"T")
+#        TSF_style=TSF_Forth_style().get(TSF_the,"T")
+        TSF_style=TSF_Forth_style(TSF_the)
         if TSF_style == "O":
             TSF_view_logline='    TSF_Forth_setTSF("{0}",join(["{1}"],"\\t"),\'O\');\n'.format(TSF_the,'","'.join(TSF_cards))
         elif TSF_style == "T":
