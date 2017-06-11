@@ -239,13 +239,13 @@ def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "quine_echo:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("quine_echo:","\t".join([
-        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_aliasQON","#TSF_this"]),'T')
+        "#TSF_mainfile","#TSF_fileext","quine_ext:","quine_view:","#TSF_casesQON","#TSF_this"]),'T')
     TSF_Forth_setTSF("quine_ext:","\t".join([
         ".tsf",".py",".d"]),'T')
     TSF_Forth_setTSF("quine_view:","\t".join([
-        "quine_TSF:","quine_Python:","quine_D:"]),'T')
+        "quine_TSF:","quine_Python:","quine_D:","#exit:"]),'T')
     TSF_Forth_setTSF("quine_TSF:","\t".join([
-        "#TSF_viewthey"]),'N')
+        "#! /usr/bin/env TSF","#TSF_echo","#TSF_viewthey"]),'T')
     TSF_Forth_setTSF("quine_Python:","\t".join([
         "#TSF_Python"]),'N')
     TSF_Forth_setTSF("quine_D:","\t".join([

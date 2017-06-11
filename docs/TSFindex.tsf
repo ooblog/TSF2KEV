@@ -15,8 +15,8 @@ KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
-	{?TITLE}	{?MODIFY}
-	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
+	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}
+	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
 	{?TSFhtmlheader}	{?TSFbodyheader}	{?TSFasidenav}	{?TSFsections}	{?TSFbodyfooter}	{?TSFhtmlfooter}
@@ -65,6 +65,9 @@ TSFdocs_tags:
 	   <li><a href="#grammar-1" title="{?TSFgrammar01title}">{?TSFgrammar01title}</a></li>
 	   <li><a href="#grammar-2" title="{?TSFgrammar02title}">{?TSFgrammar02title}</a></li>
 	   <li><a href="#grammar-3" title="{?TSFgrammar03title}">{?TSFgrammar03title}</a></li>
+	   <li><a href="#grammar-4" title="{?TSFgrammar04title}">{?TSFgrammar04title}</a></li>
+	   <li><a href="#grammar-5" title="{?TSFgrammar05title}">{?TSFgrammar05title}</a></li>
+	   <li><a href="#grammar-6" title="{?TSFgrammar06title}">{?TSFgrammar06title}</a></li>
 	   <li>②-0．「TSF.d」「TSF.py」のAPI一覧。</li>
 	   <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンドでコマンド一覧表示。</li>
 	   <li>③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧<。/li>
@@ -124,7 +127,7 @@ TSFdocs_tags:
 	   <li>「#TSF_calender」でISO週番号や徹夜日時などが未実装。「TSF_Time」モジュールでタイマー系が未実装。</li>
 	   <li>「TSF_Calc」モジュールで分数の小数変換機能細かい版が未実装(RPN経由で高速に近似を求める事は可能)。</li>
 	   <li>「TSF_Shuffle」モジュールPPPP関連で「C」「V」「A」「Q」「I」「R」「H」「L」副詞が未実装。</li>
-	   <li>「TSF_Match」モジュールで「R」副詞が未実装。「count」動詞が未実装。</li>
+	   <li>「TSF_Match」モジュールで「C」「V」「R」副詞が未実装。「count」動詞が未実装。</li>
 	  </ul>
 	 </section>
 	 <section>
@@ -164,12 +167,17 @@ TSFdocs_tags:
 	  <h2 id="grammar-2">{?TSFgrammar02title}</h2>
 	  <p>
 	   TSFは整数も小数も分数もカード(文字列)に置き換えます。カードの束をスタックと呼び、スタックの集合をデッキと呼びます。<br>
-	   「#TSF_calc」ではスタックを配列に見立てて直接式に組み込む事は可能ですが、演算結果をthatスタックに積み上げる行為を変数に代入と呼ぶかは微妙です。<br>
+	   #関数カードの演算結果はthatスタックに積み上げられますが、それを変数に代入と呼ぶかは微妙です。<br>
+	   「#TSF_calc」ではスタックを配列に見立てる場合には「#TSF_join[]」を経由せずに式に組み込む事は可能ですす。<br>
 	  </p>
 	 </section>
 	 <section>
 	  <h2 id="grammar-3">{?TSFgrammar03title}</h2>
 	  <p>
+	   「#TSF_this」でコールスタックに実行中のスタック名と枚数を記録して次の指定されたスタックが0枚目から実行されるわけですが、<br>
+	   thisスタック(実行中)のスタックを呼ぶ場合はコールスタックに積まずに再度実行されるので、末尾再帰ループとなります。<br>
+	   同様にコールスタックに存在するスタック名を呼び出すとその階層までのスタック名が破棄されます(同名スタックはコールスタックに積まない)のでループとなります。<br>
+	   TSFではコールスタックを直接編集する#関数カードはありません。ループ(再帰)を用いる場合は脱出用の分岐もセットで用意してください。<br>
 	  </p>
 	 </section>
 	 <section>
@@ -177,11 +185,21 @@ TSFdocs_tags:
 	  <p>
 	  </p>
 	 </section>
+	 <section>
+	  <h2 id="grammar-5">{?TSFgrammar05title}</h2>
+	  <p>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="grammar-6">{?TSFgrammar06title}</h2>
+	  <p>
+	  </p>
+	 </section>
 {$TSFsection_404}
 	  <ul>
-	   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV">{?TITLE_index}</a></li>
-	   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="TSFdoc">{?TITLE_TSFdoc}</a></li>
-	   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2">{?TITLE_KEV2}</a></li>
+	   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV">{$TITLE_index}</a></li>
+	   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="TSFdoc">{$TITLE_TSFdoc}</a></li>
+	   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2">{$TITLE_KEV2}</a></li>
 	  </ul>
 	 </section>
 {$TSFsection_TSFdoc}
@@ -359,9 +377,13 @@ TSFdocs_tags:
 {?TSFgrammar02title}
 	①-2．TSF式には変数の型どころか変数自体が存在しません。
 {?TSFgrammar03title}
-	①-3．TSFにはFOR文が無いので再帰がループです。
+	①-3．TSFにはfor文やwhile文が無いので再帰がループです。
 {?TSFgrammar04title}
-	①-4．TSFにはIF文が無いので式(比較演算子)を用います。
+	①-4．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)を用います。
+{?TSFgrammar05title}
+	①-5．スタック代名詞4つのth、this,that,the,theyとハウリングについて。
+{?TSFgrammar06title}
+	①-6．カードシャッフル動詞4つのp、peek,poke,pull,pushとドロー＆リターンについて。
 {?CODE}
 	<pre><code>
 {?/CODE}

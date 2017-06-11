@@ -21,7 +21,11 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_aliasQSN":&TSF_Match_aliasQSN, "#同択文字列群で順択代入":&TSF_Match_aliasQSN,
         "#TSF_aliasQDN":&TSF_Match_aliasQDN, "#同択文字列で順択代入":&TSF_Match_aliasQDN,
         "#TSF_aliasQON":&TSF_Match_aliasQON, "#同択で順択代入":&TSF_Match_aliasQON,
+        "#TSF_casesQSN":&TSF_Match_casesQSN, "#例外あり同択文字列群で表択代入":&TSF_Match_casesQSN,
+        "#TSF_casesQDN":&TSF_Match_casesQDN, "#例外あり同択文字列で表択代入":&TSF_Match_casesQDN,
+        "#TSF_casesQON":&TSF_Match_casesQON, "#例外あり同択で表択代入":&TSF_Match_casesQON,
         "#TSF_docsQ":&TSF_Match_docsQ, "#同択編集":&TSF_Match_docsQ,
+        "#TSF_Match":&TSF_Match_Match, "#置換代入系統一式":&TSF_Match_Match,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -31,11 +35,11 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
     TSF_Match_Random=Random(unpredictableSeed);
 }
 
-void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_RAD){    //#TSFdoc:replace,aliassの共通部品。(TSFAPI)
+void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_RACD){    //#TSFdoc:replace,aliassの共通部品。(TSFAPI)
     string TSF_theN=TSF_Forth_drawthe();  string TSF_theO=TSF_Forth_drawthe();  string TSF_theT=TSF_Forth_drawthe();
     string TSF_Text="";  string[] TSF_cardsN=[],TSF_cardsO=[];   string[] TSF_cardsI=TSF_cardsN;  string TSF_cardsT="";
     long TSF_cardsN_len=0; long  TSF_cardsO_len=0;  char TSF_SDOpoke=' ';
-    if( TSF_RAD== 'D' ){
+    if( TSF_RACD== 'D' ){
         TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
         TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
         if( TSF_theT in TSF_Forth_stackD() ){
@@ -68,18 +72,6 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
                 break;
             default: break;
         }
-//        if( TSF_SDO=='D' || TSF_SDO=='O' ){
-//            TSF_cardsN=[TSF_theN];  TSF_cardsN_len=1;
-//            TSF_cardsO=[TSF_theO];  TSF_cardsO_len=1;
-//            TSF_Text=TSF_theT;  TSF_SDOpoke='D';
-//        }
-//        if( TSF_SDO=='S' || TSF_SDO=='O' ){
-//            TSF_cardsN=TSF_Forth_stackD().get(TSF_theN,[]);  TSF_cardsN_len=TSF_cardsN.length;
-//            TSF_cardsO=TSF_Forth_stackD().get(TSF_theO,[]);  TSF_cardsO_len=TSF_cardsO.length;
-//            if( TSF_theT in TSF_Forth_stackD() ){
-//                TSF_Text=TSF_Io_ESCdecode(join(TSF_Forth_stackD()[TSF_theT],"\n"));  TSF_SDOpoke='S';
-//            }
-//        }
     }
     switch( TSF_FNCMVA ){
         case 'F': TSF_cardsI=null; 
@@ -96,7 +88,7 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
             foreach(string TSF_card;TSF_cardsO){ TSF_cardsI~=TSF_cardsN[uniform(0,to!size_t(TSF_cardsN_len),TSF_Match_Random)]; } break;
         default: break;
     }
-    switch( TSF_RAD ){
+    switch( TSF_RACD ){
         case 'R':
             switch( TSF_QIRHL ){
                 case 'Q':
@@ -106,6 +98,7 @@ void TSF_Match_replaceRAD(char TSF_QIRHL,char TSF_SDO,char TSF_FNCMVA,char TSF_R
                 default: break;
             }
         break;
+        case 'C': TSF_cardsT=TSF_cardsN[$-1]; goto case;
         case 'A':
             switch( TSF_QIRHL ){
                 case 'Q':
@@ -154,8 +147,22 @@ string TSF_Match_aliasQDN(){    //#TSFdoc:stackTをカードとみなしてcardO
 string TSF_Match_aliasQON(){    //#TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。
     TSF_Match_replaceRAD('Q','O','N','A');    return ""; }
 
+string TSF_Match_casesQSN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群と同択できたらstackNの文字列群で代入。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+    TSF_Match_replaceRAD('Q','S','N','C');    return ""; }
+string TSF_Match_casesQDN(){    //#TSFdoc:stackTをカードとみなしてcardOの文字列と同択できたらstackNの文字列で代入。不足分はゼロ文字列。3枚[cardT,cardO,cardN]ドロー。1枚[cardN]リターン。
+    TSF_Match_replaceRAD('Q','D','N','C');    return ""; }
+string TSF_Match_casesQON(){    //#TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。Tがカードなら1枚[cardN]リターン。
+    TSF_Match_replaceRAD('Q','O','N','C');    return ""; }
+
 string TSF_Match_docsQ(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群と同択できたらstackNの文字列またはスタックで編集。3枚[stackT,stackO,stackN]ドロー。
     TSF_Match_replaceRAD('Q',' ',' ','D');    return ""; }
+
+
+string TSF_Match_Match(){    //#TSFdoc:5*3*6*4=360もの関数を用意するのはしんどいので、replaceRADに渡すパラメータ用の関数を作成。4枚[stackT,stackO,stackN,macro]ドロー。
+    string TSF_MP=TSF_Forth_drawthe();    TSF_MP~="    ";
+    TSF_Match_replaceRAD(TSF_MP[0],TSF_MP[1],TSF_MP[2],TSF_MP[3]);
+    return "";
+}
 
 
 void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];

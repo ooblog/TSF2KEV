@@ -109,10 +109,6 @@ string TSF_Shuffle_peekMthey(){    //#TSFdoc:スタック一覧から最後尾�
 }
 
 void TSF_Shuffle_pokeM(string TSF_the,long TSF_peek,string TSF_poke){    //#TSFdoc:指定スタックからカードを囲択で読込。(TSFAPI)
-//    string TSF_pull="";  size_t TSF_cardsN_len=TSF_Forth_stackD()[TSF_the].length;
-//    if( (TSF_the in TSF_Forth_stackD())&&(0<TSF_cardsN_len) ){
-//        TSF_Forth_stackD()[TSF_the][to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0))]=TSF_poke;
-//    }
     if( TSF_the in TSF_Forth_stackD() ){
         size_t TSF_cardsN_len=TSF_Forth_stackD()[TSF_the].length;
         if( 0<TSF_cardsN_len ){
@@ -156,11 +152,6 @@ string TSF_Shuffle_pokeMthey(){    //#TSFdoc:スタック一覧からスタッ�
 }
 
 string TSF_Shuffle_pullM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからカードを囲択で引抜。(TSFAPI)
-//    string TSF_pull="";  size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;
-//    if( (TSF_the in TSF_Forth_stackD())&&(0<TSF_cardsN_len) ){
-//        TSF_pull=TSF_Forth_stackD()[TSF_the][to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0))];
-//        TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_peek);
-//    }
     string TSF_pull="";
     if( TSF_the in TSF_Forth_stackD() ){
         size_t TSF_cardsN_len=TSF_Forth_stackD()[TSF_the].length;
@@ -201,10 +192,6 @@ string TSF_Shuffle_pullMthey(){    //#TSFdoc:スタック一覧からスタッ�
 }
 
 void TSF_Shuffle_pushM(string TSF_the,long TSF_peek,string TSF_push){    //#TSFdoc:指定スタックにカードを囲択で差込。(TSFAPI)
-//    size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;
-//    if( TSF_push in TSF_Forth_stackD() ){
-//        TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0)),TSF_push);
-//    }
     if( TSF_push in TSF_Forth_stackD() ){
         size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;
         TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0)),TSF_push);

@@ -109,9 +109,6 @@ def TSF_Shuffle_swapCB():    #TSFdoc:カードBとカードCを交換する。3�
     return ""
 
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
-#    TSF_pull="";  TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
-#    if TSF_the in TSF_Forth_stackD() and 0 < TSF_cardsN_len:
-#        TSF_pull=TSF_Forth_stackD()[TSF_the][max(min(TSF_peek,TSF_cardsN_len-1),0)]
     TSF_pull=""
     if TSF_the in TSF_Forth_stackD():
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
@@ -141,9 +138,6 @@ def TSF_Shuffle_peekMthey():    #TSFdoc:スタック一覧から最後尾スタ�
     return ""
 
 def TSF_Shuffle_pokeM(TSF_the,TSF_peek,TSF_poke):    #TSFdoc:指定スタックからカードを囲択で読込。(TSFAPI)
-#    TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
-#    if TSF_the in TSF_Forth_stackD() and 0 < TSF_cardsN_len:
-#        TSF_Forth_stackD()[TSF_the][max(min(TSF_peek,TSF_cardsN_len-1),0)]=TSF_poke
     if TSF_the in TSF_Forth_stackD():
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
         if 0 < TSF_cardsN_len:
@@ -178,9 +172,6 @@ def TSF_Shuffle_pokeMthey():    #TSFdoc:スタック一覧からスタック名�
     return ""
 
 def TSF_Shuffle_pullM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからカードを囲択で引抜。(TSFAPI)
-#    TSF_pull="";  TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
-#    if TSF_the in TSF_Forth_stackD() and 0 < TSF_cardsN_len:
-#        TSF_pull=TSF_Forth_stackD()[TSF_the].pop(max(min(TSF_peek,TSF_cardsN_len-1),0))
     TSF_pull="";  
     if TSF_the in TSF_Forth_stackD():
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
@@ -212,9 +203,6 @@ def TSF_Shuffle_pullMthey():    #TSFdoc:スタック一覧からスタック名�
     return ""
 
 def TSF_Shuffle_pushM(TSF_the,TSF_peek,TSF_push):    #TSFdoc:指定スタックにカードを囲択で差込。(TSFAPI)
-#    TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
-#    if TSF_the in TSF_stackD and 0 < TSF_cardsN_len:
-#        TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],max(min(TSF_peek,TSF_cardsN_len-1),0),TSF_push)
     if TSF_the in TSF_stackD:
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
         TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],max(min(TSF_peek,TSF_cardsN_len-1),0),TSF_push)
