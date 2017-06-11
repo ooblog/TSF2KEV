@@ -101,12 +101,16 @@ input.yonmoji_entry:focus{
 span.kan5x5comic{
  font-family: "kan5x5comic";
 }
+img.TSFcard{
+ float: right;
+}
 p.capcenter{
   text-align: center;
 }
 pre{
   margin-top:1rem;
   border: 1px gray solid;
+  overflow: auto;
 }
 footer{
   margin-top:1rem;
