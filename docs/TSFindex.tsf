@@ -139,7 +139,7 @@ TSFdocs_tags:
 	  <h2 id="grammar-0">{?TSFgrammar00title}</h2>
 	  <p>
 	   <img src="cardimg/TSF176x250.png" width="176" height="250" class="TSFcard" alt="「TSF_Tab-Separated-Forth」カードサイズロゴ" title="「TSF_Tab-Separated-Forth」カードサイズロゴ">
-	   そもそもForthとかRPN自体今聞いた人はwikipediaなどを軽く参考にしてもらって、<br>
+	   ForthとかRPN自体初耳な方はwikipediaなどを軽く参考にしてもらって、<br>
 	   「TSF_Tab-Separated-Forth」ではForthとの違いを説明しながら構文や式の概要を説明していきます。<br>
 	  </p>
 	  <dl><dt>Forth - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Forth" title="Forth - Wikipedia">https://ja.wikipedia.org/wiki/Forth</a></dd></dl>
@@ -409,8 +409,6 @@ TSFdocs_tags:
 	<pre><code>
 {?/CODE}
 	</code></pre>
-{?BR}
-	<br />
 {?INDENT}
 	    	
 {?TAB}
