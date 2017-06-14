@@ -4,20 +4,27 @@ TSF_Tab-Separated-Forth:
 TSFdocs_help:
 	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#TSF_echo	#TSF_fin.
 #! -- merge --
-#!	TSFdocs_files:	TSFdocs_basedocs:	TSFdocs_tags:
+#!	TSFdocs_files:	TSFdocs_basedocs:	TSFdocs_imports:	TSFimportstyles:	TSFdocs_tags:
 TSFdocs_merge:
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_loop:	#TSF_this
 TSFdocs_loop:
 	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	#TSF_echo
 	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
-	TSF_carbontags:	TSFdocs_tags:	#TSF_clonethe	TSFtags_loop1:	#TSF_this
+	TSF_carbontags:	TSFdocs_tags:	#TSF_clonethe	TSFtags_loop:	#TSF_this
 	#TSF_peekFthat	TSF_carbondoc:	#TSF_savetext
 	TSFdocs_files:	#TSF_lenthe	[0]Z~#exit:~TSFdocs_loop:	#TSF_join[]	#TSF_calc	#TSF_this
-TSFtags_loop1:
-	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe
-	#TSF_calender
+TSFtags_loop:
+	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	#TSF_calender
+#!	#TSF_peekFthat	TSFdocs_imports:	TSFimportstyles:	#TSF_casesQON	#TSF_this
+#!	TSFdocs_imports:	TSFimportstyles:	#TSF_peekFthat	#TSF_casesQON	#TSF_this
 	#TSF_docsQ
-	TSF_carbontags:	#TSF_lenthe	[0]Z~#exit:~TSFtags_loop1:	#TSF_join[]	#TSF_calc	#TSF_this
+	TSF_carbontags:	#TSF_lenthe	[0]Z~#exit:~TSFtags_loop:	#TSF_join[]	#TSF_calc	#TSF_this
+TSFimportstyle_None:
+TSFimportstyle_Python:
+	regex_py	#TSF_echo
+TSFimportstyle_D-lang:
+	regex_D	#TSF_echo
+
 
 #! -- Copyright (c) 2017 ooblog --
 #! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE

@@ -11,6 +11,10 @@ TSFdocs_baseHTML:
 	{?TSFhtmlheader}{?TSFreadmehead}{?TSFabout}{?TSFreadmebuttom}{?TSFhtmlfooter}
 TSFdocs_baseTSF:
 	{?TSFabout}
+TSFdocs_imports:
+	_sample_aboutTSF_tsf
+TSFimportstyles:
+	TSFimportstyle_Python:	TSFimportstyle_None:
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}

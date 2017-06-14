@@ -13,6 +13,10 @@ TSFdoc_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
+TSFdocs_imports:
+	../trans_quine.py
+TSFimportstyles:
+	TSFimportstyle_Python:	TSFimportstyle_None:
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}
@@ -90,8 +94,7 @@ TSFdocs_tags:
 	   <li>⑨-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
 	   <li>⑩-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
 	   <li>⑩-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
-#!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
-	   <li>{?TSFfaq00title}</li>
+	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
 	  </ul>
 	 </section>
@@ -213,6 +216,14 @@ TSFdocs_tags:
 	  <p>
 	   ※#関数カードの、ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
 	  </p>
+	 </section>
+	 <section>
+	  <h2 id="faq-0">{?TSFfaq00title}</h2>
+	  <dl><dt>
+	   Ｑ．<br>
+	  </dt><dd>
+	   Ａ．<br>
+	  </dd></dl>
 	 </section>
 {$TSFsection_404}
 	  <ul>
