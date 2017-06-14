@@ -15,8 +15,8 @@ KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_imports:
 	../trans_quine.py
-TSFimportstyles:
-	TSFimportstyle_Python:	TSFimportstyle_None:
+{@sample_helloworld.tsf}
+	../trans_quine.py
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}

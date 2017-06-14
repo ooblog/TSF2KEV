@@ -4,9 +4,13 @@ TSF_Tab-Separated-Forth:
 TSFdocs_help:
 	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#TSF_echo	#TSF_fin.
 #! -- merge --
-#!	TSFdocs_files:	TSFdocs_basedocs:	TSFdocs_imports:	TSFimportstyles:	TSFdocs_tags:
+#!	TSFdocs_files:	TSFdocs_basedocs:	TSFdocs_imports:	TSFdocs_tags:
 TSFdocs_merge:
-	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_loop:	#TSF_this
+	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_import:	#TSF_this
+TSFdocs_import:
+	TSFdocs_imports:	#TSF_pullFthe	#TSF_peekFthat	#TSF_echo
+	#TSF_peekFthat	#TSF_readtext	#TSF_mergethe
+	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
 TSFdocs_loop:
 	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	#TSF_echo
 	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
@@ -14,16 +18,9 @@ TSFdocs_loop:
 	#TSF_peekFthat	TSF_carbondoc:	#TSF_savetext
 	TSFdocs_files:	#TSF_lenthe	[0]Z~#exit:~TSFdocs_loop:	#TSF_join[]	#TSF_calc	#TSF_this
 TSFtags_loop:
-	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe	#TSF_calender
-#!	#TSF_peekFthat	TSFdocs_imports:	TSFimportstyles:	#TSF_casesQON	#TSF_this
-#!	TSFdocs_imports:	TSFimportstyles:	#TSF_peekFthat	#TSF_casesQON	#TSF_this
-	#TSF_docsQ
+	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe
+	#TSF_calender	#TSF_docsQ
 	TSF_carbontags:	#TSF_lenthe	[0]Z~#exit:~TSFtags_loop:	#TSF_join[]	#TSF_calc	#TSF_this
-TSFimportstyle_None:
-TSFimportstyle_Python:
-	regex_py	#TSF_echo
-TSFimportstyle_D-lang:
-	regex_D	#TSF_echo
 
 
 #! -- Copyright (c) 2017 ooblog --
