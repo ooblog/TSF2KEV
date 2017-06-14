@@ -15,6 +15,8 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_swapBA":&TSF_Shuffle_swapBA, "#カードBA交換":&TSF_Shuffle_swapBA,
         "#TSF_swapCA":&TSF_Shuffle_swapCA, "#カードCA交換":&TSF_Shuffle_swapCA,
         "#TSF_swapCB":&TSF_Shuffle_swapCB, "#カードCB交換":&TSF_Shuffle_swapCB,
+        "#TSF_swapAA":&TSF_Shuffle_swapAA, "#カードAA交換":&TSF_Shuffle_swapAA,
+        "#TSF_swapCC":&TSF_Shuffle_swapCC, "#カードCC交換":&TSF_Shuffle_swapCC,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -40,38 +42,36 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
 }
 
 string TSF_Shuffle_swapBA(){    //#TSFdoc:カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。
-    string TSF_swapA=TSF_Forth_drawthe();
-    string TSF_swapB=TSF_Forth_drawthe();
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
+    string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
     return "";
 }
 
 string TSF_Shuffle_swapCA(){    //#TSFdoc:カードAとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardB,cardC]リターン。
-    string TSF_swapA=TSF_Forth_drawthe();
-    string TSF_swapB=TSF_Forth_drawthe();
-    string TSF_swapC=TSF_Forth_drawthe();
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
+    string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();  string TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
     return "";
 }
 
-string TSF_Shuffle_swapCB(){    //#TSFdoc:カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン
-    string TSF_swapA=TSF_Forth_drawthe();
-    string TSF_swapB=TSF_Forth_drawthe();
-    string TSF_swapC=TSF_Forth_drawthe();
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);
+string TSF_Shuffle_swapCB(){    //#TSFdoc:カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardC,cardA]リターン
+    string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();  string TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);
+    return "";
+}
+
+string TSF_Shuffle_swapAA(){    //#TSFdoc:カードAをカードCの位置に沈下してカードBCを浮上。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardC,cardB]リターン。
+    string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();  string TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
+    return "";
+}
+
+string TSF_Shuffle_swapCC(){    //#カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。
+    string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();  string TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
     return "";
 }
 
 string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
-//    string TSF_pull="";  size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;
-//    if( (TSF_the in TSF_Forth_stackD())&&(0<TSF_cardsN_len) ){
-//        TSF_pull=TSF_Forth_stackD()[TSF_the][to!size_t(fmax(fmin(TSF_peek,TSF_cardsN_len-1),0))];
-//    }
     string TSF_pull="";
     if( TSF_the in TSF_Forth_stackD() ){
         size_t TSF_cardsN_len=TSF_stackD[TSF_the].length;

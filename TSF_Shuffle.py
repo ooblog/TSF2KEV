@@ -12,6 +12,8 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_swapBA":TSF_Shuffle_swapBA, "#カードBA交換":TSF_Shuffle_swapBA,
         "#TSF_swapCA":TSF_Shuffle_swapCA, "#カードCA交換":TSF_Shuffle_swapCA,
         "#TSF_swapCB":TSF_Shuffle_swapCB, "#カードCB交換":TSF_Shuffle_swapCB,
+        "#TSF_swapAA":TSF_Shuffle_swapAA, "#カードAA交換":TSF_Shuffle_swapAA,
+        "#TSF_swapCC":TSF_Shuffle_swapCC, "#カードCC交換":TSF_Shuffle_swapCC,
 #        "#TSF_peekCthe":TSF_Shuffle_peekCthe, "#指定スタック周択読込":TSF_Shuffle_peekCthe,
 #        "#TSF_peekCthis":TSF_Shuffle_peekCthis, "#実行中スタック周択読込":TSF_Shuffle_peekCthis,
 #        "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
@@ -84,29 +86,27 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Shuffle_swapBA():    #TSFdoc:カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。
-    TSF_swapA=TSF_Forth_drawthe()
-    TSF_swapB=TSF_Forth_drawthe()
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB)
+    TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
     return ""
 
 def TSF_Shuffle_swapCA():    #TSFdoc:カードAとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardB,cardC]リターン。
-    TSF_swapA=TSF_Forth_drawthe()
-    TSF_swapB=TSF_Forth_drawthe()
-    TSF_swapC=TSF_Forth_drawthe()
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC)
+    TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();  TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
     return ""
 
-def TSF_Shuffle_swapCB():    #TSFdoc:カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。
-    TSF_swapA=TSF_Forth_drawthe()
-    TSF_swapB=TSF_Forth_drawthe()
-    TSF_swapC=TSF_Forth_drawthe()
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA)
+def TSF_Shuffle_swapCB():    #TSFdoc:カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardC,cardA]リターン。
+    TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();  TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);
     return ""
+
+def TSF_Shuffle_swapAA():    #TSFdoc:カードAをカードCの位置に沈下してカードBCを浮上。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardC,cardB]リターン。
+    TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();  TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);
+
+def TSF_Shuffle_swapCC():    #TSFdoc:カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。
+    TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();  TSF_swapC=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
 
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
     TSF_pull=""
