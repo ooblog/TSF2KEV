@@ -51,11 +51,13 @@ def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","README.tsf"]),'T')
     TSF_Forth_setTSF("TSFdocs_help:","\t".join([
-        "usage: ./TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."]),'T')
+        "usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."]),'T')
     TSF_Forth_setTSF("TSFdocs_merge:","\t".join([
-        "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_loop:","#TSF_this"]),'T')
+        "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_import:","#TSF_this"]),'T')
+    TSF_Forth_setTSF("TSFdocs_import:","\t".join([
+        "TSFdocs_imports:","#TSF_pullFthe","#TSF_peekFthat","[0](import)","#TSF_join[]","#TSF_echo","#TSF_peekFthat","#TSF_readtext","#TSF_mergethe","TSFdocs_imports:","#TSF_lenthe","[0]Z~TSFdocs_loop:~TSFdocs_import:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFdocs_loop:","\t".join([
-        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
+        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","[0](save)","#TSF_join[]","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFtags_loop:","\t".join([
         "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_samplerun("TSF_sample_TSFdoc")
