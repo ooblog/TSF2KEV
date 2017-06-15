@@ -18,6 +18,9 @@ void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_replacesQSN":&TSF_Match_replacesQSN, "#同択文字列群で順択置換":&TSF_Match_replacesQSN,
         "#TSF_replacesQDN":&TSF_Match_replacesQDN, "#同択文字列で順択置換":&TSF_Match_replacesQDN,
         "#TSF_replacesQON":&TSF_Match_replacesQON, "#同択で順択置換":&TSF_Match_replacesQON,
+        "#TSF_replacesRSN":&TSF_Match_replacesRSN, "#規択文字列群で順択置換":&TSF_Match_replacesRSN,
+        "#TSF_replacesaRDN":&TSF_Match_replacesRDN, "#規択文字列で順択置換":&TSF_Match_replacesRDN,
+        "#TSF_replacesRON":&TSF_Match_replacesRON, "#規択で順択置換":&TSF_Match_replacesRON,
         "#TSF_aliasQSN":&TSF_Match_aliasQSN, "#同択文字列群で順択代入":&TSF_Match_aliasQSN,
         "#TSF_aliasQDN":&TSF_Match_aliasQDN, "#同択文字列で順択代入":&TSF_Match_aliasQDN,
         "#TSF_aliasQON":&TSF_Match_aliasQON, "#同択で順択代入":&TSF_Match_aliasQON,
@@ -138,6 +141,13 @@ string TSF_Match_replacesQSN(){    //#TSFdoc:stackTをテキストとみなし�
 string TSF_Match_replacesQDN(){    //#TSFdoc:stackTをカードとみなしてcardOの文字列をcardNの文字列に置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_Match_replaceRAD('Q','D','N','R');    return ""; }
 string TSF_Match_replacesQON(){    //#TSFdoc:stackTがカードかスタックか判断してON置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。
+    TSF_Match_replaceRAD('Q','O','N','R');    return ""; }
+
+string TSF_Match_replacesRSN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に正規表現で置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
+    TSF_Match_replaceRAD('Q','S','N','R');    return ""; }
+string TSF_Match_replacesRDN(){    //#TSFdoc:stackTをカードとみなしてcardOの文字列をcardNの文字列に正規表現で置換。不足分はゼロ文字列。3枚[cardT,cardO,cardN]ドロー。1枚[cardN]リターン。
+    TSF_Match_replaceRAD('Q','D','N','R');    return ""; }
+string TSF_Match_replacesRON(){    //#TSFdoc:stackTがカードかスタックか判断してONを正規表現で置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。Tがカードなら1枚[cardN]リターン。
     TSF_Match_replaceRAD('Q','O','N','R');    return ""; }
 
 string TSF_Match_aliasQSN(){    //#TSFdoc:stackTをテキストとみなしてstackOの文字列群と同択できたらstackNの文字列群で代入。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
