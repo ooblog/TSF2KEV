@@ -9,8 +9,24 @@ TSFdocs_merge:
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_import:	#TSF_this
 TSFdocs_import:
 	TSFdocs_imports:	#TSF_pullFthe	#TSF_peekFthat	[0](import)	#TSF_join[]	#TSF_echo
-	#TSF_peekFthat	#TSF_readtext	#TSF_mergethe
+#!	#TSF_peekFthat	#TSF_readtext	#TSF_mergethe
+
+	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe
+	#TSF_peekFthat	#TSF_fileext	TSFimport_ext:	TSFimport_regex:	#TSF_casesQON	#TSF_this
+
 	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
+TSFimport_ext:
+	.tsf	.py	.d
+TSFimport_regex:
+	regex_TSF:	regex_Python:	regex_D:	regex_none:
+regex_TSF:
+	regex_TSF	2	#TSF_echoN
+regex_Python:
+	regex_Python	2	#TSF_echoN
+regex_D:
+	regex_D	2	#TSF_echoN
+regex_none:
+	regex_none	2	#TSF_echoN
 TSFdocs_loop:
 	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	[0](save)	#TSF_join[]	#TSF_echo
 	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
