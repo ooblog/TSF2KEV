@@ -48,6 +48,7 @@ TSFdocs_tags:
 	{$TSFreadmehead}	{$TSFreadmehead}	
 {$TSFreadmehead}
 	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
+#!	{@sample_helloworld.tsf}
 	{?P}
 	目標は「{?A_TSF2kanedit}」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
 	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「{?A_LTsv10kanedit}」をお使いください。{?BR}

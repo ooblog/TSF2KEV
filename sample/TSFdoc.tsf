@@ -17,7 +17,11 @@ TSFimport_ext:
 TSFimport_regex:
 	regex_TSF:	regex_Python:	regex_D:	regex_none:
 regex_TSF:
-	regex_TSF	2	#TSF_echoN
+	regexTSF_reg:	regexTSF_txt:	#TSF_replacesQSN
+regexTSF_reg:
+	TSF
+regexTSF_txt:
+	[TSF]
 regex_Python:
 	regex_Python	2	#TSF_echoN
 regex_D:
