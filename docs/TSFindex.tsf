@@ -96,7 +96,8 @@ TSFdocs_tags:
 	   <li>⑨-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
 	   <li>⑩-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
 	   <li>⑩-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
-	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
+	   <li>{?TSFfaq00title}</li>
+#!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
 	  </ul>
 	 </section>
@@ -219,14 +220,6 @@ TSFdocs_tags:
 	   ※#関数カードの、ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
 	  </p>
 	 </section>
-	 <section>
-	  <h2 id="faq-0">{?TSFfaq00title}</h2>
-	  <dl><dt>
-	   Ｑ．<br>
-	  </dt><dd>
-	   Ａ．<br>
-	  </dd></dl>
-	 </section>
 {$TSFsection_404}
 	  <ul>
 	   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV">{$TITLE_index}</a></li>
@@ -243,8 +236,7 @@ TSFdocs_tags:
 	   <li>①-0．「TSFdoc」の使い方。</li>
 	   <li>①-1．「TSFdoc」で必要になるスタックと上書きしてはいけないスタック。</li>
 	   <li>①-2．「TSFdoc」の文法っぽい慣習。</li>
-#!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
-	   <li>{?TSFfaq00title}</li>
+	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
 	  </ul>
 	 </section>
@@ -261,6 +253,14 @@ TSFdocs_tags:
 	  <p>
 	   ソースコードから関数一覧とコメントを抽出してAPI一覧を生成する機能がまだ未実装です。<br>
 	  </p>
+	 </section>
+	 <section>
+	  <h2 id="faq-0">{?TSFfaq00title}</h2>
+	  <dl><dt>
+	   Ｑ．「TSFimport_regex:」で正規表現を使う箇所があるのですがD言語とPythonで正規表現の違いがあると挙動が変わりませんか？<br>
+	  </dt><dd>
+	   Ａ．いちいち確認はしませんが、実装言語毎に挙動は変わるはずです。TSF側で正規表現そのものを作り直すなどの徒労は行わないので注意。<br>
+	  </dd></dl>
 	 </section>
 {$TSFsection_KEV2}
 	  <ul>
