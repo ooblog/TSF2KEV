@@ -53,9 +53,9 @@ def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版。
     TSF_Forth_setTSF("TSFdocs_help:","\t".join([
         "usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf","#TSF_echo","#TSF_fin."]),'T')
     TSF_Forth_setTSF("TSFdocs_merge:","\t".join([
-        "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_import:","#TSF_this"]),'T')
+        "#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_basepath","TSFdocs_imports:","#TSF_lenthe","[0]Z~TSFdocs_loop:~TSFdocs_import:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFdocs_import:","\t".join([
-        "TSFdocs_imports:","#TSF_pullFthe","#TSF_peekFthat","[0](import)","#TSF_join[]","#TSF_echo","#TSF_peekFthat","#TSF_readtext","#TSF_mergethe","TSFdocs_imports:","#TSF_lenthe","[0]Z~TSFdocs_loop:~TSFdocs_import:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
+        "TSFdocs_imports:","#TSF_pullFthe","#TSF_peekFthat","[0](import)","#TSF_join[]","#TSF_echo","#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_fileext","TSFimport_ext:","TSFimport_regex:","#TSF_casesQON","#TSF_this","TSFdocs_imports:","#TSF_lenthe","[0]Z~TSFdocs_loop:~TSFdocs_import:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFdocs_loop:","\t".join([
         "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","[0](save)","#TSF_join[]","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_setTSF("TSFtags_loop:","\t".join([

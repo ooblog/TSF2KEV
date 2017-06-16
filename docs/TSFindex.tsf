@@ -14,9 +14,11 @@ TSFdoc_html:
 KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_imports:
-	../trans_quine.py
-{@../trans_quine.py}
-	../trans_quine.py
+TSFimport_ext:
+TSFimport_regex:
+	regex_none:
+regex_none:
+	#TSF_pullFthat
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}

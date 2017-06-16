@@ -88,7 +88,7 @@ def TSF_Match_replaceRAD(TSF_QIRHL,TSF_SDO,TSF_FNCMVA,TSF_RACD):    #TSFdoc:repl
 #        elif TSF_QIRHL == 'L':
     elif TSF_RACD == 'C' or TSF_RACD == 'A':
         if TSF_RACD == 'C':
-            TSF_cardsT=TSF_cardsN[-1]
+            TSF_cardsT=TSF_cardsN[-1] if len(TSF_cardsN) else ""
         if TSF_QIRHL == 'Q':
             for TSF_peek,TSF_card in enumerate(TSF_cardsO):
                 if TSF_Text == TSF_card:
@@ -122,11 +122,11 @@ def TSF_Match_replacesQON():    #TSFdoc:stackTがカードかスタックか判�
     TSF_Match_replaceRAD('Q','O','N','R');    return ""
 
 def TSF_Match_replacesRSN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群をstackNの文字列群に正規表現で置換。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
-    TSF_Match_replaceRAD('Q','S','N','R');    return ""
+    TSF_Match_replaceRAD('R','S','N','R');    return ""
 def TSF_Match_replacesRDN():    #TSFdoc:stackTをカードとみなしてcardOの文字列をcardNの文字列に正規表現で置換。不足分はゼロ文字列。3枚[cardT,cardO,cardN]ドロー。1枚[cardN]リターン。
-    TSF_Match_replaceRAD('Q','D','N','R');    return ""
+    TSF_Match_replaceRAD('R','D','N','R');    return ""
 def TSF_Match_replacesRON():    #TSFdoc:stackTがカードかスタックか判断してONを正規表現で置換。不足分はゼロ文字列。3枚[T,O,N]ドロー。Tがカードなら1枚[cardN]リターン。
-    TSF_Match_replaceRAD('Q','O','N','R');    return ""
+    TSF_Match_replaceRAD('R','O','N','R');    return ""
 
 def TSF_Match_aliasQSN():    #TSFdoc:stackTをテキストとみなしてstackOの文字列群と同択できたらstackNの文字列群で代入。不足分はゼロ文字列。3枚[stackT,stackO,stackN]ドロー。
     TSF_Match_replaceRAD('Q','S','N','A');    return ""

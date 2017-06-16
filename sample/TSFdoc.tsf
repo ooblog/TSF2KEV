@@ -4,30 +4,22 @@ TSF_Tab-Separated-Forth:
 TSFdocs_help:
 	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#TSF_echo	#TSF_fin.
 #! -- merge --
-#!	TSFdocs_files:	TSFdocs_basedocs:	TSFdocs_imports:	TSFdocs_tags:
+#!	TSFdocs_files:	../README.md	../debug/README.html	sample_aboutTSF.tsf
+#!	TSFdocs_basedocs:	TSFdocs_baseMD:	TSFdocs_baseHTML:	TSFdocs_baseTSF:
+#!	TSFdocs_imports:	sample_helloworld.tsf
+#!	TSFimport_ext:	.tsf
+#!	TSFimport_regex:	regex_TSF:	regex_none:
+#!	regex_TSF:	regexTSF_reg:	regexTSF_txt:	#TSF_replacesRSN
+#!	regex_none:	#TSF_pullFthat
+#!	TSFdocs_tags:	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 TSFdocs_merge:
-	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath	TSFdocs_import:	#TSF_this
+	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath
+	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
 TSFdocs_import:
 	TSFdocs_imports:	#TSF_pullFthe	#TSF_peekFthat	[0](import)	#TSF_join[]	#TSF_echo
 	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe
 	#TSF_peekFthat	#TSF_fileext	TSFimport_ext:	TSFimport_regex:	#TSF_casesQON	#TSF_this
 	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
-TSFimport_ext:
-	.tsf	.py	.d
-TSFimport_regex:
-	regex_TSF:	regex_Python:	regex_D:	regex_none:
-regex_TSF:
-	regexTSF_reg:	regexTSF_txt:	#TSF_replacesQSN
-regexTSF_reg:
-	TSF
-regexTSF_txt:
-	[TSF]
-regex_Python:
-	regex_Python	2	#TSF_echoN
-regex_D:
-	regex_D	2	#TSF_echoN
-regex_none:
-	regex_none	2	#TSF_echoN
 TSFdocs_loop:
 	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	[0](save)	#TSF_join[]	#TSF_echo
 	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
