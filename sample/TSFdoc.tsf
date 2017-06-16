@@ -6,7 +6,7 @@ TSFdocs_help:
 #! -- merge --
 #!	TSFdocs_files:	../README.md	../debug/README.html	sample_aboutTSF.tsf
 #!	TSFdocs_basedocs:	TSFdocs_baseMD:	TSFdocs_baseHTML:	TSFdocs_baseTSF:
-#!	TSFdocs_imports:	sample_helloworld.tsf
+#!	TSFdocs_imports:	sample_aboutTSF.tsf
 #!	TSFimport_ext:	.tsf
 #!	TSFimport_regex:	regex_TSF:	regex_none:
 #!	regex_TSF:	regexTSF_reg:	regexTSF_txt:	#TSF_replacesRSN
