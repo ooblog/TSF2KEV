@@ -14,14 +14,28 @@ TSFdoc_html:
 KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_imports:
+	../TSF.py
+{@TSF_main}
+	../TSF.py
 TSFimport_ext:
+	.py
 TSFimport_regex:
-	regex_none:
+	regex_Python:	:regex_none:
+regex_Python:
+	regexPython_reg:	regexPython_txt:	#TSF_replacesRSN
+regexPython_reg:
+	^(?!def).+$	^\n	def	@NL	^@dddt	$
+	@DLDT	:    #TSFdoc:	@dddt
+regexPython_txt:
+			@NL@DLDT	@dddt{?NL}		@dddt
+	<dl><dt>	</dt><dd>	</dd></dl>
 regex_none:
 	#TSF_pullFthat
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
+	{@TSF_main}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}
+	{?TSFapi00title}
 	{?TSFgrammar07title}	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
@@ -75,7 +89,7 @@ TSFdocs_tags:
 	   <li><a href="#grammar-5" title="{?TSFgrammar05title}">{?TSFgrammar05title}</a></li>
 	   <li><a href="#grammar-6" title="{?TSFgrammar06title}">{?TSFgrammar06title}</a></li>
 	   <li><a href="#grammar-7" title="{?TSFgrammar07title}">{?TSFgrammar07title}</a></li>
-	   <li>②-0．「TSF.d」「TSF.py」のAPI一覧。</li>
+	   <li><a href="#api-0" title="{?TSFapi00title}">{?TSFapi00title}</a></li>
 	   <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンド一覧表示。</li>
 	   <li>②-2．「TSF --helloworld」「sample/sample_helloworld.tsf」TSFのハローワールドサンプル。</li>
 	   <li>③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧<。/li>
@@ -220,6 +234,11 @@ TSFdocs_tags:
 	   ※#関数カードの、ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
 	  </p>
 	 </section>
+	 <section>
+	  <h2 id="api-0">{?TSFapi00title}</h2>
+	{@TSF_main}
+	 </section>
+	
 {$TSFsection_404}
 	  <ul>
 	   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV">{$TITLE_index}</a></li>
@@ -418,6 +437,8 @@ TSFdocs_tags:
 	①-6．スタック代名詞4つのth、this,that,the,theyとハウリングについて。
 {?TSFgrammar07title}
 	①-7．カードシャッフル動詞4つのp、peek,poke,pull,pushとドロー＆リターンについて。
+{?TSFapi00title}
+	②-0．「TSF.d」「TSF.py」のAPI一覧。
 {?CODE}
 	<pre><code>
 {?/CODE}

@@ -22,7 +22,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170528U134416	modify:20170617S002136(執筆途中です)<br>
+   version(branch):20170528U134416	modify:20170617S201446(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
@@ -36,7 +36,7 @@
    <li><a href="#grammar-5" title="①-5．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。">①-5．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。</a></li>
    <li><a href="#grammar-6" title="①-6．スタック代名詞4つのth、this,that,the,theyとハウリングについて。">①-6．スタック代名詞4つのth、this,that,the,theyとハウリングについて。</a></li>
    <li><a href="#grammar-7" title="①-7．カードシャッフル動詞4つのp、peek,poke,pull,pushとドロー＆リターンについて。">①-7．カードシャッフル動詞4つのp、peek,poke,pull,pushとドロー＆リターンについて。</a></li>
-   <li>②-0．「TSF.d」「TSF.py」のAPI一覧。</li>
+   <li><a href="#api-0" title="②-0．「TSF.d」「TSF.py」のAPI一覧。">②-0．「TSF.d」「TSF.py」のAPI一覧。</a></li>
    <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンド一覧表示。</li>
    <li>②-2．「TSF --helloworld」「sample/sample_helloworld.tsf」TSFのハローワールドサンプル。</li>
    <li>③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧<。/li>
@@ -208,7 +208,23 @@
   <p>
    ※#関数カードの、ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。
   </p>
- </section><section>
+ </section>
+ <section>
+  <h2 id="api-0">②-0．「TSF.d」「TSF.py」のAPI一覧。</h2>
+
+<dl><dt> TSF_sample_help()</dt><dd>「sample_help.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_Helloworld()</dt><dd>「sample_helloworld.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_TSFdoc()</dt><dd>「TSFdoc.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_about()</dt><dd>「sample_aboutTSF.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_RPN()</dt><dd>「sample_RPN.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_calc()</dt><dd>「sample_calc.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_calcJA()</dt><dd>「sample_calcJA.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_calender()</dt><dd>「sample_calender.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_FizzBuzz()</dt><dd>「sample_fizzbuzz.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_99beer()</dt><dd>「sample_99beer.tsf」コマンド版。</dd></dl>
+<dl><dt> TSF_sample_quine()</dt><dd>「sample_quine.tsf」コマンド版。</dd></dl>
+ </section>
+<section>
  <h2 id="address-0">⑫-0．作者について、例えば連絡先。</h2>
  <p>
   更新情報はGitHubやブログを確認してください。<br>

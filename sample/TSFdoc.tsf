@@ -4,8 +4,8 @@ TSF_Tab-Separated-Forth:
 TSFdocs_help:
 	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#TSF_echo	#TSF_fin.
 #! -- merge --
-#!	TSFdocs_files:	../README.md	../debug/README.html	sample_aboutTSF.tsf
-#!	TSFdocs_basedocs:	TSFdocs_baseMD:	TSFdocs_baseHTML:	TSFdocs_baseTSF:
+#!	TSFdocs_files:	../README.md	../debug/README.html
+#!	TSFdocs_basedocs:	TSFdocs_baseMD:	TSFdocs_baseHTML:
 #!	TSFdocs_imports:	sample_aboutTSF.tsf
 #!	TSFimport_ext:	.tsf
 #!	TSFimport_regex:	regex_TSF:	regex_none:
