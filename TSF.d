@@ -19,7 +19,7 @@ import TSF_Match;
 import TSF_Trans;
 
 
-void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
+void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版「TSF --help」。<br>ファイル名などのパラメーターが無い場合にもコマンド一覧が表示される。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "replace:","#TSF_this","help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("help:",join([
@@ -43,7 +43,7 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_help");
 }
 
-void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマンド版。
+void TSF_sample_Helloworld(){    //#TSFdoc:「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「"Hello world #TSF_echo」のみ。「#TSF_fin.」の省略テストも兼用。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "Hello world","#TSF_echo"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_Helloworld");

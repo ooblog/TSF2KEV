@@ -24,11 +24,11 @@ TSFimport_regex:
 regex_Python:
 	regexPython_reg:	regexPython_txt:	#TSF_replacesRSN
 regexPython_reg:
-	^(?!def).+$	^\n	def	@NL	^@dddt	$
-	@DLDT	:    #TSFdoc:	@dddt
+	^(?!def).+$	^\n	def 	@NL	^@dddt	$
+	@DLDT	:[ /]+#[a-zA-Z]+:	@dddt
 regexPython_txt:
 			@NL@DLDT	@dddt{?NL}		@dddt
-	<dl><dt>	</dt><dd>	</dd></dl>
+	   <dl><dt>	</dt><dd>	</dd></dl>
 regex_none:
 	#TSF_pullFthat
 TSFdocs_tags:
@@ -36,7 +36,7 @@ TSFdocs_tags:
 	{@TSF_main}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}
 	{?TSFapi00title}
-	{?TSFgrammar07title}	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
+	{?TSFgrammar08title}	{?TSFgrammar07title}	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
 	{?TSFhtmlheader}	{?TSFbodyheader}	{?TSFasidenav}	{?TSFsections}	{?TSFbodyfooter}	{?TSFhtmlfooter}
@@ -89,6 +89,7 @@ TSFdocs_tags:
 	   <li><a href="#grammar-5" title="{?TSFgrammar05title}">{?TSFgrammar05title}</a></li>
 	   <li><a href="#grammar-6" title="{?TSFgrammar06title}">{?TSFgrammar06title}</a></li>
 	   <li><a href="#grammar-7" title="{?TSFgrammar07title}">{?TSFgrammar07title}</a></li>
+	   <li><a href="#grammar-8" title="{?TSFgrammar08title}">{?TSFgrammar08title}</a></li>
 	   <li><a href="#api-0" title="{?TSFapi00title}">{?TSFapi00title}</a></li>
 	   <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンド一覧表示。</li>
 	   <li>②-2．「TSF --helloworld」「sample/sample_helloworld.tsf」TSFのハローワールドサンプル。</li>
@@ -159,36 +160,33 @@ TSFdocs_tags:
 	  <h2 id="grammar-0">{?TSFgrammar00title}</h2>
 	  <p>
 	   <img src="cardimg/TSF176x250.png" width="176" height="250" class="TSFcard" alt="「TSF_Tab-Separated-Forth」カードサイズロゴ" title="「TSF_Tab-Separated-Forth」カードサイズロゴ">
-	   ForthとかRPN自体初耳な方はwikipediaなどを軽く参考にしてもらって、<br>
-	   「TSF_Tab-Separated-Forth」ではForthとの違いを説明しながら構文や式の概要を説明していきます。<br>
+	   ForthやTSVのおさらいはwikipediaなどを軽く参考にしてください。<br>
 	  </p>
 	  <dl><dt>Forth - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Forth" title="Forth - Wikipedia">https://ja.wikipedia.org/wiki/Forth</a></dd></dl>
 	  <dl><dt>逆ポーランド記法 - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E9%80%86%E3%83%9D%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%E8%A8%98%E6%B3%95" title="逆ポーランド記法 - Wikipedia">https://ja.wikipedia.org/wiki/%E9%80%86%E3%83%9D%E3%83%BC%E3%83%A9%E3%83%B3%E3%83%89%E8%A8%98%E6%B3%95</a></dd></dl>
 	  <dl><dt>Gforth マニュアル</dt><dd><a href="http://www.h7.dion.ne.jp/~samwyn/forth/gforth/index.html" title="Gforth マニュアル">http://www.h7.dion.ne.jp/~samwyn/forth/gforth/index.html</a></dd></dl>
+	  <dl><dt>Comma-Separated Values - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Comma-Separated_Values" title="Comma-Separated Values - Wikipedia">https://ja.wikipedia.org/wiki/Comma-Separated_Values</a></dd></dl>
+	  <dl><dt>Labeled Tab-separated Values (LTSV)</dt><dd><a href="http://ltsv.org/" title="Labeled Tab-separated Values (LTSV)">http://ltsv.org/</a></dd></dl>
 	  <p>
-	   あなたが知っている(もしくは今知った)ForthはForth自身でコンパイルされてるかもしれないコンパイラですが、TSFはインタプリタです。実装はD言語だったりPyhtonだったりします。<br>
-	   Forthはワードを定義しますが、TSFはカードの束をスタックと呼び、スタックを呼び出す形になります(スタックの集合をデッキと呼びます)。<br>
-	   Forthの式は逆ポーランド記法ですが、TSFの式は「#TSF_RPN」と「#TSF_calc」系列の２種類あり、括弧や中置記法を用いた式の使用も可能です。<br>
-	   Forthのスタックには型が存在する(演算結果の型チェックが行われていないだけ)と思われるが、TSFは整数も小数も分数も文字列に置き換えます。<br>
-	   Forthはスタックが一本と思われるが、TSFは複数のスタックを使い分けます。<br>
+	   TSVにプログラムを搭載(Value→Forth)できるようにしたものがTSFです。<br>
+	   TSFはForthも参考にしてますが「csv→tsv→ltsv(HSP)→L:Tsv(BaCon,Python)→TSF(D言語,Python)」みたいな流れなので、<br>
+	   間接的にはHSPやPythonの影響を受けてるはずですが、厳密にはプログラミング言語からではなくデータフォーマットからの進化です。
 	  </p>
 	 </section>
 	 <section>
 	  <h2 id="grammar-1">{?TSFgrammar01title}</h2>
 	  <p>
 	   <img src="cardimg/TSFcard_shebang.png" width="176" height="250" class="TSFcard" alt="「#! /usr/bin/env TSF」カード" title="「#! /usr/bin/env TSF」カード">
-	   TSFに存在する構文で用いる記号はタブ文字「\t」による区切りと「#!」によるコメントと、スタック名末尾「:」と関数カード先頭の「#」ぐらいです。
+	   TSF構文で用いる記号はタブ文字「\t」による区切りと「#!」によるコメントと、スタック名末尾「:」と関数カード先頭の「#」ぐらいです。
 	  </p>
 	  <dl>「\t(tab)」<dt></dt><dd>カード(文字列)はタブ文字で区切るので、タブ文字を視認しやすいエディタを用いてください。</dd></dl>
 	  <dl>「#!(shebang)」<dt></dt><dd>インタプリタ指定「#! /usr/bin/env TSF」を成立させるためにシバン「#!」で始まる行はコメント扱いにして読み飛ばします。</dd></dl>
 	  <dl>「:(coron)」<dt></dt><dd>スタック名に必須ではありませんが「#TSF_calc」内でスタック名を扱う際に必要。あとLTSVを読み込む「L」副詞で用いる予定。</dd></dl>
-	  <dl>「#(sharp)」<dt></dt><dd>関数カード名に必須ではありませんが視認性の関係でTSFの関数には頭にシャープが付いてます。</dd></dl>
+	  <dl>「#(sharp)」<dt></dt><dd>関数カード名にシャープは必須ではありませんが視認性の関係でTSFの関数には頭にシャープが付いてます。</dd></dl>
 	  <p>
-	   漢直関連で「#」一文字のスタック名を扱うので「#」だけでコメントとか関数カードだとか「:」が無いからスタックじゃないなどと勘違いしないよう注意。<br>
-	  </p>
-	  <p>
-	   行頭がタブ文字「\t」でもシバン「#!」でもない場合はスタック名の宣言で、行頭がタブ文字の場合はスタックを構成するカード束です。<br>
-	   スタック名とカードの束をまとまて一行で記述(ワンライナー)する事も可能です。<br>
+	   行頭がシバン「#!」の場合はコメント扱いです。<br>
+	   行頭がタブ文字「\t」の場合はスタックを構成するカード束です。<br>
+	   行頭がタブ文字「\t」でもシバン「#!」でもない場合はスタック名の宣言です。スタック名宣言とはスタック構成カード束をまとまて一行で記述(ワンライナー)する事も可能です。<br>
 	  </p>
 	 </section>
 	 <section>
@@ -218,12 +216,30 @@ TSFdocs_tags:
 	 <section>
 	  <h2 id="grammar-5">{?TSFgrammar05title}</h2>
 	  <p>
-	   「#TSF_this」にドローさせるスタック名を変更するには「#TSF_calc」や「#TSF_casesQON」などを使うのが簡単です。<br>
+	  単純な分岐なら「0Z~True:~False: #TSF_calc #TSF_this」のような感じで「#TSF_calc」の比較演算子の計算結果にスタック名を選択する荒技があります(「#TSF_RPN」では使用不可)。<br>
+	  case文の真似をする場合「switch cases: funcs: #TSF_casesQON #TSF_this」のような感じで「#TSF_casesQON」などを用いてスタック名を選択する方法もあります。<br>
+	  他にも「funcs: [cases:0] #TSF_calc #TSF_peekMthe #TSF_this」のような感じでpeek系の関数を用いてスタック名を選択する方法もあります。<br>
 	  </p>
 	 </section>
 	 <section>
 	  <h2 id="grammar-6">{?TSFgrammar06title}</h2>
 	  <p>
+	   「this」は実行中のスタック。#関数カードであればthatスタックからカードを「ドロー(積み下ろし)」してthatスタックに「リターン(積み上げ)」したりする。<br>
+	   文字列カードであれば単純にthatスタックに積み上げる。<br>
+	   thisスタックを数え終わる、もしくは途中でthisスタック目減りなど「オーバーフロー」が発生したらスタックから抜ける。<br>
+	   「#exit: #TSF_this」のように存在しないスタックに入る行為でもオーバーフロー扱い。<br>
+	  </p>
+	  <p>
+	   「that」は積込先スタック。#関数カードの返り値などが積み上げられる。<br>
+	   thisスタックとthatスタックが同じ場合、文字列カードが無限に積み重なる状況が発生する場合があり、それは「ハウリング」と呼称します。<br>
+	   ハウリング対策でthisスタック数え上げ上限を「#TSF_countmax」で指定できます。初期値は256です。<br>
+	  </p>
+	  <p>
+	   「the」は指定スタック。#関数カードで特定のスタックを指定する場合の代名詞(theは厳密には冠詞だが便宜上代名詞扱い)。<br>
+	  </p>
+	  <p>
+	   「they」はスタック名一覧。「デッキ」のスタック名一覧自体をカード束としてスタックの様に扱う場合がある。<br>
+	   「#TSF_pullNthey」などでスタックの消去。<br>
 	  </p>
 	 </section>
 	 <section>
@@ -235,8 +251,12 @@ TSFdocs_tags:
 	  </p>
 	 </section>
 	 <section>
-	  <h2 id="api-0">{?TSFapi00title}</h2>
-	{@TSF_main}
+	  <h2 id="grammar-8">{?TSFgrammar08title}</h2>
+	  <p>
+	  </p>
+	 </section>
+	 <section>
+	  <h2 id="api-0">{?TSFapi00title}</h2>{@TSF_main}
 	 </section>
 	
 {$TSFsection_404}
@@ -359,6 +379,10 @@ TSFdocs_tags:
 	   autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
 	   command KEV2tsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
 	   {?/CODE}
+	  <p>
+	   Vimエディタでの設定が成功するとシンタックスが着色されるはずです。<br>
+	   <img src="TSF_512x384.png" alt="TSF syntax image" title="TSFのシンタックス" width="512" height="384"><br>
+	  </p>
 {?TSFlicense03title}
 	⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン
 {?TSFbodyfooter}
@@ -422,7 +446,7 @@ TSFdocs_tags:
 {$TSFfaq00_KEV2}
 	③-0．「KEV2」のＦＡＱ。
 {?TSFgrammar00title}
-	①-0．TSF言語の文法、Forthとの差異(ワードをカードと呼ぶ)など。
+	①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。
 {?TSFgrammar01title}
 	①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。
 {?TSFgrammar02title}
@@ -434,11 +458,13 @@ TSFdocs_tags:
 {?TSFgrammar05title}
 	①-5．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。
 {?TSFgrammar06title}
-	①-6．スタック代名詞4つのth、this,that,the,theyとハウリングについて。
+	①-6．スタック代名詞4つの「th」、this,that,the,theyとハウリングについて。
 {?TSFgrammar07title}
-	①-7．カードシャッフル動詞4つのp、peek,poke,pull,pushとドロー＆リターンについて。
+	①-7．カードシャッフル動詞4つの「p」、peek,poke,pull,pushとドロー＆リターンについて。
+{?TSFgrammar08title}
+	①-8．カード選択位置の副詞「FNCMVAQIRHL」と多重副詞「SDO」ついて。
 {?TSFapi00title}
-	②-0．「TSF.d」「TSF.py」のAPI一覧。
+	②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。
 {?CODE}
 	<pre><code>
 {?/CODE}

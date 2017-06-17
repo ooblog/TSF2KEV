@@ -16,7 +16,7 @@ from TSF_Match import *
 from TSF_Trans import *
 
 
-def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
+def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版「TSF --help」。<br>ファイル名などのパラメーターが無い場合にもコマンド一覧が表示される。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "replace:","#TSF_this","help:","#TSF_argvsthe","#TSF_echoN","#TSF_fin."]),'T')
     TSF_Forth_setTSF("help:","\t".join([
@@ -42,7 +42,7 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版。
 #        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
 #        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
 
-def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版。
+def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「"Hello world #TSF_echo」のみ。「#TSF_fin.」の省略テストも兼用。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "Hello world","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_Helloworld")
