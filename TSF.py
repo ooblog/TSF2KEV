@@ -69,56 +69,35 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "aboutTSF:","#TSF_argvsthe","#TSF_echoN","echoRPNcalc:","#TSF_this"]),'T')
     TSF_Forth_setTSF("aboutTSF:","\t".join([
         "",
-        "○「TSF_Tab-Separated-Forth」の概要(開発予定の話も含みます)。",
+        "○「TSF_Tab-Separated-Forth」の簡略説明。",
         "",
         "　Forth風インタプリタ。単位はtsv文字列。文字列の事をカードと呼称。カードの束をスタックと呼称。スタックの集まりをデッキと呼称。",
-        "　文字から始まる行はスタック名。タブで始まる行はカードの束。「#!」で始まる行(改行のみの行含む)はコメント扱いで読み飛ばし。",
-        "　スタック名とカードの束を一行にまとめて記述するワンライナー記法も可能。",
+        "　文字から始まる行はスタック名。タブで始まる行はカードの束。シバン「#!」で始まる行(改行のみの行含む)はコメント扱いで読み飛ばし。",
         "",
-        "○TSFには4つの「th」、スタック代名詞「this」「that」「the」「they」という概念が存在する(theは厳密には冠詞だが便宜上代名詞扱い)。",
+        "○TSF構文には4つの「th」、スタック代名詞「this」「that」「the」「they」が存在。",
         "",
         "　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。",
-        "　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。",
-        "　オーバーフローもしくは「#!exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。",
-        "　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。",
-        "　TSFにはIF構文も存在しないけど「#TSF_this」に「#TSF_calc」「#TSF_peekNthe」「#TSF_aliasQON」などで呼び出し先変更を組み合わせる事で分岐は可能。",
         "　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。",
         "　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。",
         "　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。",
         "",
-        "○TSFのスタック操作に4つの「p」、スタック動詞「peek」「poke」「pull」「push」が存在する。",
+        "○TSF構文のスタック操作に4つの「p」、スタック動詞「peek」「poke」「pull」「push」が存在する。",
         "",
         "　「peek」スタックからカードを読み込む。読込先スタックはそのままに「that」スタックにカードが積まれるのでカードが増殖る形になる。",
         "　「poke」スタックにカードを書き込む。スタックのカードは上書きされるので上書きされたカードが消失する形になる。",
         "　「pull」スタックからカードを引き抜く。引抜先スタックから「that」スタックにカードが移動する形になる。",
         "　「push」スタックにカードを差し込む。引抜先スタックに「that」スタックからカードが移動する形になる。",
         "",
-        "　※ドロー(積み下ろし)は「pullFthat」、リターン(積み上げ)は「pushFthat」、してるとも言える。",
+        "○TSF構文の副詞「FNCMVAQIRHL」と数量詞「SDO」などの説明は省略。",
         "",
-        "○TSFのスタック操作で選択するカード位置の副詞「F,N,C,M,V,A…」などを用意する予定。",
+        "　※#関数カードの、ドロー(積み下ろし)は「pullFthat」リターン(積み上げ)は「pushFthat」してるとも言える。",
         "",
-        "　「F」(Front)スタックから表択、一番上に積まれたカード(tsv表現では末尾の文字列)を選択。",
-        "　「N」(Number)スタックから順択、一番下のカード(tsv表現では右端の文字列)をゼロとして数値指定で選択。",
-        "　「C」(Cycle)スタックから周択、「N」のカウント数がスタックを上回る場合、ゼロから数え直す。",
-        "　「M」(liMit)スタックから囲択、「N」のカウント数がスタックを上回る場合、「F」と同様。下回る場合ゼロ。",
-        "　「V」(reVerse)スタックから逆択、「N」のカウントが逆順になる。一番上のカード(tsv表現では左端の文字列)をゼロとして数値指定で選択。",
-        "　「A」(rAndom)スタックから乱択、ランダムに選択。乱数の定義が絡む場合は「N」を用いて別な所から乱数を準備すべき。",
-        "　「Q」(eQual)スタックから同択、文字列と同じカードを選択。カードの枚数は動詞による。",
-        "　「I」(In)スタックから含択、文字列が含まれるカードを選択。カードの枚数は動詞による。",
-        "　「R」(Regex)スタックから規択、正規表現に該当するカードを選択。カードの枚数は動詞による。TSFを実装する言語毎に正規表現の方言が存在する問題。",
-        "　「H」(matcHer)スタックから似択、文字列の一致度が一定数以上のカードを選択。カードの枚数は動詞による。Python以外の言語で一致度の基準が未定義。",
-        "　「L」(Label)スタックから札択、ラベル付カードを選択。L:Tsvを読み込む場合などに使用。",
-        "",
-        "○TSFの文字列置換などでは多重副詞(副詞の組み合わせ)が発生します。加えてスタック名なのかカード名なのかを指定する数量詞が加わります。",
-        "",
-        "　「S」(Stack)スタックを用意、同名のカードが存在しても、スタックを用います。",
-        "　「D」(carD)カードを用意、同名のスタックが存在しても、スタック名そのものを1枚のカード束とみなします。",
-        "　「O」(stack Or card)スタックまたはカードを用意、スタックが存在すればスタックを用い、スタックが存在しなければスタック名そのものを1枚のカード束とみなします。",
+        "○TSFの式の解説前にとりあえず分数計算や漢数字のテストなど。",
         ""]),'N')
     TSF_Forth_setTSF("echoRPNcalc:","\t".join([
-        "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoTIME:","#TSF_this"]),'T')
+        "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoURL:","#TSF_this"]),'T')
     TSF_Forth_setTSF("aboutRPNtest:","\t".join([
-        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「六分の五」を「#TSF_calcJA」→","６分の５","#TSF_calcJA","2","#TSF_joinN","#TSF_echo"]),'T')
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「六分の五」を「#TSF_calcJA」→","６分の５","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→","@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒","#TSF_calender","2","#TSF_joinN","#TSF_echo"]),'T')
     TSF_Forth_setTSF("aboutCALCdata:","\t".join([
         "1","3","m1|2"]),'T')
     TSF_Forth_setTSF("aboutRPNcalc:","\t".join([
@@ -146,19 +125,16 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　「#TSF_-calc」を用いると計算結果の符号を「p」「m」から「-」のみに変更できる。",
         "　「#TSF_calcJA」を用いると億千万円銭など通貨的な助数詞を扱う。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、1万分の1(‱)は「毛」表記。",
         ""]),'N')
-    TSF_Forth_setTSF("echoTIME:","\t".join([
-        "aboutTIMEtest:","#TSF_this","aboutTIME:","#TSF_argvsthe","#TSF_echoN"]),'T')
-    TSF_Forth_setTSF("aboutTIMEtest:","\t".join([
-        "▽「time」系は準備中","#TSF_echo"]),'T')
-    TSF_Forth_setTSF("aboutTIME:","\t".join([
+    TSF_Forth_setTSF("echoURL:","\t".join([
+        "aboutURL:","#TSF_argvsthe","#TSF_echoN"]),'T')
+    TSF_Forth_setTSF("aboutURL:","\t".join([
+        "○TSFの詳しい説明はローカルの「docs/index.html」かWeb上の「https://ooblog.github.io/TSF2KEV/」を確認してください。",
         "",
-        "○「time」系分数電卓も再開発中につき説明不足になります。",
+        "　Web版もTSF付属のローカル版も「docs/TSFindex.tsf」から「sample/TSFdoc.tsf」を用いて生成されてます。",
+        "　TSFを用いると簡潔なプログラムが書けます。そしてこの「sample/sample_aboutTSF.tsf」文書自体もTSF言語で書かれてます。",
         "",
-        "　時刻取得の方法が文字列置換なので、改行やタブ文字などもエスケープ置換も予定。",
-        "　時刻の取得ついでに乱数の取得も一ヶ所に集める予定。",
-        "　一週間の曜日「@wd」は月曜0~日曜7、ISOの曜日「@iw」は月曜1~日曜7の予定。",
-        "　「@T」でタブ、「@N」で改行に置換されます。",
-        ]),'N')
+        "#! -- Copyright (c) 2017 ooblog --",
+        "#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE"]),'N')
     TSF_Forth_samplerun("TSF_sample_about")
 
 def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。

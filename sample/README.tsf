@@ -79,6 +79,7 @@ TSFdocs_tags:
 	{?INDENT}▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→p5|6
 	{?INDENT}▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
 	{?INDENT}▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
+	{?INDENT}▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年06月19日(月)02時42分14秒
 	{?/CODE}
 	{?H2}TSF2KEVで未実装な箇所など(予定)。{?/H2}
 	{?P}
