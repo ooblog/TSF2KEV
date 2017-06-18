@@ -23,7 +23,7 @@ TSF_Forth_setTSF("quine_echo:","\t".join([
 TSF_Forth_setTSF("quine_ext:","\t".join([
     ".tsf",".py",".d"]),'T')
 TSF_Forth_setTSF("quine_view:","\t".join([
-    "quine_TSF:","quine_Python:","quine_D:","#exit:"]),'T')
+    "quine_TSF:","quine_Python:","quine_D:","#!exit:"]),'T')
 TSF_Forth_setTSF("quine_TSF:","\t".join([
     "#! /usr/bin/env TSF","#TSF_echo","#TSF_viewthey"]),'T')
 TSF_Forth_setTSF("quine_Python:","\t".join([

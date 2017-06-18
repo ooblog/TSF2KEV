@@ -6,7 +6,7 @@ quine_echo:
 quine_ext:
 	.tsf	.py	.d
 quine_view:
-	quine_TSF:	quine_Python:	quine_D:	#exit:
+	quine_TSF:	quine_Python:	quine_D:	#!exit:
 quine_TSF:
 	#! /usr/bin/env TSF	#TSF_echo	#TSF_viewthey
 quine_Python:

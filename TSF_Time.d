@@ -232,7 +232,7 @@ void TSF_Time_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Time」単体テ
     TSF_Forth_setTSF("timecount:",join([
         "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("timejump:",join([
-        "#exit","timepop:"],"\t"),'T');
+        "#!exit:","timepop:"],"\t"),'T');
     TSF_Forth_setTSF("timepop:",join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("timesample:",join([

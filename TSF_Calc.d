@@ -555,7 +555,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
     TSF_Forth_setTSF("calccount:",join([
         "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("calcjump:",join([
-        "#exit","calcpop:"],"\t"),'T');
+        "#!exit:","calcpop:"],"\t"),'T');
     TSF_Forth_setTSF("calcpop:",join([
         "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"],"\t"),'T');
     TSF_Forth_setTSF("calcpeekdata:",join([

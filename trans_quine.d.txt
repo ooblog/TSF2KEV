@@ -25,7 +25,7 @@ void main(string[] sys_argvs){
     TSF_Forth_setTSF("quine_ext:",join([
         ".tsf",".py",".d"],"\t"),'T');
     TSF_Forth_setTSF("quine_view:",join([
-        "quine_TSF:","quine_Python:","quine_D:","#exit:"],"\t"),'T');
+        "quine_TSF:","quine_Python:","quine_D:","#!exit:"],"\t"),'T');
     TSF_Forth_setTSF("quine_TSF:",join([
         "#! /usr/bin/env TSF","#TSF_echo","#TSF_viewthey"],"\t"),'T');
     TSF_Forth_setTSF("quine_Python:",join([

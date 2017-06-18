@@ -431,7 +431,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_Forth_setTSF("calccount:","\t".join([
         "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"]),'T')
     TSF_Forth_setTSF("calcjump:","\t".join([
-        "#exit","calcpop:"]),'T')
+        "#!exit:","calcpop:"]),'T')
     TSF_Forth_setTSF("calcpop:","\t".join([
         "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("calcpeekdata:","\t".join([

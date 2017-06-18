@@ -224,7 +224,7 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_Forth_setTSF("timecount:","\t".join([
         "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"]),'T')
     TSF_Forth_setTSF("timejump:","\t".join([
-        "#exit","timepop:"]),'T')
+        "#!exit:","timepop:"]),'T')
     TSF_Forth_setTSF("timepop:","\t".join([
         "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
     TSF_Forth_setTSF("timesample:","\t".join([

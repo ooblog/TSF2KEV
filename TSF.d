@@ -59,9 +59,9 @@ void TSF_sample_TSFdoc(){    //#TSFdoc:「TSFdoc.tsf」コマンド版。
     TSF_Forth_setTSF("TSFdocs_import:",join([
         "TSFdocs_imports:","#TSF_pullFthe","#TSF_peekFthat","[0](import)","#TSF_join[]","#TSF_echo","#TSF_peekFthat","#TSF_readtext","#TSF_peekFthat","#TSF_mergethe","#TSF_peekFthat","#TSF_fileext","TSFimport_ext:","TSFimport_regex:","#TSF_casesQON","#TSF_this","TSFdocs_imports:","#TSF_lenthe","[0]Z~TSFdocs_loop:~TSFdocs_import:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("TSFdocs_loop:",join([
-        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","[0](save)","#TSF_join[]","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
+        "TSFdocs_files:","#TSF_pullFthe","#TSF_peekFthat","[0](save)","#TSF_join[]","#TSF_echo","TSF_carbondoc:","TSFdocs_basedocs:","#TSF_pullFthe","#TSF_clonethe","TSF_carbontags:","TSFdocs_tags:","#TSF_clonethe","TSFtags_loop:","#TSF_this","#TSF_peekFthat","TSF_carbondoc:","#TSF_savetext","TSFdocs_files:","#TSF_lenthe","[0]Z~#!exit:~TSFdocs_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("TSFtags_loop:",join([
-        "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
+        "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#!exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_TSFdoc");
 }
 
@@ -82,7 +82,7 @@ void TSF_sample_about(){    //#TSFdoc:「sample_aboutTSF.tsf」コマンド版�
         "",
         "　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。",
         "　#関数カードではないカードは後述の「that」スタックに積み上げられる。関数の返り値ではないのでリターンとは呼ばない。",
-        "　オーバーフローもしくは「#exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。",
+        "　オーバーフローもしくは「#!exit: #TSF_this」のように存在しないスタックに入る行為でオーバーフローを発生させてスタックから抜ける。",
         "　TSFにループ構文は存在しないので末尾再帰がループになる。末尾だけじゃなくループの外側スタックを呼び出しても呼び出し先までのコールスタックが破棄される。",
         "　TSFにはIF構文も存在しないけど「#TSF_this」に「#TSF_calc」「#TSF_peekNthe」「#TSF_aliasQON」などで呼び出し先変更を組み合わせる事で分岐は可能。",
         "　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。",
@@ -215,7 +215,7 @@ void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド�
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "#TSF_argvs","#TSF_pullFthat","FZcount:","#TSF_pushFthe","FBloop:","#TSF_this","#TSF_fin.","20"],"\t"),'T');
     TSF_Forth_setTSF("FBloop:",join([
-        "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#exit:","#TSF_calc","#TSF_this"],"\t"),'T');
+        "FZcount:",",([FZcount:0]+1)","#TSF_-calc","FZcount:","0","#TSF_pokeNthe","([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)","#TSF_calc","#TSF_peekNthe","#TSF_echo","[FZcount:4]-[FZcount:0]o~FBloop:~#!exit:","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("FZcount:",join([
         "0","Fizz","Buzz","Fizz&Buzz"],"\t"),'T');
     TSF_Forth_samplerun("TSF_sample_FizzBuzz");
@@ -227,7 +227,7 @@ void TSF_sample_99beer(){    //#TSFdoc:「sample_99beer.tsf」コマンド版。
     TSF_Forth_setTSF("bottlessetup:",join([
         "onthewallint:","#TSF_pushFthe","onthewallint:","#TSF_that","#TSF_peekFthat","#TSF_peekFthat","callbottles:","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("callbottles:",join([
-        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQSN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#exit:","#TSF_calc","#TSF_this"],"\t"),'T');
+        "#TSF_swapBA","#TSF_pullFthat","#TSF_peekFthat","[0],1-","#TSF_join[]","#TSF_-calc","N-bottles:","bottlescall:","[onthewallint:1]","#TSF_calc","#TSF_peekMthe","#TSF_clonethe","N-bottles:","onthewallstr:","onthewallint:","#TSF_replacesQSN","N-bottles:","#TSF_argvsthe","#TSF_echoN","[onthewallint:1]o~callbottles:~#!exit:","#TSF_calc","#TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("onthewallstr:",join([
         "{buybottles}","{drink}","{drinked}"],"\t"),'T');
     TSF_Forth_setTSF("bottlescall:",join([
@@ -255,7 +255,7 @@ void TSF_sample_quine(){    //#TSFdoc:「sample_quine.tsf」コマンド版。
     TSF_Forth_setTSF("quine_ext:",join([
         ".tsf",".py",".d"],"\t"),'T');
     TSF_Forth_setTSF("quine_view:",join([
-        "quine_TSF:","quine_Python:","quine_D:","#exit:"],"\t"),'T');
+        "quine_TSF:","quine_Python:","quine_D:","#!exit:"],"\t"),'T');
     TSF_Forth_setTSF("quine_TSF:",join([
         "#! /usr/bin/env TSF","#TSF_echo","#TSF_viewthey"],"\t"),'T');
     TSF_Forth_setTSF("quine_Python:",join([
