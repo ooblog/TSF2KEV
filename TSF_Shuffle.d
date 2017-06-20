@@ -4,11 +4,14 @@ import std.stdio;
 import std.string;
 import std.conv;
 import std.math;
+import std.regex;
+import std.random;
 
 import TSF_Io;
 import TSF_Forth;
 
 
+Random TSF_Match_Random;
 void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Shuffle");
     string function()[string] TSF_Forth_cards=[
@@ -70,6 +73,77 @@ string TSF_Shuffle_swapCC(){    //#カードCをカードAの位置に浮上し�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
     return "";
 }
+
+
+long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:peek,poke,pull,pushの共通部品。(TSFAPI)
+    long[] TSF_Plist=[];
+    long TSF_cardsL=0;
+    if( TSF_the!="" ){
+        if( TSF_the in TSF_Forth_stackD() ){
+            TSF_cardsL=TSF_Forth_stackD()[TSF_the].length;
+            if( 0<TSF_cardsL ){
+                switch( TSF_FNCMVAQIRHL ){
+                    case 'F':  TSF_Plist[0]=TSF_cardsL-1;   break;
+                    case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_peek; }   break;
+                    case 'C':  TSF_Plist[0]=TSF_peek%TSF_cardsL;   break;
+                    case 'M':  TSF_Plist[0]=to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1));   break;
+                    case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_cardsL-1-TSF_peek; }   break;
+                    case 'A':  TSF_Plist[0]=uniform(0,TSF_cardsL,TSF_Match_Random);   break;
+                    case 'Q':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'I':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'R':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'H':  break;
+                    case 'L':  break;
+                    default:  break;
+                }
+            }
+        }
+    }
+    else{
+        TSF_cardsL=TSF_Forth_stackO().length;
+        if( 0<TSF_cardsL ){
+            switch( TSF_FNCMVAQIRHL ){
+                case 'F':  TSF_Plist[0]=TSF_cardsL-1;   break;
+                case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_peek; }   break;
+                case 'C':  TSF_Plist[0]=TSF_peek%TSF_cardsL;   break;
+                case 'M':  TSF_Plist[0]=to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1));   break;
+                case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_cardsL-1-TSF_peek; }   break;
+                case 'A':  TSF_Plist[0]=uniform(0,TSF_cardsL,TSF_Match_Random);   break;
+                case 'Q':
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                        if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                break;
+                case 'I':
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                        if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                break;
+                case 'R':  break;
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackO()){
+                        if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                case 'H':  break;
+                case 'L':  break;
+                default:  break;
+            }
+        }
+    }
+    return TSF_Plist;
+}
+
 
 string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
     string TSF_pull="";

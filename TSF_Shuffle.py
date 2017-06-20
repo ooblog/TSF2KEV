@@ -108,6 +108,126 @@ def TSF_Shuffle_swapCC():    #TSFdoc:カードCをカードAの位置に浮上�
     TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();  TSF_swapC=TSF_Forth_drawthe();
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
 
+
+def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peek,poke,pull,pushの共通部品。(TSFAPI)
+    TSF_Plist=[]
+    TSF_peek=TSF_peek if TSF_peek != None else 0
+    TSF_seek=TSF_seek if TSF_seek != None else ""
+    if TSF_the != "":
+        if TSF_the in TSF_Forth_stackD():
+            TSF_cardsL=len(TSF_Forth_stackD()[TSF_the])
+            if 0 < TSF_cardsL:
+                if TSF_FNCMVAQIRHL == 'F':
+                    TSF_Plist[0]=TSF_cardsL-1
+                elif TSF_FNCMVAQIRHL == 'N':
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
+                elif TSF_FNCMVAQIRHL == 'C':
+                    TSF_Plist[0]=TSF_peek%TSF_cardsL
+                elif TSF_FNCMVAQIRHL == 'M':
+                    TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
+                elif TSF_FNCMVAQIRHL == 'V':
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_cardsL-1-TSF_peek;
+                elif TSF_FNCMVAQIRHL == 'A':
+                    TSF_Plist[0]=random.randint(0,TSF_cardsL-1)
+                elif TSF_FNCMVAQIRHL == 'Q':
+                    for TSF_peek,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        if TSF_seek==TSF_card: TSF_Plist+=[TSF_peek]
+                elif TSF_FNCMVAQIRHL == 'I':
+                    for TSF_peek,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        if TSF_seek in TSF_card: TSF_Plist+=[TSF_peek]
+                elif TSF_FNCMVAQIRHL == 'R':
+                    for TSF_peekreg,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        try:
+                            rewrite_research=re.search(re.compile(TSF_seek),TSF_card)
+                        except re.error:
+                            break
+                        else:
+                            if TSF_regsearch: TSF_Plist+=[TSF_peekreg]
+                elif TSF_FNCMVAQIRHL == 'H':
+                    pass
+                elif TSF_FNCMVAQIRHL == 'L':
+                    pass
+    else:
+        TSF_cardsL=len(TSF_Forth_stackO())
+        if 0 < TSF_cardsL:
+            if TSF_FNCMVAQIRHL == 'F':
+                TSF_plist[0]=TSF_cardsL-1
+            elif TSF_FNCMVAQIRHL == 'N':
+                if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
+            elif TSF_FNCMVAQIRHL == 'C':
+                TSF_Plist[0]=TSF_peek%TSF_cardsL
+            elif TSF_FNCMVAQIRHL == 'M':
+                TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
+            elif TSF_FNCMVAQIRHL == 'V':
+                if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_cardsL-1-TSF_peek;
+            elif TSF_FNCMVAQIRHL == 'A':
+                TSF_Plist[0]=random.randint(0,TSF_cardsL-1)
+            elif TSF_FNCMVAQIRHL == 'Q':
+                for TSF_peek,TSF_card in enumerate(TSF_Forth_stackO()):
+                    if TSF_seek==TSF_card: TSF_Plist+=[TSF_peek]
+            elif TSF_FNCMVAQIRHL == 'I':
+                for TSF_peek,TSF_card in enumerate(TSF_Forth_stackO()):
+                    if TSF_seek in TSF_card: TSF_Plist+=[TSF_peek]
+            elif TSF_FNCMVAQIRHL == 'R':
+                TSF_regsearch=None
+                for TSF_peekreg,TSF_card in enumerate(TSF_Forth_stackO()):
+                    try:
+                        rewrite_research=re.search(re.compile(TSF_seek),TSF_card)
+                    except re.error:
+                        break
+                    else:
+                        if TSF_regsearch: TSF_Plist+=[TSF_peekreg]
+            elif TSF_FNCMVAQIRHL == 'H':
+                pass
+            elif TSF_FNCMVAQIRHL == 'L':
+                pass
+    return TSF_Plist
+
+def TSF_Shuffle_peek(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+
+def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+
+def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+
+def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+
+
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
     TSF_pull=""
     if TSF_the in TSF_Forth_stackD():
@@ -237,6 +357,8 @@ def TSF_Shuffle_debug(TSF_sysargvs):    #TSFdoc:「TSF_Shuffle」単体テスト
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Shuffle.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
+#    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+#    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
     TSF_Shuffle_debug(TSF_Io_argvs(["python","TSF_Shuffle.py"]))
