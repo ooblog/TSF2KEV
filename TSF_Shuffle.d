@@ -20,6 +20,10 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_swapCB":&TSF_Shuffle_swapCB, "#カードCB交換":&TSF_Shuffle_swapCB,
         "#TSF_swapAA":&TSF_Shuffle_swapAA, "#カードAA交換":&TSF_Shuffle_swapAA,
         "#TSF_swapCC":&TSF_Shuffle_swapCC, "#カードCC交換":&TSF_Shuffle_swapCC,
+        "#TSF_peekCthe":&TSF_Shuffle_peekCthe, "#指定スタック周択読込":&TSF_Shuffle_peekCthe,
+//#        "#TSF_peekCthis":&TSF_Shuffle_peekCthis, "#実行中スタック周択読込":&TSF_Shuffle_peekCthis,
+//#        "#TSF_peekCthat":&TSF_Shuffle_peekCthat, "#積込先スタック周択読込":&TSF_Shuffle_peekCthat,
+//#        "#TSF_peekCthey":&TSF_Shuffle_peekCthey, "#スタック一覧周択読込":&TSF_Shuffle_peekCthey,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -85,7 +89,7 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
                 switch( TSF_FNCMVAQIRHL ){
                     case 'F':  TSF_Plist[0]=TSF_cardsL-1;   break;
                     case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_peek; }   break;
-                    case 'C':  TSF_Plist[0]=TSF_peek%TSF_cardsL;   break;
+                    case 'C':  TSF_Plist~=[to!long(TSF_peek%TSF_cardsL)];   break;
                     case 'M':  TSF_Plist[0]=to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1));   break;
                     case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_cardsL-1-TSF_peek; }   break;
                     case 'A':  TSF_Plist[0]=uniform(0,TSF_cardsL,TSF_Match_Random);   break;
@@ -144,6 +148,22 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
     return TSF_Plist;
 }
 
+string[] TSF_Shuffle_peek(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:peekの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL);
+    string[] TSF_pulllist=[];
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackO()[to!size_t(TSF_P)]];
+        }
+    }
+    return TSF_pulllist;
+}
+
 
 string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
     string TSF_pull="";
@@ -155,6 +175,24 @@ string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定ス�
     }
     return TSF_pull;
 }
+
+void TSF_Shuffle_returnFNCMVA(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0]);
+}
+
+void TSF_Shuffle_returnQIRH(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共通部品。QIRHは複数のカードを返す。(TSFAPI)
+    foreach(string TSF_card;TSF_pulllist){
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card);
+    }
+    TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_pulllist.length));
+}
+
+string TSF_Shuffle_peekCthe(){    //#TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,"",'C'));
+    return "";
+}
+
 
 string TSF_Shuffle_peekMthe(){    //#TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());

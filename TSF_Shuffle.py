@@ -14,7 +14,7 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_swapCB":TSF_Shuffle_swapCB, "#カードCB交換":TSF_Shuffle_swapCB,
         "#TSF_swapAA":TSF_Shuffle_swapAA, "#カードAA交換":TSF_Shuffle_swapAA,
         "#TSF_swapCC":TSF_Shuffle_swapCC, "#カードCC交換":TSF_Shuffle_swapCC,
-#        "#TSF_peekCthe":TSF_Shuffle_peekCthe, "#指定スタック周択読込":TSF_Shuffle_peekCthe,
+        "#TSF_peekCthe":TSF_Shuffle_peekCthe, "#指定スタック周択読込":TSF_Shuffle_peekCthe,
 #        "#TSF_peekCthis":TSF_Shuffle_peekCthis, "#実行中スタック周択読込":TSF_Shuffle_peekCthis,
 #        "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
 #        "#TSF_peekCthey":TSF_Shuffle_peekCthey, "#スタック一覧周択読込":TSF_Shuffle_peekCthey,
@@ -109,7 +109,7 @@ def TSF_Shuffle_swapCC():    #TSFdoc:カードCをカードAの位置に浮上�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
 
 
-def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peek,poke,pull,pushの共通部品。(TSFAPI)
+def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peek,poke,pull,pushの共通部品。カードの位置を取得。(TSFAPI)
     TSF_Plist=[]
     TSF_peek=TSF_peek if TSF_peek != None else 0
     TSF_seek=TSF_seek if TSF_seek != None else ""
@@ -122,7 +122,7 @@ def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFd
                 elif TSF_FNCMVAQIRHL == 'N':
                     if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
                 elif TSF_FNCMVAQIRHL == 'C':
-                    TSF_Plist[0]=TSF_peek%TSF_cardsL
+                    TSF_Plist+=[TSF_peek%TSF_cardsL]
                 elif TSF_FNCMVAQIRHL == 'M':
                     TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
                 elif TSF_FNCMVAQIRHL == 'V':
@@ -183,9 +183,32 @@ def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFd
                 pass
     return TSF_Plist
 
-def TSF_Shuffle_peek(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通部品。(TSFAPI)
+def TSF_Shuffle_peek(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+    return TSF_pulllist
+
+def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
     TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=TSF_P
+
+def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
     TSF_pulllist=[]
     if TSF_the != "":
         for TSF_P in TSF_Plist:
@@ -195,7 +218,7 @@ def TSF_Shuffle_peek(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通
             TSF_pulllist+=TSF_P
     return TSF_pulllist
 
-def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
+def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
     TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
     TSF_pulllist=[]
@@ -206,35 +229,18 @@ def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:poke
         for TSF_P in TSF_Plist:
             TSF_pulllist+=TSF_P
 
-def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
-    TSF_the=TSF_the if TSF_the != None else ""
-    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
-    TSF_pulllist=[]
-    if TSF_the != "":
-        for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
-    else:
-        for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
-    return TSF_pulllist
+def TSF_Shuffle_returnFNCMVA(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0])
 
-def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
-    TSF_the=TSF_the if TSF_the != None else ""
-    TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
-    TSF_pulllist=[]
-    if TSF_the != "":
-        for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
-    else:
-        for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
-
+def TSF_Shuffle_returnQIRH(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。QIRHは複数のカードを返す。(TSFAPI)
+    for TSF_card in TSF_pulllist:
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_pulllist)))
 
 def TSF_Shuffle_peekCthe():    #TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Plist=TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,'C')
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,"",'C'))
     return ""
-
 
 
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)

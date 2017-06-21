@@ -14,6 +14,7 @@ pronoun:	this	that	the	they
 shufflestacks:
 	pushM:	pullM:	pokeM:	peekM:
 #!	pushC:	pullC:	pokeC:	peekC:
+	peekC:
 	pushN:	pullN:	pokeN:	peekN:
 	pushF:	pullF:	pokeF:	peekF:
 
