@@ -3,15 +3,24 @@ TSF_Tab-Separated-Forth:
 	shuffleclone:	#TSF_this	#TSF_fin.
 shuffleclone:
 	adverbclone:	adverb:	#TSF_clonethe	shufflestacks:	#TSF_pullFthe	#TSF_this
-	adverbclone:	#TSF_argvsthe	#TSF_reverseN	adverbclone:	#TSF_lenthe	 	#TSF_sandwichN	「[3][2]」「[1]」「[0]」	#TSF_join[]	#TSF_echo
+	adverbclone:	#TSF_argvsthe	#TSF_reverseN	adverbclone:	#TSF_lenthe	 	#TSF_sandwichN	「#[2]」「[1]」「[0]」	#TSF_join[]	#TSF_echo
 	shufflestacks:	#TSF_lenthe	[0]o~shuffleclone:~#!exit:	#TSF_join[]	#TSF_calc	#TSF_this
 
-shufflestacks:	pushF:	pullF:	pokeF:	peekF:
 verb:	peek	poke	push	pull
-adverb:	Front	Number	Cycle	liMit	reVerse	rAndom	eQual	In	Regex	matcHer	Label
+#!adverb:	Front	Number	Cycle	liMit	reVerse	rAndom	eQual	In	Regex	matcHer	Label
+adverb:	F	N	C	M	V	A	Q	I	R	H	L
 pronoun:	this	that	the	they
 
-peekF:	#	TSF_peekFthe	adverbclone:	#TSF_peekFthe
-pokeF:	#	TSF_pokeFthe	$poke	adverbclone:	#TSF_pokeFthe	$poke
-pullF:	#	TSF_pullFthe	adverbclone:	#TSF_pullFthe
-pushF:	#	TSF_pushFthe	$push	adverbclone:	#TSF_pushFthe	$push
+shufflestacks:
+	pushN:	pullN:	pokeN:	peekN:
+	pushF:	pullF:	pokeF:	peekF:
+
+peekF:	TSF_peekFthe	adverbclone:	#TSF_peekFthe
+pokeF:	TSF_pokeFthe	$poke	adverbclone:	#TSF_pokeFthe	$poke
+pullF:	TSF_pullFthe	adverbclone:	#TSF_pullFthe
+pushF:	TSF_pushFthe	$push	adverbclone:	#TSF_pushFthe	$push
+
+peekN:	TSF_peekNthe	adverbclone:	1	#TSF_peekNthe
+pokeN:	TSF_pokeNthe	$poke	adverbclone:	1	#TSF_pokeNthe	$poke
+pullN:	TSF_pullNthe	adverbclone:	1	#TSF_pullNthe
+pushN:	TSF_pushNthe	$push	adverbclone:	1	#TSF_pushNthe	$push

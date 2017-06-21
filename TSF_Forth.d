@@ -646,7 +646,7 @@ string TSF_Forth_pushFthey(){    //#TSFdoc:スタック一覧に最後尾スタ�
 }
 
 void TSF_Forth_pushN(string TSF_the,long TSF_peek,string TSF_push){    //#TSFdoc:指定スタックにカードを順択で差込。(TSFAPI)
-    if( TSF_push in TSF_stackD ){
+    if( TSF_the in TSF_stackD ){
         TSF_stackD[TSF_the]=TSF_Io_separatepushN(TSF_stackD[TSF_the],TSF_peek,TSF_push);
     }
 }
