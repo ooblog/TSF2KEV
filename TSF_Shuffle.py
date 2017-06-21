@@ -193,6 +193,7 @@ def TSF_Shuffle_peek(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通
     else:
         for TSF_P in TSF_Plist:
             TSF_pulllist+=TSF_P
+    return TSF_pulllist
 
 def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
@@ -215,6 +216,7 @@ def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通
     else:
         for TSF_P in TSF_Plist:
             TSF_pulllist+=TSF_P
+    return TSF_pulllist
 
 def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
@@ -226,6 +228,13 @@ def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:push
     else:
         for TSF_P in TSF_Plist:
             TSF_pulllist+=TSF_P
+
+
+def TSF_Shuffle_peekCthe():    #TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Plist=TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,'C')
+    return ""
+
 
 
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
@@ -296,20 +305,21 @@ def TSF_Shuffle_pullM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからカ�
     if TSF_the in TSF_Forth_stackD():
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
         if 0 < TSF_cardsN_len:
-            TSF_pull=TSF_Forth_stackD()[TSF_the].pop(max(min(TSF_peek,TSF_cardsN_len-1),0))
+#            TSF_pull=TSF_Forth_stackD()[TSF_the].pop(max(min(TSF_peek,TSF_cardsN_len-1),0))
+            TSF_pull=TSF_Forth_stackD()[TSF_the].pop(min(max(TSF_peek,0),TSF_cardsN_len-1))
     return TSF_pull
 
 def TSF_Shuffle_pullMthe():    #TSFdoc:指定スタックからカードを囲択で引抜。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullM(TSF_Forth_drawthe(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_pullM(TSF_Forth_drawthe(),TSF_peek))
     return ""
 
 def TSF_Shuffle_pullMthis():    #TSFdoc:実行中スタックからカードを囲択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullM(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_pullM(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
 def TSF_Shuffle_pullMthat():    #TSFdoc:積込先スタックからカードを囲択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullM(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Shuffle_pullM(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
     return ""
 
 def TSF_Shuffle_pullMthey():    #TSFdoc:スタック一覧からスタック名を囲択で引抜。1枚[peek]ドローして1枚[card]リターン。
