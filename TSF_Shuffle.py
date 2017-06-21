@@ -333,7 +333,7 @@ def TSF_Shuffle_pullMthey():    #TSFdoc:スタック一覧からスタック名�
     return ""
 
 def TSF_Shuffle_pushM(TSF_the,TSF_peek,TSF_push):    #TSFdoc:指定スタックにカードを囲択で差込。(TSFAPI)
-    if TSF_the in TSF_stackD:
+    if TSF_the in TSF_Forth_stackD():
         TSF_cardsN_len=len(TSF_Forth_stackD()[TSF_the])
         TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],max(min(TSF_peek,TSF_cardsN_len-1),0),TSF_push)
 
