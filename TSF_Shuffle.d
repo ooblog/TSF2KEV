@@ -87,12 +87,12 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
             TSF_cardsL=TSF_Forth_stackD()[TSF_the].length;
             if( 0<TSF_cardsL ){
                 switch( TSF_FNCMVAQIRHL ){
-                    case 'F':  TSF_Plist[0]=TSF_cardsL-1;   break;
-                    case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_peek; }   break;
+                    case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
+                    case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
                     case 'C':  TSF_Plist~=[to!long(TSF_peek%TSF_cardsL)];   break;
-                    case 'M':  TSF_Plist[0]=to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1));   break;
-                    case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_cardsL-1-TSF_peek; }   break;
-                    case 'A':  TSF_Plist[0]=uniform(0,TSF_cardsL,TSF_Match_Random);   break;
+                    case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
+                    case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+                    case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_Match_Random)];   break;
                     case 'Q':
                         foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
                             if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
@@ -119,12 +119,12 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
         TSF_cardsL=TSF_Forth_stackO().length;
         if( 0<TSF_cardsL ){
             switch( TSF_FNCMVAQIRHL ){
-                case 'F':  TSF_Plist[0]=TSF_cardsL-1;   break;
-                case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_peek; }   break;
-                case 'C':  TSF_Plist[0]=TSF_peek%TSF_cardsL;   break;
-                case 'M':  TSF_Plist[0]=to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1));   break;
-                case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist[0]=TSF_cardsL-1-TSF_peek; }   break;
-                case 'A':  TSF_Plist[0]=uniform(0,TSF_cardsL,TSF_Match_Random);   break;
+                case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
+                case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
+                case 'C':  TSF_Plist~=[to!long(TSF_peek%TSF_cardsL)];   break;
+                case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
+                case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+                case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_Match_Random)];   break;
                 case 'Q':
                     foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
                         if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
@@ -177,7 +177,12 @@ string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定ス�
 }
 
 void TSF_Shuffle_returnFNCMVA(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0]);
+    if( TSF_pulllist.length ){
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0]);
+    }
+    else{
+        TSF_Forth_return(TSF_Forth_drawthat(),"");
+    }
 }
 
 void TSF_Shuffle_returnQIRH(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共通部品。QIRHは複数のカードを返す。(TSFAPI)
@@ -187,7 +192,7 @@ void TSF_Shuffle_returnQIRH(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_pulllist.length));
 }
 
-string TSF_Shuffle_peekCthe(){    //#TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Shuffle_peekCthe(){    //#TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,"",'C'));
     return "";

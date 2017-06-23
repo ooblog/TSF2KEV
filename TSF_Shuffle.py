@@ -15,9 +15,9 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_swapAA":TSF_Shuffle_swapAA, "#カードAA交換":TSF_Shuffle_swapAA,
         "#TSF_swapCC":TSF_Shuffle_swapCC, "#カードCC交換":TSF_Shuffle_swapCC,
         "#TSF_peekCthe":TSF_Shuffle_peekCthe, "#指定スタック周択読込":TSF_Shuffle_peekCthe,
-#        "#TSF_peekCthis":TSF_Shuffle_peekCthis, "#実行中スタック周択読込":TSF_Shuffle_peekCthis,
-#        "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
-#        "#TSF_peekCthey":TSF_Shuffle_peekCthey, "#スタック一覧周択読込":TSF_Shuffle_peekCthey,
+        "#TSF_peekCthis":TSF_Shuffle_peekCthis, "#実行中スタック周択読込":TSF_Shuffle_peekCthis,
+        "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
+        "#TSF_peekCthey":TSF_Shuffle_peekCthey, "#スタック一覧周択読込":TSF_Shuffle_peekCthey,
 #        "#TSF_pokeCthe":TSF_Shuffle_pokeCthe, "#指定スタック周択上書":TSF_Shuffle_pokeCthe,
 #        "#TSF_pokeCthis":TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":TSF_Shuffle_pokeCthis,
 #        "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
@@ -118,17 +118,17 @@ def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFd
             TSF_cardsL=len(TSF_Forth_stackD()[TSF_the])
             if 0 < TSF_cardsL:
                 if TSF_FNCMVAQIRHL == 'F':
-                    TSF_Plist[0]=TSF_cardsL-1
+                    TSF_Plist+=[TSF_cardsL-1]
                 elif TSF_FNCMVAQIRHL == 'N':
-                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_peek];
                 elif TSF_FNCMVAQIRHL == 'C':
                     TSF_Plist+=[TSF_peek%TSF_cardsL]
                 elif TSF_FNCMVAQIRHL == 'M':
-                    TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
+                    TSF_Plist+=[min(max(TSF_peek,0),TSF_cardsL-1)]
                 elif TSF_FNCMVAQIRHL == 'V':
-                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_cardsL-1-TSF_peek;
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_cardsL-1-TSF_peek];
                 elif TSF_FNCMVAQIRHL == 'A':
-                    TSF_Plist[0]=random.randint(0,TSF_cardsL-1)
+                    TSF_Plist+=[random.randint(0,TSF_cardsL-1)]
                 elif TSF_FNCMVAQIRHL == 'Q':
                     for TSF_peek,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
                         if TSF_seek==TSF_card: TSF_Plist+=[TSF_peek]
@@ -230,16 +230,34 @@ def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TS
             TSF_pulllist+=TSF_P
 
 def TSF_Shuffle_returnFNCMVA(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0])
+    if len(TSF_pulllist) > 0:
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0])
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"")
 
 def TSF_Shuffle_returnQIRH(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。QIRHは複数のカードを返す。(TSFAPI)
     for TSF_card in TSF_pulllist:
         TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_pulllist)))
 
-def TSF_Shuffle_peekCthe():    #TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Shuffle_peekCthe():    #TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthe(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_peekCthis():    #TSFdoc:実行中スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthis(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_peekCthat():    #TSFdoc:積込先スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek(TSF_Forth_drawthat(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_peekCthey():    #TSFdoc:スタック一覧から周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek("",TSF_peek,"",'C'))
     return ""
 
 
