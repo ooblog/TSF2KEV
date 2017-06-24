@@ -391,8 +391,64 @@ def TSF_Shuffle_debug(TSF_sysargvs):    #TSFdoc:「TSF_Shuffle」単体テスト
     TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Shuffle.log";
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
-#    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
-#    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
+
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "shuffleclone:","#TSF_this","#TSF_fin."]),'T')
+    TSF_Forth_setTSF("shuffleclone:","\t".join([
+        "adverbclone:","adverb:","#TSF_clonethe","shufflestacks:","#TSF_pullFthe","#TSF_this","adverbclone:","#TSF_argvsthe","#TSF_reverseN","adverbclone:","#TSF_lenthe"," ","#TSF_sandwichN","「#[2]」「[1]」「[0]」","#TSF_join[]","#TSF_echo","shufflejump:","shufflestacks:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this"]),'T')
+    TSF_Forth_setTSF("shufflejump:","\t".join([
+        "#!exit:","shuffleclone:"]),'T')
+    TSF_Forth_setTSF("verb:","\t".join(["peek","poke","push","pull"]),'O')
+    TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
+    TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
+    TSF_Forth_setTSF("shufflestacks:","\t".join([
+        "pushM:","pullM:","pokeM:","peekM:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+    TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
+    TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')
+    TSF_Forth_setTSF("pushF:","\t".join(["TSF_pushFthe","$push","adverbclone:","#TSF_pushFthe","$push"]),'O')
+    TSF_Forth_setTSF("peekN:","\t".join(["TSF_peekNthe","adverbclone:","1","#TSF_peekNthe"]),'O')
+    TSF_Forth_setTSF("pokeN:","\t".join(["TSF_pokeNthe","$poke","adverbclone:","1","#TSF_pokeNthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullN:","\t".join(["TSF_pullNthe","adverbclone:","1","#TSF_pullNthe"]),'O')
+    TSF_Forth_setTSF("pushN:","\t".join(["TSF_pushNthe","$push","adverbclone:","1","#TSF_pushNthe","$push"]),'O')
+    TSF_Forth_setTSF("peekC:","\t".join(["TSF_peekCthe","adverbclone:","2","#TSF_peekCthe"]),'O')
+    TSF_Forth_setTSF("pokeC:","\t".join(["TSF_pokeCthe","$poke","adverbclone:","2","#TSF_pokeCthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullC:","\t".join(["TSF_pullCthe","adverbclone:","2","#TSF_pullCthe"]),'O')
+    TSF_Forth_setTSF("pushC:","\t".join(["TSF_pushCthe","$push","adverbclone:","2","#TSF_pushCthe","$push"]),'O')
+    TSF_Forth_setTSF("peekM:","\t".join(["TSF_peekMthe","adverbclone:","3","#TSF_peekMthe"]),'O')
+    TSF_Forth_setTSF("pokeM:","\t".join(["TSF_pokeMthe","$poke","adverbclone:","3","#TSF_pokeMthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullM:","\t".join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"]),'O')
+    TSF_Forth_setTSF("pushM:","\t".join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"]),'O')
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "shuffleclone:","#TSF_this","#TSF_fin."]),'T')
+    TSF_Forth_setTSF("shuffleclone:","\t".join([
+        "adverbclone:","adverb:","#TSF_clonethe","shufflestacks:","#TSF_pullFthe","#TSF_this","adverbclone:","#TSF_argvsthe","#TSF_reverseN","adverbclone:","#TSF_lenthe"," ","#TSF_sandwichN","「#[2]」「[1]」「[0]」","#TSF_join[]","#TSF_echo","shufflejump:","shufflestacks:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this"]),'T')
+    TSF_Forth_setTSF("shufflejump:","\t".join([
+        "#!exit:","shuffleclone:"]),'T')
+    TSF_Forth_setTSF("verb:","\t".join(["peek","poke","push","pull"]),'O')
+    TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
+    TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
+    TSF_Forth_setTSF("shufflestacks:","\t".join([
+        "pushM:","pullM:","pokeM:","peekM:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+    TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
+    TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')
+    TSF_Forth_setTSF("pushF:","\t".join(["TSF_pushFthe","$push","adverbclone:","#TSF_pushFthe","$push"]),'O')
+    TSF_Forth_setTSF("peekN:","\t".join(["TSF_peekNthe","adverbclone:","1","#TSF_peekNthe"]),'O')
+    TSF_Forth_setTSF("pokeN:","\t".join(["TSF_pokeNthe","$poke","adverbclone:","1","#TSF_pokeNthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullN:","\t".join(["TSF_pullNthe","adverbclone:","1","#TSF_pullNthe"]),'O')
+    TSF_Forth_setTSF("pushN:","\t".join(["TSF_pushNthe","$push","adverbclone:","1","#TSF_pushNthe","$push"]),'O')
+    TSF_Forth_setTSF("peekC:","\t".join(["TSF_peekCthe","adverbclone:","2","#TSF_peekCthe"]),'O')
+    TSF_Forth_setTSF("pokeC:","\t".join(["TSF_pokeCthe","$poke","adverbclone:","2","#TSF_pokeCthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullC:","\t".join(["TSF_pullCthe","adverbclone:","2","#TSF_pullCthe"]),'O')
+    TSF_Forth_setTSF("pushC:","\t".join(["TSF_pushCthe","$push","adverbclone:","2","#TSF_pushCthe","$push"]),'O')
+    TSF_Forth_setTSF("peekM:","\t".join(["TSF_peekMthe","adverbclone:","3","#TSF_peekMthe"]),'O')
+    TSF_Forth_setTSF("pokeM:","\t".join(["TSF_pokeMthe","$poke","adverbclone:","3","#TSF_pokeMthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullM:","\t".join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"]),'O')
+    TSF_Forth_setTSF("pushM:","\t".join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"]),'O')
+
+    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
     TSF_Shuffle_debug(TSF_Io_argvs(["python","TSF_Shuffle.py"]))
