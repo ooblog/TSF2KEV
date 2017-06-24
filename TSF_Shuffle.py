@@ -18,7 +18,7 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_peekCthis":TSF_Shuffle_peekCthis, "#実行中スタック周択読込":TSF_Shuffle_peekCthis,
         "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
         "#TSF_peekCthey":TSF_Shuffle_peekCthey, "#スタック一覧周択読込":TSF_Shuffle_peekCthey,
-#        "#TSF_pokeCthe":TSF_Shuffle_pokeCthe, "#指定スタック周択上書":TSF_Shuffle_pokeCthe,
+        "#TSF_pokeCthe":TSF_Shuffle_pokeCthe, "#指定スタック周択上書":TSF_Shuffle_pokeCthe,
 #        "#TSF_pokeCthis":TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":TSF_Shuffle_pokeCthis,
 #        "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
 #        "#TSF_pokeCthey":TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":TSF_Shuffle_pokeCthey,
@@ -201,10 +201,10 @@ def TSF_Shuffle_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TS
     TSF_pulllist=[]
     if TSF_the != "":
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
+            TSF_Forth_stackD()[TSF_the][TSF_P]=TSF_poke
     else:
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
+            TSF_Forth_stackO()[TSF_P]=TSF_poke
 
 def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
@@ -258,6 +258,12 @@ def TSF_Shuffle_peekCthat():    #TSFdoc:積込先スタックから周択でカ�
 def TSF_Shuffle_peekCthey():    #TSFdoc:スタック一覧から周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Shuffle_returnFNCMVA(TSF_Shuffle_peek("",TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_pokeCthe():    #TSFdoc:指定スタックからカードを周択で上書。3枚[poke,the,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Shuffle_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
 
 
@@ -402,34 +408,7 @@ def TSF_Shuffle_debug(TSF_sysargvs):    #TSFdoc:「TSF_Shuffle」単体テスト
     TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
     TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
     TSF_Forth_setTSF("shufflestacks:","\t".join([
-        "pushM:","pullM:","pokeM:","peekM:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
-    TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
-    TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
-    TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')
-    TSF_Forth_setTSF("pushF:","\t".join(["TSF_pushFthe","$push","adverbclone:","#TSF_pushFthe","$push"]),'O')
-    TSF_Forth_setTSF("peekN:","\t".join(["TSF_peekNthe","adverbclone:","1","#TSF_peekNthe"]),'O')
-    TSF_Forth_setTSF("pokeN:","\t".join(["TSF_pokeNthe","$poke","adverbclone:","1","#TSF_pokeNthe","$poke"]),'O')
-    TSF_Forth_setTSF("pullN:","\t".join(["TSF_pullNthe","adverbclone:","1","#TSF_pullNthe"]),'O')
-    TSF_Forth_setTSF("pushN:","\t".join(["TSF_pushNthe","$push","adverbclone:","1","#TSF_pushNthe","$push"]),'O')
-    TSF_Forth_setTSF("peekC:","\t".join(["TSF_peekCthe","adverbclone:","2","#TSF_peekCthe"]),'O')
-    TSF_Forth_setTSF("pokeC:","\t".join(["TSF_pokeCthe","$poke","adverbclone:","2","#TSF_pokeCthe","$poke"]),'O')
-    TSF_Forth_setTSF("pullC:","\t".join(["TSF_pullCthe","adverbclone:","2","#TSF_pullCthe"]),'O')
-    TSF_Forth_setTSF("pushC:","\t".join(["TSF_pushCthe","$push","adverbclone:","2","#TSF_pushCthe","$push"]),'O')
-    TSF_Forth_setTSF("peekM:","\t".join(["TSF_peekMthe","adverbclone:","3","#TSF_peekMthe"]),'O')
-    TSF_Forth_setTSF("pokeM:","\t".join(["TSF_pokeMthe","$poke","adverbclone:","3","#TSF_pokeMthe","$poke"]),'O')
-    TSF_Forth_setTSF("pullM:","\t".join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"]),'O')
-    TSF_Forth_setTSF("pushM:","\t".join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"]),'O')
-    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "shuffleclone:","#TSF_this","#TSF_fin."]),'T')
-    TSF_Forth_setTSF("shuffleclone:","\t".join([
-        "adverbclone:","adverb:","#TSF_clonethe","shufflestacks:","#TSF_pullFthe","#TSF_this","adverbclone:","#TSF_argvsthe","#TSF_reverseN","adverbclone:","#TSF_lenthe"," ","#TSF_sandwichN","「#[2]」「[1]」「[0]」","#TSF_join[]","#TSF_echo","shufflejump:","shufflestacks:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this"]),'T')
-    TSF_Forth_setTSF("shufflejump:","\t".join([
-        "#!exit:","shuffleclone:"]),'T')
-    TSF_Forth_setTSF("verb:","\t".join(["peek","poke","push","pull"]),'O')
-    TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
-    TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
-    TSF_Forth_setTSF("shufflestacks:","\t".join([
-        "pushM:","pullM:","pokeM:","peekM:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+        "pushM:","pullM:","pokeM:","peekM:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
     TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
     TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
     TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')
@@ -447,7 +426,8 @@ def TSF_Shuffle_debug(TSF_sysargvs):    #TSFdoc:「TSF_Shuffle」単体テスト
     TSF_Forth_setTSF("pullM:","\t".join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"]),'O')
     TSF_Forth_setTSF("pushM:","\t".join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"]),'O')
 
-    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+#    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":

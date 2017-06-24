@@ -21,9 +21,10 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_swapAA":&TSF_Shuffle_swapAA, "#カードAA交換":&TSF_Shuffle_swapAA,
         "#TSF_swapCC":&TSF_Shuffle_swapCC, "#カードCC交換":&TSF_Shuffle_swapCC,
         "#TSF_peekCthe":&TSF_Shuffle_peekCthe, "#指定スタック周択読込":&TSF_Shuffle_peekCthe,
-//#        "#TSF_peekCthis":&TSF_Shuffle_peekCthis, "#実行中スタック周択読込":&TSF_Shuffle_peekCthis,
-//#        "#TSF_peekCthat":&TSF_Shuffle_peekCthat, "#積込先スタック周択読込":&TSF_Shuffle_peekCthat,
-//#        "#TSF_peekCthey":&TSF_Shuffle_peekCthey, "#スタック一覧周択読込":&TSF_Shuffle_peekCthey,
+        "#TSF_peekCthis":&TSF_Shuffle_peekCthis, "#実行中スタック周択読込":&TSF_Shuffle_peekCthis,
+        "#TSF_peekCthat":&TSF_Shuffle_peekCthat, "#積込先スタック周択読込":&TSF_Shuffle_peekCthat,
+        "#TSF_peekCthey":&TSF_Shuffle_peekCthey, "#スタック一覧周択読込":&TSF_Shuffle_peekCthey,
+        "#TSF_pokeCthe":&TSF_Shuffle_pokeCthe, "#指定スタック周択上書":&TSF_Shuffle_pokeCthe,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -164,6 +165,21 @@ string[] TSF_Shuffle_peek(string TSF_the,long TSF_peek,string TSF_seek,char TSF_
     return TSF_pulllist;
 }
 
+void TSF_Shuffle_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pokeの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
+    string[] TSF_pulllist=[];
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]=TSF_poke;
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
+        }
+    }
+}
+
 
 void TSF_Shuffle_returnFNCMVA(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
     if( TSF_pulllist.length ){
@@ -205,6 +221,12 @@ string TSF_Shuffle_peekCthey(){    //#TSFdoc:スタック一覧から周択で�
     return "";
 }
 
+string TSF_Shuffle_pokeCthe(){    //#TSFdoc:指定スタックからカードを周択で上書。3枚[poke,the,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Shuffle_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
 
 
 string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
@@ -381,7 +403,7 @@ void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単
     TSF_Forth_setTSF("adverb:",join(["F","N","C","M","V","A","Q","I","R","H","L"],"\t"),'O');
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
-        "pushM:","pullM:","pokeM:","peekM:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
+        "pushM:","pullM:","pokeM:","peekM:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
     TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"],"\t"),'O');
     TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"],"\t"),'O');
@@ -399,7 +421,8 @@ void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単
     TSF_Forth_setTSF("pullM:",join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"],"\t"),'O');
     TSF_Forth_setTSF("pushM:",join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"],"\t"),'O');
 
-    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+//    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+    TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 
 
