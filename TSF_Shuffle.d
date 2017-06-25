@@ -25,6 +25,9 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_peekCthat":&TSF_Shuffle_peekCthat, "#積込先スタック周択読込":&TSF_Shuffle_peekCthat,
         "#TSF_peekCthey":&TSF_Shuffle_peekCthey, "#スタック一覧周択読込":&TSF_Shuffle_peekCthey,
         "#TSF_pokeCthe":&TSF_Shuffle_pokeCthe, "#指定スタック周択上書":&TSF_Shuffle_pokeCthe,
+        "#TSF_pokeCthis":&TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":&TSF_Shuffle_pokeCthis,
+        "#TSF_pokeCthat":&TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":&TSF_Shuffle_pokeCthat,
+        "#TSF_pokeCthey":&TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":&TSF_Shuffle_pokeCthey,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -227,6 +230,26 @@ string TSF_Shuffle_pokeCthe(){    //#TSFdoc:指定スタックからカードを
     TSF_Shuffle_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe());
     return "";
 }
+
+string TSF_Shuffle_pokeCthis(){    //#TSFdoc:実行中スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_poke(TSF_Forth_drawthis(),TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pokeCthat(){    //#TSFdoc:積込先スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_poke(TSF_Forth_drawthat(),TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pokeCthey(){    //#TSFdoc:スタック一覧から周択でカードを上書。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_poke("",TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+
 
 
 string TSF_Shuffle_peekM(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)

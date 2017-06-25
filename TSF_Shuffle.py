@@ -19,9 +19,9 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_peekCthat":TSF_Shuffle_peekCthat, "#積込先スタック周択読込":TSF_Shuffle_peekCthat,
         "#TSF_peekCthey":TSF_Shuffle_peekCthey, "#スタック一覧周択読込":TSF_Shuffle_peekCthey,
         "#TSF_pokeCthe":TSF_Shuffle_pokeCthe, "#指定スタック周択上書":TSF_Shuffle_pokeCthe,
-#        "#TSF_pokeCthis":TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":TSF_Shuffle_pokeCthis,
-#        "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
-#        "#TSF_pokeCthey":TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":TSF_Shuffle_pokeCthey,
+        "#TSF_pokeCthis":TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":TSF_Shuffle_pokeCthis,
+        "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
+        "#TSF_pokeCthey":TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":TSF_Shuffle_pokeCthey,
 #        "#TSF_pullCthe":TSF_Shuffle_pullCthe, "#指定スタック周択引抜":TSF_Shuffle_pullCthe,
 #        "#TSF_pullCthis":TSF_Shuffle_pullCthis, "#実行中スタック周択引抜":TSF_Shuffle_pullCthis,
 #        "#TSF_pullCthat":TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":TSF_Shuffle_pullCthat,
@@ -265,6 +265,22 @@ def TSF_Shuffle_pokeCthe():    #TSFdoc:指定スタックからカードを周�
     TSF_the=TSF_Forth_drawthe()
     TSF_Shuffle_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
+
+def TSF_Shuffle_pokeCthis():    #TSFdoc:実行中スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_poke(TSF_Forth_drawthis(),TSF_peek,"",'C',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pokeCthat():    #TSFdoc:積込先スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_poke(TSF_Forth_drawthat(),TSF_peek,"",'C',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pokeCthey():    #TSFdoc:スタック一覧から周択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_poke("",TSF_peek,"",'C',TSF_Forth_drawthe())
+    return ""
+
 
 
 def TSF_Shuffle_peekM(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を囲択で読込。(TSFAPI)
