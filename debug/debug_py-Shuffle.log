@@ -10,7 +10,7 @@ verb:	peek	poke	push	pull
 adverb:	F	N	C	M	V	A	Q	I	R	H	L
 pronoun:	this	that	the	they
 shufflestacks:
-	pushM:	pullM:	pokeM:	peekM:	pokeC:	peekC:	pushN:	pullN:	pokeN:	peekN:	pushF:	pullF:	pokeF:	peekF:
+	pushM:	pullM:	pokeM:	peekM:	pullC:	pokeC:	peekC:	pushN:	pullN:	pokeN:	peekN:	pushF:	pullF:	pokeF:	peekF:
 peekF:	TSF_peekFthe	adverbclone:	#TSF_peekFthe
 pokeF:	TSF_pokeFthe	$poke	adverbclone:	#TSF_pokeFthe	$poke
 pullF:	TSF_pullFthe	adverbclone:	#TSF_pullFthe
@@ -38,6 +38,7 @@ pushM:	TSF_pushMthe	$push	adverbclone:	3	#TSF_pushMthe	$push
 「#TSF_pushNthe」「$push」「F $push N C M V A Q I R H L」
 「#TSF_peekCthe」「C」「F N C M V A Q I R H L」
 「#TSF_pokeCthe」「$poke」「F N $poke M V A Q I R H L」
+「#TSF_pullCthe」「C」「F N M V A Q I R H L」
 「#TSF_peekMthe」「M」「F N C M V A Q I R H L」
 「#TSF_pokeMthe」「$poke」「F N C $poke V A Q I R H L」
 「#TSF_pullMthe」「M」「F N C V A Q I R H L」

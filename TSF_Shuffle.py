@@ -22,7 +22,7 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_pokeCthis":TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":TSF_Shuffle_pokeCthis,
         "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
         "#TSF_pokeCthey":TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":TSF_Shuffle_pokeCthey,
-#        "#TSF_pullCthe":TSF_Shuffle_pullCthe, "#指定スタック周択引抜":TSF_Shuffle_pullCthe,
+        "#TSF_pullCthe":TSF_Shuffle_pullCthe, "#指定スタック周択引抜":TSF_Shuffle_pullCthe,
 #        "#TSF_pullCthis":TSF_Shuffle_pullCthis, "#実行中スタック周択引抜":TSF_Shuffle_pullCthis,
 #        "#TSF_pullCthat":TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":TSF_Shuffle_pullCthat,
 #        "#TSF_pullCthey":TSF_Shuffle_pullCthey, "#スタック一覧周択引抜":TSF_Shuffle_pullCthey,
@@ -122,7 +122,7 @@ def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFd
                 elif TSF_FNCMVAQIRHL == 'N':
                     if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_peek];
                 elif TSF_FNCMVAQIRHL == 'C':
-                    TSF_Plist+=[TSF_peek%TSF_cardsL]
+                    TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)]
                 elif TSF_FNCMVAQIRHL == 'M':
                     TSF_Plist+=[min(max(TSF_peek,0),TSF_cardsL-1)]
                 elif TSF_FNCMVAQIRHL == 'V':
@@ -155,7 +155,7 @@ def TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFd
             elif TSF_FNCMVAQIRHL == 'N':
                 if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
             elif TSF_FNCMVAQIRHL == 'C':
-                TSF_Plist[0]=TSF_peek%TSF_cardsL
+                TSF_Plist[0]=TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)
             elif TSF_FNCMVAQIRHL == 'M':
                 TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
             elif TSF_FNCMVAQIRHL == 'V':
@@ -212,10 +212,14 @@ def TSF_Shuffle_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pull
     TSF_pulllist=[]
     if TSF_the != "":
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
+            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+            TSF_Forth_stackD()[TSF_the].pop(TSF_P)
     else:
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=TSF_P
+            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+            TSF_pull=TSF_stackO[TSF_peek]
+            TSF_Forth_stackO().pop(TSF_P)
+            TSF_Forth_stackD().pop(TSF_pull)
     return TSF_pulllist
 
 def TSF_Shuffle_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
@@ -279,6 +283,11 @@ def TSF_Shuffle_pokeCthat():    #TSFdoc:積込先スタックから周択でカ�
 def TSF_Shuffle_pokeCthey():    #TSFdoc:スタック一覧から周択でカードを上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Shuffle_poke("",TSF_peek,"",'C',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Shuffle_pullCthe():    #TSFdoc:指定スタックから周択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull(TSF_Forth_drawthe(),TSF_peek,"",'C'))
     return ""
 
 
@@ -424,7 +433,7 @@ def TSF_Shuffle_debug(TSF_sysargvs):    #TSFdoc:「TSF_Shuffle」単体テスト
     TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
     TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
     TSF_Forth_setTSF("shufflestacks:","\t".join([
-        "pushM:","pullM:","pokeM:","peekM:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+        "pushM:","pullM:","pokeM:","peekM:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
     TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
     TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
     TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')

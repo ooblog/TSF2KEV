@@ -28,6 +28,7 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_pokeCthis":&TSF_Shuffle_pokeCthis, "#実行中スタック周択上書":&TSF_Shuffle_pokeCthis,
         "#TSF_pokeCthat":&TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":&TSF_Shuffle_pokeCthat,
         "#TSF_pokeCthey":&TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":&TSF_Shuffle_pokeCthey,
+        "#TSF_pullCthe":&TSF_Shuffle_pullCthe, "#指定スタック周択引抜":&TSF_Shuffle_pullCthe,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -93,7 +94,7 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
                 switch( TSF_FNCMVAQIRHL ){
                     case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
                     case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-                    case 'C':  TSF_Plist~=[to!long(TSF_peek%TSF_cardsL)];   break;
+                    case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
                     case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
                     case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
                     case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_Match_Random)];   break;
@@ -125,7 +126,7 @@ long[] TSF_Shuffle_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char
             switch( TSF_FNCMVAQIRHL ){
                 case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
                 case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-                case 'C':  TSF_Plist~=[to!long(TSF_peek%TSF_cardsL)];   break;
+                case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
                 case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
                 case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
                 case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_Match_Random)];   break;
@@ -181,6 +182,26 @@ void TSF_Shuffle_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCM
             TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
         }
     }
+}
+
+string[] TSF_Shuffle_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:pullの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL);
+    string[] TSF_pulllist=[];
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_P);
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            string TSF_pull=TSF_Forth_stackO()[to!size_t(TSF_P)];
+            TSF_pulllist~=[TSF_pull];
+            TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_P));
+            TSF_Forth_stackD().remove(TSF_pull);
+        }
+    }
+    return TSF_pulllist;
 }
 
 
@@ -246,6 +267,12 @@ string TSF_Shuffle_pokeCthat(){    //#TSFdoc:積込先スタックから周択�
 string TSF_Shuffle_pokeCthey(){    //#TSFdoc:スタック一覧から周択でカードを上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Shuffle_poke("",TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pullCthe(){    //#TSFdoc:指定スタックから周択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull(TSF_Forth_drawthe(),TSF_peek,"",'C'));
     return "";
 }
 
@@ -426,7 +453,7 @@ void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単
     TSF_Forth_setTSF("adverb:",join(["F","N","C","M","V","A","Q","I","R","H","L"],"\t"),'O');
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
-        "pushM:","pullM:","pokeM:","peekM:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
+        "pushM:","pullM:","pokeM:","peekM:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
     TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"],"\t"),'O');
     TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"],"\t"),'O');

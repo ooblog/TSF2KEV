@@ -221,7 +221,9 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     real[] TSF_RPNstack=[];
     string TSF_RPNseq=TSF_RPN~="  ";
 //    if( count(["U+","0x"],TSF_RPN[0..2]) ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
-    if( TSF_RPN.length>2 && count(["U+","0x"],TSF_RPN[0..2])>0 ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
+//    if( TSF_RPN.length>2 && count(["U+","0x"],TSF_RPN[0..2])>0 ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
+    if( TSF_RPN[0..1]=="-" ){ TSF_RPNseq="m"~TSF_RPN[1..$]; }
+    if( count(["U+","0x"],TSF_RPN[0..2]) ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
     real TSF_RPNstackL,TSF_RPNstackR,TSF_RPNstackF;
     string[] TSF_RPNcalcND;
     opeexit_rpn: foreach(char TSF_RPNope;TSF_RPNseq){
@@ -469,7 +471,7 @@ void TSF_Io_debug(string[] TSF_argvs){
     TSF_debug_log=TSF_Io_printlog("\t%s".format(TSF_Io_splitpushL(TSF_debug_PPPP,"\t","cards:","pushed")),TSF_debug_log);
     TSF_debug_log=TSF_Io_printlog("TSF_debug_rpn:",TSF_debug_log);
     foreach(string debug_rpn;[
-        "0","0.0","U+p128","$ffff","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
+        "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u"
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);

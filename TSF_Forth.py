@@ -487,7 +487,7 @@ def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を
     if 0 <= TSF_peek < len(TSF_stackD):
         TSF_pull=TSF_stackO[TSF_peek]
         TSF_stackO.pop(TSF_peek)
-        TSF_stackD[TSF_the].pop(TSF_pull)
+        TSF_stackD.pop(TSF_pull)
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
 
