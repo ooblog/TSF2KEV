@@ -23,9 +23,9 @@ def TSF_Shuffle_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにD
         "#TSF_pokeCthat":TSF_Shuffle_pokeCthat, "#積込先スタック周択上書":TSF_Shuffle_pokeCthat,
         "#TSF_pokeCthey":TSF_Shuffle_pokeCthey, "#スタック一覧周択上書":TSF_Shuffle_pokeCthey,
         "#TSF_pullCthe":TSF_Shuffle_pullCthe, "#指定スタック周択引抜":TSF_Shuffle_pullCthe,
-#        "#TSF_pullCthis":TSF_Shuffle_pullCthis, "#実行中スタック周択引抜":TSF_Shuffle_pullCthis,
-#        "#TSF_pullCthat":TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":TSF_Shuffle_pullCthat,
-#        "#TSF_pullCthey":TSF_Shuffle_pullCthey, "#スタック一覧周択引抜":TSF_Shuffle_pullCthey,
+        "#TSF_pullCthis":TSF_Shuffle_pullCthis, "#実行中スタック周択引抜":TSF_Shuffle_pullCthis,
+        "#TSF_pullCthat":TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":TSF_Shuffle_pullCthat,
+        "#TSF_pullCthey":TSF_Shuffle_pullCthey, "#スタック一覧周択引抜":TSF_Shuffle_pullCthey,
 #        "#TSF_pushCthe":TSF_Shuffle_pushCthe, "#指定スタック周択差込":TSF_Shuffle_pushCthe,
 #        "#TSF_pushCthis":TSF_Shuffle_pushCthis, "#実行中スタック周択差込":TSF_Shuffle_pushCthis,
 #        "#TSF_pushCthat":TSF_Shuffle_pushCthat, "#積込先スタック周択差込":TSF_Shuffle_pushCthat,
@@ -289,6 +289,22 @@ def TSF_Shuffle_pullCthe():    #TSFdoc:指定スタックから周択でカー�
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull(TSF_Forth_drawthe(),TSF_peek,"",'C'))
     return ""
+
+def TSF_Shuffle_pullCthis():    #TSFdoc:実行中スタックから周択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull(TSF_Forth_drawthis(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_pullCthat():    #TSFdoc:積込先スタックから周択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull(TSF_Forth_drawthat(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Shuffle_pullCthey():    #TSFdoc:スタック一覧から周択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull("",TSF_peek,"",'C'))
+    return ""
+
 
 
 
