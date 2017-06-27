@@ -33,6 +33,9 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_pullCthat":&TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":&TSF_Shuffle_pullCthat,
         "#TSF_pullCthey":&TSF_Shuffle_pullCthey, "#スタック一覧周択引抜":&TSF_Shuffle_pullCthey,
         "#TSF_pushCthe":&TSF_Shuffle_pushCthe, "#指定スタック周択差込":&TSF_Shuffle_pushCthe,
+        "#TSF_pushCthis":&TSF_Shuffle_pushCthis, "#実行中スタック周択差込":&TSF_Shuffle_pushCthis,
+        "#TSF_pushCthat":&TSF_Shuffle_pushCthat, "#積込先スタック周択差込":&TSF_Shuffle_pushCthat,
+        "#TSF_pushCthey":&TSF_Shuffle_pushCthey, "#スタック一覧周択差込":&TSF_Shuffle_pushCthey,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -322,6 +325,23 @@ string TSF_Shuffle_pushCthe(){    //#TSFdoc:指定スタックからカードを
     return "";
 }
 
+string TSF_Shuffle_pushCthis(){    //#TSFdoc:実行中スタックから周択でカードを差込。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_push(TSF_Forth_drawthis(),TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pushCthat(){    //#TSFdoc:積込先スタックから周択でカードを差込。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_push(TSF_Forth_drawthat(),TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Shuffle_pushCthey(){    //#TSFdoc:スタック一覧から周択でカードを差込。2枚[poke,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Shuffle_push("",TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
 
 
 
