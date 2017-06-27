@@ -83,6 +83,7 @@ TSFdocs_tags:
 	{?/CODE}
 	{?H2}TSF2KEVで未実装な箇所など(予定)。{?/H2}
 	{?P}
+	☐PPPP処理が「TSF_Io_separate*」や「TSF_Shuffle_cardsFNCMVA()」に分散してるので「TSF_Forth.*」に一本化したい(大工事)。{?BR}
 	☐HTML版ドキュメント「{?A_TSF2KEV}」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。{?BR}
 	☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
 	☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。{?BR}

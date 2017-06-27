@@ -101,6 +101,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 
 ## TSF2KEVで未実装な箇所など(予定)。
 
+☐「TSF_Io_separate*」関連や「TSF_Shuffle_cardsFNCMVA()」関連を「TSF_Forth.*」に一本化したい(大工事)。  
 ☐HTML版ドキュメント「[TSF2KEV(https://ooblog.github.io/TSF2KEV/)](https://ooblog.github.io/TSF2KEV/ "「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。")」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。  
 ☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
 ☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。  

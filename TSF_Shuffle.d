@@ -32,6 +32,7 @@ void TSF_Shuffle_Initcards(ref string function()[string] TSF_cardsD,ref string[]
         "#TSF_pullCthis":&TSF_Shuffle_pullCthis, "#実行中スタック周択引抜":&TSF_Shuffle_pullCthis,
         "#TSF_pullCthat":&TSF_Shuffle_pullCthat, "#積込先スタック周択引抜":&TSF_Shuffle_pullCthat,
         "#TSF_pullCthey":&TSF_Shuffle_pullCthey, "#スタック一覧周択引抜":&TSF_Shuffle_pullCthey,
+        "#TSF_pushCthe":&TSF_Shuffle_pushCthe, "#指定スタック周択差込":&TSF_Shuffle_pushCthe,
         "#TSF_peekMthe":&TSF_Shuffle_peekMthe, "#指定スタック囲択読込":&TSF_Shuffle_peekMthe,
         "#TSF_peekMthis":&TSF_Shuffle_peekMthis, "#実行中スタック囲択読込":&TSF_Shuffle_peekMthis,
         "#TSF_peekMthat":&TSF_Shuffle_peekMthat, "#積込先スタック囲択読込":&TSF_Shuffle_peekMthat,
@@ -174,7 +175,6 @@ string[] TSF_Shuffle_peek(string TSF_the,long TSF_peek,string TSF_seek,char TSF_
 
 void TSF_Shuffle_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pokeの共通部品。(TSFAPI)
     long[] TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
-    string[] TSF_pulllist=[];
     if( TSF_the!="" ){
         foreach(long TSF_P;TSF_Plist){
             TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]=TSF_poke;
@@ -193,6 +193,7 @@ string[] TSF_Shuffle_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_
     if( TSF_the!="" ){
         foreach(long TSF_P;TSF_Plist){
             TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+//            TSF_Forth_stackD()[TSF_the].remove(TSF_P);
             TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_P);
         }
     }
@@ -200,11 +201,28 @@ string[] TSF_Shuffle_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_
         foreach(long TSF_P;TSF_Plist){
             string TSF_pull=TSF_Forth_stackO()[to!size_t(TSF_P)];
             TSF_pulllist~=[TSF_pull];
+//            TSF_Forth_stackO().remove(TSF_P);
             TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_P));
             TSF_Forth_stackD().remove(TSF_pull);
         }
     }
     return TSF_pulllist;
+}
+
+void TSF_Shuffle_push(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pushの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Shuffle_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackD()[TSF_the].insert(TSF_P,TSF_poke);
+            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],TSF_P,TSF_poke);
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackO().insert(TSF_P,TSF_poke);
+            TSF_Forth_stackD()[TSF_the]=[];
+        }
+    }
 }
 
 
@@ -296,6 +314,14 @@ string TSF_Shuffle_pullCthey(){    //#TSFdoc:スタック一覧から周択で�
     TSF_Shuffle_returnFNCMVA(TSF_Shuffle_pull("",TSF_peek,"",'C'));
     return "";
 }
+
+string TSF_Shuffle_pushCthe(){    //#TSFdoc:指定スタックからカードを周択で差込。3枚[poke,the,peek]ドロー。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Shuffle_push(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe());
+    return "";
+}
+
 
 
 
@@ -476,7 +502,7 @@ void TSF_Shuffle_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Shuffle」単
     TSF_Forth_setTSF("adverb:",join(["F","N","C","M","V","A","Q","I","R","H","L"],"\t"),'O');
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
-        "pushM:","pullM:","pokeM:","peekM:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
+        "pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
     TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"],"\t"),'O');
     TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"],"\t"),'O');
