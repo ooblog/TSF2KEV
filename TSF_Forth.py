@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 from __future__ import division,print_function,absolute_import,unicode_literals
-#import random
-#import re
+import random
+import re
 from TSF_Io import *
 
 def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
@@ -17,6 +17,7 @@ def TSF_Forth_grammarID():    #TSFdoc:TSF文法管理番号(TSFAPI)。
 def TSF_Forth_foolangID():    #TSFdoc:TSF実装言語(TSFAPI)。
     return "Python"
 
+random.seed()
 def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化する(TSFAPI)。
     TSF_Forth_importlist("TSF_Forth")
     TSF_Forth_cards={
@@ -337,6 +338,137 @@ def TSF_Forth_lenthat():    #TSFdoc:指定スタックの枚数を取得。0枚[
 def TSF_Forth_lenthey():    #TSFdoc:指定スタックの枚数を取得。0枚[]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_stackD)))
     return ""
+
+def TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peek,poke,pull,pushの共通部品。カードの位置を取得。(TSFAPI)
+    TSF_Plist=[]
+    TSF_peek=TSF_peek if TSF_peek != None else 0
+    TSF_seek=TSF_seek if TSF_seek != None else ""
+    if TSF_the != "":
+        if TSF_the in TSF_Forth_stackD():
+            TSF_cardsL=len(TSF_Forth_stackD()[TSF_the])
+            if 0 < TSF_cardsL:
+                if TSF_FNCMVAQIRHL == 'F':
+                    TSF_Plist+=[TSF_cardsL-1]
+                elif TSF_FNCMVAQIRHL == 'N':
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_peek];
+                elif TSF_FNCMVAQIRHL == 'C':
+                    TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)]
+                elif TSF_FNCMVAQIRHL == 'M':
+                    TSF_Plist+=[min(max(TSF_peek,0),TSF_cardsL-1)]
+                elif TSF_FNCMVAQIRHL == 'V':
+                    if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_cardsL-1-TSF_peek];
+                elif TSF_FNCMVAQIRHL == 'A':
+                    TSF_Plist+=[random.randint(0,TSF_cardsL-1)]
+                elif TSF_FNCMVAQIRHL == 'Q':
+                    for TSF_peek,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        if TSF_seek==TSF_card: TSF_Plist+=[TSF_peek]
+                elif TSF_FNCMVAQIRHL == 'I':
+                    for TSF_peek,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        if TSF_seek in TSF_card: TSF_Plist+=[TSF_peek]
+                elif TSF_FNCMVAQIRHL == 'R':
+                    for TSF_peekreg,TSF_card in enumerate(TSF_Forth_stackD()[TSF_the]):
+                        try:
+                            rewrite_research=re.search(re.compile(TSF_seek),TSF_card)
+                        except re.error:
+                            break
+                        else:
+                            if TSF_regsearch: TSF_Plist+=[TSF_peekreg]
+                elif TSF_FNCMVAQIRHL == 'H':
+                    pass
+                elif TSF_FNCMVAQIRHL == 'L':
+                    pass
+    else:
+        TSF_cardsL=len(TSF_Forth_stackO())
+        if 0 < TSF_cardsL:
+            if TSF_FNCMVAQIRHL == 'F':
+                TSF_plist[0]=TSF_cardsL-1
+            elif TSF_FNCMVAQIRHL == 'N':
+                if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_peek;
+            elif TSF_FNCMVAQIRHL == 'C':
+                TSF_Plist[0]=TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)
+            elif TSF_FNCMVAQIRHL == 'M':
+                TSF_Plist[0]=min(max(TSF_peek,0),TSF_cardsL-1)
+            elif TSF_FNCMVAQIRHL == 'V':
+                if 0 <= TSF_peek < TSF_cardsL: TSF_Plist[0]=TSF_cardsL-1-TSF_peek;
+            elif TSF_FNCMVAQIRHL == 'A':
+                TSF_Plist[0]=random.randint(0,TSF_cardsL-1)
+            elif TSF_FNCMVAQIRHL == 'Q':
+                for TSF_peek,TSF_card in enumerate(TSF_Forth_stackO()):
+                    if TSF_seek==TSF_card: TSF_Plist+=[TSF_peek]
+            elif TSF_FNCMVAQIRHL == 'I':
+                for TSF_peek,TSF_card in enumerate(TSF_Forth_stackO()):
+                    if TSF_seek in TSF_card: TSF_Plist+=[TSF_peek]
+            elif TSF_FNCMVAQIRHL == 'R':
+                TSF_regsearch=None
+                for TSF_peekreg,TSF_card in enumerate(TSF_Forth_stackO()):
+                    try:
+                        rewrite_research=re.search(re.compile(TSF_seek),TSF_card)
+                    except re.error:
+                        break
+                    else:
+                        if TSF_regsearch: TSF_Plist+=[TSF_peekreg]
+            elif TSF_FNCMVAQIRHL == 'H':
+                pass
+            elif TSF_FNCMVAQIRHL == 'L':
+                pass
+    return TSF_Plist
+
+def TSF_Forth_peek(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peekの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+    return TSF_pulllist
+
+def TSF_Forth_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_Forth_stackD()[TSF_the][TSF_P]=TSF_poke
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_Forth_stackO()[TSF_P]=TSF_poke
+
+def TSF_Forth_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+            TSF_Forth_stackD()[TSF_the].pop(TSF_P)
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+            TSF_pull=TSF_stackO[TSF_peek]
+            TSF_Forth_stackO().pop(TSF_P)
+            TSF_Forth_stackD().pop(TSF_pull)
+    return TSF_pulllist
+
+def TSF_Forth_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pushの共通部品。(TSFAPI)
+    TSF_the=TSF_the if TSF_the != None else ""
+    TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
+    TSF_pulllist=[]
+    if TSF_the != "":
+        for TSF_P in TSF_Plist:
+            TSF_Forth_stackD()[TSF_the].insert(TSF_P,TSF_poke)
+    else:
+        for TSF_P in TSF_Plist:
+            TSF_Forth_stackO().insert(TSF_P,TSF_poke)
+            TSF_Forth_stackD()[TSF_the]=[]
+
+
+
+
+
+
 
 def TSF_Forth_peekF(TSF_the):    #TSFdoc:指定スタックから表択でカードを読込。(TSFAPI)。
     TSF_pull=""
@@ -785,7 +917,6 @@ def TSF_Forth_view(TSF_the,TSF_view_io=True,TSF_view_log=""):    #TSFdoc:スタ�
 def TSF_Forth_draw(TSF_the):    #TSFdoc:スタックから1枚ドロー。(TSFAPI)
     global TSF_stackD,TSF_stackO
     TSF_draw=""
-#    if len(TSF_stackD[TSF_the]) and len(TSF_the) and TSF_the in TSF_stackD:
     if TSF_the in TSF_stackD and len(TSF_stackD[TSF_the]):
         TSF_draw=TSF_stackD[TSF_the].pop()
     return TSF_draw

@@ -3,6 +3,9 @@
 import std.stdio;
 import std.string;
 import std.conv;
+import std.math;
+import std.regex;
+import std.random;
 import std.utf;
 import std.array;
 import std.typecons;
@@ -30,6 +33,7 @@ string TSF_Forth_foolangID(){    //#TSFdoc:TSF実装言語(TSFAPI)。
     return "D-lang";
 }
 
+Random TSF_PPPP_Random;
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[
@@ -425,6 +429,145 @@ string TSF_Forth_lenthey(){    //#TSFdoc:指定スタックの枚数を取得。
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_stackD.length));
     return "";
 }
+
+long[] TSF_Forth_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:peek,poke,pull,pushの共通部品。(TSFAPI)
+    long[] TSF_Plist=[];
+    long TSF_cardsL=0;
+    if( TSF_the!="" ){
+        if( TSF_the in TSF_Forth_stackD() ){
+            TSF_cardsL=TSF_Forth_stackD()[TSF_the].length;
+            if( 0<TSF_cardsL ){
+                switch( TSF_FNCMVAQIRHL ){
+                    case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
+                    case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
+                    case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
+                    case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
+                    case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+                    case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)];   break;
+                    case 'Q':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'I':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'R':
+                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                            if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
+                        }
+                    break;
+                    case 'H':  break;
+                    case 'L':  break;
+                    default:  break;
+                }
+            }
+        }
+    }
+    else{
+        TSF_cardsL=TSF_Forth_stackO().length;
+        if( 0<TSF_cardsL ){
+            switch( TSF_FNCMVAQIRHL ){
+                case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
+                case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
+                case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
+                case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
+                case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+                case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)];   break;
+                case 'Q':
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                        if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                break;
+                case 'I':
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                        if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                break;
+                case 'R':  break;
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackO()){
+                        if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                case 'H':  break;
+                case 'L':  break;
+                default:  break;
+            }
+        }
+    }
+    return TSF_Plist;
+}
+
+string[] TSF_Forth_peek(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:peekの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL);
+    string[] TSF_pulllist=[];
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackO()[to!size_t(TSF_P)]];
+        }
+    }
+    return TSF_pulllist;
+}
+
+void TSF_Forth_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pokeの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]=TSF_poke;
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
+        }
+    }
+}
+
+string[] TSF_Forth_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL){    //#TSFdoc:pullの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL);
+    string[] TSF_pulllist=[];
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+//            TSF_Forth_stackD()[TSF_the].remove(TSF_P);
+            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_P);
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+            string TSF_pull=TSF_Forth_stackO()[to!size_t(TSF_P)];
+            TSF_pulllist~=[TSF_pull];
+//            TSF_Forth_stackO().remove(TSF_P);
+            TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_P));
+            TSF_Forth_stackD().remove(TSF_pull);
+        }
+    }
+    return TSF_pulllist;
+}
+
+void TSF_Forth_push(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pushの共通部品。(TSFAPI)
+    long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
+    if( TSF_the!="" ){
+        foreach(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackD()[TSF_the].insert(TSF_P,TSF_poke);
+            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],TSF_P,TSF_poke);
+        }
+    }
+    else{
+        foreach(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackO().insert(TSF_P,TSF_poke);
+            TSF_Forth_stackD()[TSF_the]=[];
+        }
+    }
+}
+
+
 
 string TSF_Forth_peekF(string TSF_the){    //#指定スタックから表択でカードを読込(TSFAPI)。
     string TSF_pull="";
@@ -1000,7 +1143,6 @@ string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...){    //#TSFdoc:スタ
 
 string TSF_Forth_draw(string TSF_the){    //#TSFdoc:スタックから1枚ドロー。(TSFAPI)
     string TSF_draw="";
-//    if( TSF_stackD[TSF_the].length && TSF_the.length>0 && TSF_the in TSF_stackD ){
     if( (TSF_the in TSF_stackD)&&(TSF_stackD[TSF_the].length>0) ){
         TSF_draw=TSF_stackD[TSF_the][$-1];  TSF_stackD[TSF_the].popBack();
     }
@@ -1109,7 +1251,7 @@ string TSF_Forth_samplerun(...){    //#TSFdoc:TSF実行。ソース表示やロ�
 }
 
 unittest {
-//    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
+    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
 }
 
 

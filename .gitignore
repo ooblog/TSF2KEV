@@ -108,4 +108,6 @@ TSF.exe
 cardsize/
 debug/trans_about.d
 debug/trans_about.py
+old_*
+
 
