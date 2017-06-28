@@ -26,7 +26,7 @@ regexTSF_txt:
 regex_none:
 	#TSF_pullFthat
 TSFdocs_tags:
-	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{?&asterisk}	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{@sample_aboutTSF.tsf}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
 	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
@@ -83,7 +83,7 @@ TSFdocs_tags:
 	{?/CODE}
 	{?H2}TSF2KEVで未実装な箇所など(予定)。{?/H2}
 	{?P}
-	☐PPPP処理が「TSF_Io_separate*」や「TSF_Shuffle_cardsFNCMVA()」に分散してるので「TSF_Forth.*」に一本化したい(大工事)。{?BR}
+	☐PPPP処理が「TSF_Io_separate&#42;」や「TSF_Shuffle_cardsFNCMVA()」に分散してるので「TSF_Forth.{?&asterisk}」に一本化したい(大工事)。{?BR}
 	☐HTML版ドキュメント「{?A_TSF2KEV}」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。{?BR}
 	☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
 	☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。{?BR}
@@ -94,7 +94,7 @@ TSFdocs_tags:
 	☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。{?BR}
 	☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
 	☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
-	☐「tan(θ*90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
+	☐「tan(θ{?&asterisk}90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
 	☐「kM&#126;1&#126;10」で1から10まで合計するような和数列(総和)、「kP&#126;1&#126;10」で積数列(総乗)を用いて乗数や階乗の計算の予定。{?BR}
 	☐Calcの動作がそもそも重いorz{?BR}
 	☐D言語で現在時刻(StopWatchではなく「現在時刻」)のミリ秒以下を取得する方法が不明oxL ので「@ls」「@rs」系が0を返す。{?BR}
@@ -287,6 +287,8 @@ TSFdocs_tags:
 	<	&lt;
 {?&gt}
 	>	&gt;
+{?&asterisk}
+	&#42;	*
 
 #! -- Copyright (c) 2017 ooblog --
 #! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
