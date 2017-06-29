@@ -86,6 +86,43 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#TSF_pushNthis":TSF_Forth_pushNthis, "#実行中スタック順択差込":TSF_Forth_pushNthis,
         "#TSF_pushNthat":TSF_Forth_pushNthat, "#積込先スタック順択差込":TSF_Forth_pushNthat,
         "#TSF_pushNthey":TSF_Forth_pushNthey, "#スタック一覧順択差込":TSF_Forth_pushNthey,
+        "#TSF_peekCthe":TSF_Forth_peekCthe, "#指定スタック周択読込":TSF_Forth_peekCthe,
+#        "#TSF_peekCthis":TSF_Forth_peekCthis, "#実行中スタック周択読込":TSF_Forth_peekCthis,
+#        "#TSF_peekCthat":TSF_Forth_peekCthat, "#積込先スタック周択読込":TSF_Forth_peekCthat,
+#        "#TSF_peekCthey":TSF_Forth_peekCthey, "#スタック一覧周択読込":TSF_Forth_peekCthey,
+#        "#TSF_pokeCthe":TSF_Forth_pokeCthe, "#指定スタック周択上書":TSF_Forth_pokeCthe,
+#        "#TSF_pokeCthis":TSF_Forth_pokeCthis, "#実行中スタック周択上書":TSF_Forth_pokeCthis,
+#        "#TSF_pokeCthat":TSF_Forth_pokeCthat, "#積込先スタック周択上書":TSF_Forth_pokeCthat,
+#        "#TSF_pokeCthey":TSF_Forth_pokeCthey, "#スタック一覧周択上書":TSF_Forth_pokeCthey,
+#        "#TSF_pullCthe":TSF_Forth_pullCthe, "#指定スタック周択引抜":TSF_Forth_pullCthe,
+#        "#TSF_pullCthis":TSF_Forth_pullCthis, "#実行中スタック周択引抜":TSF_Forth_pullCthis,
+#        "#TSF_pullCthat":TSF_Forth_pullCthat, "#積込先スタック周択引抜":TSF_Forth_pullCthat,
+#        "#TSF_pullCthey":TSF_Forth_pullCthey, "#スタック一覧周択引抜":TSF_Forth_pullCthey,
+#        "#TSF_pushCthe":TSF_Forth_pushCthe, "#指定スタック周択差込":TSF_Forth_pushCthe,
+#        "#TSF_pushCthis":TSF_Forth_pushCthis, "#実行中スタック周択差込":TSF_Forth_pushCthis,
+#        "#TSF_pushCthat":TSF_Forth_pushCthat, "#積込先スタック周択差込":TSF_Forth_pushCthat,
+#        "#TSF_pushCthey":TSF_Forth_pushCthey, "#スタック一覧周択差込":TSF_Forth_pushCthey,
+#        "#TSF_peekMthe":TSF_Forth_peekMthe, "#指定スタック囲択読込":TSF_Forth_peekMthe,
+#        "#TSF_peekMthis":TSF_Forth_peekMthis, "#実行中スタック囲択読込":TSF_Forth_peekMthis,
+#        "#TSF_peekMthat":TSF_Forth_peekMthat, "#積込先スタック囲択読込":TSF_Forth_peekMthat,
+#        "#TSF_peekMthey":TSF_Forth_peekMthey, "#スタック一覧囲択読込":TSF_Forth_peekMthey,
+#        "#TSF_pokeMthe":TSF_Forth_pokeMthe, "#指定スタック囲択上書":TSF_Forth_pokeMthe,
+#        "#TSF_pokeMthis":TSF_Forth_pokeMthis, "#実行中スタック囲択上書":TSF_Forth_pokeMthis,
+#        "#TSF_pokeMthat":TSF_Forth_pokeMthat, "#積込先スタック囲択上書":TSF_Forth_pokeMthat,
+#        "#TSF_pokeMthey":TSF_Forth_pokeMthey, "#スタック一覧囲択上書":TSF_Forth_pokeMthey,
+#        "#TSF_pullMthe":TSF_Forth_pullMthe, "#指定スタック囲択引抜":TSF_Forth_pullMthe,
+#        "#TSF_pullMthis":TSF_Forth_pullMthis, "#実行中スタック囲択引抜":TSF_Forth_pullMthis,
+#        "#TSF_pullMthat":TSF_Forth_pullMthat, "#積込先スタック囲択引抜":TSF_Forth_pullMthat,
+#        "#TSF_pullMthey":TSF_Forth_pullMthey, "#スタック一覧囲択引抜":TSF_Forth_pullMthey,
+#        "#TSF_pushMthe":TSF_Forth_pushMthe, "#指定スタック囲択差込":TSF_Forth_pushMthe,
+#        "#TSF_pushMthis":TSF_Forth_pushMthis, "#実行中スタック囲択差込":TSF_Forth_pushMthis,
+#        "#TSF_pushMthat":TSF_Forth_pushMthat, "#積込先スタック囲択差込":TSF_Forth_pushMthat,
+#        "#TSF_pushMthey":TSF_Forth_pushMthey, "#スタック一覧囲択差込":TSF_Forth_pushMthey,
+#        "#TSF_swapBA":TSF_Forth_swapBA, "#カードBA交換":TSF_Forth_swapBA,
+#        "#TSF_swapCA":TSF_Forth_swapCA, "#カードCA交換":TSF_Forth_swapCA,
+#        "#TSF_swapCB":TSF_Forth_swapCB, "#カードCB交換":TSF_Forth_swapCB,
+#        "#TSF_swapAA":TSF_Forth_swapAA, "#カードAA交換":TSF_Forth_swapAA,
+#        "#TSF_swapCC":TSF_Forth_swapCC, "#カードCC交換":TSF_Forth_swapCC,
         "#TSF_clonethe":TSF_Forth_clonethe, "#指定スタックの複製":TSF_Forth_clonethe,
         "#TSF_clonethis":TSF_Forth_clonethis, "#実行中スタックの複製":TSF_Forth_clonethis,
         "#TSF_clonethat":TSF_Forth_clonethat, "#積込先スタックの複製":TSF_Forth_clonethat,
@@ -443,7 +480,6 @@ def TSF_Forth_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFd
             TSF_stackP=TSF_stackD.pop(TSF_pull)
             TSF_stackD[TSF_poke]=TSF_stackP
 
-
 def TSF_Forth_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
     TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
@@ -479,8 +515,16 @@ def TSF_Forth_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFd
                 TSF_stackD[TSF_pull]=[];
                 TSF_stackO.insert(TSF_P,TSF_poke);
 
+def TSF_Forth_returnFNCMVA(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。FNCMVAは単独のカードを返す。(TSFAPI)
+    if len(TSF_pulllist) > 0:
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_pulllist[0])
+    else:
+        TSF_Forth_return(TSF_Forth_drawthat(),"")
 
-
+def TSF_Forth_returnQIRH(TSF_pulllist):    #TSFdoc:peek,pullの共通部品。QIRHは複数のカードを返す。(TSFAPI)
+    for TSF_card in TSF_pulllist:
+        TSF_Forth_return(TSF_Forth_drawthat(),TSF_card)
+    TSF_Forth_return(TSF_Forth_drawthat(),str(len(TSF_pulllist)))
 
 def TSF_Forth_peekF(TSF_the):    #TSFdoc:指定スタックから表択でカードを読込。(TSFAPI)。
     TSF_pull=""
@@ -682,6 +726,27 @@ def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧にスタック名とし
         TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
         TSF_stackD[TSF_push]=[]
     return ""
+
+def TSF_Forth_peekCthe():    #TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Forth_peekCthis():    #TSFdoc:実行中スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthis(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Forth_peekCthat():    #TSFdoc:積込先スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthat(),TSF_peek,"",'C'))
+    return ""
+
+def TSF_Forth_peekCthey():    #TSFdoc:スタック一覧から周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek("",TSF_peek,"",'C'))
+    return ""
+
 
 def TSF_Forth_clone(TSF_clone,TSF_the):    #TSFdoc:スタックを複製する。(TSFAPI)
     if not TSF_clone in TSF_stackD:
@@ -978,16 +1043,6 @@ def TSF_Forth_stackO(TSF_Shuffle_stackO=None):    #TSFdoc:TSF_stackOの取得。
     return TSF_stackO
 
 
-TSF_Initcalldebug=[TSF_Forth_Initcards]
-def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
-    TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Forth.log";
-    TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"PPPP:\t#TSF_this\tTSF_argvs:\t#TSF_that\t#TSF_argvs\t#TSF_fin.",'T')
-    TSF_Forth_setTSF("PPPP:","this:Peek\tthat:Poke\tthe:Pull\tthey:Push\t2\t#TSF_echoN\tlen:\t#TSF_this",'T')
-    TSF_Forth_setTSF("len:","len:\t#TSF_that\tlen:\t#TSF_lenthe\t#TSF_lenthis\t#TSF_lenthat\t#TSF_lenthey\t#exit\t#TSF_this",'T')
-    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
-    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
-
 def TSF_Forth_samplerun(TSF_sample_sepalete=None,TSF_sample_viewthey=None,TSF_sample_log=None):    #TSFdoc:TSF実行。ソース表示やログ保存機能付き。
     TSF_sample_logsw=True if TSF_sample_log != None else False
     TSF_sample_log=TSF_sample_log if TSF_sample_log != None else ""
@@ -1005,6 +1060,45 @@ def TSF_Forth_samplerun(TSF_sample_sepalete=None,TSF_sample_viewthey=None,TSF_sa
         for TSF_the in TSF_stackO:
             TSF_sample_log=TSF_Forth_view(TSF_the,True,TSF_sample_log)
     return TSF_sample_log
+
+
+TSF_Initcalldebug=[TSF_Forth_Initcards]
+def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風デバッグ。
+    TSF_debug_log="";  TSF_debug_savefilename="debug/debug_py-Forth.log";
+    TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
+
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "shuffleclone:","#TSF_this","#TSF_fin."]),'T')
+    TSF_Forth_setTSF("shuffleclone:","\t".join([
+        "adverbclone:","adverb:","#TSF_clonethe","shufflestacks:","#TSF_pullFthe","#TSF_this","adverbclone:","#TSF_argvsthe","#TSF_reverseN","adverbclone:","#TSF_lenthe"," ","#TSF_sandwichN","「#[2]」「[1]」「[0]」","#TSF_join[]","#TSF_echo","shufflejump:","shufflestacks:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this"]),'T')
+    TSF_Forth_setTSF("shufflejump:","\t".join([
+        "#!exit:","shuffleclone:"]),'T')
+    TSF_Forth_setTSF("verb:","\t".join(["peek","poke","push","pull"]),'O')
+    TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
+    TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
+    TSF_Forth_setTSF("shufflestacks:","\t".join([
+#        "pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+        "peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+    TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"]),'O')
+    TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"]),'O')
+    TSF_Forth_setTSF("pushF:","\t".join(["TSF_pushFthe","$push","adverbclone:","#TSF_pushFthe","$push"]),'O')
+    TSF_Forth_setTSF("peekN:","\t".join(["TSF_peekNthe","adverbclone:","1","#TSF_peekNthe"]),'O')
+    TSF_Forth_setTSF("pokeN:","\t".join(["TSF_pokeNthe","$poke","adverbclone:","1","#TSF_pokeNthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullN:","\t".join(["TSF_pullNthe","adverbclone:","1","#TSF_pullNthe"]),'O')
+    TSF_Forth_setTSF("pushN:","\t".join(["TSF_pushNthe","$push","adverbclone:","1","#TSF_pushNthe","$push"]),'O')
+    TSF_Forth_setTSF("peekC:","\t".join(["TSF_peekCthe","adverbclone:","2","#TSF_peekCthe"]),'O')
+    TSF_Forth_setTSF("pokeC:","\t".join(["TSF_pokeCthe","$poke","adverbclone:","2","#TSF_pokeCthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullC:","\t".join(["TSF_pullCthe","adverbclone:","2","#TSF_pullCthe"]),'O')
+    TSF_Forth_setTSF("pushC:","\t".join(["TSF_pushCthe","$push","adverbclone:","2","#TSF_pushCthe","$push"]),'O')
+    TSF_Forth_setTSF("peekM:","\t".join(["TSF_peekMthe","adverbclone:","3","#TSF_peekMthe"]),'O')
+    TSF_Forth_setTSF("pokeM:","\t".join(["TSF_pokeMthe","$poke","adverbclone:","3","#TSF_pokeMthe","$poke"]),'O')
+    TSF_Forth_setTSF("pullM:","\t".join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"]),'O')
+    TSF_Forth_setTSF("pushM:","\t".join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"]),'O')
+
+#    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)
+    TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
     TSF_Forth_debug(TSF_Io_argvs(["python","TSF_Forth.py"]))
