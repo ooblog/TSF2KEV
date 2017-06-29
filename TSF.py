@@ -8,7 +8,7 @@ from __future__ import division,print_function,absolute_import,unicode_literals
 #sys.path.append("TSFpy")
 from TSF_Io import *
 from TSF_Forth import *
-from TSF_Shuffle import *
+#from TSF_Shuffle import *
 from TSF_Calc import *
 from TSF_Time import *
 from TSF_Urlpath import *
@@ -231,7 +231,8 @@ def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版。
     TSF_Forth_samplerun("TSF_sample_quine")
 
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
-TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
+#TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
+TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
 if os.path.isfile(TSF_bootcommand) and len(TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand)):

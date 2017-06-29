@@ -98,22 +98,19 @@ TSFdocs_tags:
 	   <li>③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</li>
 	   <li>④-0．「TSF_Forth.d」「TSF_Forth.py」の#関数カード一覧。</li>
 	   <li>④-1．「TSF_Forth.d」「TSF_Forth.py」のAPI一覧。</li>
-	   <li>⑤-0．「TSF_Shuffle.d」「TSF_Shuffle.py」の#関数カード一覧。</li>
-	   <li>⑤-1．「TSF_Shuffle.d」「TSF_Shuffle.py」のAPI一覧。</li>
-	   <li>⑥-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
-	   <li>⑥-1．「TSF_Calc.d」「TSF_Calc.py」のAPI一覧。</li>
-	   <li>⑥-2．「TSF_Time.d」「TSF_Time.py」の電卓フォーマットの解説。</li>
-	   <li>⑦-0．「TSF_Time.d」「TSF_Time.py」の#関数カード一覧。</li>
-	   <li>⑦-1．「TSF_Time.d」「TSF_Time.py」のAPI一覧。</li>
-	   <li>⑦-2．「TSF_Time.d」「TSF_Time.py」の日時フォーマットの解説。</li>
-	   <li>⑧-0．「TSF_Urlpath.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
-	   <li>⑧-1．「TSF_Urlpath.d」「TSF_Urlpath.py」のAPI一覧。</li>
-	   <li>⑨-0．「TSF_Match.d」「TSF_Match.py」の#関数カード一覧。</li>
-	   <li>⑨-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
-	   <li>⑩-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
-	   <li>⑩-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
-	   <li>{?TSFfaq00title}</li>
-#!	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
+	   <li>⑤-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
+	   <li>⑤-1．「TSF_Calc.d」「TSF_Calc.py」のAPI一覧。</li>
+	   <li>⑤-2．「TSF_Time.d」「TSF_Time.py」の電卓フォーマットの解説。</li>
+	   <li>⑥-0．「TSF_Time.d」「TSF_Time.py」の#関数カード一覧。</li>
+	   <li>⑥-1．「TSF_Time.d」「TSF_Time.py」のAPI一覧。</li>
+	   <li>⑥-2．「TSF_Time.d」「TSF_Time.py」の日時フォーマットの解説。</li>
+	   <li>⑦-0．「TSF_Urlpath.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+	   <li>⑦-1．「TSF_Urlpath.d」「TSF_Urlpath.py」のAPI一覧。</li>
+	   <li>⑧-0．「TSF_Match.d」「TSF_Match.py」の#関数カード一覧。</li>
+	   <li>⑧-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
+	   <li>⑨-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+	   <li>⑨-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
+	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
 	  </ul>
 	 </section>
@@ -134,7 +131,7 @@ TSFdocs_tags:
 	   D言語の環境が用意できる場合「<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh" title="TSF2KEV/TSF_DMDcompile.sh at master · ooblog/TSF2KEV">TSF_DMDcompile.sh</a>」のように「TSF」の実行バイナリがコンパイルできます。<br>
 	  </p>
 	   {?CODE}
-	   dmd TSF.d TSF_Io.d TSF_Forth.d TSF_Shuffle.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
+	   dmd TSF.d TSF_Io.d TSF_Forth.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
 	   {?/CODE}
 	  <p>
 	   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「/root/my-applications/bin/TSF」など)にコピーするとLinuxの場合「*.tsf」が実行できるようになるはずです。<br>
@@ -148,9 +145,9 @@ TSFdocs_tags:
 	   未実装の#関数カードや#関数カード内の未実装な機能などが存在します。<br>
 	  </p>
 	  <ul>
-	   <li>「#TSF_calender」でISO週番号や徹夜日時などが未実装。「TSF_Time」モジュールでタイマー系が未実装。</li>
+	   <li>「TSF_Forth」モジュールPPPP関連で「V」「A」「Q」「I」「R」「H」「L」副詞が未実装。</li>
 	   <li>「TSF_Calc」モジュールで分数の小数変換機能細かい版が未実装(RPN経由で高速に近似を求める事は可能)。</li>
-	   <li>「TSF_Shuffle」モジュールPPPP関連で「C」「V」「A」「Q」「I」「R」「H」「L」副詞が未実装。</li>
+	   <li>「TSF_Time」モジュールでタイマー系が未実装。「#TSF_calender」でISO週番号や徹夜日時などが未実装。</li>
 	   <li>「TSF_Match」モジュールで「C」「V」「R」副詞が未実装。「count」動詞が未実装。</li>
 	  </ul>
 	  <p>
@@ -577,7 +574,7 @@ TSFdocs_tags:
 {?TSFaddress00title}
 	{$TSFaddress00_index}		{$TSFaddress00_TSFdoc}	{$TSFaddress00_KEV2}
 {$TSFaddress00_index}
-	⑫-0．作者について、例えば連絡先。
+	⑪-0．作者について、例えば連絡先。
 {$TSFaddress00_TSFdoc}
 	③-0．作者について、例えば連絡先。
 {$TSFaddress00_KEV2}
@@ -585,7 +582,7 @@ TSFdocs_tags:
 {?TSFfaq00title}
 	{$TSFfaq00_index}		{$TSFfaq00_TSFdoc}	{$TSFfaq00_KEV2}
 {$TSFfaq00_index}
-	⑪-0．「TSF」のＦＡＱ。
+	⑩-0．「TSF」のＦＡＱ。
 {$TSFfaq00_TSFdoc}
 	②-0．「TSFdoc」のＦＡＱ。
 {$TSFfaq00_KEV2}

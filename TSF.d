@@ -11,7 +11,7 @@ import std.string;
 
 import TSF_Io;
 import TSF_Forth;
-import TSF_Shuffle;
+//import TSF_Shuffle;
 import TSF_Calc;
 import TSF_Time;
 import TSF_Urlpath;
@@ -243,7 +243,8 @@ void TSF_sample_quine(){    //#TSFdoc:「sample_quine.tsf」コマンド版。
 
 void main(string[] sys_argvs){
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
-    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
+//    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
+    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
     string TSF_bootcommand=TSF_sysargvs.length<2?"":TSF_sysargvs[1];
     TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);
     if( exists(TSF_bootcommand) && TSF_Forth_loadtext(TSF_bootcommand,TSF_bootcommand).length>0 ){
