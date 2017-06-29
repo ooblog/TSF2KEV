@@ -449,17 +449,17 @@ def TSF_Forth_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pull„Å
     TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL)
     TSF_pulllist=[]
     if TSF_the != "":
-        for TSF_P in TSF_Plist:
+        for TSF_P in reversed(TSF_Plist):
             TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
 #            TSF_Forth_stackD()[TSF_the].pop(TSF_P)
             TSF_stackD[TSF_the].pop(TSF_P)
     else:
-        for TSF_P in TSF_Plist:
+        for TSF_P in reversed(TSF_Plist):
 #            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
 #            TSF_pull=TSF_stackO[TSF_peek]
 #            TSF_Forth_stackO().pop(TSF_P)
 #            TSF_Forth_stackD().pop(TSF_pull)
-            TSF_pull=TSF_Forth_stackO()[TSF_P];
+            TSF_pull=TSF_stackO[TSF_P]
             TSF_pulllist+=[TSF_pull]
             TSF_stackD.pop(TSF_pull)
             TSF_stackO.pop(TSF_P)
@@ -470,15 +470,14 @@ def TSF_Forth_push(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFd
     TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL)
     TSF_pulllist=[]
     if TSF_the != "":
-        for TSF_P in TSF_Plist:
-            TSF_Forth_stackD()[TSF_the].insert(TSF_P,TSF_poke)
+        for TSF_P in reversed(TSF_Plist):
+            TSF_stackD[TSF_the].insert(TSF_P,TSF_poke)
     else:
-        for TSF_P in TSF_Plist:
-            TSF_Forth_stackO().insert(TSF_P,TSF_poke)
-            TSF_Forth_stackD()[TSF_the]=[]
-
-
-
+        for TSF_P in reversed(TSF_Plist):
+            TSF_pull=TSF_stackO[TSF_P];
+            if not TSF_pull in TSF_stackD:
+                TSF_stackD[TSF_pull]=[];
+                TSF_stackO.insert(TSF_P,TSF_poke);
 
 
 

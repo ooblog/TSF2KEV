@@ -562,15 +562,19 @@ string[] TSF_Forth_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FN
 void TSF_Forth_push(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVAQIRHL,string TSF_poke){    //#TSFdoc:pushの共通部品。(TSFAPI)
     long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
     if( TSF_the!="" ){
-        foreach(long TSF_P;TSF_Plist){
-//            TSF_Forth_stackD()[TSF_the].insert(TSF_P,TSF_poke);
-            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],TSF_P,TSF_poke);
+        foreach_reverse(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepushN(TSF_Forth_stackD()[TSF_the],TSF_P,TSF_poke);
+            TSF_stackD[TSF_the].insertInPlace(to!size_t(TSF_P),[TSF_poke]);
         }
     }
     else{
-        foreach(long TSF_P;TSF_Plist){
-//            TSF_Forth_stackO().insert(TSF_P,TSF_poke);
-            TSF_Forth_stackD()[TSF_the]=[];
+        foreach_reverse(long TSF_P;TSF_Plist){
+//            TSF_Forth_stackD()[TSF_the]=[];
+            string TSF_pull=TSF_stackO[to!size_t(TSF_P)];
+            if( TSF_pull !in TSF_stackD ){
+                TSF_stackD[TSF_pull]=[];
+                TSF_stackO.insertInPlace(to!size_t(TSF_P),[TSF_poke]);
+            }
         }
     }
 }
