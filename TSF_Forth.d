@@ -528,7 +528,10 @@ void TSF_Forth_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVA
     else{
         foreach(long TSF_P;TSF_Plist){
 //            TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
+            string TSF_pull=TSF_stackO[to!size_t(TSF_P)];
             TSF_stackO[to!size_t(TSF_P)]=TSF_poke;
+            string[] TSF_stackP=TSF_stackD[TSF_pull];  TSF_stackD.remove(TSF_pull);
+            TSF_stackD[TSF_poke]=TSF_stackP;
         }
     }
 }
