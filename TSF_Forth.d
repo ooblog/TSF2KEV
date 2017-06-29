@@ -504,12 +504,14 @@ string[] TSF_Forth_peek(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FN
     string[] TSF_pulllist=[];
     if( TSF_the!="" ){
         foreach(long TSF_P;TSF_Plist){
-            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+//            TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
+            TSF_pulllist~=[TSF_stackD[TSF_the][to!size_t(TSF_P)]];
         }
     }
     else{
         foreach(long TSF_P;TSF_Plist){
-            TSF_pulllist~=[TSF_Forth_stackO()[to!size_t(TSF_P)]];
+//            TSF_pulllist~=[TSF_Forth_stackO()[to!size_t(TSF_P)]];
+            TSF_pulllist~=[TSF_stackO[to!size_t(TSF_P)]];
         }
     }
     return TSF_pulllist;
@@ -519,12 +521,14 @@ void TSF_Forth_poke(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FNCMVA
     long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL);
     if( TSF_the!="" ){
         foreach(long TSF_P;TSF_Plist){
-            TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]=TSF_poke;
+//            TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]=TSF_poke;
+            TSF_stackD[TSF_the][to!size_t(TSF_P)]=TSF_poke;
         }
     }
     else{
         foreach(long TSF_P;TSF_Plist){
-            TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
+//            TSF_Forth_stackO()[to!size_t(TSF_P)]=TSF_poke;
+            TSF_stackO[to!size_t(TSF_P)]=TSF_poke;
         }
     }
 }
@@ -533,19 +537,20 @@ string[] TSF_Forth_pull(string TSF_the,long TSF_peek,string TSF_seek,char TSF_FN
     long[] TSF_Plist=TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,"",TSF_FNCMVAQIRHL);
     string[] TSF_pulllist=[];
     if( TSF_the!="" ){
-        foreach(long TSF_P;TSF_Plist){
+        foreach_reverse(long TSF_P;TSF_Plist){
             TSF_pulllist~=[TSF_Forth_stackD()[TSF_the][to!size_t(TSF_P)]];
-//            TSF_Forth_stackD()[TSF_the].remove(TSF_P);
-            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_P);
+//            TSF_Forth_stackD()[TSF_the]=TSF_Io_separatepullN(TSF_Forth_stackD()[TSF_the],TSF_P);
+            TSF_stackD[TSF_the]=remove(TSF_stackD[TSF_the],to!size_t(TSF_P));
         }
     }
     else{
-        foreach(long TSF_P;TSF_Plist){
+        foreach_reverse(long TSF_P;TSF_Plist){
             string TSF_pull=TSF_Forth_stackO()[to!size_t(TSF_P)];
             TSF_pulllist~=[TSF_pull];
-//            TSF_Forth_stackO().remove(TSF_P);
-            TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_P));
-            TSF_Forth_stackD().remove(TSF_pull);
+//            TSF_Forth_stackD().remove(TSF_pull);
+//            TSF_Forth_stackO(TSF_Io_separatepullN(TSF_Forth_stackO(),TSF_P));
+            TSF_stackD.remove(TSF_pull);
+            TSF_stackO=remove(TSF_stackO,to!size_t(TSF_P));
         }
     }
     return TSF_pulllist;

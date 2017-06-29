@@ -419,10 +419,12 @@ def TSF_Forth_peek(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:peek�
     TSF_pulllist=[]
     if TSF_the != "":
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+#            TSF_pulllist+=[TSF_Forth_stackD()[TSF_the][TSF_P]]
+            TSF_pulllist+=[TSF_stackD[TSF_the][TSF_P]]
     else:
         for TSF_P in TSF_Plist:
-            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+#            TSF_pulllist+=[TSF_Forth_stackO()[TSF_P]]
+            TSF_pulllist+=[TSF_stackO[TSF_P]]
     return TSF_pulllist
 
 def TSF_Forth_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFdoc:pokeの共通部品。(TSFAPI)
@@ -431,10 +433,11 @@ def TSF_Forth_poke(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL,TSF_poke):    #TSFd
     TSF_pulllist=[]
     if TSF_the != "":
         for TSF_P in TSF_Plist:
-            TSF_Forth_stackD()[TSF_the][TSF_P]=TSF_poke
+#            TSF_Forth_stackD()[TSF_the][TSF_P]=TSF_poke
+            TSF_stackD[TSF_the][TSF_P]=TSF_poke
     else:
         for TSF_P in TSF_Plist:
-            TSF_Forth_stackO()[TSF_P]=TSF_poke
+            TSF_stackO[TSF_P]=TSF_poke
 
 def TSF_Forth_pull(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc:pullの共通部品。(TSFAPI)
     TSF_the=TSF_the if TSF_the != None else ""
