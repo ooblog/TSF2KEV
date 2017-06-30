@@ -539,28 +539,28 @@ def TSF_Forth_peekFthey():    #TSFdoc:スタック一覧から最後尾スタッ
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_stackO[-1] if len(TSF_stackO) else "")
     return ""
 
-def TSF_Forth_peekN(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を順択で読込。(TSFAPI)。
-    TSF_pull=""
-    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD[TSF_the]):
-        TSF_pull=TSF_stackD[TSF_the][TSF_peek]
-    return TSF_pull
+#def TSF_Forth_peekN(TSF_the,TSF_peek):    #TSFdoc:指定スタックからスタック名を順択で読込。(TSFAPI)。
+#    TSF_pull=""
+#    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD[TSF_the]):
+#        TSF_pull=TSF_stackD[TSF_the][TSF_peek]
+#    return TSF_pull
 
-def TSF_Forth_peekNthe():    #TSFdoc:指定スタックからカードを順択で読込。2枚[the,peek]ドローして1枚[card]リターン。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthe(),TSF_peek))
-    return ""
+#def TSF_Forth_peekNthe():    #TSFdoc:指定スタックからカードを順択で読込。2枚[the,peek]ドローして1枚[card]リターン。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthe(),TSF_peek))
+#    return ""
 
-def TSF_Forth_peekNthis():    #TSFdoc:実行中スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
-    return ""
+#def TSF_Forth_peekNthis():    #TSFdoc:実行中スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+#    return ""
 
-def TSF_Forth_peekNthat():    #TSFdoc:積込先スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
-    return ""
+#def TSF_Forth_peekNthat():    #TSFdoc:積込先スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+#    return ""
 
-def TSF_Forth_peekNthey():    #TSFdoc:スタック一覧からスタック名を順択で読込。1枚[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())))
-    return ""
+#def TSF_Forth_peekNthey():    #TSFdoc:スタック一覧からスタック名を順択で読込。1枚[peek]ドローして1枚[card]リターン。
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())))
+#    return ""
 
 def TSF_Forth_pokeF(TSF_the,TSF_poke):    #TSFdoc:指定カードの表択でカードに上書。(TSFAPI)
     if TSF_the in TSF_stackD and 0 < len(TSF_stackD[TSF_the]):
@@ -590,36 +590,36 @@ def TSF_Forth_pokeFthey():    #TSFdoc:スタック一覧の最後尾スタック
             TSF_stackD[TSF_poke]=TSF_stackR
     return ""
 
-def TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_poke):    #TSFdoc:指定スタックからカードを順択で読込。(TSFAPI)
-    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD[TSF_the]):
-        TSF_stackD[TSF_the][TSF_peek]=TSF_poke
+#def TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_poke):    #TSFdoc:指定スタックからカードを順択で読込。(TSFAPI)
+#    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD[TSF_the]):
+#        TSF_stackD[TSF_the][TSF_peek]=TSF_poke
 
-def TSF_Forth_pokeNthe():    #TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_the=TSF_Forth_drawthe()
-    TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_Forth_drawthe())
-    return ""
+#def TSF_Forth_pokeNthe():    #TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_the=TSF_Forth_drawthe()
+#    TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_Forth_drawthe())
+#    return ""
 
-def TSF_Forth_pokeNthis():    #TSFdoc:実行中スタックからカードを順択で上書。2枚[poke,peek]ドロー。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_pokeN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
-    return ""
+#def TSF_Forth_pokeNthis():    #TSFdoc:実行中スタックからカードを順択で上書。2枚[poke,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_pokeN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+#    return ""
 
-def TSF_Forth_pokeNthat():    #TSFdoc:積込先スタックからカードを順択で上書。2枚[poke,peek]ドロー。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_pokeN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
-    return ""
+#def TSF_Forth_pokeNthat():    #TSFdoc:積込先スタックからカードを順択で上書。2枚[poke,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_pokeN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
+#    return ""
 
-def TSF_Forth_pokeNthey():    #TSFdoc:スタック一覧からスタック名を順択で上書。2枚[poke,peek]ドロー。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_poke=TSF_Forth_drawthe()
-    if 0 <= TSF_peek < len(TSF_stackD):
-        TSF_pull=TSF_stackO[TSF_peek]
-        if TSF_pull!=TSF_poke:
-            TSF_stackO[TSF_peek]=TSF_poke
-            TSF_stackR=TSF_stackD.pop(TSF_pull)
-            TSF_stackD[TSF_poke]=TSF_stackR
-    return ""
+#def TSF_Forth_pokeNthey():    #TSFdoc:スタック一覧からスタック名を順択で上書。2枚[poke,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_poke=TSF_Forth_drawthe()
+##    if 0 <= TSF_peek < len(TSF_stackD):
+#        TSF_pull=TSF_stackO[TSF_peek]
+#        if TSF_pull!=TSF_poke:
+#            TSF_stackO[TSF_peek]=TSF_poke
+#            TSF_stackR=TSF_stackD.pop(TSF_pull)
+#            TSF_stackD[TSF_poke]=TSF_stackR
+#    return ""
 
 def TSF_Forth_pullFthe():    #TSFdoc:指定スタックから表択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthe()))
@@ -641,34 +641,34 @@ def TSF_Forth_pullFthey():    #TSFdoc:スタック一覧から最後尾スタッ
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
     return ""
 
-def TSF_Forth_pullN(TSF_the,TSF_peek):    #TSFdoc:指定スタックからカードを順択で引抜。(TSFAPI)
-    TSF_pull=""
-    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD):
-        TSF_pull=TSF_stackD[TSF_the].pop(TSF_peek)
-    return TSF_pull
+#def TSF_Forth_pullN(TSF_the,TSF_peek):    #TSFdoc:指定スタックからカードを順択で引抜。(TSFAPI)
+#    TSF_pull=""
+#    if TSF_the in TSF_stackD and 0 <= TSF_peek < len(TSF_stackD):
+#        TSF_pull=TSF_stackD[TSF_the].pop(TSF_peek)
+#    return TSF_pull
 
-def TSF_Forth_pullNthe():    #TSFdoc:指定スタックからカードを順択で引抜。2枚[the,peek]ドローして1枚[card]リターン。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthe(),TSF_peek))
-    return ""
+#def TSF_Forth_pullNthe():    #TSFdoc:指定スタックからカードを順択で引抜。2枚[the,peek]ドローして1枚[card]リターン。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthe(),TSF_peek))
+#    return ""
 
-def TSF_Forth_pullNthis():    #TSFdoc:実行中スタックからカードを順択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
-    return ""
+#def TSF_Forth_pullNthis():    #TSFdoc:実行中スタックからカードを順択で引抜。1枚[peek]ドローして1枚[card]リターン。
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+#    return ""
 
-def TSF_Forth_pullNthat():    #TSFdoc:積込先スタックからカードを順択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
-    return ""
+#def TSF_Forth_pullNthat():    #TSFdoc:積込先スタックからカードを順択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())))
+#    return ""
 
-def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を順択で引抜。1枚[peek]ドローして1枚[card]リターン。
-    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_pull=""
-    if 0 <= TSF_peek < len(TSF_stackD):
-        TSF_pull=TSF_stackO[TSF_peek]
-        TSF_stackO.pop(TSF_peek)
-        TSF_stackD.pop(TSF_pull)
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
-    return ""
+#def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧からスタック名を順択で引抜。1枚[peek]ドローして1枚[card]リターン。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_pull=""
+#    if 0 <= TSF_peek < len(TSF_stackD):
+#        TSF_pull=TSF_stackO[TSF_peek]
+#        TSF_stackO.pop(TSF_peek)
+#        TSF_stackD.pop(TSF_pull)
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull)
+#    return ""
 
 def TSF_Forth_pushFthe():    #TSFdoc:実行中スタックに表択でカードを差込。2枚[push,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
@@ -690,32 +690,115 @@ def TSF_Forth_pushFthey():    #TSFdoc:スタック一覧に最後尾スタック
         TSF_stackD[TSF_push]=[]
     return ""
 
-def TSF_Forth_pushN(TSF_the,TSF_peek,TSF_push):    #TSFdoc:指定スタックにカードを順択で差込。(TSFAPI)
-    if TSF_the in TSF_stackD:
-        TSF_stackD[TSF_the]=TSF_Io_separatepushN(TSF_stackD[TSF_the],TSF_peek,TSF_push)
+#def TSF_Forth_pushN(TSF_the,TSF_peek,TSF_push):    #TSFdoc:指定スタックにカードを順択で差込。(TSFAPI)
+#    if TSF_the in TSF_stackD:
+#        TSF_stackD[TSF_the]=TSF_Io_separatepushN(TSF_stackD[TSF_the],TSF_peek,TSF_push)
 
-def TSF_Forth_pushNthe():    #TSFdoc:指定スタックにカードを順択で差込。3枚[push,the,peek]ドロー。
+#def TSF_Forth_pushNthe():    #TSFdoc:指定スタックにカードを順択で差込。3枚[push,the,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_the=TSF_Forth_drawthe()
+#    TSF_Forth_pushN(TSF_the,TSF_peek,TSF_Forth_drawthe())
+#    return ""
+
+#def TSF_Forth_pushNthis():    #TSFdoc:実行中スタックにカードを順択で差込。2枚[push,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+#    return ""
+
+#def TSF_Forth_pushNthat():    #TSFdoc:積込先スタックにカードを順択で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_Forth_pushN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
+#    return ""
+
+#def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧にスタック名として順択で差込。2枚[push,peek]ドロー。
+#    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+#    TSF_push=TSF_Forth_drawthe()
+#    if not TSF_push in TSF_stackD:
+#        TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
+#        TSF_stackD[TSF_push]=[]
+ #   return ""
+
+
+def TSF_Forth_peekNthe():    #TSFdoc:指定スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_peekNthis():    #TSFdoc:実行中スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthis(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_peekNthat():    #TSFdoc:積込先スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthat(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_peekNthey():    #TSFdoc:スタック一覧から順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek("",TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_pokeNthe():    #TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
     TSF_the=TSF_Forth_drawthe()
-    TSF_Forth_pushN(TSF_the,TSF_peek,TSF_Forth_drawthe())
+    TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
 
-def TSF_Forth_pushNthis():    #TSFdoc:実行中スタックにカードを順択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pokeNthis():    #TSFdoc:実行中スタックから順択でカードを上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe())
+    TSF_Forth_poke(TSF_Forth_drawthis(),TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
 
-def TSF_Forth_pushNthat():    #TSFdoc:積込先スタックにカードを順択で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
+def TSF_Forth_pokeNthat():    #TSFdoc:積込先スタックから順択でカードを上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_Forth_pushN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe())
+    TSF_Forth_poke(TSF_Forth_drawthat(),TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
 
-def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧にスタック名として順択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pokeNthey():    #TSFdoc:スタック一覧から順択でカードを上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
-    TSF_push=TSF_Forth_drawthe()
-    if not TSF_push in TSF_stackD:
-        TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push)
-        TSF_stackD[TSF_push]=[]
+    TSF_Forth_poke("",TSF_peek,"",'N',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pullNthe():    #TSFdoc:指定スタックから順択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthe(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_pullNthis():    #TSFdoc:実行中スタックから順択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthis(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_pullNthat():    #TSFdoc:積込先スタックから順択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthat(),TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_pullNthey():    #TSFdoc:スタック一覧から順択でカードを引抜。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull("",TSF_peek,"",'N'))
+    return ""
+
+def TSF_Forth_pushNthe():    #TSFdoc:指定スタックからカードを順択で差込。3枚[poke,the,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pushNthis():    #TSFdoc:実行中スタックから順択でカードを差込。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_push(TSF_Forth_drawthis(),TSF_peek,"",'N',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pushNthat():    #TSFdoc:積込先スタックから順択でカードを差込。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_push(TSF_Forth_drawthat(),TSF_peek,"",'N',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pushNthey():    #TSFdoc:スタック一覧から順択でカードを差込。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_push("",TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_peekCthe():    #TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
