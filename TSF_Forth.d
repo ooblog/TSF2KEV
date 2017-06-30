@@ -74,30 +74,30 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#TSF_peekFthis":&TSF_Forth_peekFthis, "#実行中スタック表択読込":&TSF_Forth_peekFthis,
         "#TSF_peekFthat":&TSF_Forth_peekFthat, "#積込先スタック表択読込":&TSF_Forth_peekFthat,
         "#TSF_peekFthey":&TSF_Forth_peekFthey, "#スタック一覧表択読込":&TSF_Forth_peekFthey,
-        "#TSF_peekNthe":&TSF_Forth_peekNthe, "#指定スタック順択読込":&TSF_Forth_peekNthe,
-        "#TSF_peekNthis":&TSF_Forth_peekNthis, "#実行中スタック順択読込":&TSF_Forth_peekNthis,
-        "#TSF_peekNthat":&TSF_Forth_peekNthat, "#積込先スタック順択読込":&TSF_Forth_peekNthat,
-        "#TSF_peekNthey":&TSF_Forth_peekNthey, "#スタック一覧順択読込":&TSF_Forth_peekNthey,
         "#TSF_pokeFthe":&TSF_Forth_pokeFthe, "#指定スタック表択上書":&TSF_Forth_pokeFthe,
         "#TSF_pokeFthis":&TSF_Forth_pokeFthis, "#実行中スタック表択上書":&TSF_Forth_pokeFthis,
         "#TSF_pokeFthat":&TSF_Forth_pokeFthat, "#積込先スタック表択上書":&TSF_Forth_pokeFthat,
         "#TSF_pokeFthey":&TSF_Forth_pokeFthey, "#スタック一覧表択上書":&TSF_Forth_pokeFthey,
-        "#TSF_pokeNthe":&TSF_Forth_pokeNthe, "#指定スタック順択上書":&TSF_Forth_pokeNthe,
-        "#TSF_pokeNthis":&TSF_Forth_pokeNthis, "#実行中スタック順択上書":&TSF_Forth_pokeNthis,
-        "#TSF_pokeNthat":&TSF_Forth_pokeNthat, "#積込先スタック順択上書":&TSF_Forth_pokeNthat,
-        "#TSF_pokeNthey":&TSF_Forth_pokeNthey, "#スタック一覧順択上書":&TSF_Forth_pokeNthey,
         "#TSF_pullFthe":&TSF_Forth_pullFthe, "#指定スタック表択引抜":&TSF_Forth_pullFthe,
         "#TSF_pullFthis":&TSF_Forth_pullFthis, "#実行中スタック表択引抜":&TSF_Forth_pullFthis,
         "#TSF_pullFthat":&TSF_Forth_pullFthat, "#積込先スタック表択引抜":&TSF_Forth_pullFthat,
         "#TSF_pullFthey":&TSF_Forth_pullFthey, "#スタック一覧表択引抜":&TSF_Forth_pullFthey,
-        "#TSF_pullNthe":&TSF_Forth_pullNthe, "#指定スタック順択引抜":&TSF_Forth_pullNthe,
-        "#TSF_pullNthis":&TSF_Forth_pullNthis, "#実行中スタック順択引抜":&TSF_Forth_pullNthis,
-        "#TSF_pullNthat":&TSF_Forth_pullNthat, "#積込先スタック順択引抜":&TSF_Forth_pullNthat,
-        "#TSF_pullNthey":&TSF_Forth_pullNthey, "#スタック一覧順択引抜":&TSF_Forth_pullNthey,
         "#TSF_pushFthe":&TSF_Forth_pushFthe, "#指定スタック表択差込":&TSF_Forth_pushFthe,
         "#TSF_pushFthis":&TSF_Forth_pushFthis, "#実行中スタック表択差込":&TSF_Forth_pushFthis,
         "#TSF_pushFthat":&TSF_Forth_pushFthat, "#積込先スタック表択差込":&TSF_Forth_pushFthat,
         "#TSF_pushFthey":&TSF_Forth_pushFthey, "#スタック一覧表択差込":&TSF_Forth_pushFthey,
+        "#TSF_peekNthe":&TSF_Forth_peekNthe, "#指定スタック順択読込":&TSF_Forth_peekNthe,
+        "#TSF_peekNthis":&TSF_Forth_peekNthis, "#実行中スタック順択読込":&TSF_Forth_peekNthis,
+        "#TSF_peekNthat":&TSF_Forth_peekNthat, "#積込先スタック順択読込":&TSF_Forth_peekNthat,
+        "#TSF_peekNthey":&TSF_Forth_peekNthey, "#スタック一覧順択読込":&TSF_Forth_peekNthey,
+        "#TSF_pokeNthe":&TSF_Forth_pokeNthe, "#指定スタック順択上書":&TSF_Forth_pokeNthe,
+        "#TSF_pokeNthis":&TSF_Forth_pokeNthis, "#実行中スタック順択上書":&TSF_Forth_pokeNthis,
+        "#TSF_pokeNthat":&TSF_Forth_pokeNthat, "#積込先スタック順択上書":&TSF_Forth_pokeNthat,
+        "#TSF_pokeNthey":&TSF_Forth_pokeNthey, "#スタック一覧順択上書":&TSF_Forth_pokeNthey,
+        "#TSF_pullNthe":&TSF_Forth_pullNthe, "#指定スタック順択引抜":&TSF_Forth_pullNthe,
+        "#TSF_pullNthis":&TSF_Forth_pullNthis, "#実行中スタック順択引抜":&TSF_Forth_pullNthis,
+        "#TSF_pullNthat":&TSF_Forth_pullNthat, "#積込先スタック順択引抜":&TSF_Forth_pullNthat,
+        "#TSF_pullNthey":&TSF_Forth_pullNthey, "#スタック一覧順択引抜":&TSF_Forth_pullNthey,
         "#TSF_pushNthe":&TSF_Forth_pushNthe, "#指定スタック順択差込":&TSF_Forth_pushNthe,
         "#TSF_pushNthis":&TSF_Forth_pushNthis, "#実行中スタック順択差込":&TSF_Forth_pushNthis,
         "#TSF_pushNthat":&TSF_Forth_pushNthat, "#積込先スタック順択差込":&TSF_Forth_pushNthat,
@@ -651,35 +651,6 @@ string TSF_Forth_peekFthey(){    //#TSFdoc:スタック一覧から最後尾ス�
     return "";
 }
 
-//string TSF_Forth_peekN(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからカードを表択で読込。(TSFAPI)。
-//    string TSF_pull="";
-//    if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
-//        TSF_pull=TSF_stackD[TSF_the][to!size_t(TSF_peek)];
-//    }
-//    return TSF_pull;
-//}
-
-//string TSF_Forth_peekNthe(){    //#TSFdoc:指定スタックからカードを順択で読込。2枚[the,peek]ドローして1枚[card]リターン。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthe(),TSF_peek));
-//    return "";
-//}
-
-//string TSF_Forth_peekNthis(){    //#TSFdoc:実行中スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
-//    return "";
-//}
-
-//string TSF_Forth_peekNthat(){    //#TSFdoc:積込先スタックからカードを順択で読込。1枚[peek]ドローして1枚[card]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_peekN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
-//    return "";
-//}
-
-//string TSF_Forth_peekNthey(){    //#TSFdoc:スタック一覧からスタック名を順択で読込。1枚[peek]ドローして1枚[card]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Io_separatepeekN(TSF_stackO,TSF_Io_RPNzero(TSF_Forth_drawthe())));
-//    return "";
-//}
-
 string TSF_Forth_pokeF(string TSF_the,string TSF_poke){    //#TSFdoc:指定スタックの順択でカードに上書。(TSFAPI)
     if( (TSF_the in TSF_stackD)&&(0<TSF_stackD[TSF_the].length) ){
         TSF_stackD[TSF_the][$-1]=TSF_poke;
@@ -716,45 +687,6 @@ string TSF_Forth_pokeFthey(){    //#TSFdoc:スタック一覧の最後尾スタ�
     return "";
 }
 
-//void TSF_Forth_pokeN(string TSF_the,long TSF_peek,string TSF_poke){    //#TSFdoc:指定スタックからカードを順択で読込。(TSFAPI)
-//    if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
-//        TSF_stackD[TSF_the][to!size_t(TSF_peek)]=TSF_poke;
-//    }
-//}
-
-//string TSF_Forth_pokeNthe(){    //#TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    string TSF_the=TSF_Forth_drawthe();
-//    TSF_Forth_pokeN(TSF_the,TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pokeNthis(){    //#TSFdoc:実行中スタックからカードを順択で上書。2枚[poke,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    TSF_Forth_pokeN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pokeNthat(){    //TSF_doc:積込先スタックからカードを順択で上書。2枚[poke,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    TSF_Forth_pokeN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pokeNthey(){    //#TSFdoc:スタック一覧からスタック名を順択で上書。2枚[poke,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    string TSF_poke=TSF_Forth_drawthe();
-//    if( (0<=TSF_peek)&&(TSF_peek<TSF_stackD.length) ){
-//        string TSF_pull=TSF_stackO[to!size_t(TSF_peek)];
-//        if( TSF_pull!=TSF_poke ){
-//            TSF_stackO[to!size_t(TSF_peek)]=TSF_poke;
-//            string[] TSF_stackR=TSF_stackD[TSF_pull]; TSF_stackD.remove(TSF_pull);
- //           TSF_stackD[TSF_poke]=TSF_stackR;
-//        }
- //   }
-//    return "";
-//}
-
 string TSF_Forth_pullFthe(){    //#TSFdoc:指定スタックから表択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_draw(TSF_Forth_drawthe()));
     return "";
@@ -779,43 +711,6 @@ string TSF_Forth_pullFthey(){    //#TSFdoc:スタック一覧から最後尾ス�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull);
     return "";
 }
-
-//string TSF_Forth_pullN(string TSF_the,long TSF_peek){    //#TSFdoc:指定スタックからカードを順択で引抜。(TSFAPI)
-//    string TSF_pull="";
-//    if( (TSF_the in TSF_stackD)&&(0<=TSF_peek)&&(TSF_peek<TSF_stackD[TSF_the].length) ){
-//        TSF_pull=TSF_stackD[TSF_the][to!size_t(TSF_peek)];
-//        TSF_stackD[TSF_the]=TSF_Io_separatepullN(TSF_stackD[TSF_the],TSF_peek);
-//    }
-//    return TSF_pull;
-//}
-
-//string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックからカードを順択で引抜。2枚[the,peek]ドローして1枚[card]リターン。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthe(),TSF_peek));
-//    return "";
-//}
-
-//string TSF_Forth_pullNthis(){    //#TSFdoc:実行中スタックからカードを順択で引抜。1枚[peek]ドローして1枚[card]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthis(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
-//    return "";
-//}
-
-//string TSF_Forth_pullNthat(){    //#TSFdoc:積込先スタックからカードを順択で引抜。2枚[pull]←[peek]ドローして1枚[card]リターン。
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_pullN(TSF_Forth_drawthat(),TSF_Io_RPNzero(TSF_Forth_drawthe())));
-//    return "";
-//}
-
-//string TSF_Forth_pullNthey(){    //#TSFdoc:スタック一覧からスタック名を順択で引抜。1枚[peek]ドローして1枚[card]リターン。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    string TSF_pull="";
-//    if( (0<=TSF_peek)&&(TSF_peek<TSF_stackD.length) ){
-//        TSF_pull=TSF_stackO[to!size_t(TSF_peek)];
-//        TSF_stackO=TSF_Io_separatepullN(TSF_stackO,TSF_peek);
-//        TSF_stackD.remove(TSF_pull);
-//    }
-//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_pull);
-//    return "";
-//}
 
 string TSF_Forth_pushFthe(){    //#TSFdoc:実行中スタックに表択でカードを差込。2枚[push,the]ドロー。
     string TSF_the=TSF_Forth_drawthe();
@@ -842,134 +737,99 @@ string TSF_Forth_pushFthey(){    //#TSFdoc:スタック一覧に最後尾スタ�
     return "";
 }
 
-//void TSF_Forth_pushN(string TSF_the,long TSF_peek,string TSF_push){    //#TSFdoc:指定スタックにカードを順択で差込。(TSFAPI)
-//    if( TSF_the in TSF_stackD ){
-//        TSF_stackD[TSF_the]=TSF_Io_separatepushN(TSF_stackD[TSF_the],TSF_peek,TSF_push);
-//    }
-//}
-
-//string TSF_Forth_pushNthe(){    //#TSFdoc:指定スタックにカードを順択で差込。3枚[push,the,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    string TSF_the=TSF_Forth_drawthe();
-//    TSF_Forth_pushN(TSF_the,TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pushNthis(){    //#TSFdoc:実行中スタックにカードを順択で差込。2枚[push,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-////    TSF_Forth_pushN(TSF_Forth_drawthis(),TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pushNthat(){    //#TSFdoc:積込先スタックにカードを順択で差込。2枚[push,peek]ドロー。1枚リターンの可能性。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    TSF_Forth_pushN(TSF_Forth_drawthat(),TSF_peek,TSF_Forth_drawthe());
-//    return "";
-//}
-
-//string TSF_Forth_pushNthey(){    //#TSFdoc:スタック一覧にスタック名として順択で差込。2枚[push,peek]ドロー。
-//    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
-//    string TSF_push=TSF_Forth_drawthe();
- //   if( TSF_push !in TSF_stackD ){
-//        TSF_stackO=TSF_Io_separatepushN(TSF_stackO,TSF_peek,TSF_push);
- //       TSF_stackD[TSF_push]=null;
-//    }
-//    return "";
-//}
-
-string TSF_Forth_peekNthe(){    //#TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekNthe(){    //#TSFdoc:指定スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_peekNthis(){    //#TSFdoc:実行中スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekNthis(){    //#TSFdoc:実行中スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthis(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_peekNthat(){    //#TSFdoc:積込先スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekNthat(){    //#TSFdoc:積込先スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthat(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_peekNthey(){    //#TSFdoc:スタック一覧から周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekNthey(){    //#TSFdoc:スタック一覧から周順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_peek("",TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_pokeNthe(){    //#TSFdoc:指定スタックからカードを周択で上書。3枚[poke,the,peek]ドロー。
+string TSF_Forth_pokeNthe(){    //#TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pokeNthis(){    //#TSFdoc:実行中スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeNthis(){    //#TSFdoc:実行中スタックから順択でカードを上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_poke(TSF_Forth_drawthis(),TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pokeNthat(){    //#TSFdoc:積込先スタックから周択でカードを上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeNthat(){    //#TSFdoc:積込先スタックから順択でカードを上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_poke(TSF_Forth_drawthat(),TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pokeNthey(){    //#TSFdoc:スタック一覧から周択でカードを上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeNthey(){    //#TSFdoc:スタック一覧から順択でカードを上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_poke("",TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックから周択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックから順択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthe(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_pullNthis(){    //#TSFdoc:実行中スタックから周択でカードを引抜。2枚[poke,peek]ドロー。
+string TSF_Forth_pullNthis(){    //#TSFdoc:実行中スタックから順択でカードを引抜。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthis(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_pullNthat(){    //#TSFdoc:積込先スタックから周択でカードを引抜。2枚[poke,peek]ドロー。
+string TSF_Forth_pullNthat(){    //#TSFdoc:積込先スタックから順択でカードを引抜。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthat(),TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_pullNthey(){    //#TSFdoc:スタック一覧から周択でカードを引抜。2枚[poke,peek]ドロー。
+string TSF_Forth_pullNthey(){    //#TSFdoc:スタック一覧から順択でカードを引抜。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_returnFNCMVA(TSF_Forth_pull("",TSF_peek,"",'N'));
     return "";
 }
 
-string TSF_Forth_pushNthe(){    //#TSFdoc:指定スタックからカードを周択で差込。3枚[poke,the,peek]ドロー。
+string TSF_Forth_pushNthe(){    //#TSFdoc:指定スタックからカードを順択で差込。3枚[poke,the,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pushNthis(){    //#TSFdoc:実行中スタックから周択でカードを差込。2枚[poke,peek]ドロー。
+string TSF_Forth_pushNthis(){    //#TSFdoc:実行中スタックから順択でカードを差込。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_push(TSF_Forth_drawthis(),TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pushNthat(){    //#TSFdoc:積込先スタックから周択でカードを差込。2枚[poke,peek]ドロー。
+string TSF_Forth_pushNthat(){    //#TSFdoc:積込先スタックから順択でカードを差込。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_push(TSF_Forth_drawthat(),TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_pushNthey(){    //#TSFdoc:スタック一覧から周択でカードを差込。2枚[poke,peek]ドロー。
+string TSF_Forth_pushNthey(){    //#TSFdoc:スタック一覧から順択でカードを差込。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
     TSF_Forth_push("",TSF_peek,"",'N',TSF_Forth_drawthe());
     return "";
