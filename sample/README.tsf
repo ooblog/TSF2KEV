@@ -6,9 +6,9 @@ TSFdocs_files:
 TSFdocs_basedocs:
 	TSFdocs_baseMD:	TSFdocs_baseHTML:
 TSFdocs_baseMD:
-	{?TSFreadmehead}{?TSFreadmebuttom}
+	{?TSFreadmebody}
 TSFdocs_baseHTML:
-	{?TSFhtmlheader}{?TSFreadmehead}{?TSFreadmebuttom}{?TSFhtmlfooter}
+	{?TSFhtmlheader}{?TSFreadmebody}{?TSFhtmlfooter}
 TSFdocs_imports:
 	sample_aboutTSF.tsf
 {@sample_aboutTSF.tsf}
@@ -26,7 +26,7 @@ regexTSF_txt:
 regex_none:
 	#TSF_pullFthat
 TSFdocs_tags:
-	{?&asterisk}	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
+	{?&asterisk}	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H3}	{?H3}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{@sample_aboutTSF.tsf}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
 	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
@@ -43,7 +43,7 @@ TSFdocs_tags:
 	{$U_vim-trusty_title}	{$U_vim-trusty_href}	{$U_vim-trusty_text}	{?U_vim-trusty}
 	{$U_vim-kaoriya_title}	{$U_vim-kaoriya_href}	{$U_vim-kaoriya_text}	{?U_vim-kaoriya}
 	{$U_wine_title}	{$U_wine_href}	{$U_wine_text}	{?U_wine}
-	{?TSFhtmlfooter}	{?TSFreadmebuttom}	{?TSFreadmehead}	{?TSFhtmlheader}
+	{?TSFhtmlfooter}	{?TSFreadmebody}	{?TSFhtmlheader}
 {?TSFhtmlheader}
 		{$TSFhtmlheader}	
 {$TSFhtmlheader}
@@ -52,26 +52,34 @@ TSFdocs_tags:
 	 <title>README.md</title>
 	</head><body>
 	
-{?TSFreadmehead}
-	{$TSFreadmehead}	{$TSFreadmehead}	
-{$TSFreadmehead}
+{?TSFreadmebody}
+	{$TSFreadmebody}
+{$TSFreadmebody}
 	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
+	{?H2}TSF超ザックリ説明。{?/H2}
 	{?P}
-	目標は「{?A_TSF2kanedit}」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。{?BR}
-	TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「{?A_LTsv10kanedit}」をお使いください。{?BR}
-	未整備の箇所もあるけどHTML版のドキュメント「{?A_TSF2KEV}」も制作中。{?BR}
+	TSFはForth風インタプリタです。CSV→TSV→TSF。{?BR}
+	構文は文字列をタブで区切るだけ(コメント行などでシバン「#!」を用いる程度)。{?BR}
 	{?A_syntaximage}{?BR}
 	{?/P}
-	{?H2}簡易版TSF解説「sample_aboutTSF.tsf」。{?/H2}
-	「{?A_aboutTSF}」は「./TSF.d --about」「./TSF.py --about」でも確認できます。{?BR}
+	{?H2}言語が生まれた経緯。{?/H2}
+	{?P}
+	漢直(漢字直接入力)の漢字配列やkan5x5フォントのグリフエディタの単漢字辞書など漢字データ管理でTSV(LTSVを更にアレンジしたL:Tsv)を用いてました(「{?A_LTsv10kanedit}」を参考)。{?BR}
+	HSP→BaCon→Pythonで何度か作り直す紆余曲折を経て今度はD言語で作り直す流れでしたが、言語の変更が強いられる度に一から作り直すのはしんどい。{?BR}
+	なので、TSVにデータ(プログラム含む)を入力するだけで動作するアプリ的なモノが欲しくなったので開発中です。{?BR}
+	プログラム本体をTSFで作れば、OSや言語などの環境差異はTSF実装の方で吸収させるという戦法を想定。{?BR}
+	当面の目標は「{?A_TSF2kanedit}」のような漢直をVimスクリプトの力を借りずに使わずに「TSF」だけで動かす事。{?BR}
+	{?/P}
+	{?H2}TSF言語の簡易説明「sample_aboutTSF.tsf」。{?/H2}
+	{?P}
+	「{?A_aboutTSF}」自体もTSFで書かれてるので、文中数式を「TSF sample/sample_aboutTSF.tsf」で動作確認したり、{?BR}
+	D言語やPythonに変換して「./TSF.d --about」「./TSF.py --about」のように内蔵コマンド化もできます。{?BR}
+	TSF言語の詳細説明はHTML版のドキュメント「{?A_TSF2KEV}」で執筆中。{?BR}
+	{?/P}
 	{?CODE}
 	{@sample_aboutTSF.tsf}
-	
-{?TSFreadmebuttom}
-	{$TSFreadmebuttom}	{$TSFreadmebuttom}
-{$TSFreadmebuttom}
 	{?/CODE}
-	{?H2}「TSF. --about」の「RPN」「Calc」テスト部分の抜粋。{?/H2}
+	{?H3}「TSF --about」の「RPN」「Calc」テスト部分の抜粋。{?/H3}
 	{?CODE}
 	{?INDENT}▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
 	{?INDENT}▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -81,7 +89,7 @@ TSFdocs_tags:
 	{?INDENT}▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
 	{?INDENT}▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年06月19日(月)02時42分14秒
 	{?/CODE}
-	{?H2}TSF2KEVで未実装な箇所など(予定)。{?/H2}
+	{?H2}TSF2KEVで未実装な箇所など(ToDoリスト風)。{?/H2}
 	{?P}
 	☐PPPP処理が「TSF_Io_separate&#42;」に残存してるので「TSF_Forth.{?&asterisk}」に一本化したい(工事中)。{?BR}
 	☐HTML版ドキュメント「{?A_TSF2KEV}」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。{?BR}
@@ -92,6 +100,7 @@ TSFdocs_tags:
 	☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。{?BR}
 	☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。{?BR}
 	☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。{?BR}
+	☐「#TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。{?BR}
 	☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
 	☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
 	☐「tan(θ{?&asterisk}90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
@@ -100,20 +109,7 @@ TSFdocs_tags:
 	☐D言語で現在時刻(StopWatchではなく「現在時刻」)のミリ秒以下を取得する方法が不明oxL ので「@ls」「@rs」系が0を返す。{?BR}
 	☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。{?BR}
 	{?/P}
-	{?H2}Vimシンタックスの設定など。{?/H2}
-	{?P}
-	 シンタックスファイル「{?A_vimsyntax}」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。{?BR}
-	「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。{?BR}
-	Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追記する。{?BR}
-	ついでに「{?A_TSF2kanedit}」の設定もおまけで書いてみた。{?BR}
-	{?/P}
-	{?CODE}
-	{?INDENT}syntax on
-	{?INDENT}au BufRead,BufNewFile *.tsf set filetype=tsf
-	{?INDENT}autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
-	{?INDENT}command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
-	{?/CODE}
-	{?H2}動作環境。{?/H2}
+	{?H2}動作環境(開発環境)。{?/H2}
 	{?P}
 	「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および{?BR}
 	「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。{?BR}
@@ -267,6 +263,10 @@ TSFdocs_tags:
 	## 	<h2>
 {?/H2}
 		</h2>
+{?H3}
+	### 	<h3>
+{?/H3}
+		</h3>
 {?P}
 		<p>
 {?/P}

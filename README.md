@@ -1,12 +1,24 @@
 # プログラミング言語「TSF_Tab-Separated-Forth」開発中。
+## TSF超ザックリ説明。
 
-目標は「[TSF2KEV/kanedit.vim](https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim "TSF2KEV/kanedit.vim at master ooblog/TSF2KEV")」などをVim使わずに「TSF」だけで動かす事。実装はとりあえずPythonとD言語で。  
-TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方は「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」をお使いください。  
-未整備の箇所もあるけどHTML版のドキュメント「[TSF2KEV(https://ooblog.github.io/TSF2KEV/)](https://ooblog.github.io/TSF2KEV/ "「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。")」も制作中。  
+TSFはForth風インタプリタです。CSV→TSV→TSF。  
+構文は文字列をタブで区切るだけ(コメント行などでシバン「#!」を用いる程度)。  
 ![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
 
-## 簡易版TSF解説「sample_aboutTSF.tsf」。
-「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」は「./TSF.d --about」「./TSF.py --about」でも確認できます。  
+## 言語が生まれた経緯。
+
+漢直(漢字直接入力)の漢字配列やkan5x5フォントのグリフエディタの単漢字辞書など漢字データ管理でTSV(LTSVを更にアレンジしたL:Tsv)を用いてました(「[LTsv10kanedit](https://github.com/ooblog/LTsv10kanedit "ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。")」を参考)。  
+HSP→BaCon→Pythonで何度か作り直す紆余曲折を経て今度はD言語で作り直す流れでしたが、言語の変更が強いられる度に一から作り直すのはしんどい。  
+なので、TSVにデータ(プログラム含む)を入力するだけで動作するアプリ的なモノが欲しくなったので開発中です。  
+プログラム本体をTSFで作れば、OSや言語などの環境差異はTSF実装の方で吸収させるという戦法を想定。  
+当面の目標は「[TSF2KEV/kanedit.vim](https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim "TSF2KEV/kanedit.vim at master ooblog/TSF2KEV")」のような漢直をVimスクリプトの力を借りずに使わずに「TSF」だけで動かす事。  
+
+## TSF言語の簡易説明「sample_aboutTSF.tsf」。
+
+「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」自体もTSFで書かれてるので、文中数式を「TSF sample/sample_aboutTSF.tsf」で動作確認したり、  
+D言語やPythonに変換して「./TSF.d --about」「./TSF.py --about」のように内蔵コマンド化もできます。  
+TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblog.github.io/TSF2KEV/)](https://ooblog.github.io/TSF2KEV/ "「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。")」で執筆中。  
+
 
     #! /usr/bin/env TSF    
     TSF_Tab-Separated-Forth:    
@@ -89,7 +101,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     	#! -- Copyright (c) 2017 ooblog --    
     	#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE
 
-## 「TSF. --about」の「RPN」「Calc」テスト部分の抜粋。
+### 「TSF --about」の「RPN」「Calc」テスト部分の抜粋。
 
     ▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
     ▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
@@ -99,7 +111,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
     ▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
     ▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年06月19日(月)02時42分14秒
 
-## TSF2KEVで未実装な箇所など(予定)。
+## TSF2KEVで未実装な箇所など(ToDoリスト風)。
 
 ☐PPPP処理が「TSF_Io_separate&#42;」に残存してるので「TSF_Forth.&#42;」に一本化したい(工事中)。  
 ☐HTML版ドキュメント「[TSF2KEV(https://ooblog.github.io/TSF2KEV/)](https://ooblog.github.io/TSF2KEV/ "「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。")」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。  
@@ -110,6 +122,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。  
 ☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。  
 ☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。  
+☐「#TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。  
 ☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。  
 ☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
 ☐「tan(θ&#42;90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  
@@ -118,20 +131,7 @@ TSFはまだ開発中なので、漢直やkan5x5フォントをお探しの方�
 ☐D言語で現在時刻(StopWatchではなく「現在時刻」)のミリ秒以下を取得する方法が不明oxL ので「@ls」「@rs」系が0を返す。  
 ☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。  
 
-## Vimシンタックスの設定など。
-
- シンタックスファイル「[vimsyntax/tsf.vim](https://github.com/ooblog/TSF2KEV/blob/master/vimsyntax/tsf.vim "TSF2KEV/tsf.vim at master ooblog/TSF2KEV")」を「~/.vim/syntax/tsf.vim」にコピーする(syntaxフォルダは作成する)。  
-「./TSF_DMDcompile.sh」を用いてD言語でコンパイルした「./TSF」を「&#126;/my-applications/bin/TSF」としてコピーする(puppy linux Ubuntu Tahrの場合。環境毎に「echo $PATH」は異なる)。  
-Vimの「メニュー→編集(E)→起動時の設定(S)」で「&#126;/.vimrc」を開いて「filetype=tsf」や「:!TSF %」を追記する。  
-ついでに「[TSF2KEV/kanedit.vim](https://github.com/ooblog/TSF2KEV/blob/master/KEV2/kanedit.vim "TSF2KEV/kanedit.vim at master ooblog/TSF2KEV")」の設定もおまけで書いてみた。  
-
-
-    syntax on
-    au BufRead,BufNewFile *.tsf set filetype=tsf
-    autocmd BufNewFile,BufRead *.tsf nnoremap <F5> :!TSF %<CR>
-    command KEVtsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
-
-## 動作環境。
+## 動作環境(開発環境)。
 
 「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および  
 「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。  
