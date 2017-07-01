@@ -105,7 +105,7 @@ aboutURL:
 ▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
 ▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
 ▽漢数字テスト「六分の五」を「#TSF_calcJA」→6分の5
-▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年06月29日(木)03時05分37秒
+▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年07月01日(土)16時55分52秒
 
 ○「#TSF_RPN」逆ポーランド小数電卓の概要。
 

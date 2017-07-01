@@ -672,12 +672,12 @@ def TSF_Forth_pushFthe():    #TSFdoc:指定スタックからカードを表択�
 
 def TSF_Forth_pushFthis():    #TSFdoc:実行中スタックから表択でカードを差込。1枚[push]ドロー。
 #    TSF_Forth_push(TSF_Forth_drawthis(),-1,"",'F',TSF_Forth_drawthe())
-    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthis())
+    TSF_Forth_return(TSF_Forth_drawthis(),TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_pushFthat():    #TSFdoc:積込先スタックから表択でカードを差込。1枚ドローするが、実質同じガードがリターンするので変化無し。
 #    TSF_Forth_push(TSF_Forth_drawthat(),-1,"",'F',TSF_Forth_drawthe())
-#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthat())
+#    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthe())
     return ""
 
 def TSF_Forth_pushFthey():    #TSFdoc:スタック一覧から表択でカードを差込。1枚[push]ドロー。

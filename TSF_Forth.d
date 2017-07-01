@@ -630,6 +630,7 @@ void TSF_Forth_returnQIRH(string[] TSF_pulllist){    //#TSFdoc:peek,pullの共�
     TSF_Forth_return(TSF_Forth_drawthat(),to!string(TSF_pulllist.length));
 }
 
+/*
 string TSF_Forth_peekF(string TSF_the){    //#指定スタックから表択でカードを読込(TSFAPI)。
     string TSF_pull="";
     if( (TSF_the in TSF_stackD)&&(0<TSF_stackD[TSF_the].length) ){
@@ -741,6 +742,93 @@ string TSF_Forth_pushFthey(){    //#TSFdoc:スタック一覧に最後尾スタ�
         TSF_stackO~=[TSF_push];
         TSF_stackD[TSF_push]=null;
     }
+    return "";
+}
+*/
+
+string TSF_Forth_peekFthe(){    //#TSFdoc:指定スタックから表択でカードを読込。1枚[the]ドローして1枚[peek]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_peekFthis(){    //#TSFdoc:実行中スタックから表択でカードを読込。0枚[]ドローして1枚[peek]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthis(),-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_peekFthat(){    //#TSFdoc:積込先スタックから表択でカードを読込。0枚[]ドローして1枚[peek]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthat(),-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_peekFthey(){    //#TSFdoc:スタック一覧から表択でカードを読込。0枚[]ドローして1枚[peek]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek("",-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_pokeFthe(){    //#TSFdoc:指定スタックからカードを表択で上書。2枚[poke,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_poke(TSF_the,-1,"",'F',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthis(){    //#TSFdoc:実行中スタックから表択でカードを上書。1枚[poke]ドロー。
+    TSF_Forth_poke(TSF_Forth_drawthis(),-1,"",'F',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthat(){    //#TSFdoc:積込先スタックから表択でカードを上書。1枚[poke]ドロー。
+    TSF_Forth_poke(TSF_Forth_drawthat(),-1,"",'F',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pokeFthey(){    //#TSFdoc:スタック一覧から表択でカードを上書。1枚[poke]ドロー。
+    TSF_Forth_poke("",-1,"",'F',TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pullFthe(){    //#TSFdoc:指定スタックから表択でカードを引抜。1枚[the]ドローして1枚[pull]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthe(),-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_pullFthis(){    //#TSFdoc:実行中スタックから表択でカードを引抜。0枚[]ドローして1枚[pull]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthis(),-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_pullFthat(){    //#TSFdoc:積込先スタックから表択でカードを引抜。リターンすると引抜にならないので例外的にリターンされない。
+//    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthat(),-1,"",'F'));
+    TSF_Forth_draw(TSF_Forth_drawthat());
+    return "";
+}
+
+string TSF_Forth_pullFthey(){    //#TSFdoc:スタック一覧から表択でカードを引抜。0枚[]ドローして1枚[pull]リターン。
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull("",-1,"",'F'));
+    return "";
+}
+
+string TSF_Forth_pushFthe(){    //#TSFdoc:指定スタックからカードを表択で差込。2枚[push,the]ドロー。pushFは例外的に存在しないスタックにも直接pushできる。
+//    TSF_Forth_push(TSF_the,-1,"",'F',TSF_Forth_drawthe());
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_return(TSF_the,TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pushFthis(){    //#TSFdoc:実行中スタックから表択でカードを差込。1枚[push]ドロー。
+//    TSF_Forth_push(TSF_Forth_drawthis(),-1,"",'F',TSF_Forth_drawthe());
+    TSF_Forth_return(TSF_Forth_drawthis(),TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pushFthat(){    //#TSFdoc:積込先スタックから表択でカードを差込。1枚ドローするが、実質同じガードがリターンするので変化無し。
+//    TSF_Forth_push(TSF_Forth_drawthat(),-1,"",'F',TSF_Forth_drawthe());
+//    TSF_Forth_return(TSF_Forth_drawthat(),TSF_Forth_drawthe());
+    return "";
+}
+
+string TSF_Forth_pushFthey(){    //#TSFdoc:スタック一覧から表択でカードを差込。1枚[push]ドロー。
+    TSF_Forth_push("",-1,"",'F',TSF_Forth_drawthe());
     return "";
 }
 
@@ -1218,7 +1306,6 @@ char TSF_Forth_style(string TSF_the, ...){    //#TSFdoc:スタックの表示ス
             }
             else if( _arguments[0]==typeid(string) ){
                 string TSF_stylestr=va_arg!(string)(_argptr);
-//                if( TSF_stylestr.length>0 ){ TSF_styleD[TSF_the]=TSF_stylestr[0]; }.front
                 if( TSF_stylestr.length>0 ){ TSF_styleD[TSF_the]=to!char(TSF_stylestr.front); }
             }
         }
