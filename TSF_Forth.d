@@ -471,66 +471,73 @@ long[] TSF_Forth_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char T
     long[] TSF_Plist=[];
     long TSF_cardsL=0;
     if( TSF_the!="" ){
-        if( TSF_the in TSF_Forth_stackD() ){
-            TSF_cardsL=TSF_Forth_stackD()[TSF_the].length;
-            if( 0<TSF_cardsL ){
-                switch( TSF_FNCMVAQIRHL ){
-                    case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
-                    case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-                    case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
-                    case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
-                    case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
-                    case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)];   break;
-                    case 'Q':
-                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
-                            if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
-                        }
-                    break;
-                    case 'I':
-                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
-                            if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
-                        }
-                    break;
-                    case 'R':
-                        foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
-                            if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
-                        }
-                    break;
-                    case 'H':  break;
-                    case 'L':  break;
-                    default:  break;
+        TSF_cardsL=(TSF_the in TSF_stackD)?TSF_stackD[TSF_the].length:0;
+        switch( TSF_FNCMVAQIRHL ){
+            case 'F':  if( 0<TSF_cardsL ){ TSF_Plist~=[TSF_cardsL-1]; }  break;
+            case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
+            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))]; }  break;
+            case 'M':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))]; }  break;
+            case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+            case 'A':  if( 0<TSF_cardsL ){ TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)]; }   break;
+            case 'Q':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackD[TSF_the]){
+                        if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
                 }
-            }
+            break;
+            case 'I':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackD[TSF_the]){
+                        if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                }
+            break;
+            case 'R':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackD[TSF_the]){
+                        if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
+                    }
+                }
+            break;
+            case 'H':  break;
+            case 'L':  break;
+            default:  break;
         }
     }
     else{
-        TSF_cardsL=TSF_Forth_stackO().length;
-        if( 0<TSF_cardsL ){
-            switch( TSF_FNCMVAQIRHL ){
-                case 'F':  TSF_Plist~=[TSF_cardsL-1];   break;
-                case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-                case 'C':  TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))];   break;
-                case 'M':  TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))];   break;
-                case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
-                case 'A':  TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)];   break;
-                case 'Q':
-                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+        TSF_cardsL=TSF_stackO.length;
+        switch( TSF_FNCMVAQIRHL ){
+            case 'F':  if( 0<TSF_cardsL ){ TSF_Plist~=[TSF_cardsL-1]; }  break;
+            case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
+            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))]; }  break;
+            case 'M':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))]; }  break;
+            case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
+            case 'A':  if( 0<TSF_cardsL ){ TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)]; }   break;
+            case 'Q':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackO){
                         if( TSF_seek==TSF_card ){ TSF_Plist~=[TSF_peekreg]; }
                     }
-                break;
-                case 'I':
-                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackD()[TSF_the]){
+                }
+            break;
+            case 'I':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackO){
                         if( count(TSF_card,TSF_seek) ){ TSF_Plist~=[TSF_peekreg]; }
                     }
-                break;
-                case 'R':  break;
-                    foreach(size_t TSF_peekreg,string TSF_card;TSF_Forth_stackO()){
+                }
+            break;
+            case 'R':
+                if( 0<TSF_cardsL ){
+                    foreach(size_t TSF_peekreg,string TSF_card;TSF_stackO){
                         if( match(TSF_card,regex(TSF_seek,"m")) ){ TSF_Plist~=[TSF_peekreg]; }
                     }
-                case 'H':  break;
-                case 'L':  break;
-                default:  break;
-            }
+                }
+            break;
+            case 'H':  break;
+            case 'L':  break;
+            default:  break;
         }
     }
     return TSF_Plist;
