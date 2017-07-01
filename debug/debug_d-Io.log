@@ -8,20 +8,6 @@ TSF_debug_tsv:
 	helloワールド咖喱
 	csv&tab;tsv&tab;LTSV&tab;L:Tsv&tab;TSF
 	csv	tsv	LTSV	L:Tsv	TSF
-	11
-	5
-	this:Peek
-	Peek
-	this:Peek	poked	the:Pull	they:Push
-	this:Peek	that:poked	the:Pull	they:Push
-	this:Peek	that:Poke	the:Pull	they:Push
-	this:Peek	that:Poke	they:Push
-	this:Peek	that:Poke	they:Push
-	pushed	this:Peek	that:Poke	the:Pull	they:Push
-	this:Peek	that:Poke	the:Pull	pushed	they:Push
-	this:Peek	that:Poke	the:Pull	they:Push	pushed
-	this:Peek	that:Poke	the:Pull	they:pushed
-	this:Peek	that:Poke	the:Pull	they:Push	cards:pushed
 TSF_debug_rpn:
 	0	0
 	0.0	0
