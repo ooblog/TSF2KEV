@@ -22,7 +22,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170528U134416	modify:20170630F051340(執筆途中です)<br>
+   version(branch):20170528U134416	modify:20170703M002638(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
@@ -114,7 +114,7 @@
    dmd TSF.d TSF_Io.d TSF_Forth.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
    </code></pre>
   <p>
-   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「/root/my-applications/bin/TSF」など)にコピーするとLinuxの場合「*.tsf」が実行できるようになるはずです。<br>
+   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「~/my-applications/bin」など)にコピーすると「*.tsf」が実行できるようになるはずです。<br>
   </p>
   <dl><dt>env - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Env" title="env - Wikipedia">https://ja.wikipedia.org/wiki/Env</a></dd></dl>
   <dl><dt>シバン (Unix) - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)" title="シバン (Unix) - Wikipedia">https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)</a></dd></dl>
@@ -303,6 +303,7 @@
   <dl><dt>「C」Cycle(周択カード)</dt>
   <dd>
    順択「N」の指定枚数がスタックのカード枚数を上回る(下回る)場合、ゼロから数え直します。いわゆるmod演算子の要領。<br>
+   周択ではマイナス1の時は表択になり以下逆順+1になるので注意。<br>
   </dd></dl>
   <dl><dt>「M」liMit(囲択カード)</dt>
   <dd>
@@ -362,16 +363,16 @@
  <section>
   <h2 id="api-0">②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。</h2>
    <dl><dt>TSF_sample_help()</dt><dd>「sample_help.tsf」コマンド版「TSF --help」。<br>ファイル名などのパラメーターが無い場合にもコマンド一覧が表示される。<br></dd></dl>
-   <dl><dt>TSF_sample_Helloworld()</dt><dd>「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「"Hello world #TSF_echo」のみ。「#TSF_fin.」の省略テストも兼用。<br></dd></dl>
-   <dl><dt>TSF_sample_TSFdoc()</dt><dd>「TSFdoc.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_about()</dt><dd>「sample_aboutTSF.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_RPN()</dt><dd>「sample_RPN.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_calc()</dt><dd>「sample_calc.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_calcJA()</dt><dd>「sample_calcJA.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_calender()</dt><dd>「sample_calender.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_FizzBuzz()</dt><dd>「sample_fizzbuzz.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_99beer()</dt><dd>「sample_99beer.tsf」コマンド版。</dd></dl>
-   <dl><dt>TSF_sample_quine()</dt><dd>「sample_quine.tsf」コマンド版。</dd></dl>
+   <dl><dt>TSF_sample_Helloworld()</dt><dd>「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「#TSF_fin.」の省略テストも兼用なので「"Hello world #TSF_echo」のみ。<br></dd></dl>
+   <dl><dt>TSF_sample_TSFdoc()</dt><dd>「TSFdoc.tsf」コマンド版「TSF --doc」。<br>「sample/README.tsf」や「docs/TSFindex.tsf」が呼び出すTSFdocは「sample/TSFdoc.tsf」なので注意<br>(コマンドとして内蔵のTSFdocなどはD言語やPythonなのでTSFから呼び出せない)。<br></dd></dl>
+   <dl><dt>TSF_sample_about()</dt><dd>「sample_aboutTSF.tsf」コマンド版「TSF --about」。<br>TSF言語の簡易説明。<br></dd></dl>
+   <dl><dt>TSF_sample_RPN()</dt><dd>「sample_RPN.tsf」コマンド版「TSF --RPN [1,3/m1|2-]」。<br>後置記法(逆ポーランド記法)による括弧を使わない電卓。結果は小数。<br></dd></dl>
+   <dl><dt>TSF_sample_calc()</dt><dd>「sample_calc.tsf」コマンド版「TSF --calc [1/3-m1|2]」。<br>中置記法による括弧を用いる電卓。結果は分数。<br></dd></dl>
+   <dl><dt>TSF_sample_calcJA()</dt><dd>「sample_calc.tsf」コマンド版「TSF --calc [一割る三引くマイナス二分の一]」。<br>中置記法による括弧を用いる電卓。結果は漢数字(〇一二三四五六七八九の表示はアラビア数字も用いる)。<br></dd></dl>
+   <dl><dt>TSF_sample_calender()</dt><dd>「sample_calender.tsf」コマンド版「TSF --calender」。<br>現在時刻を「@4y@0m@0dm@wdec@0h@0n@0s」形式で表示(@wdecは曜日MTWRFSU表記)。<br></dd></dl>
+   <dl><dt>TSF_sample_FizzBuzz()</dt><dd>「sample_fizzbuzz.tsf」コマンド版「TSF --fizzbuzz [20]」。<br>3の倍数の時はFizz、5の倍数の時はBuzzを表示する。<br></dd></dl>
+   <dl><dt>TSF_sample_99beer()</dt><dd>「sample_99beer.tsf」コマンド版「TSF --99bear [9]」。<br>99 Bottles of Beer(http://99-bottles-of-beer.net/lyrics.html)を出力する。長いので初期値は9に設定。</dd></dl>
+   <dl><dt>TSF_sample_quine()</dt><dd>「sample_quine.tsf」コマンド版「TSF --quine」。<br>「sample_quine.tsf」は「sample_quine.tsf」自身を出力する。<br>同様に「trans_quine.d」の時は「trans_quine.d」、「trans_quine.py」の時は「trans_quine.py」を出力する。<br>コマンド「TSF --quine」時も「sample_quine.tsf」を出力。<br></dd></dl>
  </section>
  <section>
   <h2 id="faq-0">⑩-0．「TSF」のＦＡＱ。</h2>

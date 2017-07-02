@@ -29,7 +29,10 @@ TSFdocs_tags:
 	{?&asterisk}	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H3}	{?H3}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{@sample_aboutTSF.tsf}
 	{$A_LTsv10kanedit_text}	{$A_LTsv10kanedit_href}	{$A_LTsv10kanedit_title}	{?A_LTsv10kanedit}
-	{$A_LTsv10kev_text}	{$A_LTsv10kev_href}	{$A_LTsv10kev_title}	{?A_LTsv10kev}
+	{$A_HSP_text}	{$A_HSP_href}	{$A_HSP_title}	{?A_HSP}
+	{$A_BaCon_text}	{$A_BaCon_href}	{$A_BaCon_title}	{?A_BaCon}
+	{$A_Python_text}	{$A_Python_href}	{$A_Python_title}	{?A_Python}
+	{$A_D言語_text}	{$A_D言語_href}	{$A_D言語_title}	{?A_D言語}
 	{$A_TSF2kanedit_text}	{$A_TSF2kanedit_href}	{$A_TSF2kanedit_title}	{?A_TSF2kanedit}
 	{$A_TSF1KEV_text}	{$A_TSF1KEV_href}	{$A_TSF1KEV_title}	{?A_TSF2KEV}
 	{$A_syntaximage_title}	{$A_syntaximage_img}	{$A_syntaximage_href}	{$A_syntaximage_text}	{?A_syntaximage}
@@ -65,8 +68,8 @@ TSFdocs_tags:
 	{?H2}言語が生まれた経緯。{?/H2}
 	{?P}
 	漢直(漢字直接入力)の漢字配列やkan5x5フォントのグリフエディタの単漢字辞書など漢字データ管理でTSV(LTSVを更にアレンジしたL:Tsv)を用いてました(「{?A_LTsv10kanedit}」を参考)。{?BR}
-	HSP→BaCon→Pythonで何度か作り直す紆余曲折を経て今度はD言語で作り直す流れでしたが、言語の変更が強いられる度に一から作り直すのはしんどい。{?BR}
-	なので、TSVにデータ(プログラム含む)を入力するだけで動作するアプリ的なモノが欲しくなったので開発中です。{?BR}
+	実装を{?A_HSP}→{?A_BaCon}→{?A_Python}で何度か作り直す紆余曲折を経て今度は{?A_D言語}で作り直す流れでしたが、言語の変更が強いられる度に一から作り直すのはしんどい。{?BR}
+	なので、TSVにデータ(プログラム含む)を入力するだけで動作するスクリプトが欲しくなったので開発中です。{?BR}
 	プログラム本体をTSFで作れば、OSや言語などの環境差異はTSF実装の方で吸収させるという戦法を想定。{?BR}
 	当面の目標は「{?A_TSF2kanedit}」のような漢直をVimスクリプトの力を借りずに使わずに「TSF」だけで動かす事。{?BR}
 	{?/P}
@@ -79,28 +82,19 @@ TSFdocs_tags:
 	{?CODE}
 	{@sample_aboutTSF.tsf}
 	{?/CODE}
-	{?H3}「TSF --about」の「RPN」「Calc」テスト部分の抜粋。{?/H3}
-	{?CODE}
-	{?INDENT}▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→p0.833333
-	{?INDENT}▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→p0.833333
-	{?INDENT}▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→p5|6
-	{?INDENT}▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→p5|6
-	{?INDENT}▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→p5|6
-	{?INDENT}▽漢数字テスト「億千万」を「#TSF_calcJA」→1億1000万円
-	{?INDENT}▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→2017年06月19日(月)02時42分14秒
-	{?/CODE}
-	{?H2}TSF2KEVで未実装な箇所など(ToDoリスト風)。{?/H2}
+	{?H2}TSF2KEVで未実装な箇所や気が付いたバグやドキュメント未整備な箇所など(ToDoリスト風)。{?/H2}
 	{?P}
-	☐PPPP処理が「TSF_Io_separate&#42;」に残存してるので「TSF_Forth.{?&asterisk}」に一本化したい(工事中)。{?BR}
-	☐HTML版ドキュメント「{?A_TSF2KEV}」の整備を進めて「TSF --about」の簡易解説やこの「README.md」自体ももっとコンパクトにすべき。{?BR}
+	☐構文をよりシンプルにするため「#TSF_echo」を「#!echo」のようにシバンに統一させるか検討中(#!関数カードと同名のスタック名を回避させる目的)。{?BR}
 	☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
 	☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。{?BR}
 	☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。{?BR}
 	☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限初期値256)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
+	☑PPPP処理を「TSF_Forth.{?&asterisk}」に一本化。スタックやデッキ(文字列リスト)の処理が複数モジュールにまたがるとスコープの問題で言語の組み込み関数で直接編集できなくなるため。{?BR}
 	☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。{?BR}
 	☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。{?BR}
 	☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。{?BR}
 	☐「#TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。{?BR}
+	☐「#TSF_calc」で「(1/3)-(m1|2)」の様に括弧で負数を囲むと符号反転に失敗する。{?BR}
 	☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
 	☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
 	☐「tan(θ{?&asterisk}90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}
@@ -108,6 +102,7 @@ TSFdocs_tags:
 	☐Calcの動作がそもそも重いorz{?BR}
 	☐D言語で現在時刻(StopWatchではなく「現在時刻」)のミリ秒以下を取得する方法が不明oxL ので「@ls」「@rs」系が0を返す。{?BR}
 	☐TSFにはまだ直接関係しないKEV(漢直)の話だけど、操作性を簡潔にするためα鍵盤を廃止して一文字検索と辞書変更のみのスマートな仕様にしたい。{?BR}
+	☐「TSF --about」の簡易説明では漢直方面に触れられないのでHTML版ドキュメント「{?A_TSF2KEV}」の整備をもっと強化。{?BR}
 	{?/P}
 	{?H2}動作環境(開発環境)。{?/H2}
 	{?P}
@@ -139,14 +134,38 @@ TSFdocs_tags:
 	https://github.com/ooblog/LTsv10kanedit
 {$A_LTsv10kanedit_title}
 	ooblog/LTsv10kanedit: 「L:Tsv」の読み書きを中心としたモジュール群と漢字入力「kanedit」のPythonによる実装です(準備中)。
-{?A_LTsv10kev}
-	[{$A_LTsv10kev_text}]({$A_LTsv10kev_href} "{$A_LTsv10kev_title}")	<a href="{$A_LTsv10kev_href}" title="{$A_LTsv10kev_title}">{$A_LTsv10kev_text}</a>
-{$A_LTsv10kev_text}
-	LTsv/kanedit.vim
-{$A_LTsv10kev_href}
-	https://github.com/ooblog/LTsv10kanedit/blob/master/LTsv/kanedit.vim
-{$A_LTsv10kev_title}
-	LTsv/kanedit.vim at master ooblog/LTsv10kanedit
+{?A_HSP}
+	[{$A_HSP_text}]({$A_HSP_href} "{$A_HSP_title}")	<a href="{$A_HSP_href}" title="{$A_HSP_title}">{$A_HSP_text}</a>
+{$A_HSP_text}
+	HSP
+{$A_HSP_href}
+	http://hsp.tv/
+{$A_HSP_title}
+	HSPTV!（HSP( Hot Soup Processor )ソフトウェアの配布）
+{?A_BaCon}
+	[{$A_BaCon_text}]({$A_BaCon_href} "{$A_BaCon_title}")	<a href="{$A_BaCon_href}" title="{$A_BaCon_title}">{$A_BaCon_text}</a>
+{$A_BaCon_text}
+	BaCon
+{$A_BaCon_href}
+	http://www.basic-converter.org/
+{$A_BaCon_title}
+	BaCon - BASIC to C converter
+{?A_Python}
+	[{$A_Python_text}]({$A_Python_href} "{$A_Python_title}")	<a href="{$A_Python_href}" title="{$A_Python_title}">{$A_Python_text}</a>
+{$A_Python_text}
+	Python
+{$A_Python_href}
+	https://www.python.org/
+{$A_Python_title}
+	Welcome to Python.org
+{?A_D言語}
+	[{$A_D言語_text}]({$A_D言語_href} "{$A_D言語_title}")	<a href="{$A_D言語_href}" title="{$A_D言語_title}">{$A_D言語_text}</a>
+{$A_D言語_text}
+	D言語
+{$A_D言語_href}
+	https://dlang.org/
+{$A_D言語_title}
+	Home - D Programming Language
 {?A_TSF2kanedit}
 	[{$A_TSF2kanedit_text}]({$A_TSF2kanedit_href} "{$A_TSF2kanedit_title}")	<a href="{$A_TSF2kanedit_href}" title="{$A_TSF2kanedit_title}">{$A_TSF2kanedit_text}</a>
 {$A_TSF2kanedit_text}

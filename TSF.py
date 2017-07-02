@@ -42,12 +42,12 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版「TSF --h
 #        "  --fibonacci   Fibonacci number 0,1,1,2,3,5,8,13,21,55... sample",
 #        "  --prime       prime numbers 2,3,5,7,11,13,17,19,23,29... sample",
 
-def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「"Hello world #TSF_echo」のみ。「#TSF_fin.」の省略テストも兼用。<br>
+def TSF_sample_Helloworld():    #TSFdoc:「sample_helloworld.tsf」コマンド版「TSF --helloworld」。<br>「#TSF_fin.」の省略テストも兼用なので「"Hello world #TSF_echo」のみ。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "Hello world","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_Helloworld")
 
-def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版。
+def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版「TSF --doc」。<br>「sample/README.tsf」や「docs/TSFindex.tsf」が呼び出すTSFdocは「sample/TSFdoc.tsf」なので注意<br>(コマンドとして内蔵のTSFdocなどはD言語やPythonなのでTSFから呼び出せない)。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","#TSF_peekFthat","#TSF_existfile","[0]Z~TSFdocs_help:~TSFdocs_merge:","#TSF_join[]","#TSF_calc","#TSF_this","#TSF_fin.","README.tsf"]),'T')
     TSF_Forth_setTSF("TSFdocs_help:","\t".join([
@@ -62,7 +62,7 @@ def TSF_sample_TSFdoc():    #TSFdoc:「TSFdoc.tsf」コマンド版。
         "TSF_carbondoc:","TSF_carbontags:","#TSF_pullFthe","#TSF_peekFthat","TSFdocs_files:","#TSF_lenthe","#TSF_peekMthe","#TSF_calender","#TSF_docsQ","TSF_carbontags:","#TSF_lenthe","[0]Z~#!exit:~TSFtags_loop:","#TSF_join[]","#TSF_calc","#TSF_this"]),'T')
     TSF_Forth_samplerun("TSF_sample_TSFdoc")
 
-def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
+def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版「TSF --about」。<br>TSF言語の簡易説明。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "echoTSF:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("echoTSF:","\t".join([
@@ -74,61 +74,50 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "　Forth風インタプリタ。単位はtsv文字列。文字列の事をカードと呼称。カードの束をスタックと呼称。スタックの集まりをデッキと呼称。",
         "　文字から始まる行はスタック名。タブで始まる行はカードの束。シバン「#!」で始まる行(改行のみの行含む)はコメント扱いで読み飛ばし。",
         "",
-        "○TSF構文には4つの「th」、スタック代名詞「this」「that」「the」「they」が存在。",
+        "○TSF構文には4つの「th」スタック代名詞(冠詞含む)「this」「that」「the」「they」が存在。",
         "",
         "　「this」は実行中のスタック。#関数カードの指示通りにカードを「ドロー(積み下ろし)」したり「リターン(積み上げ)」したりする。",
         "　「that」は積込先のスタック。#関数カードの返り値や#関数カード以外のカードが積み上げられる。",
-        "　「the」は指定スタック。変数や配列やテキスト保存先として扱ってるスタックが一時的に呼び出される場合の文字通り代名詞。",
-        "　「they」はスタック名一覧。スタック名一覧自体もカード束としてスタックの様に扱える場合がある。",
+        "　「the」は指定スタック。変数や配列やテキスト保存先として扱いたいスタックを一時的に呼び出す。",
+        "　「they」はスタック名一覧。新規スタック作成や既存スタック削除の時、スタック名一覧自体をスタックの様に扱って整理する事もできる。",
         "",
-        "○TSF構文のスタック操作に4つの「p」、スタック動詞「peek」「poke」「pull」「push」が存在する。",
+        "○TSF構文のスタック操作には4つの「p」スタック動詞「peek」「poke」「pull」「push」が存在。",
         "",
-        "　「peek」スタックからカードを読み込む。読込先スタックはそのままに「that」スタックにカードが積まれるのでカードが増殖る形になる。",
+        "　「peek」スタックからカードを読み込む。読込先スタックはそのままに「that」スタックにカードが積まれるのでカードが増殖する形になる。",
         "　「poke」スタックにカードを書き込む。スタックのカードは上書きされるので上書きされたカードが消失する形になる。",
-        "　「pull」スタックからカードを引き抜く。引抜先スタックから「that」スタックにカードが移動する形になる。",
-        "　「push」スタックにカードを差し込む。引抜先スタックに「that」スタックからカードが移動する形になる。",
+        "　「pull」スタックからカードを引き抜く。通常は引抜先スタックから「that」スタックにカードが移動する形になる。",
+        "　「push」スタックにカードを差し込む。通常は引抜先スタックに「that」スタックからカードが移動する形になる。",
         "",
-        "○TSF構文の副詞「FNCMVAQIRHL」と数量詞「SDO」などの説明は省略。",
+        "○TSF構文の副詞「FNCMVAQIRHL」と可算名詞「SDO」などの説明はaboutでは簡略。",
         "",
-        "　※#関数カードの、ドロー(積み下ろし)は「pullFthat」リターン(積み上げ)は「pushFthat」してるとも言える。",
+        "　#関数カードの、ドロー(積み下ろし)は「pullFthat」リターン(積み上げ)は「pushFthat」してるとも言える。",
+        "　代名詞と動詞の間にある「F」などが副詞。スタックに最後に積まれたカード、表面カードを選択するので表択。",
+        "　「peekNthe」等の「N」は積まれた順に番号を割り振り番号で読込カード指定するので順択、というようにどのカードをppppするのか明記します。",
         "",
-        "○TSFの式の解説前にとりあえず分数計算や漢数字のテストなど。",
+        "○TSF式として2種類の電卓「#TSF_RPN」「#TSF_calc」が存在。",
+        "　calcでは括弧や分数なども使えます。RPNは括弧を処理しない上に小数のみなので高速です。",
+        "　calcの括弧内外でRPNを使う事は可能です。コンマ「,」を用いるとRPNとみなされます。",
+        "　TSFには変数がないので「#TSF_joinN」「#TSF_join[]」などを用いてカードを連結して式文字列を作ります。",
         ""]),'N')
     TSF_Forth_setTSF("echoRPNcalc:","\t".join([
         "aboutRPNtest:","#TSF_this","aboutRPNcalc:","#TSF_argvsthe","#TSF_echoN","echoURL:","#TSF_this"]),'T')
     TSF_Forth_setTSF("aboutRPNtest:","\t".join([
-        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結して「#TSF_RPN」→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結して「#TSF_RPN」→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結して「#TSF_calc」→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結して「#TSF_calc」→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽スタックからショートカットで「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2] を「#TSF_calc」→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「億千万」を「#TSF_calcJA」→","億千万","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽漢数字テスト「六分の五」を「#TSF_calcJA」→","６分の５","#TSF_calcJA","2","#TSF_joinN","#TSF_echo","▽日時テスト「@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒」を「#TSF_calender」→","@4y年@0m月@0dm日(@wdj)@0h時@0n分@0s秒","#TSF_calender","2","#TSF_joinN","#TSF_echo"]),'T')
+        "▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結した「1,3/m1|2-」を「#TSF_RPN」電卓→","1","3","m1|2","[2],[1]/[0]-","#TSF_join[]","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結した「1,3/m1|2-」を「#TSF_RPN」電卓→","1",",","3","/","m1|2","-","6","#TSF_joinN","#TSF_RPN","2","#TSF_joinN","#TSF_echo","▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結した「1/3-m1|2」を「#TSF_calc」電卓→","1","3","m1|2","[2]/[1]-[0]","#TSF_join[]","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結した「1/3-m1|2」を「#TSF_calc」電卓→","1","/","3","-","m1|2","5","#TSF_joinN","#TSF_calc","2","#TSF_joinN","#TSF_echo","▽「#TSF_calc」のショートカット文法で「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]」(演算内容は「1/3-m1|2」)→","[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]","#TSF_calc","2","#TSF_joinN","#TSF_echo"]),'T')
     TSF_Forth_setTSF("aboutCALCdata:","\t".join([
         "1","3","m1|2"]),'T')
     TSF_Forth_setTSF("aboutRPNcalc:","\t".join([
         "",
-        "○「#TSF_RPN」逆ポーランド小数電卓の概要。",
-        "",
-        "　TSFの数式に高速処理を目指すRPNと多機能を備えるcalcの2種類の電卓を用意。",
-        "　RPNでは「1+2」は「1,2+」になる。数値同士はコンマで区切る。掛け算が先に演算されるなど優先順序が存在する数式は「calc」を使う。",
-        "　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。「1-(-2)」も「1,m2-」と表記する。",
-        "　演算子の「/」と分数の「|」も分けて表記。分数二分の一「1|2」は小数「0.5」だが１÷２の割り算として表現する場合は「1,2/」と表記する。",
-        "　通常の割り算の他にも1未満を切り捨てる「\\」、余りを求める「#」がある。マイナス剰余は「5#m4」だと「4-(5#4)」のように計算する。",
-        "　計算結果が整数になる場合、および小数の丸めで整数になってしまった場合は整数表記になる。",
-        "　RPNではゼロ「0|1」で割った時は分母ゼロ「n|0」を出力して終了。計算続行はされないので注意。",
-        "　「Z」はゼロ比較演算子(条件演算子)。「1,2,0Z」はゼロの時は真なので左の数値(1)、ゼロでない時は偽なので右の数値(2)を採用。",
-        "　「O」「o」「U」「u」も同様に、ゼロ以上(ゼロ含む)、ゼロより大きい、ゼロ以下(ゼロ含む)、ゼロ未満で左右の数値を選択。",
-        "　条件演算子とスタック名(演算を抑止する「:」演算子)を組み合わせる事で、「#TSF_this」に渡すスタック名を分岐できます(IF構文の代替)。",
-        "",
-        "○「#TSF_calc」系分数電卓の概要(RPNと共通する内容は圧縮)。",
-        "",
-        "　calcは括弧や分数なども使えます。RPN電卓も混在できます。分数を用いる事で桁溢れや丸め誤差をなるだけ回避する事を目標とします。",
-        "　分数を小数に変換するには「,(1|3)」のように括弧の外側でコンマを使う事でcalcの計算結果をRPNで処理する形になります。",
-        "　calcではRPNとは事なり、括弧が無くても「小数の分数化＞掛け算系＞足し算系＞条件演算子」のような計算順序が存在します。",
-        "　calcでは式に直接スタック名を「[data:2]/[data:1]-[data:0]」できるので、「#TSF_peekNthe」「#TSF_join[]」をショートカットできます。",
-        "　スタック名ショートカット実現のため「Z~」「z~」「O~」「o~」「U~」「u~」「N~」と条件演算子にチルダ追加。「N~」は「n|0」のチェック用途。",
-        "　「#TSF_-calc」を用いると計算結果の符号を「p」「m」から「-」のみに変更できる。",
-        "　「#TSF_calcJA」を用いると億千万円銭など通貨的な助数詞を扱う。100分の1(％)は「銭」、1000分の1(‰)は「厘」表記、1万分の1(‱)は「毛」表記。",
+        "○「#TSF_RPN」と「#TSF_calc」の共通点や差異の補足。",
+        "　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。割り算の「/」と分数の「|」も分けて表記。",
+        "　calcの出力結果は基本分数ですが、「,(1|3)」のように括弧の外側でコンマを使う事で計算結果をRPNに渡す事ができます。",
+        "　条件演算子がRPNでは「Z」「z」「O」「o」「U」「u」ですがcalcでは「Z~」「z~」「O~」「o~」「U~」「u~」「N~」とチルダ追加です。",
+        "　calcで追加した条件演算子「N~」は分母ゼロ「n|0」分岐用です。RPNではゼロ割り算発生時点で分母ゼロ「n|0」を出力します。",
+        "　calcには演算を抑止する「:」演算子が含まれてるので条件演算子の結果にスタック名を直接指定する事でIF構文の代替になります。",
         ""]),'N')
     TSF_Forth_setTSF("echoURL:","\t".join([
         "aboutURL:","#TSF_argvsthe","#TSF_echoN"]),'T')
     TSF_Forth_setTSF("aboutURL:","\t".join([
-        "○TSFの詳しい説明はローカルの「docs/index.html」かWeb上の「https://ooblog.github.io/TSF2KEV/」を確認してください。",
+        "○TSFの詳しい説明はローカルの「docs/index.html」かWeb上の「https://ooblog.github.io/TSF2KEV/」を確認してください(執筆中)。",
         "",
         "　Web版もTSF付属のローカル版も「docs/TSFindex.tsf」から「sample/TSFdoc.tsf」を用いて生成されてます。",
         "　TSFを用いると簡潔なプログラムが書けます。そしてこの「sample/sample_aboutTSF.tsf」文書自体もTSF言語で書かれてます。",
@@ -137,7 +126,7 @@ def TSF_sample_about():    #TSFdoc:「sample_aboutTSF.tsf」コマンド版。
         "#! License: MIT　https://github.com/ooblog/TSF2KEV/blob/master/LICENSE"]),'N')
     TSF_Forth_samplerun("TSF_sample_about")
 
-def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
+def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版「TSF --RPN [1,3/m1|2-]」。<br>後置記法(逆ポーランド記法)による括弧を使わない電卓。結果は小数。<br>
     TSF_Forth_setTSF("RPN:","\t".join([
         "#TSF_RPN","#TSF_echo"]),'T')
     TSF_Forth_setTSF("RPNsetup:","\t".join([
@@ -150,7 +139,7 @@ def TSF_sample_RPN():    #TSFdoc:「sample_RPN.tsf」コマンド版。
         "1,3/m1|2-","RPN:","#TSF_this"]),'T')
     TSF_Forth_samplerun("TSF_sample_RPN")
 
-def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版。
+def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版「TSF --calc [1/3-m1|2]」。<br>中置記法による括弧を用いる電卓。結果は分数。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "calcsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("calcsetup:","\t".join([
@@ -163,7 +152,7 @@ def TSF_sample_calc():    #TSFdoc:「sample_calc.tsf」コマンド版。
         "#TSF_calc","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_calc")
 
-def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
+def TSF_sample_calcJA():    #TSFdoc:「sample_calc.tsf」コマンド版「TSF --calc [一割る三引くマイナス二分の一]」。<br>中置記法による括弧を用いる電卓。結果は漢数字(〇一二三四五六七八九の表示はアラビア数字も用いる)。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "calcsetup:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("calcsetup:","\t".join([
@@ -172,14 +161,14 @@ def TSF_sample_calcJA():    #TSFdoc:「sample_calcJA.tsf」コマンド版。
         "1/3-m1|2"]),'N')
     TSF_Forth_samplerun("TSF_sample_calcJA")
 
-def TSF_sample_calender():    #TSFdoc:「sample_calender.tsf」コマンド版。
+def TSF_sample_calender():    #TSFdoc:「sample_calender.tsf」コマンド版「TSF --calender」。<br>現在時刻を「@4y@0m@0dm@wdec@0h@0n@0s」形式で表示(@wdecは曜日MTWRFSU表記)。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","calender:","#TSF_this","#TSF_fin.","@4y@0m@0dm@wdec@0h@0n@0s"]),'T')
     TSF_Forth_setTSF("calender:","\t".join([
         "#TSF_calender","#TSF_echo"]),'T')
     TSF_Forth_samplerun("TSF_sample_calender")
 
-def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版。
+def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版「TSF --fizzbuzz [20]」。<br>3の倍数の時はFizz、5の倍数の時はBuzzを表示する。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","FZcount:","#TSF_pushFthe","FBloop:","#TSF_this","#TSF_fin.","20"]),'T')
     TSF_Forth_setTSF("FBloop:","\t".join([
@@ -188,7 +177,7 @@ def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版�
         "0","Fizz","Buzz","Fizz&Buzz"]),'T')
     TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
-def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
+def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版「TSF --99bear [9]」。<br>99 Bottles of Beer(http://99-bottles-of-beer.net/lyrics.html)を出力する。長いので初期値は9に設定。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#TSF_argvs","#TSF_pullFthat","bottlessetup:","#TSF_this","#TSF_fin.","9"]),'T')
     TSF_Forth_setTSF("bottlessetup:","\t".join([
@@ -213,7 +202,7 @@ def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版。
         "Go to the store and buy some more, {buybottles} bottles of beer on the wall."]),'N')
     TSF_Forth_samplerun("TSF_sample_99beer")
 
-def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版。
+def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版「TSF --quine」。<br>「sample_quine.tsf」は「sample_quine.tsf」自身を出力する。<br>同様に「trans_quine.d」の時は「trans_quine.d」、「trans_quine.py」の時は「trans_quine.py」を出力する。<br>コマンド「TSF --quine」時も「sample_quine.tsf」を出力。<br>
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "quine_echo:","#TSF_this","#TSF_fin."]),'T')
     TSF_Forth_setTSF("quine_echo:","\t".join([

@@ -134,7 +134,7 @@ TSFdocs_tags:
 	   dmd TSF.d TSF_Io.d TSF_Forth.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
 	   {?/CODE}
 	  <p>
-	   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「/root/my-applications/bin/TSF」など)にコピーするとLinuxの場合「*.tsf」が実行できるようになるはずです。<br>
+	   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「~/my-applications/bin」など)にコピーすると「*.tsf」が実行できるようになるはずです。<br>
 	  </p>
 	  <dl><dt>env - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Env" title="env - Wikipedia">https://ja.wikipedia.org/wiki/Env</a></dd></dl>
 	  <dl><dt>シバン (Unix) - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)" title="シバン (Unix) - Wikipedia">https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)</a></dd></dl>
@@ -323,6 +323,7 @@ TSFdocs_tags:
 	  <dl><dt>「C」Cycle(周択カード)</dt>
 	  <dd>
 	   順択「N」の指定枚数がスタックのカード枚数を上回る(下回る)場合、ゼロから数え直します。いわゆるmod演算子の要領。<br>
+	   周択ではマイナス1の時は表択になり以下逆順+1になるので注意。<br>
 	  </dd></dl>
 	  <dl><dt>「M」liMit(囲択カード)</dt>
 	  <dd>
