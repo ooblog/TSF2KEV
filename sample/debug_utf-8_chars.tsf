@@ -1,6 +1,6 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	splittest:	#TSF_this	#TSF_fin.
+	splittest:	#!TSF_this	#!TSF_fin.
 splittest:
-	約四文字	#TSF_charslen	#TSF_echo
-	約四文字	#TSF_chars	#TSF_echoN
+	約四文字	#!TSF_charslen	#!TSF_echo
+	約四文字	#!TSF_chars	#!TSF_echoN

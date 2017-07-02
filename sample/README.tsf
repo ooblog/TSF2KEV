@@ -1,6 +1,6 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	TSFdoc.tsf	#TSF_runagain	#TSF_fin.
+	TSFdoc.tsf	#!TSF_runagain	#!TSF_fin.
 TSFdocs_files:
 	../README.md	../debug/README.html
 TSFdocs_basedocs:
@@ -18,13 +18,13 @@ TSFimport_ext:
 TSFimport_regex:
 	regex_TSF:	regex_none:
 regex_TSF:
-	regexTSF_reg:	regexTSF_txt:	#TSF_replacesRSN
+	regexTSF_reg:	regexTSF_txt:	#!TSF_replacesRSN
 regexTSF_reg:
 	^
 regexTSF_txt:
 	    
 regex_none:
-	#TSF_pullFthat
+	#!TSF_pullFthat
 TSFdocs_tags:
 	{?&asterisk}	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H3}	{?H3}	{?/H2}	{?H2}	{?/H1}	{?H1}
 	{@sample_aboutTSF.tsf}
@@ -62,7 +62,7 @@ TSFdocs_tags:
 	{?H2}TSF超ザックリ説明。{?/H2}
 	{?P}
 	TSFはForth風インタプリタです。CSV→TSV→TSF。{?BR}
-	構文は文字列をタブで区切るだけ(コメント行などでシバン「#!」を用いる程度)。{?BR}
+	構文は文字列をタブで区切るだけ(#!コメント行と#!関数カードでシバン「#!」を用いる程度)。{?BR}
 	{?A_syntaximage}{?BR}
 	{?/P}
 	{?H2}言語が生まれた経緯。{?/H2}
@@ -84,17 +84,14 @@ TSFdocs_tags:
 	{?/CODE}
 	{?H2}TSF2KEVで未実装な箇所や気が付いたバグやドキュメント未整備な箇所など(ToDoリスト風)。{?/H2}
 	{?P}
-	☐構文をよりシンプルにするため「#TSF_echo」を「#!echo」のようにシバンに統一させるか検討中(#!関数カードと同名のスタック名を回避させる目的)。{?BR}
-	☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。{?BR}
-	☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。{?BR}
-	☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。{?BR}
-	☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限初期値256)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
+	☑#!コメント行と#!関数カードの構文をシバンに統一してみたけど様子見。「#!TSF_*」の「TSF_」部分の省略は見送り。「GTK_」「DOM_」とかGUI関数と区別視認性の予感。{?BR}
+	☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#!TSF_countmax」(スタックのカード数え上げ枚数の上限初期値256)という安全装置は付けているけどいまいちスマートじゃない。{?BR}
 	☑PPPP処理を「TSF_Forth.{?&asterisk}」に一本化。スタックやデッキ(文字列リスト)の処理が複数モジュールにまたがるとスコープの問題で言語の組み込み関数で直接編集できなくなるため。{?BR}
-	☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。{?BR}
-	☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。{?BR}
 	☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。{?BR}
-	☐「#TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。{?BR}
-	☐「#TSF_calc」で「(1/3)-(m1|2)」の様に括弧で負数を囲むと符号反転に失敗する。{?BR}
+	☐浮動小数の丸め指示「#!TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。{?BR}
+	☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。{?BR}
+	☐「#!TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。{?BR}
+	☐「#!TSF_calc」で「(1/3)-(m1|2)」の様に括弧で負数を囲むと符号反転に失敗する。{?BR}
 	☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。{?BR}
 	☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。{?BR}
 	☐「tan(θ{?&asterisk}90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。{?BR}

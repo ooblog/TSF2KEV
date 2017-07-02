@@ -18,7 +18,7 @@ void main(string[] sys_argvs){
     TSF_Forth_mainfilepath(absolutePath(__FILE__));
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "Hello world","#TSF_echo"],"\t"),'T');
+        "Hello world","#!TSF_echo"],"\t"),'T');
 
     TSF_Forth_run();
 }

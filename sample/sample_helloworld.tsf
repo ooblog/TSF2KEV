@@ -1,3 +1,3 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	Hello world	#TSF_echo
+	Hello world	#!TSF_echo

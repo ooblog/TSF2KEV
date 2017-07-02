@@ -1,11 +1,11 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	shuffleclone:	#TSF_this	#TSF_fin.
+	shuffleclone:	#!TSF_this	#!TSF_fin.
 shuffleclone:
-	adverbclone:	adverb:	#TSF_clonethe	shufflestacks:	#TSF_pullFthe	#TSF_this
-	adverbclone:	#TSF_argvsthe	#TSF_reverseN	adverbclone:	#TSF_lenthe	 	#TSF_sandwichN	「#[2]」「[1]」「[0]」	#TSF_join[]	#TSF_echo
-#!	shufflestacks:	#TSF_lenthe	[0]o~shuffleclone:~#!exit:	#TSF_join[]	#TSF_calc	#TSF_this
-	shufflejump:	shufflestacks:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this
+	adverbclone:	adverb:	#!TSF_clonethe	shufflestacks:	#!TSF_pullFthe	#!TSF_this
+	adverbclone:	#!TSF_argvsthe	#!TSF_reverseN	adverbclone:	#!TSF_lenthe	 	#!TSF_sandwichN	「#[2]」「[1]」「[0]」	#!TSF_join[]	#!TSF_echo
+#!	shufflestacks:	#!TSF_lenthe	[0]o~shuffleclone:~#!exit:	#!TSF_join[]	#!TSF_calc	#!TSF_this
+	shufflejump:	shufflestacks:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this
 shufflejump:
 	#!exit:	shuffleclone:
 
@@ -20,24 +20,24 @@ shufflestacks:
 	pushN:	pullN:	pokeN:	peekN:
 	pushF:	pullF:	pokeF:	peekF:
 
-peekF:	TSF_peekFthe	adverbclone:	#TSF_peekFthe
-pokeF:	TSF_pokeFthe	$poke	adverbclone:	#TSF_pokeFthe	$poke
-pullF:	TSF_pullFthe	adverbclone:	#TSF_pullFthe
-pushF:	TSF_pushFthe	$push	adverbclone:	#TSF_pushFthe	$push
+peekF:	TSF_peekFthe	adverbclone:	#!TSF_peekFthe
+pokeF:	TSF_pokeFthe	$poke	adverbclone:	#!TSF_pokeFthe	$poke
+pullF:	TSF_pullFthe	adverbclone:	#!TSF_pullFthe
+pushF:	TSF_pushFthe	$push	adverbclone:	#!TSF_pushFthe	$push
 
-peekN:	TSF_peekNthe	adverbclone:	1	#TSF_peekNthe
-pokeN:	TSF_pokeNthe	$poke	adverbclone:	1	#TSF_pokeNthe	$poke
-pullN:	TSF_pullNthe	adverbclone:	1	#TSF_pullNthe
-pushN:	TSF_pushNthe	$push	adverbclone:	1	#TSF_pushNthe	$push
+peekN:	TSF_peekNthe	adverbclone:	1	#!TSF_peekNthe
+pokeN:	TSF_pokeNthe	$poke	adverbclone:	1	#!TSF_pokeNthe	$poke
+pullN:	TSF_pullNthe	adverbclone:	1	#!TSF_pullNthe
+pushN:	TSF_pushNthe	$push	adverbclone:	1	#!TSF_pushNthe	$push
 
-peekC:	TSF_peekCthe	adverbclone:	2	#TSF_peekCthe
-pokeC:	TSF_pokeCthe	$poke	adverbclone:	2	#TSF_pokeCthe	$poke
-pullC:	TSF_pullCthe	adverbclone:	2	#TSF_pullCthe
-pushC:	TSF_pushCthe	$push	adverbclone:	2	#TSF_pushCthe	$push
+peekC:	TSF_peekCthe	adverbclone:	2	#!TSF_peekCthe
+pokeC:	TSF_pokeCthe	$poke	adverbclone:	2	#!TSF_pokeCthe	$poke
+pullC:	TSF_pullCthe	adverbclone:	2	#!TSF_pullCthe
+pushC:	TSF_pushCthe	$push	adverbclone:	2	#!TSF_pushCthe	$push
 
-peekM:	TSF_peekMthe	adverbclone:	3	#TSF_peekMthe
-pokeM:	TSF_pokeMthe	$poke	adverbclone:	3	#TSF_pokeMthe	$poke
-pullM:	TSF_pullMthe	adverbclone:	3	#TSF_pullMthe
-pushM:	TSF_pushMthe	$push	adverbclone:	3	#TSF_pushMthe	$push
+peekM:	TSF_peekMthe	adverbclone:	3	#!TSF_peekMthe
+pokeM:	TSF_pokeMthe	$poke	adverbclone:	3	#!TSF_pokeMthe	$poke
+pullM:	TSF_pullMthe	adverbclone:	3	#!TSF_pullMthe
+pushM:	TSF_pushMthe	$push	adverbclone:	3	#!TSF_pushMthe	$push
 
 

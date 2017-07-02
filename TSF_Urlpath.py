@@ -9,20 +9,19 @@ from TSF_Forth import *
 def TSF_Urlpath_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Urlpath")
     TSF_Forth_cards={
-        "#TSF_fileext":TSF_Urlpath_fileext, "#ファイルの拡張子":TSF_Urlpath_fileext,
-        "#TSF_abspath":TSF_Urlpath_abspath, "#ファイルの絶対パス":TSF_Urlpath_abspath,
-        "#TSF_dirpath":TSF_Urlpath_dirpath, "#ファイルのディレクトリ":TSF_Urlpath_dirpath,
-        "#TSF_chpath":TSF_Urlpath_chpath, "#ディレクトリ移動":TSF_Urlpath_chpath,
-        "#TSF_basepath":TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":TSF_Urlpath_basepath,
-        "#TSF_existfile":TSF_Urlpath_existfile, "#ファイル名の有無":TSF_Urlpath_existfile,
-        "#TSF_existdir":TSF_Urlpath_existdir, "#ディレクトリ名の有無":TSF_Urlpath_existdir,
+        "#!TSF_fileext":TSF_Urlpath_fileext, "#ファイルの拡張子":TSF_Urlpath_fileext,
+        "#!TSF_abspath":TSF_Urlpath_abspath, "#ファイルの絶対パス":TSF_Urlpath_abspath,
+        "#!TSF_dirpath":TSF_Urlpath_dirpath, "#ファイルのディレクトリ":TSF_Urlpath_dirpath,
+        "#!TSF_chpath":TSF_Urlpath_chpath, "#ディレクトリ移動":TSF_Urlpath_chpath,
+        "#!TSF_basepath":TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":TSF_Urlpath_basepath,
+        "#!TSF_existfile":TSF_Urlpath_existfile, "#ファイル名の有無":TSF_Urlpath_existfile,
+        "#!TSF_existdir":TSF_Urlpath_existdir, "#ディレクトリ名の有無":TSF_Urlpath_existdir,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
             TSF_cardsD[cardkey]=cardfunc;  TSF_cardsO.append(cardkey);
     return TSF_cardsD,TSF_cardsO
 
-#TSF_doc:[filepath]ファイルの拡張子を取得する。1スタック積み下ろし、1スタック積み上げ。
 def TSF_Urlpath_fileext():    #TSFdoc:ファイルの拡張子を取得する。1枚[path]ドローして1枚[.ext]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Urlpath_fileext_api(TSF_Forth_drawthe()));
     return ""

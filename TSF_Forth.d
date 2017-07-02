@@ -37,124 +37,124 @@ Random TSF_PPPP_Random;
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
-        "#TSF_runagain":&TSF_Forth_runagain, "#TSFを再走。":&TSF_Forth_runagain,
-        "#TSF_runagainN":&TSF_Forth_runagainN, "#TSFをコマンド付き再走":&TSF_Forth_runagainN,
-        "#TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
-        "#TSF_this":&TSF_Forth_this, "#スタック実行":&TSF_Forth_this,
-        "#TSF_that":&TSF_Forth_that, "#スタック積込":&TSF_Forth_that,
-        "#TSF_stylethe":&TSF_Forth_stylethe, "#指定スタックにスタイル指定":&TSF_Forth_stylethe,
-        "#TSF_stylethis":&TSF_Forth_stylethis, "#実行中スタックにスタイル指定":&TSF_Forth_stylethis,
-        "#TSF_stylethat":&TSF_Forth_stylethat, "#積込先スタックにスタイル指定":&TSF_Forth_stylethat,
-        "#TSF_stylethey":&TSF_Forth_stylethey, "#全スタックにスタイル指定":&TSF_Forth_stylethey,
-        "#TSF_viewthe":&TSF_Forth_viewthe, "#指定スタック表示":&TSF_Forth_viewthe,
-        "#TSF_viewthis":&TSF_Forth_viewthis, "#実行中スタック表示":&TSF_Forth_viewthis,
-        "#TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタック表示":&TSF_Forth_viewthat,
-        "#TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧表示":&TSF_Forth_viewthey,
-        "#TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
-        "#TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
-        "#TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
-        "#TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
-        "#TSF_argvsthe":&TSF_Forth_argvsthe, "#指定スタック積込":&TSF_Forth_argvsthe,
-        "#TSF_argvsthis":&TSF_Forth_argvsthis, "#実行中スタック積込":&TSF_Forth_argvsthis,
-        "#TSF_argvsthat":&TSF_Forth_argvsthat, "#積込先スタック積込":&TSF_Forth_argvsthat,
-        "#TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
-        "#TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
-        "#TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
-        "#TSF_join[]":&TSF_Forth_joinsquarebrackets, "#括弧で連結":&TSF_Forth_joinsquarebrackets,
-        "#TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
-        "#TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
-        "#TSF_chars":&TSF_Forth_chars, "#一文字ずつに分割":&TSF_Forth_chars,
-        "#TSF_charslen":&TSF_Forth_charslen, "#文字数を数える":&TSF_Forth_charslen,
-        "#TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
-        "#TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
-        "#TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
-        "#TSF_lenthey":&TSF_Forth_lenthey, "#スタック一覧枚数":&TSF_Forth_lenthey,
-        "#TSF_peekFthe":&TSF_Forth_peekFthe, "#指定スタック表択読込":&TSF_Forth_peekFthe,
-        "#TSF_peekFthis":&TSF_Forth_peekFthis, "#実行中スタック表択読込":&TSF_Forth_peekFthis,
-        "#TSF_peekFthat":&TSF_Forth_peekFthat, "#積込先スタック表択読込":&TSF_Forth_peekFthat,
-        "#TSF_peekFthey":&TSF_Forth_peekFthey, "#スタック一覧表択読込":&TSF_Forth_peekFthey,
-        "#TSF_pokeFthe":&TSF_Forth_pokeFthe, "#指定スタック表択上書":&TSF_Forth_pokeFthe,
-        "#TSF_pokeFthis":&TSF_Forth_pokeFthis, "#実行中スタック表択上書":&TSF_Forth_pokeFthis,
-        "#TSF_pokeFthat":&TSF_Forth_pokeFthat, "#積込先スタック表択上書":&TSF_Forth_pokeFthat,
-        "#TSF_pokeFthey":&TSF_Forth_pokeFthey, "#スタック一覧表択上書":&TSF_Forth_pokeFthey,
-        "#TSF_pullFthe":&TSF_Forth_pullFthe, "#指定スタック表択引抜":&TSF_Forth_pullFthe,
-        "#TSF_pullFthis":&TSF_Forth_pullFthis, "#実行中スタック表択引抜":&TSF_Forth_pullFthis,
-        "#TSF_pullFthat":&TSF_Forth_pullFthat, "#積込先スタック表択引抜":&TSF_Forth_pullFthat,
-        "#TSF_pullFthey":&TSF_Forth_pullFthey, "#スタック一覧表択引抜":&TSF_Forth_pullFthey,
-        "#TSF_pushFthe":&TSF_Forth_pushFthe, "#指定スタック表択差込":&TSF_Forth_pushFthe,
-        "#TSF_pushFthis":&TSF_Forth_pushFthis, "#実行中スタック表択差込":&TSF_Forth_pushFthis,
-        "#TSF_pushFthat":&TSF_Forth_pushFthat, "#積込先スタック表択差込":&TSF_Forth_pushFthat,
-        "#TSF_pushFthey":&TSF_Forth_pushFthey, "#スタック一覧表択差込":&TSF_Forth_pushFthey,
-        "#TSF_peekNthe":&TSF_Forth_peekNthe, "#指定スタック順択読込":&TSF_Forth_peekNthe,
-        "#TSF_peekNthis":&TSF_Forth_peekNthis, "#実行中スタック順択読込":&TSF_Forth_peekNthis,
-        "#TSF_peekNthat":&TSF_Forth_peekNthat, "#積込先スタック順択読込":&TSF_Forth_peekNthat,
-        "#TSF_peekNthey":&TSF_Forth_peekNthey, "#スタック一覧順択読込":&TSF_Forth_peekNthey,
-        "#TSF_pokeNthe":&TSF_Forth_pokeNthe, "#指定スタック順択上書":&TSF_Forth_pokeNthe,
-        "#TSF_pokeNthis":&TSF_Forth_pokeNthis, "#実行中スタック順択上書":&TSF_Forth_pokeNthis,
-        "#TSF_pokeNthat":&TSF_Forth_pokeNthat, "#積込先スタック順択上書":&TSF_Forth_pokeNthat,
-        "#TSF_pokeNthey":&TSF_Forth_pokeNthey, "#スタック一覧順択上書":&TSF_Forth_pokeNthey,
-        "#TSF_pullNthe":&TSF_Forth_pullNthe, "#指定スタック順択引抜":&TSF_Forth_pullNthe,
-        "#TSF_pullNthis":&TSF_Forth_pullNthis, "#実行中スタック順択引抜":&TSF_Forth_pullNthis,
-        "#TSF_pullNthat":&TSF_Forth_pullNthat, "#積込先スタック順択引抜":&TSF_Forth_pullNthat,
-        "#TSF_pullNthey":&TSF_Forth_pullNthey, "#スタック一覧順択引抜":&TSF_Forth_pullNthey,
-        "#TSF_pushNthe":&TSF_Forth_pushNthe, "#指定スタック順択差込":&TSF_Forth_pushNthe,
-        "#TSF_pushNthis":&TSF_Forth_pushNthis, "#実行中スタック順択差込":&TSF_Forth_pushNthis,
-        "#TSF_pushNthat":&TSF_Forth_pushNthat, "#積込先スタック順択差込":&TSF_Forth_pushNthat,
-        "#TSF_pushNthey":&TSF_Forth_pushNthey, "#スタック一覧順択差込":&TSF_Forth_pushNthey,
-        "#TSF_peekCthe":&TSF_Forth_peekCthe, "#指定スタック周択読込":&TSF_Forth_peekCthe,
-        "#TSF_peekCthis":&TSF_Forth_peekCthis, "#実行中スタック周択読込":&TSF_Forth_peekCthis,
-        "#TSF_peekCthat":&TSF_Forth_peekCthat, "#積込先スタック周択読込":&TSF_Forth_peekCthat,
-        "#TSF_peekCthey":&TSF_Forth_peekCthey, "#スタック一覧周択読込":&TSF_Forth_peekCthey,
-        "#TSF_pokeCthe":&TSF_Forth_pokeCthe, "#指定スタック周択上書":&TSF_Forth_pokeCthe,
-        "#TSF_pokeCthis":&TSF_Forth_pokeCthis, "#実行中スタック周択上書":&TSF_Forth_pokeCthis,
-        "#TSF_pokeCthat":&TSF_Forth_pokeCthat, "#積込先スタック周択上書":&TSF_Forth_pokeCthat,
-        "#TSF_pokeCthey":&TSF_Forth_pokeCthey, "#スタック一覧周択上書":&TSF_Forth_pokeCthey,
-        "#TSF_pullCthe":&TSF_Forth_pullCthe, "#指定スタック周択引抜":&TSF_Forth_pullCthe,
-        "#TSF_pullCthis":&TSF_Forth_pullCthis, "#実行中スタック周択引抜":&TSF_Forth_pullCthis,
-        "#TSF_pullCthat":&TSF_Forth_pullCthat, "#積込先スタック周択引抜":&TSF_Forth_pullCthat,
-        "#TSF_pullCthey":&TSF_Forth_pullCthey, "#スタック一覧周択引抜":&TSF_Forth_pullCthey,
-        "#TSF_pushCthe":&TSF_Forth_pushCthe, "#指定スタック周択差込":&TSF_Forth_pushCthe,
-        "#TSF_pushCthis":&TSF_Forth_pushCthis, "#実行中スタック周択差込":&TSF_Forth_pushCthis,
-        "#TSF_pushCthat":&TSF_Forth_pushCthat, "#積込先スタック周択差込":&TSF_Forth_pushCthat,
-        "#TSF_pushCthey":&TSF_Forth_pushCthey, "#スタック一覧周択差込":&TSF_Forth_pushCthey,
-        "#TSF_peekMthe":&TSF_Forth_peekMthe, "#指定スタック囲択読込":&TSF_Forth_peekMthe,
-        "#TSF_peekMthis":&TSF_Forth_peekMthis, "#実行中スタック囲択読込":&TSF_Forth_peekMthis,
-        "#TSF_peekMthat":&TSF_Forth_peekMthat, "#積込先スタック囲択読込":&TSF_Forth_peekMthat,
-        "#TSF_peekMthey":&TSF_Forth_peekMthey, "#スタック一覧囲択読込":&TSF_Forth_peekMthey,
-        "#TSF_pokeMthe":&TSF_Forth_pokeMthe, "#指定スタック囲択上書":&TSF_Forth_pokeMthe,
-        "#TSF_pokeMthis":&TSF_Forth_pokeMthis, "#実行中スタック囲択上書":&TSF_Forth_pokeMthis,
-        "#TSF_pokeMthat":&TSF_Forth_pokeMthat, "#積込先スタック囲択上書":&TSF_Forth_pokeMthat,
-        "#TSF_pokeMthey":&TSF_Forth_pokeMthey, "#スタック一覧囲択上書":&TSF_Forth_pokeMthey,
-        "#TSF_pullMthe":&TSF_Forth_pullMthe, "#指定スタック囲択引抜":&TSF_Forth_pullMthe,
-        "#TSF_pullMthis":&TSF_Forth_pullMthis, "#実行中スタック囲択引抜":&TSF_Forth_pullMthis,
-        "#TSF_pullMthat":&TSF_Forth_pullMthat, "#積込先スタック囲択引抜":&TSF_Forth_pullMthat,
-        "#TSF_pullMthey":&TSF_Forth_pullMthey, "#スタック一覧囲択引抜":&TSF_Forth_pullMthey,
-        "#TSF_pushMthe":&TSF_Forth_pushMthe, "#指定スタック囲択差込":&TSF_Forth_pushMthe,
-        "#TSF_pushMthis":&TSF_Forth_pushMthis, "#実行中スタック囲択差込":&TSF_Forth_pushMthis,
-        "#TSF_pushMthat":&TSF_Forth_pushMthat, "#積込先スタック囲択差込":&TSF_Forth_pushMthat,
-        "#TSF_pushMthey":&TSF_Forth_pushMthey, "#スタック一覧囲択差込":&TSF_Forth_pushMthey,
-        "#TSF_swapBA":&TSF_Forth_swapBA, "#カードBA交換":&TSF_Forth_swapBA,
-        "#TSF_swapCA":&TSF_Forth_swapCA, "#カードCA交換":&TSF_Forth_swapCA,
-        "#TSF_swapCB":&TSF_Forth_swapCB, "#カードCB交換":&TSF_Forth_swapCB,
-        "#TSF_swapAA":&TSF_Forth_swapAA, "#カードAA交換":&TSF_Forth_swapAA,
-        "#TSF_swapCC":&TSF_Forth_swapCC, "#カードCC交換":&TSF_Forth_swapCC,
-        "#TSF_clonethe":&TSF_Forth_clonethe, "#指定スタックの複製":&TSF_Forth_clonethe,
-        "#TSF_clonethis":&TSF_Forth_clonethis, "#実行中スタックの複製":&TSF_Forth_clonethis,
-        "#TSF_clonethat":&TSF_Forth_clonethat, "#積込先スタックの複製":&TSF_Forth_clonethat,
-        "#TSF_clonethey":&TSF_Forth_clonethey, "#スタック一覧の複製":&TSF_Forth_clonethey,
-        "#TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
-        "#TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
-        "#TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
-        "#TSF_publishthis":&TSF_Forth_publishthis, "#実行中スタックをテキスト化":&TSF_Forth_publishthis,
-        "#TSF_publishthat":&TSF_Forth_publishthat, "#積込先スタックをテキスト化":&TSF_Forth_publishthat,
-        "#TSF_remove":&TSF_Forth_remove, "#ファイルを削除する":&TSF_Forth_remove,
-        "#TSF_savetext":&TSF_Forth_savetext, "#テキストファイルに上書":&TSF_Forth_savetext,
-        "#TSF_writetext":&TSF_Forth_writetext, "#テキストファイルに追記":&TSF_Forth_writetext,
-        "#TSF_branch":&TSF_Forth_branch, "#TSFのブランチ名":&TSF_Forth_branch,
-        "#TSF_grammar":&TSF_Forth_grammar, "#TSFの文法管理番号":&TSF_Forth_grammar,
-        "#TSF_foolang":&TSF_Forth_foolang, "#TSFの実装言語":&TSF_Forth_foolang,
-        "#TSF_mainfile":&TSF_Forth_mainfile, "#実行ファイル名":&TSF_Forth_mainfile,
+        "#!TSF_fin.":&TSF_Forth_fin, "#TSFを終了。":&TSF_Forth_fin,
+        "#!TSF_runagain":&TSF_Forth_runagain, "#TSFを再走。":&TSF_Forth_runagain,
+        "#!TSF_runagainN":&TSF_Forth_runagainN, "#TSFをコマンド付き再走":&TSF_Forth_runagainN,
+        "#!TSF_countmax":&TSF_Forth_countmax, "#カード数え上げ上限":&TSF_Forth_countmax,
+        "#!TSF_this":&TSF_Forth_this, "#スタック実行":&TSF_Forth_this,
+        "#!TSF_that":&TSF_Forth_that, "#スタック積込":&TSF_Forth_that,
+        "#!TSF_stylethe":&TSF_Forth_stylethe, "#指定スタックにスタイル指定":&TSF_Forth_stylethe,
+        "#!TSF_stylethis":&TSF_Forth_stylethis, "#実行中スタックにスタイル指定":&TSF_Forth_stylethis,
+        "#!TSF_stylethat":&TSF_Forth_stylethat, "#積込先スタックにスタイル指定":&TSF_Forth_stylethat,
+        "#!TSF_stylethey":&TSF_Forth_stylethey, "#全スタックにスタイル指定":&TSF_Forth_stylethey,
+        "#!TSF_viewthe":&TSF_Forth_viewthe, "#指定スタック表示":&TSF_Forth_viewthe,
+        "#!TSF_viewthis":&TSF_Forth_viewthis, "#実行中スタック表示":&TSF_Forth_viewthis,
+        "#!TSF_viewthat":&TSF_Forth_viewthat, "#積込先スタック表示":&TSF_Forth_viewthat,
+        "#!TSF_viewthey":&TSF_Forth_viewthey, "#スタック一覧表示":&TSF_Forth_viewthey,
+        "#!TSF_RPN":&TSF_Forth_RPN, "#逆ポーランド電卓で計算":&TSF_Forth_RPN, "#小数計算":&TSF_Forth_RPN,
+        "#!TSF_echo":&TSF_Forth_echo, "#カードを表示":&TSF_Forth_echo,
+        "#!TSF_echoN":&TSF_Forth_echoN, "#N枚カードを表示":&TSF_Forth_echoN,
+        "#!TSF_argvs":&TSF_Forth_argvs, "#コマンド読込":&TSF_Forth_argvs,
+        "#!TSF_argvsthe":&TSF_Forth_argvsthe, "#指定スタック積込":&TSF_Forth_argvsthe,
+        "#!TSF_argvsthis":&TSF_Forth_argvsthis, "#実行中スタック積込":&TSF_Forth_argvsthis,
+        "#!TSF_argvsthat":&TSF_Forth_argvsthat, "#積込先スタック積込":&TSF_Forth_argvsthat,
+        "#!TSF_argvsthey":&TSF_Forth_argvsthey, "#スタック一覧積込":&TSF_Forth_argvsthey,
+        "#!TSF_reverseN":&TSF_Forth_reverseN, "#N枚逆順積込":&TSF_Forth_reverseN,
+        "#!TSF_joinN":&TSF_Forth_joinN, "#N枚1枚化":&TSF_Forth_joinN,
+        "#!TSF_join[]":&TSF_Forth_joinsquarebrackets, "#括弧で連結":&TSF_Forth_joinsquarebrackets,
+        "#!TSF_sandwichN":&TSF_Forth_sandwichN, "#N枚挟んで1枚化":&TSF_Forth_sandwichN,
+        "#!TSF_split":&TSF_Forth_split, "#文字で分割":&TSF_Forth_split,
+        "#!TSF_chars":&TSF_Forth_chars, "#一文字ずつに分割":&TSF_Forth_chars,
+        "#!TSF_charslen":&TSF_Forth_charslen, "#文字数を数える":&TSF_Forth_charslen,
+        "#!TSF_lenthe":&TSF_Forth_lenthe, "#指定スタック枚数":&TSF_Forth_lenthe,
+        "#!TSF_lenthis":&TSF_Forth_lenthis, "#実行中スタック枚数":&TSF_Forth_lenthis,
+        "#!TSF_lenthat":&TSF_Forth_lenthat, "#積込先スタック枚数":&TSF_Forth_lenthat,
+        "#!TSF_lenthey":&TSF_Forth_lenthey, "#スタック一覧枚数":&TSF_Forth_lenthey,
+        "#!TSF_peekFthe":&TSF_Forth_peekFthe, "#指定スタック表択読込":&TSF_Forth_peekFthe,
+        "#!TSF_peekFthis":&TSF_Forth_peekFthis, "#実行中スタック表択読込":&TSF_Forth_peekFthis,
+        "#!TSF_peekFthat":&TSF_Forth_peekFthat, "#積込先スタック表択読込":&TSF_Forth_peekFthat,
+        "#!TSF_peekFthey":&TSF_Forth_peekFthey, "#スタック一覧表択読込":&TSF_Forth_peekFthey,
+        "#!TSF_pokeFthe":&TSF_Forth_pokeFthe, "#指定スタック表択上書":&TSF_Forth_pokeFthe,
+        "#!TSF_pokeFthis":&TSF_Forth_pokeFthis, "#実行中スタック表択上書":&TSF_Forth_pokeFthis,
+        "#!TSF_pokeFthat":&TSF_Forth_pokeFthat, "#積込先スタック表択上書":&TSF_Forth_pokeFthat,
+        "#!TSF_pokeFthey":&TSF_Forth_pokeFthey, "#スタック一覧表択上書":&TSF_Forth_pokeFthey,
+        "#!TSF_pullFthe":&TSF_Forth_pullFthe, "#指定スタック表択引抜":&TSF_Forth_pullFthe,
+        "#!TSF_pullFthis":&TSF_Forth_pullFthis, "#実行中スタック表択引抜":&TSF_Forth_pullFthis,
+        "#!TSF_pullFthat":&TSF_Forth_pullFthat, "#積込先スタック表択引抜":&TSF_Forth_pullFthat,
+        "#!TSF_pullFthey":&TSF_Forth_pullFthey, "#スタック一覧表択引抜":&TSF_Forth_pullFthey,
+        "#!TSF_pushFthe":&TSF_Forth_pushFthe, "#指定スタック表択差込":&TSF_Forth_pushFthe,
+        "#!TSF_pushFthis":&TSF_Forth_pushFthis, "#実行中スタック表択差込":&TSF_Forth_pushFthis,
+        "#!TSF_pushFthat":&TSF_Forth_pushFthat, "#積込先スタック表択差込":&TSF_Forth_pushFthat,
+        "#!TSF_pushFthey":&TSF_Forth_pushFthey, "#スタック一覧表択差込":&TSF_Forth_pushFthey,
+        "#!TSF_peekNthe":&TSF_Forth_peekNthe, "#指定スタック順択読込":&TSF_Forth_peekNthe,
+        "#!TSF_peekNthis":&TSF_Forth_peekNthis, "#実行中スタック順択読込":&TSF_Forth_peekNthis,
+        "#!TSF_peekNthat":&TSF_Forth_peekNthat, "#積込先スタック順択読込":&TSF_Forth_peekNthat,
+        "#!TSF_peekNthey":&TSF_Forth_peekNthey, "#スタック一覧順択読込":&TSF_Forth_peekNthey,
+        "#!TSF_pokeNthe":&TSF_Forth_pokeNthe, "#指定スタック順択上書":&TSF_Forth_pokeNthe,
+        "#!TSF_pokeNthis":&TSF_Forth_pokeNthis, "#実行中スタック順択上書":&TSF_Forth_pokeNthis,
+        "#!TSF_pokeNthat":&TSF_Forth_pokeNthat, "#積込先スタック順択上書":&TSF_Forth_pokeNthat,
+        "#!TSF_pokeNthey":&TSF_Forth_pokeNthey, "#スタック一覧順択上書":&TSF_Forth_pokeNthey,
+        "#!TSF_pullNthe":&TSF_Forth_pullNthe, "#指定スタック順択引抜":&TSF_Forth_pullNthe,
+        "#!TSF_pullNthis":&TSF_Forth_pullNthis, "#実行中スタック順択引抜":&TSF_Forth_pullNthis,
+        "#!TSF_pullNthat":&TSF_Forth_pullNthat, "#積込先スタック順択引抜":&TSF_Forth_pullNthat,
+        "#!TSF_pullNthey":&TSF_Forth_pullNthey, "#スタック一覧順択引抜":&TSF_Forth_pullNthey,
+        "#!TSF_pushNthe":&TSF_Forth_pushNthe, "#指定スタック順択差込":&TSF_Forth_pushNthe,
+        "#!TSF_pushNthis":&TSF_Forth_pushNthis, "#実行中スタック順択差込":&TSF_Forth_pushNthis,
+        "#!TSF_pushNthat":&TSF_Forth_pushNthat, "#積込先スタック順択差込":&TSF_Forth_pushNthat,
+        "#!TSF_pushNthey":&TSF_Forth_pushNthey, "#スタック一覧順択差込":&TSF_Forth_pushNthey,
+        "#!TSF_peekCthe":&TSF_Forth_peekCthe, "#指定スタック周択読込":&TSF_Forth_peekCthe,
+        "#!TSF_peekCthis":&TSF_Forth_peekCthis, "#実行中スタック周択読込":&TSF_Forth_peekCthis,
+        "#!TSF_peekCthat":&TSF_Forth_peekCthat, "#積込先スタック周択読込":&TSF_Forth_peekCthat,
+        "#!TSF_peekCthey":&TSF_Forth_peekCthey, "#スタック一覧周択読込":&TSF_Forth_peekCthey,
+        "#!TSF_pokeCthe":&TSF_Forth_pokeCthe, "#指定スタック周択上書":&TSF_Forth_pokeCthe,
+        "#!TSF_pokeCthis":&TSF_Forth_pokeCthis, "#実行中スタック周択上書":&TSF_Forth_pokeCthis,
+        "#!TSF_pokeCthat":&TSF_Forth_pokeCthat, "#積込先スタック周択上書":&TSF_Forth_pokeCthat,
+        "#!TSF_pokeCthey":&TSF_Forth_pokeCthey, "#スタック一覧周択上書":&TSF_Forth_pokeCthey,
+        "#!TSF_pullCthe":&TSF_Forth_pullCthe, "#指定スタック周択引抜":&TSF_Forth_pullCthe,
+        "#!TSF_pullCthis":&TSF_Forth_pullCthis, "#実行中スタック周択引抜":&TSF_Forth_pullCthis,
+        "#!TSF_pullCthat":&TSF_Forth_pullCthat, "#積込先スタック周択引抜":&TSF_Forth_pullCthat,
+        "#!TSF_pullCthey":&TSF_Forth_pullCthey, "#スタック一覧周択引抜":&TSF_Forth_pullCthey,
+        "#!TSF_pushCthe":&TSF_Forth_pushCthe, "#指定スタック周択差込":&TSF_Forth_pushCthe,
+        "#!TSF_pushCthis":&TSF_Forth_pushCthis, "#実行中スタック周択差込":&TSF_Forth_pushCthis,
+        "#!TSF_pushCthat":&TSF_Forth_pushCthat, "#積込先スタック周択差込":&TSF_Forth_pushCthat,
+        "#!TSF_pushCthey":&TSF_Forth_pushCthey, "#スタック一覧周択差込":&TSF_Forth_pushCthey,
+        "#!TSF_peekMthe":&TSF_Forth_peekMthe, "#指定スタック囲択読込":&TSF_Forth_peekMthe,
+        "#!TSF_peekMthis":&TSF_Forth_peekMthis, "#実行中スタック囲択読込":&TSF_Forth_peekMthis,
+        "#!TSF_peekMthat":&TSF_Forth_peekMthat, "#積込先スタック囲択読込":&TSF_Forth_peekMthat,
+        "#!TSF_peekMthey":&TSF_Forth_peekMthey, "#スタック一覧囲択読込":&TSF_Forth_peekMthey,
+        "#!TSF_pokeMthe":&TSF_Forth_pokeMthe, "#指定スタック囲択上書":&TSF_Forth_pokeMthe,
+        "#!TSF_pokeMthis":&TSF_Forth_pokeMthis, "#実行中スタック囲択上書":&TSF_Forth_pokeMthis,
+        "#!TSF_pokeMthat":&TSF_Forth_pokeMthat, "#積込先スタック囲択上書":&TSF_Forth_pokeMthat,
+        "#!TSF_pokeMthey":&TSF_Forth_pokeMthey, "#スタック一覧囲択上書":&TSF_Forth_pokeMthey,
+        "#!TSF_pullMthe":&TSF_Forth_pullMthe, "#指定スタック囲択引抜":&TSF_Forth_pullMthe,
+        "#!TSF_pullMthis":&TSF_Forth_pullMthis, "#実行中スタック囲択引抜":&TSF_Forth_pullMthis,
+        "#!TSF_pullMthat":&TSF_Forth_pullMthat, "#積込先スタック囲択引抜":&TSF_Forth_pullMthat,
+        "#!TSF_pullMthey":&TSF_Forth_pullMthey, "#スタック一覧囲択引抜":&TSF_Forth_pullMthey,
+        "#!TSF_pushMthe":&TSF_Forth_pushMthe, "#指定スタック囲択差込":&TSF_Forth_pushMthe,
+        "#!TSF_pushMthis":&TSF_Forth_pushMthis, "#実行中スタック囲択差込":&TSF_Forth_pushMthis,
+        "#!TSF_pushMthat":&TSF_Forth_pushMthat, "#積込先スタック囲択差込":&TSF_Forth_pushMthat,
+        "#!TSF_pushMthey":&TSF_Forth_pushMthey, "#スタック一覧囲択差込":&TSF_Forth_pushMthey,
+        "#!TSF_swapBA":&TSF_Forth_swapBA, "#カードBA交換":&TSF_Forth_swapBA,
+        "#!TSF_swapCA":&TSF_Forth_swapCA, "#カードCA交換":&TSF_Forth_swapCA,
+        "#!TSF_swapCB":&TSF_Forth_swapCB, "#カードCB交換":&TSF_Forth_swapCB,
+        "#!TSF_swapAA":&TSF_Forth_swapAA, "#カードAA交換":&TSF_Forth_swapAA,
+        "#!TSF_swapCC":&TSF_Forth_swapCC, "#カードCC交換":&TSF_Forth_swapCC,
+        "#!TSF_clonethe":&TSF_Forth_clonethe, "#指定スタックの複製":&TSF_Forth_clonethe,
+        "#!TSF_clonethis":&TSF_Forth_clonethis, "#実行中スタックの複製":&TSF_Forth_clonethis,
+        "#!TSF_clonethat":&TSF_Forth_clonethat, "#積込先スタックの複製":&TSF_Forth_clonethat,
+        "#!TSF_clonethey":&TSF_Forth_clonethey, "#スタック一覧の複製":&TSF_Forth_clonethey,
+        "#!TSF_readtext":&TSF_Forth_readtext, "#テキストを読込":&TSF_Forth_readtext,
+        "#!TSF_mergethe":&TSF_Forth_mergethe, "#TSFに合成":&TSF_Forth_mergethe,
+        "#!TSF_publishthe":&TSF_Forth_publishthe, "#指定スタックをテキスト化":&TSF_Forth_publishthe,
+        "#!TSF_publishthis":&TSF_Forth_publishthis, "#実行中スタックをテキスト化":&TSF_Forth_publishthis,
+        "#!TSF_publishthat":&TSF_Forth_publishthat, "#積込先スタックをテキスト化":&TSF_Forth_publishthat,
+        "#!TSF_remove":&TSF_Forth_remove, "#ファイルを削除する":&TSF_Forth_remove,
+        "#!TSF_savetext":&TSF_Forth_savetext, "#テキストファイルに上書":&TSF_Forth_savetext,
+        "#!TSF_writetext":&TSF_Forth_writetext, "#テキストファイルに追記":&TSF_Forth_writetext,
+        "#!TSF_branch":&TSF_Forth_branch, "#TSFのブランチ名":&TSF_Forth_branch,
+        "#!TSF_grammar":&TSF_Forth_grammar, "#TSFの文法管理番号":&TSF_Forth_grammar,
+        "#!TSF_foolang":&TSF_Forth_foolang, "#TSFの実装言語":&TSF_Forth_foolang,
+        "#!TSF_mainfile":&TSF_Forth_mainfile, "#実行ファイル名":&TSF_Forth_mainfile,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -1160,7 +1160,7 @@ void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()
     TSF_cardO,TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];
     TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();
     TSF_cardscount=0;
-    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#TSF_fin.",'T');
+    TSF_Forth_setTSF(TSF_Forth_1ststack(),"#!TSF_fin.",'T');
 //    TSF_mainandargvs=TSF_sysargvs;
     TSF_Forth_mainandargvs(TSF_sysargvs);
     void function(ref string function()[string],ref string[])[]  TSF_Initcards=[&TSF_Forth_Initcards]~TSF_addcalls;
@@ -1285,8 +1285,8 @@ string TSF_Forth_run(...){    //#TSFdoc:TSFデッキを走らせる。
         TSF_echo=false; TSF_echo_log="";
     }
     while(true){
-        if( count(TSF_stackD[TSF_Forth_1ststack()],"#TSF_fin." )==0 ){
-            TSF_Forth_return(TSF_Forth_1ststack(),"#TSF_fin.");
+        if( count(TSF_stackD[TSF_Forth_1ststack()],"#!TSF_fin." )==0 ){
+            TSF_Forth_return(TSF_Forth_1ststack(),"#!TSF_fin.");
         }
         while(true){
             while( TSF_cardscount<TSF_stackD[TSF_stackthis].length && TSF_cardscount<TSF_Forth_stackMAX ){
@@ -1463,9 +1463,9 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug);
 
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
-        "shuffleclone:","#TSF_this","#TSF_fin."],"\t"),'T');
+        "shuffleclone:","#!TSF_this","#!TSF_fin."],"\t"),'T');
     TSF_Forth_setTSF("shuffleclone:",join([
-        "adverbclone:","adverb:","#TSF_clonethe","shufflestacks:","#TSF_pullFthe","#TSF_this","adverbclone:","#TSF_argvsthe","#TSF_reverseN","adverbclone:","#TSF_lenthe"," ","#TSF_sandwichN","「#[2]」「[1]」「[0]」","#TSF_join[]","#TSF_echo","shufflejump:","shufflestacks:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this"],"\t"),'T');
+        "adverbclone:","adverb:","#!TSF_clonethe","shufflestacks:","#!TSF_pullFthe","#!TSF_this","adverbclone:","#!TSF_argvsthe","#!TSF_reverseN","adverbclone:","#!TSF_lenthe"," ","#!TSF_sandwichN","「#[2]」「[1]」「[0]」","#!TSF_join[]","#!TSF_echo","shufflejump:","shufflestacks:","#!TSF_lenthe","0,1,[0]U","#!TSF_join[]","#!TSF_RPN","#!TSF_peekNthe","#!TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("shufflejump:",join([
         "#!exit:","shuffleclone:"],"\t"),'T');
     TSF_Forth_setTSF("verb:",join(["peek","poke","push","pull"],"\t"),'O');
@@ -1473,22 +1473,22 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
         "pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
-    TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#TSF_peekFthe"],"\t"),'O');
-    TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#TSF_pokeFthe","$poke"],"\t"),'O');
-    TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#TSF_pullFthe"],"\t"),'O');
-    TSF_Forth_setTSF("pushF:",join(["TSF_pushFthe","$push","adverbclone:","#TSF_pushFthe","$push"],"\t"),'O');
-    TSF_Forth_setTSF("peekN:",join(["TSF_peekNthe","adverbclone:","1","#TSF_peekNthe"],"\t"),'O');
-    TSF_Forth_setTSF("pokeN:",join(["TSF_pokeNthe","$poke","adverbclone:","1","#TSF_pokeNthe","$poke"],"\t"),'O');
-    TSF_Forth_setTSF("pullN:",join(["TSF_pullNthe","adverbclone:","1","#TSF_pullNthe"],"\t"),'O');
-    TSF_Forth_setTSF("pushN:",join(["TSF_pushNthe","$push","adverbclone:","1","#TSF_pushNthe","$push"],"\t"),'O');
-    TSF_Forth_setTSF("peekC:",join(["TSF_peekCthe","adverbclone:","2","#TSF_peekCthe"],"\t"),'O');
-    TSF_Forth_setTSF("pokeC:",join(["TSF_pokeCthe","$poke","adverbclone:","2","#TSF_pokeCthe","$poke"],"\t"),'O');
-    TSF_Forth_setTSF("pullC:",join(["TSF_pullCthe","adverbclone:","2","#TSF_pullCthe"],"\t"),'O');
-    TSF_Forth_setTSF("pushC:",join(["TSF_pushCthe","$push","adverbclone:","2","#TSF_pushCthe","$push"],"\t"),'O');
-    TSF_Forth_setTSF("peekM:",join(["TSF_peekMthe","adverbclone:","3","#TSF_peekMthe"],"\t"),'O');
-    TSF_Forth_setTSF("pokeM:",join(["TSF_pokeMthe","$poke","adverbclone:","3","#TSF_pokeMthe","$poke"],"\t"),'O');
-    TSF_Forth_setTSF("pullM:",join(["TSF_pullMthe","adverbclone:","3","#TSF_pullMthe"],"\t"),'O');
-    TSF_Forth_setTSF("pushM:",join(["TSF_pushMthe","$push","adverbclone:","3","#TSF_pushMthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#!TSF_peekFthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#!TSF_pokeFthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#!TSF_pullFthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushF:",join(["TSF_pushFthe","$push","adverbclone:","#!TSF_pushFthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekN:",join(["TSF_peekNthe","adverbclone:","1","#!TSF_peekNthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeN:",join(["TSF_pokeNthe","$poke","adverbclone:","1","#!TSF_pokeNthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullN:",join(["TSF_pullNthe","adverbclone:","1","#!TSF_pullNthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushN:",join(["TSF_pushNthe","$push","adverbclone:","1","#!TSF_pushNthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekC:",join(["TSF_peekCthe","adverbclone:","2","#!TSF_peekCthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeC:",join(["TSF_pokeCthe","$poke","adverbclone:","2","#!TSF_pokeCthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullC:",join(["TSF_pullCthe","adverbclone:","2","#!TSF_pullCthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushC:",join(["TSF_pushCthe","$push","adverbclone:","2","#!TSF_pushCthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekM:",join(["TSF_peekMthe","adverbclone:","3","#!TSF_peekMthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeM:",join(["TSF_pokeMthe","$poke","adverbclone:","3","#!TSF_pokeMthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullM:",join(["TSF_pullMthe","adverbclone:","3","#!TSF_pullMthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushM:",join(["TSF_pushMthe","$push","adverbclone:","3","#!TSF_pushMthe","$push"],"\t"),'O');
 
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
@@ -1496,7 +1496,7 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
 }
 
 unittest {
-    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
+//    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
 }
 
 

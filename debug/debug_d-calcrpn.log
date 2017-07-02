@@ -1,13 +1,13 @@
 -- TSF_sample_calc source --
 TSF_Tab-Separated-Forth:
-	calcsetup:	#TSF_this	#TSF_fin.
+	calcsetup:	#!TSF_this	#!TSF_fin.
 calcsetup:
-	calcargvs:	#TSF_that	#TSF_argvs	,	#TSF_sandwichN	calcjump:	calcargvs:	#TSF_lenthe	#TSF_peekNthe	#TSF_this
+	calcargvs:	#!TSF_that	#!TSF_argvs	,	#!TSF_sandwichN	calcjump:	calcargvs:	#!TSF_lenthe	#!TSF_peekNthe	#!TSF_this
 calcjump:
 	calcdefault:	calcdefault:	calc:
 calcdefault:
-	1/3-m1|2	calc:	#TSF_this
+	1/3-m1|2	calc:	#!TSF_this
 calc:
-	#TSF_calc	#TSF_echo
+	#!TSF_calc	#!TSF_echo
 -- TSF_sample_calc run --
 p5|6

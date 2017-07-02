@@ -13,11 +13,11 @@ from TSF_Forth import *
 def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Calc")
     TSF_Forth_cards={
-        "#TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
-        "#TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
-        "#TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
-        "#TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
-#        "#TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
+        "#!TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
+        "#!TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
+        "#!TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
+        "#!TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
+#        "#!TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -85,13 +85,13 @@ def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カー�
     return ""
 
 TSF_Calc_precisionMAX=100
-def TSF_Calc_precision():    ##TSF_doc:電卓の有効桁数を変更する。1枚[precision]ドロー。
+def TSF_Calc_precision():    ##TSFdoc:電卓の有効桁数を変更する。1枚[precision]ドロー。
     global TSF_Calc_precisionMAX
     TSF_Calc_precisionMAX=min(max(TSF_Io_RPNzero(TSF_Forth_drawthe()),5),1000)
     decimal.getcontext().prec=TSF_Calc_precisionMAX
     return ""
 
-def TSF_Calc_bracketsJA(TSF_calcQ):    #TSF_doc:分数電卓の日本語処理。(TSFAPI)
+def TSF_Calc_bracketsJA(TSF_calcQ):    #TSFdoc:分数電卓の日本語処理。(TSFAPI)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
 #    print("TSF_calcA",TSF_calcA)
     if not TSF_calcA.startswith('n'):
@@ -130,7 +130,7 @@ TSF_Calc_opeword,TSF_Calc_opechar,TSF_Calc_okusendic,TSF_Calc_rinmoudic={},{},{}
 TSF_Calc_opeorder,TSF_Calc_okusenyen,TSF_Calc_rinmouyen=[],"",""
 TSF_CalcReg_okusen,TSF_CalcReg_rinmou=[],[]
 TSF_CalcReg_senCpercent,TSF_CalcReg_senKkilo,TSF_CalcReg_hyakuH,TSF_CalcReg_juuD=re.compile("([0-9百十]+?)銭"),re.compile("([0-9]+?)千"),re.compile("([0-9]+?)百"),re.compile("([0-9]+?)十")
-def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
+def TSF_calc_commacut_JA(TSF_calcQ):    #TSFdoc:整数のコンマ削除(漢数字をアラビア数字に)。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if not re.search(TSF_CalcReg_ascii,TSF_calcA):
         for TSF_opewordK in TSF_Calc_opeorder:
@@ -162,7 +162,7 @@ def TSF_calc_commacut_JA(TSF_calcQ):    #TSF_doc:整数のコンマ削除(漢数
 #        print("TSF_calcA",TSF_calcA)
     return TSF_calcA
 
-def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:整数にコンマ(漢数字)処理。(TSFAPI)
+def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:整数にコンマ(漢数字)処理。(TSFAPI)
     TSF_calcA=""
     TSF_calcCptr=0
     TSF_calc_zero='0'*TSF_calcC
@@ -176,7 +176,7 @@ def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:
             TSF_calcCptr+=1
     return TSF_calcA
 
-def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:小数にコンマ(漢数字)処理。(TSFAPI)
+def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:小数にコンマ(漢数字)処理。(TSFAPI)
     TSF_calcA=""
     TSF_calcCptr=0
     TSF_calc_zero='0'*TSF_calcC
@@ -194,7 +194,7 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSF_doc:
     return TSF_calcA
 
 TSF_CalcReg_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
-def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
+def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSFdoc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
     TSF_calcA=TSF_calc_commacut_JA(TSF_calcQ); TSF_calcBLR,TSF_calcBCAP=0,0
 #    TSF_calcA=TSF_calcQ; TSF_calcBLR,TSF_calcBCAP=0,0
     while "(" in TSF_calcA or ")" in TSF_calcA:
@@ -220,7 +220,7 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSF_doc:分数電卓のmain。括弧の�
                 TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
     return TSF_calcA
 
-def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSF_doc:分数電卓のPM符号省略。(TSFAPI)
+def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSFdoc:分数電卓のPM符号省略。(TSFAPI)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
     TSF_calcA=TSF_calcA.replace("p","").replace("m","-")
     return TSF_calcA
@@ -266,7 +266,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
 
-def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
+def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if len(TSF_calcA) > 0 and TSF_calcA.endswith(':'):
         return TSF_calcA
@@ -301,7 +301,7 @@ def TSF_Calc_addition(TSF_calcQ):    #TSF_doc:分数電卓の足し算引き算�
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
+def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcA=TSF_calcQ
     TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<")
@@ -359,7 +359,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSF_doc:分数電卓の掛け算割�
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
     return TSF_calcA
 
-def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
+def TSF_Calc_fractalize(TSF_calcQ):    #TSFdoc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
     if "_" in TSF_calcA:
         TSF_calcND=TSF_calcA.split("_")
@@ -380,7 +380,7 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSF_doc:分数電卓なので小数を�
     TSF_calcA=TSF_Calc_bigtostr(TSF_calcNstr,TSF_calcDstr,TSF_calcM)
     return TSF_calcA
 
-def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSF_doc:計算結果を通分する。(TSFAPI)
+def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSFdoc:計算結果を通分する。(TSFAPI)
     if TSF_calcD != "":
         if TSF_calcN == "": TSF_calcN="0"
         try:
@@ -398,7 +398,7 @@ def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSF_doc:計算結果�
         TSF_calcA="n|0"
     return TSF_calcA
 
-def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(TSFAPI)
+def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSFdoc:最大公約数の計算。(TSFAPI)
     try:
         TSF_calcMbig,TSF_calcNbig=abs(decimal.Decimal(TSF_calcN)),abs(decimal.Decimal(TSF_calcD))
         if TSF_calcMbig < TSF_calcNbig:
@@ -410,7 +410,7 @@ def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSF_doc:最大公約数の計算。(T
         TSF_calcA="n|0"
     return TSF_calcA
 
-def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSF_doc:最小公倍数の計算(TSFAPI)。
+def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSFdoc:最小公倍数の計算(TSFAPI)。
     TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
     if TSF_calcGbig!=0:
         try:
@@ -427,13 +427,13 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "calccount:","#TSF_this","#TSF_fin."]),'T')
+        "calccount:","#!TSF_this","#!TSF_fin."]),'T')
     TSF_Forth_setTSF("calccount:","\t".join([
-        "calcjump:","calcsample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","calccount:","#TSF_this"]),'T')
+        "calcjump:","calcsample:","#!TSF_lenthe","0,1,[0]U","#!TSF_join[]","#!TSF_RPN","#!TSF_peekNthe","#!TSF_this","calccount:","#!TSF_this"]),'T')
     TSF_Forth_setTSF("calcjump:","\t".join([
         "#!exit:","calcpop:"]),'T')
     TSF_Forth_setTSF("calcpop:","\t".join([
-        "calcsample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calc","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
+        "calcsample:","0","#!TSF_pullNthe","#!TSF_peekFthat","#!TSF_calc","「[1]」→「[0]」","#!TSF_join[]","#!TSF_echo"]),'T')
     TSF_Forth_setTSF("calcpeekdata:","\t".join([
         "009","108","207","306","405","504","603","702","801","900"]),'T')
     TSF_Forth_setTSF("calcjumpdata:","\t".join([

@@ -16,6 +16,6 @@ TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcallrun)
 TSF_Forth_mainfilepath(os.path.abspath(__file__))
 
 TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-    "Hello world","#TSF_echo"]),'T')
+    "Hello world","#!TSF_echo"]),'T')
 
 TSF_Forth_run()

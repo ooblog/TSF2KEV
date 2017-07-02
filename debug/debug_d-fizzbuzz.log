@@ -1,8 +1,8 @@
 -- TSF_sample_FizzBuzz source --
 TSF_Tab-Separated-Forth:
-	#TSF_argvs	#TSF_pullFthat	FZcount:	#TSF_pushFthe	FBloop:	#TSF_this	#TSF_fin.	20
+	#!TSF_argvs	#!TSF_pullFthat	FZcount:	#!TSF_pushFthe	FBloop:	#!TSF_this	#!TSF_fin.	20
 FBloop:
-	FZcount:	,([FZcount:0]+1)	#TSF_-calc	FZcount:	0	#TSF_pokeNthe	([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)	#TSF_calc	#TSF_peekNthe	#TSF_echo	[FZcount:4]-[FZcount:0]o~FBloop:~#!exit:	#TSF_calc	#TSF_this
+	FZcount:	,([FZcount:0]+1)	#!TSF_-calc	FZcount:	0	#!TSF_pokeNthe	([FZcount:0]#3Z~1~0)+([FZcount:0]#5Z~2~0)	#!TSF_calc	#!TSF_peekNthe	#!TSF_echo	[FZcount:4]-[FZcount:0]o~FBloop:~#!exit:	#!TSF_calc	#!TSF_this
 FZcount:
 	0	Fizz	Buzz	Fizz&Buzz
 -- TSF_sample_FizzBuzz run --

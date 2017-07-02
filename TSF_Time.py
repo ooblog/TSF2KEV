@@ -12,11 +12,11 @@ from TSF_Forth import *
 def TSF_Time_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Time")
     TSF_Forth_cards={
-        "#TSF_diffminute":TSF_Time_diffminute, "#時差設定":TSF_Time_diffminute,
-        "#TSF_overhour":TSF_Time_overhour, "#徹夜設定":TSF_Time_overhour,
-        "#TSF_nowdaytime":TSF_Time_nowdaytime, "#日時取得":TSF_Time_nowdaytime,
-        "#TSF_calender":TSF_Time_calender, "#日時置換":TSF_Time_calender,
-#        "#TSF_timer":TSF_Time_timer, "#タイマー置換":TSF_Time_timer,
+        "#!TSF_diffminute":TSF_Time_diffminute, "#時差設定":TSF_Time_diffminute,
+        "#!TSF_overhour":TSF_Time_overhour, "#徹夜設定":TSF_Time_overhour,
+        "#!TSF_nowdaytime":TSF_Time_nowdaytime, "#日時取得":TSF_Time_nowdaytime,
+        "#!TSF_calender":TSF_Time_calender, "#日時置換":TSF_Time_calender,
+#        "#!TSF_timer":TSF_Time_timer, "#タイマー置換":TSF_Time_timer,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -83,9 +83,9 @@ TSF_allnight_Enum=[0]*TSF_allnight_EnumLen;
 TSF_counter_Counter=0
 TSF_Time_EnumNULL=None
 
-#TSF_time_Counter,TSF_time_randOm=0,random.random()
+#!TSF_time_Counter,TSF_time_randOm=0,random.random()
 
-def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時刻の初期化。実際の年月日等の取得は遅延処理で行う。
+def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSFdoc:時刻の初期化。実際の年月日等の取得は遅延処理で行う。
     global TSF_earlier_diffminute,TSF_earlier_overhour
     TSF_earlier_diffminute=TSF_diffminute if TSF_diffminute != None else TSF_earlier_diffminute
     TSF_earlier_overhour=min(max(TSF_overhour,24),48) if TSF_overhour != None else TSF_earlier_overhour
@@ -97,56 +97,56 @@ def TSF_Time_setdaytime(TSF_diffminute=None,TSF_overhour=None):    #TSF_doc:時�
     global TSF_counter_Counter
     TSF_counter_Counter=0
 
-def TSF_Time_meridian_Year():    #TSF_doc:現在時刻年4桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Year():    #TSFdoc:現在時刻年4桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Year]=TSF_meridian_Enum[TSF_meridian_Year] if TSF_meridian_Enum[TSF_meridian_Year] != TSF_Time_EnumNULL else TSF_diff_now.year
     return TSF_meridian_Enum[TSF_meridian_Year]
-def TSF_Time_meridian_Yearlower():    #TSF_doc:現在時刻年下2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Yearlower():    #TSFdoc:現在時刻年下2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Yearlower]=TSF_meridian_Enum[TSF_meridian_Yearlower] if TSF_meridian_Enum[TSF_meridian_Yearlower] != TSF_Time_EnumNULL else TSF_diff_now.year%100
     return TSF_meridian_Enum[TSF_meridian_Yearlower]
 
-def TSF_Time_meridian_Month():    #TSF_doc:現在時刻月2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Month():    #TSFdoc:現在時刻月2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Month]=TSF_meridian_Enum[TSF_meridian_Month] if TSF_meridian_Enum[TSF_meridian_Month] != TSF_Time_EnumNULL else TSF_diff_now.month
     return TSF_meridian_Enum[TSF_meridian_Month]
 
-def TSF_Time_meridian_Weekday():    #TSF_doc:現在時刻曜1桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Weekday():    #TSFdoc:現在時刻曜1桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Weekday]=TSF_meridian_Enum[TSF_meridian_Weekday] if TSF_meridian_Enum[TSF_meridian_Weekday] != TSF_Time_EnumNULL else TSF_diff_now.weekday()
     return TSF_meridian_Enum[TSF_meridian_Weekday]
 
-def TSF_Time_meridian_Daymonth():    #TSF_doc:現在時刻日2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Daymonth():    #TSFdoc:現在時刻日2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Daymonth]=TSF_meridian_Enum[TSF_meridian_Daymonth] if TSF_meridian_Enum[TSF_meridian_Daymonth] != TSF_Time_EnumNULL else TSF_diff_now.day
     return TSF_meridian_Enum[TSF_meridian_Daymonth]
 
-def TSF_Time_meridian_Hour():    #TSF_doc:現在時刻時2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Hour():    #TSFdoc:現在時刻時2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Hour]=TSF_meridian_Enum[TSF_meridian_Hour] if TSF_meridian_Enum[TSF_meridian_Hour] != TSF_Time_EnumNULL else TSF_diff_now.hour
     return TSF_meridian_Enum[TSF_meridian_Hour]
 
-def TSF_Time_meridian_miNute():    #TSF_doc:現在時刻分2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_miNute():    #TSFdoc:現在時刻分2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_miNute]=TSF_meridian_Enum[TSF_meridian_miNute] if TSF_meridian_Enum[TSF_meridian_miNute] != TSF_Time_EnumNULL else TSF_diff_now.minute
     return TSF_meridian_Enum[TSF_meridian_miNute]
 
-def TSF_Time_meridian_Second():    #TSF_doc:現在時刻秒2桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_Second():    #TSFdoc:現在時刻秒2桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_Second]=TSF_meridian_Enum[TSF_meridian_Second] if TSF_meridian_Enum[TSF_meridian_Second] != TSF_Time_EnumNULL else TSF_diff_now.second
     return TSF_meridian_Enum[TSF_meridian_Second]
 
-def TSF_Time_meridian_miLlisecond():    #TSF_doc:現在時刻ミリ秒3桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_miLlisecond():    #TSFdoc:現在時刻ミリ秒3桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_miLlisecond]=TSF_meridian_Enum[TSF_meridian_miLlisecond] if TSF_meridian_Enum[TSF_meridian_miLlisecond] != TSF_Time_EnumNULL else TSF_Time_meridian_micRosecond()//1000
     return TSF_meridian_Enum[TSF_meridian_miLlisecond]
 
-def TSF_Time_meridian_micRosecond():    #TSF_doc:現在時刻マイクロ秒6桁の遅延処理。(TSFAPI)
+def TSF_Time_meridian_micRosecond():    #TSFdoc:現在時刻マイクロ秒6桁の遅延処理。(TSFAPI)
     global TSF_meridian_Enum
     TSF_meridian_Enum[TSF_meridian_micRosecond]=TSF_meridian_Enum[TSF_meridian_micRosecond] if TSF_meridian_Enum[TSF_meridian_micRosecond] != TSF_Time_EnumNULL else TSF_diff_now.microsecond
     return TSF_meridian_Enum[TSF_meridian_micRosecond]
 
-def TSF_Time_Counter(TSF_Time_countset=None):    #TSF_doc:カウンターを数える。(TSFAPI)
+def TSF_Time_Counter(TSF_Time_countset=None):    #TSFdoc:カウンターを数える。(TSFAPI)
     global TSF_counter_Counter
     TSF_counter_Counter+=1
     if TSF_Time_countset != None:  TSF_counter_Counter=TSF_Time_countset
@@ -220,13 +220,13 @@ def TSF_Time_debug(TSF_sysargvs):    #TSFdoc:「TSF_Time」単体テスト風デ
     TSF_debug_log=TSF_Io_printlog("--- {0} ---".format(__file__),TSF_debug_log)
     TSF_Forth_initTSF(TSF_sysargvs,TSF_Initcalldebug)
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
-        "timecount:","#TSF_this","#TSF_fin."]),'T')
+        "timecount:","#!TSF_this","#!TSF_fin."]),'T')
     TSF_Forth_setTSF("timecount:","\t".join([
-        "timejump:","timesample:","#TSF_lenthe","0,1,[0]U","#TSF_join[]","#TSF_RPN","#TSF_peekNthe","#TSF_this","timecount:","#TSF_this"]),'T')
+        "timejump:","timesample:","#!TSF_lenthe","0,1,[0]U","#!TSF_join[]","#!TSF_RPN","#!TSF_peekNthe","#!TSF_this","timecount:","#!TSF_this"]),'T')
     TSF_Forth_setTSF("timejump:","\t".join([
         "#!exit:","timepop:"]),'T')
     TSF_Forth_setTSF("timepop:","\t".join([
-        "timesample:","0","#TSF_pullNthe","#TSF_peekFthat","#TSF_calender","「[1]」→「[0]」","#TSF_join[]","#TSF_echo"]),'T')
+        "timesample:","0","#!TSF_pullNthe","#!TSF_peekFthat","#!TSF_calender","「[1]」→「[0]」","#!TSF_join[]","#!TSF_echo"]),'T')
     TSF_Forth_setTSF("timesample:","\t".join([
         "{$TSFcounter@c}",
         "@000y,@___y,@4y,@0y,@_y,@2y",

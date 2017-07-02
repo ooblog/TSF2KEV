@@ -1,13 +1,13 @@
 --- TSF_Time.d ---
 -- TSF_Time.d source --
 TSF_Tab-Separated-Forth:
-	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.
+	#!TSF_nowdaytime	timecount:	#!TSF_this	#!TSF_fin.
 timecount:
-	timejump:	timesample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	timecount:	#TSF_this
+	timejump:	timesample:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this	timecount:	#!TSF_this
 timejump:
 	#!exit:	timepop:
 timepop:
-	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+	timesample:	0	#!TSF_pullNthe	#!TSF_peekFthat	#!TSF_calender	「[1]」→「[0]」	#!TSF_join[]	#!TSF_echo
 timesample:
 	{$TSFcounter@c}
 	@000y,@___y,@4y,@0y,@_y,@2y
@@ -24,24 +24,24 @@ timesample:
 -- TSF_Time.d run --
 「{$TSFcounter@c}」→「{$TSFcounter1}」
 「@000y,@___y,@4y,@0y,@_y,@2y」→「2017,2017,2017,17,17,17」
-「@0m,@_m,@m」→「06, 6,6」
+「@0m,@_m,@m」→「07, 7,7」
 「@wd」→「0」
-「@0dm,@_dm,@dm」→「19,19,19」
-「@0h,@_h,@h」→「02, 2,2」
-「@0m,@_m,@m」→「06, 6,6」
-「@0s,@_s,@s」→「24,24,24」
+「@0dm,@_dm,@dm」→「03, 3,3」
+「@0h,@_h,@h」→「04, 4,4」
+「@0m,@_m,@m」→「07, 7,7」
+「@0s,@_s,@s」→「48,48,48」
 「@00ls,@__ls,@ls」→「000,  0,0」
 「@00000rs,@_____rs,@rs」→「000000,     0,0」
-「@4y@0m@0dm@wdec@0h@0n@0s」→「20170619M022224」
+「@4y@0m@0dm@wdec@0h@0n@0s」→「20170703M041148」
 「{$TSFcounter@c}」→「{$TSFcounter2}」
 -- TSF_Time.d viewthey --
 TSF_Tab-Separated-Forth:
-	#TSF_nowdaytime	timecount:	#TSF_this	#TSF_fin.
+	#!TSF_nowdaytime	timecount:	#!TSF_this	#!TSF_fin.	#TSF_fin.
 timecount:
-	timejump:	timesample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	timecount:	#TSF_this
+	timejump:	timesample:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this	timecount:	#!TSF_this
 timejump:
 	#!exit:	timepop:
 timepop:
-	timesample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_calender	「[1]」→「[0]」	#TSF_join[]	#TSF_echo
+	timesample:	0	#!TSF_pullNthe	#!TSF_peekFthat	#!TSF_calender	「[1]」→「[0]」	#!TSF_join[]	#!TSF_echo
 timesample:
 	

@@ -1,35 +1,35 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	#TSF_argvs	#TSF_pullFthat	#TSF_peekFthat	#TSF_existfile	[0]Z~TSFdocs_help:~TSFdocs_merge:	#TSF_join[]	#TSF_calc	#TSF_this	#TSF_fin.	README.tsf
+	#!TSF_argvs	#!TSF_pullFthat	#!TSF_peekFthat	#!TSF_existfile	[0]Z~TSFdocs_help:~TSFdocs_merge:	#!TSF_join[]	#!TSF_calc	#!TSF_this	#!TSF_fin.	README.tsf
 TSFdocs_help:
-	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#TSF_echo	#TSF_fin.
+	usage: TSF [--TSFdoc | sample/TSFdoc.tsf] README.tsf	#!TSF_echo	#!TSF_fin.
 #! -- merge --
 #!	TSFdocs_files:	../README.md	../debug/README.html
 #!	TSFdocs_basedocs:	TSFdocs_baseMD:	TSFdocs_baseHTML:
 #!	TSFdocs_imports:	sample_aboutTSF.tsf
 #!	TSFimport_ext:	.tsf
 #!	TSFimport_regex:	regex_TSF:	regex_none:
-#!	regex_TSF:	regexTSF_reg:	regexTSF_txt:	#TSF_replacesRSN
-#!	regex_none:	#TSF_pullFthat
+#!	regex_TSF:	regexTSF_reg:	regexTSF_txt:	#!TSF_replacesRSN
+#!	regex_none:	#!TSF_pullFthat
 #!	TSFdocs_tags:	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}	{?/P}	{?P}	{?/H2}	{?H2}	{?/H1}	{?H1}
 TSFdocs_merge:
-	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe	#TSF_peekFthat	#TSF_basepath
-	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
+	#!TSF_peekFthat	#!TSF_readtext	#!TSF_peekFthat	#!TSF_mergethe	#!TSF_peekFthat	#!TSF_basepath
+	TSFdocs_imports:	#!TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#!TSF_join[]	#!TSF_calc	#!TSF_this
 TSFdocs_import:
-	TSFdocs_imports:	#TSF_pullFthe	#TSF_peekFthat	[0](import)	#TSF_join[]	#TSF_echo
-	#TSF_peekFthat	#TSF_readtext	#TSF_peekFthat	#TSF_mergethe
-	#TSF_peekFthat	#TSF_fileext	TSFimport_ext:	TSFimport_regex:	#TSF_casesQON	#TSF_this
-	TSFdocs_imports:	#TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#TSF_join[]	#TSF_calc	#TSF_this
+	TSFdocs_imports:	#!TSF_pullFthe	#!TSF_peekFthat	[0](import)	#!TSF_join[]	#!TSF_echo
+	#!TSF_peekFthat	#!TSF_readtext	#!TSF_peekFthat	#!TSF_mergethe
+	#!TSF_peekFthat	#!TSF_fileext	TSFimport_ext:	TSFimport_regex:	#!TSF_casesQON	#!TSF_this
+	TSFdocs_imports:	#!TSF_lenthe	[0]Z~TSFdocs_loop:~TSFdocs_import:	#!TSF_join[]	#!TSF_calc	#!TSF_this
 TSFdocs_loop:
-	TSFdocs_files:	#TSF_pullFthe	#TSF_peekFthat	[0](save)	#TSF_join[]	#TSF_echo
-	TSF_carbondoc:	TSFdocs_basedocs:	#TSF_pullFthe	#TSF_clonethe
-	TSF_carbontags:	TSFdocs_tags:	#TSF_clonethe	TSFtags_loop:	#TSF_this
-	#TSF_peekFthat	TSF_carbondoc:	#TSF_savetext
-	TSFdocs_files:	#TSF_lenthe	[0]Z~#!exit:~TSFdocs_loop:	#TSF_join[]	#TSF_calc	#TSF_this
+	TSFdocs_files:	#!TSF_pullFthe	#!TSF_peekFthat	[0](save)	#!TSF_join[]	#!TSF_echo
+	TSF_carbondoc:	TSFdocs_basedocs:	#!TSF_pullFthe	#!TSF_clonethe
+	TSF_carbontags:	TSFdocs_tags:	#!TSF_clonethe	TSFtags_loop:	#!TSF_this
+	#!TSF_peekFthat	TSF_carbondoc:	#!TSF_savetext
+	TSFdocs_files:	#!TSF_lenthe	[0]Z~#!exit:~TSFdocs_loop:	#!TSF_join[]	#!TSF_calc	#!TSF_this
 TSFtags_loop:
-	TSF_carbondoc:	TSF_carbontags:	#TSF_pullFthe	#TSF_peekFthat	TSFdocs_files:	#TSF_lenthe	#TSF_peekMthe
-	#TSF_calender	#TSF_docsQ
-	TSF_carbontags:	#TSF_lenthe	[0]Z~#!exit:~TSFtags_loop:	#TSF_join[]	#TSF_calc	#TSF_this
+	TSF_carbondoc:	TSF_carbontags:	#!TSF_pullFthe	#!TSF_peekFthat	TSFdocs_files:	#!TSF_lenthe	#!TSF_peekMthe
+	#!TSF_calender	#!TSF_docsQ
+	TSF_carbontags:	#!TSF_lenthe	[0]Z~#!exit:~TSFtags_loop:	#!TSF_join[]	#!TSF_calc	#!TSF_this
 
 
 #! -- Copyright (c) 2017 ooblog --

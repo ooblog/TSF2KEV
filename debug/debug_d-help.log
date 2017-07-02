@@ -1,6 +1,6 @@
 -- TSF_sample_help source --
 TSF_Tab-Separated-Forth:
-	replace:	#TSF_this	help:	#TSF_argvsthe	#TSF_echoN	#TSF_fin.
+	replace:	#!TSF_this	help:	#!TSF_argvsthe	#!TSF_echoN	#!TSF_fin.
 help:
 	usage: ./TSF [command|file.tsf] [argvs] ...
 	commands & samples:
@@ -12,12 +12,12 @@ help:
 	  --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
 	  --calc        fraction calculator "1/3-m1|2"-> p5|6
 	  --calender    "@4y@0m@0dm@wdec@0h@0n@0s"-> {calender}
-	  --helloworld  "Hello world  #TSF_echo" sample
+	  --helloworld  "Hello world  #!TSF_echo" sample
 	  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample
 	  --99bear      99 Bottles of Beer 9 Bottles sample
 	  --quine       quine (TSF,Python,D... selfsource) sample
 replace:
-	help:	{calender}	@4y@0m@0dm@wdec@0h@0n@0s	#TSF_calender	#TSF_replacesQON
+	help:	{calender}	@4y@0m@0dm@wdec@0h@0n@0s	#!TSF_calender	#!TSF_replacesQON
 -- TSF_sample_help run --
 usage: ./TSF [command|file.tsf] [argvs] ...
 commands & samples:
@@ -28,8 +28,8 @@ commands & samples:
   --dlang       TSF to D
   --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
   --calc        fraction calculator "1/3-m1|2"-> p5|6
-  --calender    "@4y@0m@0dm@wdec@0h@0n@0s"-> 20170703M000644
-  --helloworld  "Hello world  #TSF_echo" sample
+  --calender    "@4y@0m@0dm@wdec@0h@0n@0s"-> 20170703M044222
+  --helloworld  "Hello world  #!TSF_echo" sample
   --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample
   --99bear      99 Bottles of Beer 9 Bottles sample
   --quine       quine (TSF,Python,D... selfsource) sample

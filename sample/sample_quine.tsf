@@ -1,15 +1,15 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	quine_echo:	#TSF_this	#TSF_fin.
+	quine_echo:	#!TSF_this	#!TSF_fin.
 quine_echo:
-	#TSF_mainfile	#TSF_fileext	quine_ext:	quine_view:	#TSF_casesQON	#TSF_this
+	#!TSF_mainfile	#!TSF_fileext	quine_ext:	quine_view:	#!TSF_casesQON	#!TSF_this
 quine_ext:
 	.tsf	.py	.d
 quine_view:
 	quine_TSF:	quine_Python:	quine_D:	#!exit:
 quine_TSF:
-	#! /usr/bin/env TSF	#TSF_echo	#TSF_viewthey
+	#! /usr/bin/env TSF	#!TSF_echo	#!TSF_viewthey
 quine_Python:
-	#TSF_Python
+	#!TSF_Python
 quine_D:
-	#TSF_D-lang
+	#!TSF_D-lang

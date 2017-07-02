@@ -15,20 +15,20 @@ Random TSF_Match_Random;
 void TSF_Match_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Match");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_replacesQSN":&TSF_Match_replacesQSN, "#同択文字列群で順択置換":&TSF_Match_replacesQSN,
-        "#TSF_replacesQDN":&TSF_Match_replacesQDN, "#同択文字列で順択置換":&TSF_Match_replacesQDN,
-        "#TSF_replacesQON":&TSF_Match_replacesQON, "#同択で順択置換":&TSF_Match_replacesQON,
-        "#TSF_replacesRSN":&TSF_Match_replacesRSN, "#規択文字列群で順択置換":&TSF_Match_replacesRSN,
-        "#TSF_replacesaRDN":&TSF_Match_replacesRDN, "#規択文字列で順択置換":&TSF_Match_replacesRDN,
-        "#TSF_replacesRON":&TSF_Match_replacesRON, "#規択で順択置換":&TSF_Match_replacesRON,
-        "#TSF_aliasQSN":&TSF_Match_aliasQSN, "#同択文字列群で順択代入":&TSF_Match_aliasQSN,
-        "#TSF_aliasQDN":&TSF_Match_aliasQDN, "#同択文字列で順択代入":&TSF_Match_aliasQDN,
-        "#TSF_aliasQON":&TSF_Match_aliasQON, "#同択で順択代入":&TSF_Match_aliasQON,
-        "#TSF_casesQSN":&TSF_Match_casesQSN, "#例外あり同択文字列群で表択代入":&TSF_Match_casesQSN,
-        "#TSF_casesQDN":&TSF_Match_casesQDN, "#例外あり同択文字列で表択代入":&TSF_Match_casesQDN,
-        "#TSF_casesQON":&TSF_Match_casesQON, "#例外あり同択で表択代入":&TSF_Match_casesQON,
-        "#TSF_docsQ":&TSF_Match_docsQ, "#同択編集":&TSF_Match_docsQ,
-        "#TSF_Match":&TSF_Match_Match, "#置換代入系統一式":&TSF_Match_Match,
+        "#!TSF_replacesQSN":&TSF_Match_replacesQSN, "#同択文字列群で順択置換":&TSF_Match_replacesQSN,
+        "#!TSF_replacesQDN":&TSF_Match_replacesQDN, "#同択文字列で順択置換":&TSF_Match_replacesQDN,
+        "#!TSF_replacesQON":&TSF_Match_replacesQON, "#同択で順択置換":&TSF_Match_replacesQON,
+        "#!TSF_replacesRSN":&TSF_Match_replacesRSN, "#規択文字列群で順択置換":&TSF_Match_replacesRSN,
+        "#!TSF_replacesaRDN":&TSF_Match_replacesRDN, "#規択文字列で順択置換":&TSF_Match_replacesRDN,
+        "#!TSF_replacesRON":&TSF_Match_replacesRON, "#規択で順択置換":&TSF_Match_replacesRON,
+        "#!TSF_aliasQSN":&TSF_Match_aliasQSN, "#同択文字列群で順択代入":&TSF_Match_aliasQSN,
+        "#!TSF_aliasQDN":&TSF_Match_aliasQDN, "#同択文字列で順択代入":&TSF_Match_aliasQDN,
+        "#!TSF_aliasQON":&TSF_Match_aliasQON, "#同択で順択代入":&TSF_Match_aliasQON,
+        "#!TSF_casesQSN":&TSF_Match_casesQSN, "#例外あり同択文字列群で表択代入":&TSF_Match_casesQSN,
+        "#!TSF_casesQDN":&TSF_Match_casesQDN, "#例外あり同択文字列で表択代入":&TSF_Match_casesQDN,
+        "#!TSF_casesQON":&TSF_Match_casesQON, "#例外あり同択で表択代入":&TSF_Match_casesQON,
+        "#!TSF_docsQ":&TSF_Match_docsQ, "#同択編集":&TSF_Match_docsQ,
+        "#!TSF_Match":&TSF_Match_Match, "#置換代入系統一式":&TSF_Match_Match,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -183,7 +183,7 @@ void TSF_Match_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Match」単体�
 }
 
 unittest {
-//    TSF_Match_debug(TSF_Io_argvs(["dmd","TSF_Match.d"]));
+//   TSF_Match_debug(TSF_Io_argvs(["dmd","TSF_Match.d"]));
 }
 
 

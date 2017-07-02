@@ -9,11 +9,11 @@ from TSF_Forth import *
 def TSF_Trans_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードにDやPythonに翻訳する命令を追加する。(TSFAPI)
     TSF_Forth_importlist(TSF_import="TSF_Trans")
     TSF_Forth_cards={
-        "#TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,
-        "#TSF_D-lang":TSF_Trans_dlang, "#デッキのD言語化":TSF_Trans_dlang,
-#        "#TSF_Vim-script":TSF_Trans_vimscript, "#デッキのVimスクリプト化":TSF_Trans_vimscript,
-#        "#TSF_JavaScript":TSF_Trans_javascript, "#デッキのJavaスクリプト化":TSF_Trans_javascript,
-#        "#TSF_HSP":TSF_Trans_hsp, "#デッキのHSP化":TSF_Trans_hsp,
+        "#!TSF_Python":TSF_Trans_python, "#デッキのpython化":TSF_Trans_python,
+        "#!TSF_D-lang":TSF_Trans_dlang, "#デッキのD言語化":TSF_Trans_dlang,
+#        "#!TSF_Vim-script":TSF_Trans_vimscript, "#デッキのVimスクリプト化":TSF_Trans_vimscript,
+#        "#!TSF_JavaScript":TSF_Trans_javascript, "#デッキのJavaスクリプト化":TSF_Trans_javascript,
+#        "#!TSF_HSP":TSF_Trans_hsp, "#デッキのHSP化":TSF_Trans_hsp,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:

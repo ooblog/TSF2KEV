@@ -16,13 +16,13 @@ import TSF_Forth;
 void TSF_Urlpath_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに文字列置換などの命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Urlpath");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_fileext":&TSF_Urlpath_fileext, "#ファイルの拡張子":&TSF_Urlpath_fileext,
-        "#TSF_abspath":&TSF_Urlpath_abspath, "#ファイルの絶対パス":&TSF_Urlpath_abspath,
-        "#TSF_dirpath":&TSF_Urlpath_dirpath, "#ファイルのディレクトリ":&TSF_Urlpath_dirpath,
-        "#TSF_chpath":&TSF_Urlpath_chpath, "#ディレクトリ移動":&TSF_Urlpath_chpath,
-        "#TSF_basepath":&TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":&TSF_Urlpath_basepath,
-        "#TSF_existfile":&TSF_Urlpath_existfile, "#ファイル名の有無":&TSF_Urlpath_existfile,
-        "#TSF_existdir":&TSF_Urlpath_existdir, "#ディレクトリ名の有無":&TSF_Urlpath_existdir,
+        "#!TSF_fileext":&TSF_Urlpath_fileext, "#ファイルの拡張子":&TSF_Urlpath_fileext,
+        "#!TSF_abspath":&TSF_Urlpath_abspath, "#ファイルの絶対パス":&TSF_Urlpath_abspath,
+        "#!TSF_dirpath":&TSF_Urlpath_dirpath, "#ファイルのディレクトリ":&TSF_Urlpath_dirpath,
+        "#!TSF_chpath":&TSF_Urlpath_chpath, "#ディレクトリ移動":&TSF_Urlpath_chpath,
+        "#!TSF_basepath":&TSF_Urlpath_basepath, "#ファイルのディレクトリに移動":&TSF_Urlpath_basepath,
+        "#!TSF_existfile":&TSF_Urlpath_existfile, "#ファイル名の有無":&TSF_Urlpath_existfile,
+        "#!TSF_existdir":&TSF_Urlpath_existdir, "#ディレクトリ名の有無":&TSF_Urlpath_existdir,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){

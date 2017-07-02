@@ -2,7 +2,7 @@
 ## TSF超ザックリ説明。
 
 TSFはForth風インタプリタです。CSV→TSV→TSF。  
-構文は文字列をタブで区切るだけ(コメント行などでシバン「#!」を用いる程度)。  
+構文は文字列をタブで区切るだけ(#!コメント行と#!関数カードでシバン「#!」を用いる程度)。  
 ![TSF syntax image](https://github.com/ooblog/TSF2KEV/blob/master/docs/TSF_512x384.png "TSF2KEV/TSF_512x384.png at master ooblog/TSF2KEV")  
 
 ## 言語が生まれた経緯。
@@ -22,9 +22,9 @@ TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblo
 
     #! /usr/bin/env TSF    
     TSF_Tab-Separated-Forth:    
-    	echoTSF:	#TSF_this	#TSF_fin.    
+    	echoTSF:	#!TSF_this	#!TSF_fin.    
     echoTSF:    
-    	aboutTSF:	#TSF_argvsthe	#TSF_echoN	echoRPNcalc:	#TSF_this    
+    	aboutTSF:	#!TSF_argvsthe	#!TSF_echoN	echoRPNcalc:	#!TSF_this    
     aboutTSF:    
     	    
     	○「TSF_Tab-Separated-Forth」の簡略説明。    
@@ -52,34 +52,34 @@ TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblo
     	　代名詞と動詞の間にある「F」などが副詞。スタックに最後に積まれたカード、表面カードを選択するので表択。    
     	　「peekNthe」等の「N」は積まれた順に番号を割り振り番号で読込カード指定するので順択、というようにどのカードをppppするのか明記します。    
     	    
-    	○TSF式として2種類の電卓「#TSF_RPN」「#TSF_calc」が存在。    
+    	○TSF式として2種類の電卓「#!TSF_RPN」「#!TSF_calc」が存在。    
     	　calcでは括弧や分数なども使えます。RPNは括弧を処理しない上に小数のみなので高速です。    
     	　calcの括弧内外でRPNを使う事は可能です。コンマ「,」を用いるとRPNとみなされます。    
-    	　TSFには変数がないので「#TSF_joinN」「#TSF_join[]」などを用いてカードを連結して式文字列を作ります。    
+    	　TSFには変数がないので「#!TSF_joinN」「#!TSF_join[]」などを用いてカードを連結して式文字列を作ります。    
     	    
     echoRPNcalc:    
-    	aboutRPNtest:	#TSF_this	aboutRPNcalc:	#TSF_argvsthe	#TSF_echoN	echoURL:	#TSF_this    
+    	aboutRPNtest:	#!TSF_this	aboutRPNcalc:	#!TSF_argvsthe	#!TSF_echoN	echoURL:	#!TSF_this    
     aboutRPNtest:    
-    	▽「1 3 m1|2」を「[2],[1]/[0]- #TSF_join[]」で連結した「1,3/m1|2-」を「#TSF_RPN」電卓→    
-    	1	3	m1|2	[2],[1]/[0]-	#TSF_join[]	#TSF_RPN	2	#TSF_joinN	#TSF_echo    
-    #!「#TSF_RPN」電卓→p0.833333333333    
-    	▽「1 , 3 / m1|2 -」を「6 #TSF_join」で連結した「1,3/m1|2-」を「#TSF_RPN」電卓→    
-    	1	,	3	/	m1|2	-	6	#TSF_joinN	#TSF_RPN	2	#TSF_joinN	#TSF_echo    
-    #!「#TSF_RPN」電卓→p0.833333333333    
-    	▽「1 3 m1|2」を「[2]/[1]-[0] #TSF_join[]」で連結した「1/3-m1|2」を「#TSF_calc」電卓→    
-    	1	3	m1|2	[2]/[1]-[0]	#TSF_join[]	#TSF_calc	2	#TSF_joinN	#TSF_echo    
-    #!「#TSF_calc」電卓→p5|6    
-    	▽「1 / 3 - m1|2 」を「5 #TSF_join」で連結した「1/3-m1|2」を「#TSF_calc」電卓→    
-    	1	/	3	-	m1|2	5	#TSF_joinN	#TSF_calc	2	#TSF_joinN	#TSF_echo    
-    #!「#TSF_calc」電卓→p5|6    
-    	▽「#TSF_calc」のショートカット文法で「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]」(演算内容は「1/3-m1|2」)→    
-    	[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]	#TSF_calc	2	#TSF_joinN	#TSF_echo    
-    #!「#TSF_calc」電卓→p5|6    
+    	▽「1 3 m1|2」を「[2],[1]/[0]- #!TSF_join[]」で連結した「1,3/m1|2-」を「#!TSF_RPN」電卓→    
+    	1	3	m1|2	[2],[1]/[0]-	#!TSF_join[]	#!TSF_RPN	2	#!TSF_joinN	#!TSF_echo    
+    #!「#!TSF_RPN」電卓→p0.833333333333    
+    	▽「1 , 3 / m1|2 -」を「6 #!TSF_join」で連結した「1,3/m1|2-」を「#!TSF_RPN」電卓→    
+    	1	,	3	/	m1|2	-	6	#!TSF_joinN	#!TSF_RPN	2	#!TSF_joinN	#!TSF_echo    
+    #!「#!TSF_RPN」電卓→p0.833333333333    
+    	▽「1 3 m1|2」を「[2]/[1]-[0] #!TSF_join[]」で連結した「1/3-m1|2」を「#!TSF_calc」電卓→    
+    	1	3	m1|2	[2]/[1]-[0]	#!TSF_join[]	#!TSF_calc	2	#!TSF_joinN	#!TSF_echo    
+    #!「#!TSF_calc」電卓→p5|6    
+    	▽「1 / 3 - m1|2 」を「5 #!TSF_join」で連結した「1/3-m1|2」を「#!TSF_calc」電卓→    
+    	1	/	3	-	m1|2	5	#!TSF_joinN	#!TSF_calc	2	#!TSF_joinN	#!TSF_echo    
+    #!「#!TSF_calc」電卓→p5|6    
+    	▽「#!TSF_calc」のショートカット文法で「[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]」(演算内容は「1/3-m1|2」)→    
+    	[aboutCALCdata:0]/[aboutCALCdata:1]-[aboutCALCdata:2]	#!TSF_calc	2	#!TSF_joinN	#!TSF_echo    
+    #!「#!TSF_calc」電卓→p5|6    
     aboutCALCdata:    
     	1	3	m1|2    
     aboutRPNcalc:    
     	    
-    	○「#TSF_RPN」と「#TSF_calc」の共通点や差異の補足。    
+    	○「#!TSF_RPN」と「#!TSF_calc」の共通点や差異の補足。    
     	　演算子の「+」プラス「-」マイナスと符号の「p」プラス「m」マイナスは分けて表記。割り算の「/」と分数の「|」も分けて表記。    
     	　calcの出力結果は基本分数ですが、「,(1|3)」のように括弧の外側でコンマを使う事で計算結果をRPNに渡す事ができます。    
     	　条件演算子がRPNでは「Z」「z」「O」「o」「U」「u」ですがcalcでは「Z~」「z~」「O~」「o~」「U~」「u~」「N~」とチルダ追加です。    
@@ -87,7 +87,7 @@ TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblo
     	　calcには演算を抑止する「:」演算子が含まれてるので条件演算子の結果にスタック名を直接指定する事でIF構文の代替になります。    
     	    
     echoURL:    
-    	aboutURL:	#TSF_argvsthe	#TSF_echoN    
+    	aboutURL:	#!TSF_argvsthe	#!TSF_echoN    
     aboutURL:    
     	○TSFの詳しい説明はローカルの「docs/index.html」かWeb上の「https://ooblog.github.io/TSF2KEV/」を確認してください(執筆中)。    
     	    
@@ -99,17 +99,14 @@ TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblo
 
 ## TSF2KEVで未実装な箇所や気が付いたバグやドキュメント未整備な箇所など(ToDoリスト風)。
 
-☐構文をよりシンプルにするため「#TSF_echo」を「#!echo」のようにシバンに統一させるか検討中(#!関数カードと同名のスタック名を回避させる目的)。  
-☑文字コードは「UTF-8」改行は「LF」と固定。TSF1KEVにあった「UTF-8\t#TSF_encoding」は圧縮。  
-☑L:Tsvではタブの個数は関係なかったけどTSFではゼロ長文字列も扱うのでタブの重複に注意。  
-☑アンダーフローが発生しても長さゼロ文字列が帰ってくるだけ。ただし「TSF_Tab-Separated-Forth」の「#TSF_fin.」を消さないよう注意。  
-☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#TSF_countmax」(スタックのカード数え上げ枚数の上限初期値256)という安全装置は付けているけどいまいちスマートじゃない。  
+☑#!コメント行と#!関数カードの構文をシバンに統一してみたけど様子見。「#!TSF_*」の「TSF_」部分の省略は見送り。「GTK_」「DOM_」とかGUI関数と区別視認性の予感。  
+☑ハウリング(thisとthatが同じで出口が壊れてるとスタックが無限蓄積の危険性)対策のため「#!TSF_countmax」(スタックのカード数え上げ枚数の上限初期値256)という安全装置は付けているけどいまいちスマートじゃない。  
 ☑PPPP処理を「TSF_Forth.&#42;」に一本化。スタックやデッキ(文字列リスト)の処理が複数モジュールにまたがるとスコープの問題で言語の組み込み関数で直接編集できなくなるため。  
-☐浮動小数の丸め指示「#TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。  
-☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。  
 ☑分数の小数変換を「,(1|3)」と説明したのに「(,1|3)」で小数が分数になると説明しないのは、極論0.333…と0.3が区別できないので1|3と3|10が区別できなくなる恐れ。  
-☐「#TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。  
-☐「#TSF_calc」で「(1/3)-(m1|2)」の様に括弧で負数を囲むと符号反転に失敗する。  
+☐浮動小数の丸め指示「#!TSF_calcRO」の扱いが未定。言語毎に小数の実装などにに差異があるはず。  
+☐浮動小数ではない分数の小数変換専用の#関数カードも必要だけど未着手。  
+☐「#!TSF_calcJA」で指数が表示されたり「銭」の扱いが不十分。  
+☐「#!TSF_calc」で「(1/3)-(m1|2)」の様に括弧で負数を囲むと符号反転に失敗する。  
 ☐字列の類似度「H」(matcHer)がD言語で再現できるか未定なので当面後回しになるかも。  
 ☐自然対数(logｅ)は「E&#126;」。常用対数(log10)は「L&#126;」。二進対数(log2)は「l&#126;」の予定。「256l&#126;2」を8にするも「256L&#126;2」や「256E&#126;2」が8になってくれない症状は継続の予感。  
 ☐「tan(θ&#42;90|360)」なども何かしらの巨大な数ではなく0で割った「n|0」と表記したいがとりあえず未着手。  

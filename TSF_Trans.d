@@ -16,8 +16,8 @@ import TSF_Forth;
 void TSF_Trans_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Trans");
     string function()[string] TSF_Forth_cards=[
-        "#TSF_Python":&TSF_Trans_python, "#デッキのpython化":&TSF_Trans_python,
-        "#TSF_D-lang":&TSF_Trans_dlang, "#デッキのD言語化":&TSF_Trans_dlang,
+        "#!TSF_Python":&TSF_Trans_python, "#デッキのpython化":&TSF_Trans_python,
+        "#!TSF_D-lang":&TSF_Trans_dlang, "#デッキのD言語化":&TSF_Trans_dlang,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){

@@ -1,12 +1,12 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	calccount:	#TSF_this	#TSF_fin.
+	calccount:	#!TSF_this	#!TSF_fin.
 calccount:
-	calcjump:	calcsample:	#TSF_lenthe	0,1,[0]U	#TSF_join[]	#TSF_RPN	#TSF_peekNthe	#TSF_this	calccount:	#TSF_this
+	calcjump:	calcsample:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this	calccount:	#!TSF_this
 calcjump:
 	#!exit:	calcpop:
 calcpop:
-	calcsample:	0	#TSF_pullNthe	#TSF_peekFthat	#TSF_peekFthat	calcstack:	#TSF_pushFthe	#TSF_calc	calcstack:	#TSF_pullFthe	#TSF_calcJA	「[2]」→「[1]」「[0]」	#TSF_join[]	#TSF_echo
+	calcsample:	0	#!TSF_pullNthe	#!TSF_peekFthat	#!TSF_peekFthat	calcstack:	#!TSF_pushFthe	#!TSF_calc	calcstack:	#!TSF_pullFthe	#!TSF_calcJA	「[2]」→「[1]」「[0]」	#!TSF_join[]	#!TSF_echo
 calcpeekdata:
 	009	108	207	306	405	504	603	702	801	900
 calcjumpdata:
