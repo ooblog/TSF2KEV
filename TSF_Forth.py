@@ -9,7 +9,7 @@ def TSF_Forth_1ststack():    #TSFdoc:最初のスタック名(TSFAPI)。
     return "TSF_Tab-Separated-Forth:"
 
 def TSF_Forth_branchID():    #TSFdoc:TSFブランチ名(TSFAPI)。
-    return "20170628W165418"
+    return "20170703M004636"
 
 def TSF_Forth_grammarID():    #TSFdoc:TSF文法管理番号(TSFAPI)。
     return "2"
