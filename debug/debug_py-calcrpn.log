@@ -10,4 +10,5 @@ calcdefault:
 calc:
 	#!TSF_calc	#!TSF_echo
 -- TSF_sample_calc run --
+TSF_calcA 5|6
 p5|6

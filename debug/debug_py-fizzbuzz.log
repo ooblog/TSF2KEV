@@ -6,23 +6,63 @@ FBloop:
 FZcount:
 	0	Fizz	Buzz	Fizz&Buzz
 -- TSF_sample_FizzBuzz run --
+TSF_calcA 1|1
+TSF_calcA 0|1
 1
+TSF_calcA 2|1
+TSF_calcA 0|1
 2
+TSF_calcA 3|1
+TSF_calcA 1|1
 Fizz
+TSF_calcA 4|1
+TSF_calcA 0|1
 4
+TSF_calcA 5|1
+TSF_calcA 2|1
 Buzz
+TSF_calcA 6|1
+TSF_calcA 1|1
 Fizz
+TSF_calcA 7|1
+TSF_calcA 0|1
 7
+TSF_calcA 8|1
+TSF_calcA 0|1
 8
+TSF_calcA 9|1
+TSF_calcA 1|1
 Fizz
+TSF_calcA 10|1
+TSF_calcA 2|1
 Buzz
+TSF_calcA 11|1
+TSF_calcA 0|1
 11
+TSF_calcA 12|1
+TSF_calcA 1|1
 Fizz
+TSF_calcA 13|1
+TSF_calcA 0|1
 13
+TSF_calcA 14|1
+TSF_calcA 0|1
 14
+TSF_calcA 15|1
+TSF_calcA 3|1
 Fizz&Buzz
+TSF_calcA 16|1
+TSF_calcA 0|1
 16
+TSF_calcA 17|1
+TSF_calcA 0|1
 17
+TSF_calcA 18|1
+TSF_calcA 1|1
 Fizz
+TSF_calcA 19|1
+TSF_calcA 0|1
 19
+TSF_calcA 20|1
+TSF_calcA 2|1
 Buzz

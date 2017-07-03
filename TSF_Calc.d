@@ -332,7 +332,7 @@ string TSF_Calc_addition(string TSF_calcQ){    //#TSFdoc:分数電卓の足し�
         return TSF_calcA;
     }
     BigInt TSF_calcLN=BigInt(0),TSF_calcLD=BigInt(1);
-    string TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m");
+    string TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m").replace("++","+p").replace("--","+p");
     TSF_calcQreplace=TSF_calcQreplace.replace("+","\t+").replace("-","\t-").replace("%","\t%");
     string[] TSF_calcQsplits=TSF_calcQreplace.strip('\t').split("\t");
     char TSF_calcO;

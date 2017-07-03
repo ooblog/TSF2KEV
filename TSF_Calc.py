@@ -263,6 +263,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('n') else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
+        print("TSF_calcA",TSF_calcA)
     return TSF_calcA
 
 def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)
@@ -270,7 +271,7 @@ def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算�
     if len(TSF_calcA) > 0 and TSF_calcA.endswith(':'):
         return TSF_calcA
     TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
-    TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m")
+    TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m").replace("++","+p").replace("--","+p")
     TSF_calcQreplace=TSF_calcQreplace.replace("+","\t+").replace("-","\t-").replace("%","\t%")
     TSF_calcQsplits=TSF_calcQreplace.strip("\t").split("\t")
     for TSF_calcQmulti in TSF_calcQsplits:
