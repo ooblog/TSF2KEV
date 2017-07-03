@@ -213,11 +213,13 @@ def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSFdoc:分数電卓のmain。括弧の�
         TSF_calcA='('*abs(TSF_calcBCAP)+TSF_calcA+')'*abs(TSF_calcBCAP)
         for TSF_calcK in re.findall(TSF_CalcReg_bracketreg,TSF_calcA):
             TSF_calcA=TSF_calcA.replace(TSF_calcK,TSF_Calc_function(TSF_calcK))
-    TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
     if len(TSF_calcA):
+        TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA))
         if not TSF_calcA.endswith(':'):
             if not TSF_calcA[0] in "n0pm":
                 TSF_calcA=TSF_calcA.replace("-","m") if TSF_calcA.startswith('-') else "".join(["p",TSF_calcA])
+    else:
+        TSF_calcA="0|1"
     return TSF_calcA
 
 def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSFdoc:分数電卓のPM符号省略。(TSFAPI)
@@ -238,6 +240,8 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
 #"0123456789abcdef.pm$|":
 #M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
+    print("_TSF_calcQ={}".format(TSF_calcQ))
+    TSF_calcA=TSF_calcQ
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
@@ -264,6 +268,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('n') else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
+    print("_TSF_calcA={}".format(TSF_calcA))
     return TSF_calcA
 
 def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)

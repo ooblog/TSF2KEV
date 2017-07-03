@@ -255,13 +255,16 @@ string TSF_Calc_bracketsQQ(string TSF_calcQ){    //#TSFdoc:分数電卓のmain�
             TSF_calcA=TSF_calcA.replace(TSF_calcK.hit,TSF_Calc_function(TSF_calcK.hit));
         }
     }
-    TSF_calcA=replace(TSF_calcA,TSF_calcA,TSF_Calc_function(TSF_calcA));
     if( TSF_calcA.length ){
+        TSF_calcA=TSF_calcA.replace(TSF_calcA,TSF_Calc_function(TSF_calcA));
         if( count(":",TSF_calcA.back)==0 ){
             if( count("n0pm",TSF_calcA.front)==0 ){
                 TSF_calcA=TSF_calcA.front=='-'?TSF_calcA.replace("-","m"):"p"~TSF_calcA;
             }
         }
+    }
+    else{
+        TSF_calcA="0|1";
     }
     return TSF_calcA;
 }

@@ -11,6 +11,7 @@ TSF_debug_tsv:
 TSF_debug_rpn:
 	0	0
 	0.0	0
+		0
 	U+p128	p296
 	$ffff	p65535
 	m1	m1
