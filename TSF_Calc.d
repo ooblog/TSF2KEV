@@ -132,14 +132,9 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSFdoc:分数電卓の日本
             }
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
             TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
-            TSF_calcDstr=replace(TSF_calcDstr,"円","");
             TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"分の");
-            if( TSF_calcDstr=="1"){
-                TSF_calcA=TSF_calcA.replace("1分の","");
-            }
-            else{
-                TSF_calcA=TSF_calcA.replace("円","");
-            }
+            TSF_calcA=TSF_calcA.replace("円","").replace("1分の","");
+            if( TSF_calcA.length==0 ){ TSF_calcA="0円"; }
         }
         TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数");
         TSF_calcA=TSF_calcF~TSF_calcA;
