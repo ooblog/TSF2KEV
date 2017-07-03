@@ -287,7 +287,8 @@ auto TSF_Calc_FLR(string TSF_calcQ,string TSF_calcO){    //#三項演算子と�
 
 string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
-    string TSF_calcK=stripRight(stripLeft(TSF_calcQ,'('),')');
+//    string TSF_calcK=stripRight(stripLeft(TSF_calcQ,'('),')');
+    string TSF_calcK=TSF_calcQ.stripLeft('(').stripRight(')');
     if( count(TSF_calcK,",") ){
          TSF_calcA=TSF_Io_RPN(TSF_calcK);
     }

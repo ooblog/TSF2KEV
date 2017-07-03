@@ -90,11 +90,9 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     string TSF_RPNanswer="";
     string TSF_RPNnum="";  int TSF_RPNminus=0;
     real[] TSF_RPNstack=[];
-    string TSF_RPNseq=TSF_RPN~="  ";
-//    if( count(["U+","0x"],TSF_RPN[0..2]) ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
-//    if( TSF_RPN.length>2 && count(["U+","0x"],TSF_RPN[0..2])>0 ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
-    if( TSF_RPN[0..1]=="-" ){ TSF_RPNseq="m"~TSF_RPN[1..$]; }
-    if( count(["U+","0x"],TSF_RPN[0..2]) ){ TSF_RPNseq="$"~TSF_RPN[2..$]; }
+    string TSF_RPNseq=join([TSF_RPN.stripLeft(','),"  "]);
+    if( TSF_RPNseq[0..1]=="-" ){ TSF_RPNseq="m"~TSF_RPNseq[1..$]; }
+    if( count(["U+","0x"],TSF_RPNseq[0..2]) ){ TSF_RPNseq="$"~TSF_RPNseq[2..$]; }
     real TSF_RPNstackL,TSF_RPNstackR,TSF_RPNstackF;
     string[] TSF_RPNcalcND;
     opeexit_rpn: foreach(char TSF_RPNope;TSF_RPNseq){

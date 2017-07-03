@@ -138,7 +138,7 @@ calcsample:
 「3_2」→「p2|3」
 -- TSF_Calc.d viewthey --
 TSF_Tab-Separated-Forth:
-	calccount:	#!TSF_this	#!TSF_fin.	#TSF_fin.
+	calccount:	#!TSF_this	#!TSF_fin.
 calccount:
 	calcjump:	calcsample:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this	calccount:	#!TSF_this
 calcjump:

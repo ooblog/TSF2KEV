@@ -89,7 +89,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
     TSF_RPNstack=[]
-    TSF_RPNseq="".join([TSF_RPN,"  "])
+    TSF_RPNseq="".join([TSF_RPN.lstrip(","),"  "])
     if TSF_RPNseq[0:1]=="-":  TSF_RPNseq="".join(["m",TSF_RPNseq[1:]])
     if TSF_RPNseq[0:2] in ["U+","0x"]:  TSF_RPNseq="".join(["$",TSF_RPNseq[2:]])
     for TSF_RPNope in TSF_RPNseq:
