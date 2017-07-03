@@ -102,7 +102,8 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSFdoc:分数電卓の日本語処理。
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
             TSF_calcNstr=TSF_calcNstr.replace("円","")
             TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,True)
-            TSF_calcDstr=TSF_calcDstr.replace("割","")
+            if "割" in TSF_calcDstr:
+                TSF_calcDstr=TSF_calcDstr.replace("割","") if "銭" in TSF_calcDstr else TSF_calcDstr.replace("割","0銭")
             TSF_calcA="".join([TSF_calcNstr,TSF_calcDstr])
             if TSF_calcA.startswith('円'): TSF_calcA=TSF_calcA.replace("円","")
             TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
@@ -263,7 +264,6 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('n') else TSF_calcR)
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
-        print("TSF_calcA",TSF_calcA)
     return TSF_calcA
 
 def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算・消費税計算等。(TSFAPI)

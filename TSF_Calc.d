@@ -115,7 +115,10 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSFdoc:分数電卓の日本
             TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
             TSF_calcNstr=replace(TSF_calcNstr,"円","");
             TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,true);
-            TSF_calcDstr=TSF_calcDstr.replace("割","");
+//            TSF_calcDstr=TSF_calcDstr.replace("割","");
+            if( count(TSF_calcDstr,"割") ){
+                TSF_calcDstr=count(TSF_calcDstr,"銭")?TSF_calcDstr.replace("割",""):TSF_calcDstr.replace("割","0銭");
+            }
             TSF_calcA=TSF_calcNstr~TSF_calcDstr;
             if( TSF_calcA.front=='円' ){ TSF_calcA=TSF_calcA.replace("円",""); }
             TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那");
