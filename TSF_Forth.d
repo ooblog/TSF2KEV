@@ -1400,7 +1400,7 @@ string[] TSF_Forth_mainandargvs(...){    //#TSFdoc:argvsの取得。(TSFAPI)
 }
 
 string TSF_mainfilepath="";
-string TSF_Forth_mainfilepath(...){    //#TSF_doc:実行ファイル名を設定・取得(TSFAPI)。
+string TSF_Forth_mainfilepath(...){    //#TSFdoc:実行ファイル名を設定・取得(TSFAPI)。
     if( _arguments.length>0 && _arguments[0]==typeid(string) ){
         TSF_mainfilepath=va_arg!(string)(_argptr);
     }

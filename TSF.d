@@ -230,9 +230,8 @@ void TSF_sample_quine(){    //#TSFdoc:「sample_quine.tsf」コマンド版「TS
     TSF_Forth_samplerun("TSF_sample_quine");
 }
 
-void main(string[] sys_argvs){
+void main(string[] sys_argvs){    //#TSFdoc:D言語のmain関数。ここでは「TSF --dlang」「TSF --python」コマンドの解説。<br>「TSF --dlang helloworld.d helloworld.d」「TSF --python helloworld.tsf helloworld.py」のようにTSFをD言語やPythonに変換した風(インタプリタを呼び出す形)にすることができる。<br>D言語の場合「TSF_DMDcompile.sh helloworld.d」で実行バイナリも作成可能。<br>
     string[] TSF_sysargvs=TSF_Io_argvs(sys_argvs);
-//    void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Shuffle_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
     void function(ref string function()[string],ref string[])[] TSF_Initcallrun=[&TSF_Forth_Initcards,&TSF_Calc_Initcards,&TSF_Time_Initcards,&TSF_Urlpath_Initcards,&TSF_Match_Initcards,&TSF_Trans_Initcards];
     string TSF_bootcommand=TSF_sysargvs.length<2?"":TSF_sysargvs[1];
     TSF_Forth_initTSF(TSF_sysargvs[1..$],TSF_Initcallrun);

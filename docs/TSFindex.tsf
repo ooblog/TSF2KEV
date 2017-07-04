@@ -14,13 +14,15 @@ TSFdoc_html:
 KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_imports:
-	../TSF.py
+	../TSF.d	../TSF_Io.d
 {@TSF_main}
-	../TSF.py
+	../TSF.d
+{@TSF_Io}
+	../TSF_Io.d
 TSFimport_ext:
-	.py
+	.py	.d
 TSFimport_regex:
-	regex_Python:	:regex_none:
+	regex_Python:	regex_D:	regex_none:
 regex_Python:
 	regexPython_reg:	regexPython_txt:	#!TSF_replacesRSN
 regexPython_reg:
@@ -29,13 +31,23 @@ regexPython_reg:
 regexPython_txt:
 			@NL@DLDT	@dddt{?NL}		@dddt
 	   <dl><dt>	</dt><dd>	</dd></dl>
+regex_D:
+	regexD_reg:	regexD_txt:	#!TSF_replacesRSN
+regexD_reg:
+	^void	^long\x5b\x5d	^long	^real\x5b\x5d	^real	^string\x5b\x5d	^string
+	^(?!def).+$	^\n	def 	@NL	^@dddt	$	\)\{
+	@DLDT	:[ /]+#[a-zA-Z]+:	@dddt
+regexD_txt:
+	def	def	def	def	def	def	def
+			@NL@DLDT	@dddt{?NL}		@dddt	):
+	   <dl><dt>	</dt><dd>	</dd></dl>
 regex_none:
 	#!TSF_pullFthat
 TSFdocs_tags:
 	{?&lt}	{?&gt}	{?TAB}	{?NL}	{?INDENT}	{?BR}	{?/CODE}	{?CODE}
-	{@TSF_main}
+	{@TSF_Io}	{@TSF_main}
 	{?TITLE}	{?MODIFY}	{$TITLE_KEV2}	{$TITLE_TSFdoc}	{$TITLE_index}
-	{?TSFapi00title}
+	{?TSFapi01RPN}	{?TSFapi01title}	{?TSFapi00title}
 	{?TSFgrammar09title}	{?TSFgrammar08title}	{?TSFgrammar07title}	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
@@ -92,10 +104,8 @@ TSFdocs_tags:
 	   <li><a href="#grammar-8" title="{?TSFgrammar08title}">{?TSFgrammar08title}</a></li>
 	   <li><a href="#grammar-9" title="{?TSFgrammar09title}">{?TSFgrammar09title}</a></li>
 	   <li><a href="#api-0" title="{?TSFapi00title}">{?TSFapi00title}</a></li>
-	   <li>②-1．「TSF --help」「sample/sample_help.tsf」コマンド一覧表示。</li>
-	   <li>②-2．「TSF --helloworld」「sample/sample_helloworld.tsf」TSFのハローワールドサンプル。</li>
-	   <li>③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧<。/li>
-	   <li>③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</li>
+	   <li><a href="#api-1" title="{?TSFapi01title}">{?TSFapi01title}</a></li>
+	   <li><a href="#api-rpn" title="{?TSFapi01RPN}">{?TSFapi01RPN}</a></li>
 	   <li>④-0．「TSF_Forth.d」「TSF_Forth.py」の#関数カード一覧。</li>
 	   <li>④-1．「TSF_Forth.d」「TSF_Forth.py」のAPI一覧。</li>
 	   <li>⑤-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
@@ -315,54 +325,54 @@ TSFdocs_tags:
 	   pppp以外でもreplaces、alias、casesなどの動詞で同じような副詞が登場。<br>
 	   動詞の種類によっては意味をなさない副詞もあるので注意。<br>
 	  </p>
-	  <dl><dt>「F」Front(表択カード)</dt>
+	  <dl><dt>「F」Front(カード表択)</dt>
 	  <dd>
 	   表面、一番上(tsv表現では右端なので末尾)に積まれたカードを選択。<br>
 	  </dd></dl>
-	  <dl><dt>「N」Number(順択カード)</dt>
+	  <dl><dt>「N」Number(カード順択)</dt>
 	  <dd>
 	   表面、一番上(tsv表現では右端なので末尾)から数えて数値を指定して選択。ゼロから数える。<br>
 	  </dd></dl>
-	  <dl><dt>「C」Cycle(周択カード)</dt>
+	  <dl><dt>「C」Cycle(カード周択)</dt>
 	  <dd>
 	   順択「N」の指定枚数がスタックのカード枚数を上回る(下回る)場合、ゼロから数え直します。いわゆるmod演算子の要領。<br>
 	   周択ではマイナス1の時は表択になり以下逆順+1になるので注意。<br>
 	  </dd></dl>
-	  <dl><dt>「M」liMit(囲択カード)</dt>
+	  <dl><dt>「M」liMit(カード囲択)</dt>
 	  <dd>
 	   順択「N」の指定枚数がスタックのカード枚数を上回る(下回る)場合、max演算子min演算子の組み合わせ(HSPのlimit)、いわゆるmin(max(N,0),len-1)の要領。<br>
 	  </dd></dl>
-	  <dl><dt>「V」reVerse(逆択カード)</dt>
+	  <dl><dt>「V」reVerse(カード逆択)</dt>
 	  <dd>
 	   順択「N」と逆順に(底面、一番下、tsv表現では左端先頭から)数えた数値で選択。ゼロから数える。<br>
 	  </dd></dl>
-	  <dl><dt>「A」rAndom(乱択カード)</dt>
+	  <dl><dt>「A」rAndom(カード乱択)</dt>
 	  <dd>
 	   スタック内カードをランダムに選択。乱択で使う乱数の定義はTSFでは定めない(実装する言語のリストオブジェクトに同等の機能があれば使う)ので、乱数を別途用意して順択「N」を用いる必要に迫られるケースがごくまれに発生するかも。<br>
 	  </dd></dl>
-	  <dl><dt>「Q」eQual(同択カード)</dt>
+	  <dl><dt>「Q」eQual(カード同択)</dt>
 	  <dd>
 	   枚数指定のような数値ではなく文字列で同じカードを選択。同じカードが何枚あっても一枚にまとめる。<br>
 	   peekQだと無駄っぽいがpullQだと同じ文字列のカードをまとめて引き抜く的な(予定というか未実装)。<br>
 	  </dd></dl>
-	  <dl><dt>「I」In(含択カード)</dt>
+	  <dl><dt>「I」In(カード含択)</dt>
 	  <dd>
 	   文字列が含まれるで同じカードを選択。カードの枚数は動詞による。<br>
 	   peekQでも似た名前のカードが複数引き抜きされるので枚数が付加される(予定というか未実装)。<br>
 	  </dd></dl>
-	  <dl><dt>「R」Regex(規択カード)</dt>
+	  <dl><dt>「R」Regex(カード規択)</dt>
 	  <dd>
 	   正規表現に該当するカードを選択。カードの枚数は動詞による。<br>
 	   似た名前のカードが複数引き抜きされるので枚数が付加される(予定というか未実装)。<br>
 	   TSFを実装する言語毎に正規表現の方言が存在しそうな問題。<br>
 	  </dd></dl>
-	  <dl><dt>「H」matcHer(似択カード)</dt>
+	  <dl><dt>「H」matcHer(カード似択)</dt>
 	  <dd>
 	   文字列の一致度が一定数以上のカードを選択。カードの枚数は動詞による。<br>
 	   Pythonにあったdifflib.SequenceMatcher().ratio()みたいな関数がD言語その他で再現できるか不明なので保留。<br>
 	   pppp以外、例えば「#!TSF_replacesQDN」で可能でも「#!TSF_replacesQSN」の時に文字数の組み合わせ爆発懸念。<br>
 	  </dd></dl>
-	  <dl><dt>「L」Label(札択カード)</dt>
+	  <dl><dt>「L」Label(カード札択)</dt>
 	  <dd>
 	   文字列の一致度が一定数以上のカードを選択。カードの枚数は動詞による。<br>
 	   LTSVなどを読み込む場合などに使用。<br>
@@ -384,12 +394,29 @@ TSFdocs_tags:
 	  </dd></dl>
 	 </section>
 	 <section>
-	  <h2 id="api-0">{?TSFapi00title}</h2>{@TSF_main}
+	  <h2 id="api-0">{?TSFapi00title}</h2>
+	  <p>
+	   TSFコマンドのシェル部分です。TSFファイルを読み込んで実行するか内蔵の各種サンプルを実行する事ができます。<br>
+	   またTSFファイルをD言語やPythonに変換(インタプリタを呼び出す形)する事も可能です。<br>
+	  </p>{@TSF_main}
+	 </section>
+	 <section>
+	  <h2 id="api-1">{?TSFapi01title}</h2>
+	  <p>
+	   TSFインタプリンタ以前の実装言語毎にprintf/writelnといった文字出力の仕様差(特にPythonの2と3)を吸収するモジュールです。<br>
+	   ファイル読み書きやコマンド受付などの文字コード処理やRPN電卓(テキストの数値変換)も用意してます。<br>
+	  </p>{@TSF_Io}
+	 </section>
+	 <section>
+	  <h3 id="api-rpn">{?TSFapi01RPN}</h3>
+	  <p>
+	   RPN<br>
+	  </p>
 	 </section>
 	 <section>
 	  <h2 id="faq-0">{?TSFfaq00title}</h2>
 	  <dl><dt>
-	   Ｑ．タブ追加して見栄え調整したら動かなくなったり暴走したりするんですけど？<br>
+	   Ｑ．タブ追加してインデント調整したら動かなくなったり暴走したりするんですけど？<br>
 	  </dt><dd>
 	   Ａ．CSVで勝手にコンマ追加したらセルの位置がズレるようなものです。タブ文字が2連続の場合、タブとタブの間には長さ0の文字列が発生します。<br>
 	   　タブ文字が視認しづらい場合は等幅フォントでどうこうというよりも、タブ幅が1文字よりも狭くなるエディタに問題があると思います。<br>
@@ -444,7 +471,7 @@ TSFdocs_tags:
 	  <dl><dt>
 	   Ｑ．「TSFimport_regex:」で正規表現を使う箇所があるのですがD言語とPythonで正規表現の違いがあると挙動が変わりませんか？<br>
 	  </dt><dd>
-	   Ａ．いちいち確認はしませんが、実装言語毎に挙動は変わるはずです。TSF側で正規表現そのものを作り直すなどの徒労は行わないので注意。<br>
+	   Ａ．実装言語毎に正規表現の方言があるはずです。TSF側で正規表現の方言の吸収(TSF自前で正規表現)は行わないので注意。<br>
 	  </dd></dl>
 	 </section>
 {$TSFsection_KEV2}
@@ -613,6 +640,10 @@ TSFdocs_tags:
 	①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。
 {?TSFapi00title}
 	②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。
+{?TSFapi01title}
+	③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。
+{?TSFapi01RPN}
+	③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。
 {?CODE}
 	<pre><code>
 {?/CODE}

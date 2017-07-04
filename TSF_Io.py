@@ -38,7 +38,7 @@ if sys.platform.startswith("linux"):
     TSF_libc=ctypes.CDLL("libc.so.6")
 
 TSF_Io_stdout=sys.stdout.encoding if sys.stdout.encoding != None else locale.getpreferredencoding()
-def TSF_Io_printlog(TSF_text,TSF_log=None):    ##TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)
+def TSF_Io_printlog(TSF_text,TSF_log=None):    #TSFdoc:テキストをstdoutに表示。ログに追記もできる。(TSFAPI)<br>
     TSF_text=TSF_text.rstrip('\n')
     if TSF_log != None:
         if len(TSF_log) > 0:

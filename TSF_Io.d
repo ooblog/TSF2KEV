@@ -262,14 +262,14 @@ long TSF_Io_RPNzero(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分
     return TSF_RPNanswer;
 }
 
-void TSF_Io_savedir(string TSF_path){    //「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
+void TSF_Io_savedir(string TSF_path){    //#TSFdoc:「TSF_Io_savetext()」でファイル保存する時、1階層分のフォルダを作成する。(TSFAPI)
     string TSF_Io_workdir=dirName(absolutePath(TSF_path));
     if( exists(TSF_Io_workdir)==false && TSF_Io_workdir.length>0 ){
         mkdir(TSF_Io_workdir);
     }
 }
 
-void TSF_Io_savedirs(string TSF_path){    //一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。(TSFAPI)
+void TSF_Io_savedirs(string TSF_path){    //#TSFdoc:一気に深い階層のフォルダを複数作れてしまうので取扱い注意(扱わない)。(TSFAPI)
     string TSF_Io_workdir=dirName(absolutePath(TSF_path));
     if( exists(TSF_Io_workdir)==false && TSF_Io_workdir.length>0 ){
         mkdirRecurse(TSF_Io_workdir);
@@ -310,7 +310,7 @@ void TSF_Io_writetext(string TSF_path,string TSF_addtext){    //#TSFdoc:TSF_path
 }
 
 
-void TSF_Io_debug(string[] TSF_argvs){
+void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テスト風デバッグ関数。
     string TSF_debug_log="";  string TSF_debug_savefilename="debug/debug_d-Io.log";
     std.stdio.writeln("--- %s ---".format(__FILE__));
     TSF_debug_log=TSF_Io_printlog("TSF_Tab-Separated-Forth:",TSF_debug_log);

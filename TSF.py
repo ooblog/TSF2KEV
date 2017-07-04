@@ -219,8 +219,8 @@ def TSF_sample_quine():    #TSFdoc:「sample_quine.tsf」コマンド版「TSF -
         "#!TSF_D-lang"]),'N')
     TSF_Forth_samplerun("TSF_sample_quine")
 
+#TSFdoc:D言語のmain関数。ここでは「TSF --dlang」「TSF --python」コマンドの解説。<br>「TSF --dlang helloworld.d helloworld.d」「TSF --python helloworld.tsf helloworld.py」のようにTSFをD言語やPythonに変換した風(インタプリタを呼び出す形)にすることができる。<br>D言語の場合「TSF_DMDcompile.sh helloworld.d」で実行バイナリも作成可能。<br>
 TSF_sysargvs=TSF_Io_argvs(sys.argv)
-#!TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Shuffle_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Initcallrun=[TSF_Forth_Initcards,TSF_Calc_Initcards,TSF_Time_Initcards,TSF_Urlpath_Initcards,TSF_Match_Initcards,TSF_Trans_Initcards]
 TSF_Forth_initTSF(TSF_sysargvs[1:],TSF_Initcallrun)
 TSF_bootcommand="" if len(TSF_sysargvs) < 2 else TSF_sysargvs[1]
