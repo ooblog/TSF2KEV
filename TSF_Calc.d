@@ -137,42 +137,6 @@ string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSFdoc:分数電卓の日本
         TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数");
         TSF_calcA=TSF_calcF~TSF_calcA;
     }
-//    string TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ);
-////    writeln(format("TSF_calcA %s",TSF_calcA));
-//    string TSF_calcF=TSF_calcA.front=='m'?"マイナス":"";
-//    if( TSF_calcA.front!='n' ){
-//        if( count(TSF_calcA,".") ){
-//            string[] TSF_calcND=replace(replace(TSF_calcA,"p",""),"m","").split(".");
-//            string TSF_calcNstr=TSF_calcND[0],TSF_calcDstr=TSF_calcND[$-1];
-//            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
-//            TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,true);
-//            if( count(TSF_calcDstr,"割") ){
-//                TSF_calcDstr=count(TSF_calcDstr,"銭")?TSF_calcDstr.replace("割",""):TSF_calcDstr.replace("割","0銭");
-//            }
-//            TSF_calcA=TSF_calcNstr~TSF_calcDstr;
-//            TSF_calcA=replace(TSF_calcA,"円","");
-//            if( TSF_calcA.front=='円' ){ TSF_calcA=TSF_calcA.replace("円",""); }
-//            TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那");
-//            TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静");
-//        }
-//        else{
-//            string[] TSF_calcND=replace(replace(TSF_calcA,"p",""),"m","").split("|");
-//            string TSF_calcNstr,TSF_calcDstr;
-//            if( TSF_calcND.length>=2 ){
-//                TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr=TSF_calcND[$-1];
-//            }
-//            else{
-//                TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr="1";
-//            }
-//            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
-//            TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4,true).stripLeft('0');
-//            TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"分の");
-//            TSF_calcA=TSF_calcA.replace("円","").replace("1分の","");
-//            if( TSF_calcA.length==0 ){ TSF_calcA="0円"; }
-//        }
-//        TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数");
-//        TSF_calcA=TSF_calcF~TSF_calcA;
-//    }
     return TSF_calcA;
 }
 
@@ -214,6 +178,7 @@ string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSFdoc:整数のコンマ�
         foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
             TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
         }
+//        writeln("TSF_calcA %s".format(TSF_calcA));
     }
     return TSF_calcA;
 }
