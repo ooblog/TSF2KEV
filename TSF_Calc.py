@@ -93,34 +93,61 @@ def TSF_Calc_precision():    ##TSFdoc:電卓の有効桁数を変更する。1�
 
 def TSF_Calc_bracketsJA(TSF_calcQ):    #TSFdoc:分数電卓の日本語処理。(TSFAPI)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
-#    print("TSF_calcA",TSF_calcA)
     if not TSF_calcA.startswith('n'):
         TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
-        if "." in TSF_calcA:
-            TSF_calcND=TSF_calcA.replace("p","").replace("m","").split(".")
+        TSF_calcA=TSF_calcA.replace("p","").replace("m","")
+        if "|" in TSF_calcA:
+            TSF_calcND=TSF_calcA.split("|")
             TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
-            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
-            TSF_calcNstr=TSF_calcNstr.replace("円","")
-            TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,True)
+            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0').replace("円","")
+            if len(TSF_calcNstr)==0: TSF_calcNstr="0"
+            TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4,True).lstrip('0').replace("円","")
+            TSF_calcA="分の".join([TSF_calcDstr,TSF_calcNstr])
+            if "1分の" in TSF_calcA:
+                TSF_calcA="".join([TSF_calcA.replace("1分の",""),"円"])
+        else:
+            TSF_calcND=TSF_calcA.split(".") if "." in TSF_calcA else [TSF_calcA,""]
+            TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
+            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0').replace("円","")
+            if len(TSF_calcNstr)==0: TSF_calcNstr="0"
+            TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,True).replace("円","")
             if "割" in TSF_calcDstr:
                 TSF_calcDstr=TSF_calcDstr.replace("割","") if "銭" in TSF_calcDstr else TSF_calcDstr.replace("割","0銭")
-            TSF_calcA="".join([TSF_calcNstr,TSF_calcDstr])
-            if TSF_calcA.startswith('円'): TSF_calcA=TSF_calcA.replace("円","")
+            TSF_calcA="".join([TSF_calcNstr,"円",TSF_calcDstr])
             TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
             TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静")
-        else:
-            TSF_calcND=TSF_calcA.replace("p","").replace("m","").split("|")
-            if len(TSF_calcND) >= 2: 
-                TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
-            else:
-                TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],"1";
-            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
-            TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4,True).lstrip('0')
-            TSF_calcA="分の".join([TSF_calcDstr,TSF_calcNstr])
-            TSF_calcA=TSF_calcA.replace("円","").replace("1分の","")
-            if len(TSF_calcA)==0: TSF_calcA="0円"
+        if TSF_calcA.startswith('0') and TSF_calcA != "0円": TSF_calcA=TSF_calcA.replace("0円","")
         TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数")
         TSF_calcA="".join([TSF_calcF,TSF_calcA])
+#    TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
+##    print("TSF_calcA",TSF_calcA)
+#    if not TSF_calcA.startswith('n'):
+#        TSF_calcF="マイナス" if TSF_calcA.startswith('m') else ""
+#        if "." in TSF_calcA:
+#            TSF_calcND=TSF_calcA.replace("p","").replace("m","").split(".")
+#            TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
+#            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
+#            TSF_calcDstr=TSF_calc_comma_rinmou(TSF_calcDstr,TSF_Calc_rinmouyen,1,True)
+#            if "割" in TSF_calcDstr:
+#                TSF_calcDstr=TSF_calcDstr.replace("割","") if "銭" in TSF_calcDstr else TSF_calcDstr.replace("割","0銭")
+#            TSF_calcA="".join([TSF_calcNstr,TSF_calcDstr])
+#            TSF_calcA=TSF_calcA.replace("円円","円")
+#            if TSF_calcA.startswith('円'): TSF_calcA=TSF_calcA.replace("円","")
+#            TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
+#            TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静")
+#        else:
+#            TSF_calcND=TSF_calcA.replace("p","").replace("m","").split("|")
+#            if len(TSF_calcND) >= 2: 
+#                TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1];
+#            else:
+#                TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],"1";
+#            TSF_calcNstr=TSF_calc_comma_okusen(TSF_calcNstr,TSF_Calc_okusenyen,4,True).lstrip('0')
+#            TSF_calcDstr=TSF_calc_comma_okusen(TSF_calcDstr,TSF_Calc_okusenyen,4,True).lstrip('0')
+#            TSF_calcA="分の".join([TSF_calcDstr,TSF_calcNstr])
+#            TSF_calcA=TSF_calcA.replace("円","").replace("1分の","")
+#            if len(TSF_calcA)==0: TSF_calcA="0円"
+#        TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数")
+#        TSF_calcA="".join([TSF_calcF,TSF_calcA])
     return TSF_calcA
 
 TSF_CalcReg_ascii=re.compile("^[\x20-\x7E]+$")
