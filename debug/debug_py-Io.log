@@ -46,3 +46,4 @@ TSF_debug_rpn:
 	5,7,p1u	p7
 	5,7,0u	p7
 	5,7,m1u	p5
+	0.00001	p1e-05

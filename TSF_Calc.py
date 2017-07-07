@@ -44,13 +44,11 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
     }
     TSF_Calc_okusenman="万億兆京垓𥝱穣溝澗正載極恒阿那思量"
-#    TSF_Calc_okusenzero=["*(10000"+'0'*(o*4)+")" for o in range(len(TSF_Calc_okusenman))]
     TSF_Calc_okusenzero=["".join(["*(10000",'0'*(o*4),")"]) for o in range(len(TSF_Calc_okusenman))]
     TSF_Calc_okusendic=dict(zip(list(TSF_Calc_okusenman),TSF_Calc_okusenzero))
     TSF_Calc_okusenreg=["".join(["([0-9千百十]+?)",k]) for k in TSF_Calc_okusenman]
     TSF_CalcReg_okusen=dict(zip(list(TSF_Calc_okusenman),TSF_Calc_okusenreg))
     TSF_Calc_rinmoushi="厘毛糸忽微繊沙塵埃渺漠模逡須瞬弾刹徳空清耶摩涅"
-#    TSF_Calc_rinmouzero=["/(1000"+'0'*o+")" for o in range(len(TSF_Calc_rinmoushi))]
     TSF_Calc_rinmouzero=["".join(["/(1000",'0'*o,")"]) for o in range(len(TSF_Calc_rinmoushi))]
     TSF_Calc_rinmoudic=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmouzero))
     TSF_Calc_rinmoureg=["".join(["([0-9千百十]+?)",k]) for k in TSF_Calc_rinmoushi]
