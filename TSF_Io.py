@@ -11,6 +11,8 @@ import zipfile
 import base64
 import datetime
 import math
+import decimal
+import struct
 #from collections import OrderedDict
 #from collections import deque
 
@@ -30,6 +32,8 @@ if sys.version_info.major == 3:
     TSF_Io_htmlparser=html.parser
     import urllib.request
     TSF_Io_urlliburlretrieve=urllib.request.urlretrieve
+
+TSF_maxint=2**(struct.Struct('i').size*8-1)-1;  TSF_minint=-TSF_maxint-1
 
 TSF_libc=None
 if sys.platform.startswith("win"):
@@ -178,11 +182,22 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNstack.append(TSF_RPNstackL if TSF_RPNstackF<0 else TSF_RPNstackR)
     TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
     if TSF_RPNanswer != "n|0":
-        TSF_RPNanswer=str(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
+#        TSF_RPNanswer=str(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
 #        TSF_RPNanswer="{0}".format(TSF_RPNstackL) if TSF_RPNstackL != int(TSF_RPNstackL) else str(int(TSF_RPNstackL))
+
+        if TSF_RPNstackL<TSF_minint or TSF_maxint<TSF_RPNstackL:
+#            TSF_RPNanswer=str(decimal.Decimal(TSF_RPNstackL))
+            TSF_RPNanswer=str(TSF_RPNstackL)
+        elif TSF_RPNstackL != int(TSF_RPNstackL):
+#            "{0}".format(TSF_RPNstackL)
+            TSF_RPNanswer=str(TSF_RPNstackL)
+        else:
+            TSF_RPNanswer=str(int(TSF_RPNstackL))
+
         if TSF_RPNanswer != "0":
             TSF_RPNanswer=TSF_RPNanswer.replace('-','m') if TSF_RPNanswer.startswith('-') else "".join(["p",TSF_RPNanswer])
     return TSF_RPNanswer
+# 0.0000123	p1.23e-05
 
 def TSF_Io_RPNzero(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
     TSF_RPNtext=TSF_Io_RPN(TSF_RPN)
@@ -247,7 +262,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     for debug_rpn in [
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
-        "0.00001"
+        "0.0000123","456000000000000000000000000","-789000000000000000000000000"
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))

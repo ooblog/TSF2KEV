@@ -13,6 +13,7 @@ import std.compiler;
 import std.system;
 import std.typecons;
 import std.math;
+import std.bigint;
 import std.algorithm;
 
 
@@ -241,14 +242,30 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
         TSF_RPNstackL=0.0;
     }
     if( TSF_RPNanswer != "n|0" ){
-        TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
+//        TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):to!string(to!long(TSF_RPNstackL));
+//        TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?to!string(TSF_RPNstackL):toDecimalString(BigInt(TSF_RPNstackL));
 //        TSF_RPNanswer=( TSF_RPNstackL!=to!long(TSF_RPNstackL) )?TSF_RPNanswer="%s".format(TSF_RPNanswer):to!string(to!long(TSF_RPNstackL));
+
+        if( (TSF_RPNstackL<int.min)||(int.max<TSF_RPNstackL) ){
+//            TSF_RPNanswer=to!string(to!long(TSF_RPNstackL));
+//            TSF_RPNanswer=toDecimalString(BigInt(TSF_RPNstackL));
+            TSF_RPNanswer=to!string(TSF_RPNstackL);
+        }
+        else if( TSF_RPNstackL!=to!long(TSF_RPNstackL) ){
+//            TSF_RPNanswer="%s".format(TSF_RPNanswer)
+            TSF_RPNanswer=to!string(TSF_RPNstackL);
+        }
+        else{
+            TSF_RPNanswer=to!string(to!long(TSF_RPNstackL));
+        }
+
         if( TSF_RPNanswer!="0" ){
             TSF_RPNanswer=TSF_RPNanswer.front=='-'?TSF_RPNanswer.replace("-","m"):"p"~TSF_RPNanswer;
         }
     }
     return TSF_RPNanswer;
 }
+//# 0.0000123	p1.23e-05
 
 long TSF_Io_RPNzero(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算を「0」と数値で返す。(TSFAPI)
     string TSF_RPNtext=TSF_Io_RPN(TSF_RPN);
@@ -328,7 +345,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
     foreach(string debug_rpn;[
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
-        "0.00001"
+        "0.0000123","456000000000000000000000000","-789000000000000000000000000"
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
