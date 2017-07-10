@@ -164,9 +164,16 @@ def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:æ
         if TSF_calcM%TSF_calcC != 0:
             TSF_calcA="".join([TSF_calcK,TSF_calcA])
         else:
+#            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ").join([TSF_calcK,TSF_calcA])
+#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+#                TSF_calcA=TSF_calcA.replace("".join([TSF_calcT[TSF_calcCptr],TSF_calc_zero]),TSF_calcT[TSF_calcCptr])
+#            TSF_calcCptr+=1
             TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ").join([TSF_calcK,TSF_calcA])
-            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-                TSF_calcA=TSF_calcA.replace("".join([TSF_calcT[TSF_calcCptr],TSF_calc_zero]),TSF_calcT[TSF_calcCptr])
+#            print("TSF_calcA",TSF_calcA)
+#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+            if TSF_calcZ and TSF_calc_zero in TSF_calcA and 0<TSF_calcCptr<len(TSF_calcT):
+                TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr-1]]),"")
+#                print("replace","".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr-1]]))
             TSF_calcCptr+=1
     return TSF_calcA
 

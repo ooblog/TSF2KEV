@@ -189,12 +189,15 @@ string TSF_calc_comma_okusen(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC,
     string TSF_calc_zero=""; foreach(long i;0..TSF_calcC){ TSF_calc_zero~="0"; }
     foreach_reverse(size_t TSF_calcM,char TSF_calcK;TSF_calcQ){
         if( (TSF_calcQ.length-1-TSF_calcM)%TSF_calcC!=0 ){
-            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],"");
+            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA]);
         }
         else{
             TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:",");
-            if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(TSF_calcCptr<TSF_calcT.length) ){
-                TSF_calcA=TSF_calcA.replace(TSF_calcT[TSF_calcCptr]~TSF_calc_zero,TSF_calcT[TSF_calcCptr]);
+//            if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(TSF_calcCptr<TSF_calcT.length) ){
+//                TSF_calcA=TSF_calcA.replace(TSF_calcT[TSF_calcCptr]~TSF_calc_zero,TSF_calcT[TSF_calcCptr]);
+//            }
+            if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(0<TSF_calcCptr)&&(TSF_calcCptr<TSF_calcT.length) ){
+                TSF_calcA=TSF_calcA.replace(TSF_calc_zero~TSF_calcT[TSF_calcCptr-1],"");
             }
             TSF_calcCptr+=1;
         }
