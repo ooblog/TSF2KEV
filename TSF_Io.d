@@ -250,6 +250,12 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
 //            TSF_RPNanswer=to!string(to!long(TSF_RPNstackL));
 //            TSF_RPNanswer=toDecimalString(BigInt(TSF_RPNstackL));
             TSF_RPNanswer=to!string(TSF_RPNstackL);
+            if( count(TSF_RPNanswer,"e+") ){
+                string[] TSF_RPNloge=TSF_RPNanswer.replace(".","").split("e+");
+                size_t TSF_RPNlogeN=to!size_t(TSF_RPNloge[$-1])-TSF_RPNloge[0].length; TSF_RPNlogeN=TSF_RPNstackL<0?TSF_RPNlogeN+1:TSF_RPNlogeN;
+                string TSF_RPNlogeZ="0"; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
+                TSF_RPNanswer=join([TSF_RPNloge[0],TSF_RPNlogeZ]);
+            }
         }
         else if( TSF_RPNstackL!=to!long(TSF_RPNstackL) ){
 //            TSF_RPNanswer="%s".format(TSF_RPNanswer)
