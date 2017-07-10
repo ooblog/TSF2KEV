@@ -192,10 +192,7 @@ string TSF_calc_comma_okusen(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC,
             TSF_calcA=join([to!string(TSF_calcK),TSF_calcA]);
         }
         else{
-            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:",");
-//            if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(TSF_calcCptr<TSF_calcT.length) ){
-//                TSF_calcA=TSF_calcA.replace(TSF_calcT[TSF_calcCptr]~TSF_calc_zero,TSF_calcT[TSF_calcCptr]);
-//            }
+            TSF_calcA=join([to!string(TSF_calcK),TSF_calcA],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:"");
             if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(0<TSF_calcCptr)&&(TSF_calcCptr<TSF_calcT.length) ){
                 TSF_calcA=TSF_calcA.replace(TSF_calc_zero~TSF_calcT[TSF_calcCptr-1],"");
             }
@@ -214,14 +211,14 @@ string TSF_calc_comma_rinmou(string TSF_calcQ,string[] TSF_calcT,long TSF_calcC,
             TSF_calcA=join([TSF_calcA,to!string(TSF_calcK)],"");
         }
         else{
-            TSF_calcA=join([TSF_calcA,to!string(TSF_calcK)],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:",");
+            TSF_calcA=join([TSF_calcA,to!string(TSF_calcK)],(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:"");
             if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(TSF_calcCptr<TSF_calcT.length) ){
                 TSF_calcA=TSF_calcA.replace(TSF_calc_zero~TSF_calcT[TSF_calcCptr],"");
             }
             TSF_calcCptr++;
         }
     }
-    TSF_calcA=join([TSF_calcA,(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:","]);
+    TSF_calcA=join([TSF_calcA,(TSF_calcCptr<TSF_calcT.length)?TSF_calcT[TSF_calcCptr]:""]);
     if( (TSF_calcZ==true)&&(count(TSF_calcA,TSF_calc_zero)>0)&&(TSF_calcCptr<TSF_calcT.length) ){
         TSF_calcA=TSF_calcA.replace(TSF_calc_zero~TSF_calcT[TSF_calcCptr],"");
     }
@@ -578,8 +575,10 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
         "0|1N~True:~False:","n|0N~True:~False:",
         "2/3","2|3","2_3","3/2","3|2","3_2",
+        "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
         ],"\t"),'N');
-    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+//    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
+    TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log);
 }
 

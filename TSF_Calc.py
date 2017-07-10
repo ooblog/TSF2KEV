@@ -164,16 +164,9 @@ def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:�
         if TSF_calcM%TSF_calcC != 0:
             TSF_calcA="".join([TSF_calcK,TSF_calcA])
         else:
-#            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ").join([TSF_calcK,TSF_calcA])
-#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-#                TSF_calcA=TSF_calcA.replace("".join([TSF_calcT[TSF_calcCptr],TSF_calc_zero]),TSF_calcT[TSF_calcCptr])
-#            TSF_calcCptr+=1
-            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ").join([TSF_calcK,TSF_calcA])
-#            print("TSF_calcA",TSF_calcA)
-#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "").join([TSF_calcK,TSF_calcA])
             if TSF_calcZ and TSF_calc_zero in TSF_calcA and 0<TSF_calcCptr<len(TSF_calcT):
                 TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr-1]]),"")
-#                print("replace","".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr-1]]))
             TSF_calcCptr+=1
     return TSF_calcA
 
@@ -185,11 +178,11 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:�
         if TSF_calcM%TSF_calcC != 0:
             TSF_calcA="".join([TSF_calcA,TSF_calcK])
         else:
-            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ").join([TSF_calcA,TSF_calcK])
+            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "").join([TSF_calcA,TSF_calcK])
             if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
                 TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
             TSF_calcCptr+=1
-    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else " ")])
+    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
     if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
         TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
     return TSF_calcA
@@ -456,8 +449,10 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "m1Z~True:~False:","0Z~True:~False:","p1Z~True:~False:",
         "0|1N~True:~False:","n|0N~True:~False:",
         "2/3","2|3","2_3","3/2","3|2","3_2",
+        "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
         ]),'N')
-    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+#    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
+    TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)
     TSF_Io_savetext(TSF_debug_savefilename,TSF_debug_log)
 
 if __name__=="__main__":
