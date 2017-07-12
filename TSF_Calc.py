@@ -131,17 +131,11 @@ def TSF_calc_commacut_JA(TSF_calcQ):    #TSFdoc:整数のコンマ削除(漢数�
             TSF_calcA=TSF_calcA.replace(TSF_opewordK,TSF_Calc_opeword[TSF_opewordK])
         for TSF_opecharK,TSF_opecharV in TSF_Calc_opechar.items():
             TSF_calcA=TSF_calcA.replace(TSF_opecharK,TSF_opecharV)
-#        TSF_calcA=re.sub(re.compile("([0-9百十]+?)銭"),"+(\\1)/(100)",TSF_calcA)
         TSF_calcA=re.sub(TSF_CalcReg_senCpercent,"+(\\1)/(100)",TSF_calcA)
         for TSF_okusenK,TSF_okusenV in TSF_Calc_okusendic.items():
-#            TSF_calcA=re.sub(re.compile("".join(["([0-9千百十]+?)",TSF_okusenK])),"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
             TSF_calcA=re.sub(TSF_CalcReg_okusen[TSF_okusenK],"".join(["+(\\1)",TSF_okusenV]),TSF_calcA)
         for TSF_rinmouK,TSF_rinmouV in TSF_Calc_rinmoudic.items():
-#            TSF_calcA=re.sub(re.compile("".join(["([0-9]+?)",TSF_rinmouK])),"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
             TSF_calcA=re.sub(TSF_CalcReg_rinmou[TSF_rinmouK],"".join(["+(\\1)",TSF_rinmouV]),TSF_calcA)
-#        TSF_calcA=re.sub(re.compile("([0-9]+?)千"),"+\\1*(1000)",TSF_calcA)
-#        TSF_calcA=re.sub(re.compile("([0-9]+?)百"),"+\\1*(100)",TSF_calcA)
-#        TSF_calcA=re.sub(re.compile("([0-9]+?)十"),"+\\1*(10)",TSF_calcA)
         TSF_calcA=re.sub(TSF_CalcReg_senKkilo,"+\\1*(1000)",TSF_calcA)
         TSF_calcA=re.sub(TSF_CalcReg_hyakuH,"+\\1*(100)",TSF_calcA)
         TSF_calcA=re.sub(TSF_CalcReg_juuD,"+\\1*(10)",TSF_calcA)
@@ -237,6 +231,7 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
+#        print("TSF_calcA,TSF_calcK {0}'{1}".format(TSF_calcA,TSF_calcK))
     elif "Z~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z~")
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('0') else TSF_calcR)
@@ -377,6 +372,7 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSFdoc:分数電卓なので小数を分
     return TSF_calcA
 
 def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSFdoc:計算結果を通分する。(TSFAPI)
+#    print("TSF_calcN,TSF_calcD,TSF_calcM {0},{1},{2}".format(TSF_calcN,TSF_calcD,TSF_calcM))
     if TSF_calcD != "":
         if TSF_calcN == "": TSF_calcN="0"
         try:
@@ -392,6 +388,7 @@ def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSFdoc:計算結果を
             TSF_calcA="n|0"
     else:
         TSF_calcA="n|0"
+#    print("TSF_calcA {0}".format(TSF_calcA));
     return TSF_calcA
 
 def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSFdoc:最大公約数の計算。(TSFAPI)

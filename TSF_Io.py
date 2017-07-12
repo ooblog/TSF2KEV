@@ -94,7 +94,9 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNnum,TSF_RPNminus="",0
     TSF_RPNstack=[]
     TSF_RPNseq="".join([TSF_RPN.lstrip(","),"  "])
-    if TSF_RPNseq[0:1]=="-":  TSF_RPNseq="".join(["m",TSF_RPNseq[1:]])
+    if TSF_RPNseq[0]=="-":  TSF_RPNseq="".join(["m",TSF_RPNseq[1:]])
+    elif TSF_RPNseq[0]=="/":  TSF_RPNseq="".join(["1|",TSF_RPNseq[1:]])
+    elif TSF_RPNseq[0]=="*":  TSF_RPNseq=TSF_RPNseq[1:]
     if TSF_RPNseq[0:2] in ["U+","0x"]:  TSF_RPNseq="".join(["$",TSF_RPNseq[2:]])
     for TSF_RPNope in TSF_RPNseq:
         if TSF_RPNope in "0123456789abcdef.pm$|":
@@ -106,7 +108,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     try:
                         TSF_RPNcalcND=TSF_RPNnum.split("|")
                         TSF_RPNcalcN=float(int(TSF_RPNcalcND[0].replace("$",""),16)) if "$" in TSF_RPNcalcND[0] else float(TSF_RPNcalcND[0])
-                        TSF_RPNcalcD=float(int(TSF_RPNcalcND[-1].replace("$",""),16)) if "$" in TSF_RPNcalcND[-1] else float(TSF_RPNcalcND[-1])
+                        TSF_RPNcalcD=float(int(TSF_RPNcalcND[-1].replace("$",""),16)) if "$" in TSF_RPNcalcND[1] else float(TSF_RPNcalcND[1])
                     except ValueError:
                         TSF_RPNanswer="n|0"
                         break;
@@ -264,9 +266,8 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
     for debug_rpn in [
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
-#        "1230 000 000",
         "456000000000000000000000000","-789000000000000000000000000",
-        "0.0000000000456","-0.0000000000789"
+        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1"
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))

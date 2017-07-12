@@ -94,7 +94,14 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
     string TSF_RPNnum="";  int TSF_RPNminus=0;
     real[] TSF_RPNstack=[];
     string TSF_RPNseq=join([TSF_RPN.stripLeft(','),"  "]);
-    if( TSF_RPNseq[0..1]=="-" ){ TSF_RPNseq="m"~TSF_RPNseq[1..$]; }
+//    if( TSF_RPNseq[0..1]=="-" ){ TSF_RPNseq="m"~TSF_RPNseq[1..$]; }
+//    if( TSF_RPNseq.front=='-' ){ TSF_RPNseq="m"~TSF_RPNseq[1..$]; }
+    switch( TSF_RPNseq.front ){
+        case '-': TSF_RPNseq="m"~TSF_RPNseq[1..$]; break;
+        case '/': TSF_RPNseq="1|"~TSF_RPNseq[1..$]; break;
+        case '*': TSF_RPNseq=TSF_RPNseq[1..$]; break;
+        default: break;
+    }
     if( count(["U+","0x"],TSF_RPNseq[0..2]) ){ TSF_RPNseq="$"~TSF_RPNseq[2..$]; }
     real TSF_RPNstackL,TSF_RPNstackR,TSF_RPNstackF;
     string[] TSF_RPNcalcND;
@@ -110,7 +117,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     try{
                         TSF_RPNcalcND=TSF_RPNnum.split("|");
                         TSF_RPNcalcN=count(TSF_RPNcalcND[0],'$')?to!real(to!long(TSF_RPNcalcND[0].replace("$",""),16)):to!real(TSF_RPNcalcND[0]);
-                        TSF_RPNcalcD=count(TSF_RPNcalcND[$-1],'$')?to!real(to!long(TSF_RPNcalcND[$-1].replace("$",""),16)):to!real(TSF_RPNcalcND[$-1]);
+                        TSF_RPNcalcD=count(TSF_RPNcalcND[$-1],'$')?to!real(to!long(TSF_RPNcalcND[1].replace("$",""),16)):to!real(TSF_RPNcalcND[1]);
                     }
                     catch(ConvException e){
                         TSF_RPNanswer="n|0";
@@ -349,7 +356,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
         "456000000000000000000000000","-789000000000000000000000000",
-        "0.0000000000456","-0.0000000000789"
+        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1"
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
