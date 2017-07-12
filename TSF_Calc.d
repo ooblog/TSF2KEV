@@ -178,6 +178,9 @@ string TSF_calc_commacut_JA(string TSF_calcQ){    //#TSFdoc:整数のコンマ�
         foreach(string TSF_okusenK,string TSF_okusenV;TSF_Calc_okusendic){
             TSF_calcA=replace(TSF_calcA,TSF_okusenK,TSF_okusenV~"+");
         }
+        foreach(string TSF_rinmouK,string TSF_rinmouV;TSF_Calc_rinmoudic){
+            TSF_calcA=replace(TSF_calcA,TSF_rinmouK,TSF_rinmouV~"+");
+        }
 //        writeln("TSF_calcA %s".format(TSF_calcA));
     }
     return TSF_calcA;
@@ -583,7 +586,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
 }
 
 unittest {
-    TSF_Calc_debug(TSF_Io_argvs(["dmd","TSF_Calc.d"]));
+//    TSF_Calc_debug(TSF_Io_argvs(["dmd","TSF_Calc.d"]));
 }
 
 
