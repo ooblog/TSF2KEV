@@ -261,7 +261,8 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
         else if( count(TSF_RPNanswer,"e-") ){
             string[] TSF_RPNloge=TSF_RPNanswer.split("e-"); TSF_RPNloge[0]=TSF_RPNloge[0].replace(".","").replace("-","");
             size_t TSF_RPNlogeN=to!size_t(TSF_RPNloge[$-1])-TSF_RPNloge[0].length;
-            string TSF_RPNlogeZ="00"; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
+//            string TSF_RPNlogeZ="00"; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
+            string TSF_RPNlogeZ=""; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
             TSF_RPNanswer=join([TSF_RPNstackL>=0?"0.":"-0,",TSF_RPNlogeZ,TSF_RPNloge[0]]);
         }
         else if( TSF_RPNstackL==to!long(TSF_RPNstackL) ){
@@ -356,7 +357,8 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
         "456000000000000000000000000","-789000000000000000000000000",
-        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1"
+        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
+        "0.0001","0.00001","0.000001",
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
@@ -366,7 +368,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
 
 
 unittest {
-//    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
+    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 

@@ -192,7 +192,8 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
             TSF_RPNanswer="".join(["" if TSF_RPNstackL >= 0 else "-",TSF_RPNloge[0],TSF_RPNlogeZ])
         elif "e-" in TSF_RPNanswer:
             TSF_RPNloge=TSF_RPNanswer.split("e-"); TSF_RPNloge[0]=TSF_RPNloge[0].replace(".","").replace("-","")
-            TSF_RPNlogeN=int(TSF_RPNloge[-1])-len(TSF_RPNloge[0])+2
+#            TSF_RPNlogeN=int(TSF_RPNloge[-1])-len(TSF_RPNloge[0])+2
+            TSF_RPNlogeN=int(TSF_RPNloge[-1])-len(TSF_RPNloge[0])
             TSF_RPNlogeZ='0'*TSF_RPNlogeN
             TSF_RPNanswer="".join(["0." if TSF_RPNstackL >= 0 else "-0.",TSF_RPNlogeZ,TSF_RPNloge[0]])
         elif TSF_RPNstackL == int(TSF_RPNstackL):
@@ -267,7 +268,8 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
         "0","0.0","U+p128","$ffff","m1","-1","1.414|3","2,3+","2,m3+","2,3-","2,m3-","2,3*","2,3/","0|0","0,0/","5,3\\","5,3#","5,3<","5,3>",
         "5,7,p1Z","5,7,0Z","5,7,m1Z","5,7,p1z","5,7,0z","5,7,m1z","5,7,p1O","5,7,0O","5,7,m1O","5,7,p1o","5,7,0o","5,7,m1o","5,7,p1U","5,7,0U","5,7,m1U","5,7,p1u","5,7,0u","5,7,m1u",
         "456000000000000000000000000","-789000000000000000000000000",
-        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1"
+        "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
+        "0.0001","0.00001","0.000001",
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))
