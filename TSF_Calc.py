@@ -112,7 +112,7 @@ def TSF_Calc_bracketsJA(TSF_calcQ):    #TSFdoc:分数電卓の日本語処理。
             if "割" in TSF_calcDstr:
                 TSF_calcDstr=TSF_calcDstr.replace("割","") if "銭" in TSF_calcDstr else TSF_calcDstr.replace("割","0銭")
             TSF_calcA="".join([TSF_calcNstr,"円",TSF_calcDstr])
-            TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","弾指").replace("弾","弾指").replace("刹","刹那")
+            TSF_calcA=TSF_calcA.replace("模","模糊").replace("逡","逡巡").replace("須","須臾").replace("瞬","瞬息").replace("弾","弾指").replace("刹","刹那")
             TSF_calcA=TSF_calcA.replace("徳","六徳").replace("空","虚空").replace("清","清浄").replace("耶","阿頼耶").replace("摩","阿摩羅").replace("涅","涅槃寂静")
         if TSF_calcA.startswith('0') and TSF_calcA != "0円": TSF_calcA=TSF_calcA.replace("0円","")
         TSF_calcA=TSF_calcA.replace("恒","恒河沙").replace("阿","阿僧祇").replace("那","那由他").replace("思","不可思議").replace("量","無量大数")
@@ -166,20 +166,41 @@ def TSF_calc_comma_okusen(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:�
 
 def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:小数にコンマ(漢数字)処理。(TSFAPI)
     TSF_calcA=""
-    TSF_calcCptr=0
+    TSF_calcCptr=1
     TSF_calc_zero='0'*TSF_calcC
     for TSF_calcM,TSF_calcK in enumerate(TSF_calcQ):
         if TSF_calcM%TSF_calcC != 0:
             TSF_calcA="".join([TSF_calcA,TSF_calcK])
         else:
-            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "").join([TSF_calcA,TSF_calcK])
+            TSF_calcA="".join([TSF_calcA,TSF_calcK,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
             if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
                 TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
+            elif TSF_calcCptr>=len(TSF_calcT):
+                TSF_calcA=TSF_calcA[0:-min(TSF_calcC,len(TSF_calcA))]
+                break;
             TSF_calcCptr+=1
-    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
-    if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-        TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
+#        print("TSF_calcA",TSF_calcA)
+#    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
+#    if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+#        TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
     return TSF_calcA
+#def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:小数にコンマ(漢数字)処理。(TSFAPI)
+#    TSF_calcA=""
+#    TSF_calcCptr=0
+#    TSF_calc_zero='0'*TSF_calcC
+#    for TSF_calcM,TSF_calcK in enumerate(TSF_calcQ):
+#        if TSF_calcM%TSF_calcC != 0:
+#            TSF_calcA="".join([TSF_calcA,TSF_calcK])
+#        else:
+#            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "").join([TSF_calcA,TSF_calcK])
+#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+#                TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
+#            TSF_calcCptr+=1
+##    print("TSF_calcA",TSF_calcA)
+#    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
+#    if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
+#        TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
+#    return TSF_calcA
 
 TSF_CalcReg_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSFdoc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
