@@ -368,7 +368,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
 
 
 unittest {
-    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
+//    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 

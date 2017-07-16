@@ -16,7 +16,8 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         "#!TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
         "#!TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
         "#!TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
-        "#!TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
+#        "#!TSF_bigdivdec":TSF_Calc_bigdivdec, "#分数の小数化":TSF_Calc_bigdivdec,
+#        "#!TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
 #        "#!TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
@@ -80,6 +81,9 @@ def TSF_Calc_calcMinus():    #TSFdoc:分数計算する。符号pmを省略す�
 
 def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
+    return ""
+
+def TSF_Calc_bigdivdec():    #TSFdoc:分数を小数に変換する。RPN電卓よりも正確に計算する。
     return ""
 
 TSF_Calc_precisionMAX=100
@@ -179,28 +183,7 @@ def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:�
                 TSF_calcA=TSF_calcA[0:-min(TSF_calcC,len(TSF_calcA))]
                 break;
             TSF_calcCptr+=1
-#        print("TSF_calcA",TSF_calcA)
-#    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
-#    if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-#        TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
     return TSF_calcA
-#def TSF_calc_comma_rinmou(TSF_calcQ,TSF_calcT,TSF_calcC,TSF_calcZ):    #TSFdoc:小数にコンマ(漢数字)処理。(TSFAPI)
-#    TSF_calcA=""
-#    TSF_calcCptr=0
-#    TSF_calc_zero='0'*TSF_calcC
-#    for TSF_calcM,TSF_calcK in enumerate(TSF_calcQ):
-#        if TSF_calcM%TSF_calcC != 0:
-#            TSF_calcA="".join([TSF_calcA,TSF_calcK])
-#        else:
-#            TSF_calcA=(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "").join([TSF_calcA,TSF_calcK])
-#            if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-#                TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
-#            TSF_calcCptr+=1
-##    print("TSF_calcA",TSF_calcA)
-#    TSF_calcA="".join([TSF_calcA,(TSF_calcT[TSF_calcCptr] if TSF_calcCptr<len(TSF_calcT) else "")])
-#    if TSF_calcZ and TSF_calc_zero in TSF_calcA and TSF_calcCptr<len(TSF_calcT):
-#        TSF_calcA=TSF_calcA.replace("".join([TSF_calc_zero,TSF_calcT[TSF_calcCptr]]),"")
-#    return TSF_calcA
 
 TSF_CalcReg_bracketreg=re.compile("[(](?<=[(])[^()]*(?=[)])[)]")
 def TSF_Calc_bracketsQQ(TSF_calcQ):    #TSFdoc:分数電卓のmain。括弧の内側を検索。(TSFAPI)
@@ -235,9 +218,20 @@ def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSFdoc:分数電卓のPM符号省略。
     TSF_calcA=TSF_calcA.replace("p","").replace("m","-")
     return TSF_calcA
 
-def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。(TSFAPI)
+def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。TSF_calcFは事前計算。(TSFAPI)
     TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
-    TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]).replace("-","m"));
+#    TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]).replace("-","m"));
+    TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]))
+    if "~" in TSF_calcQsplits[-1]:
+        TSF_calcLRsplits=TSF_calcQsplits[-1].split('~')
+        TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[-1];
+    else:
+        TSF_calcL=TSF_calcQsplits[-1];  TSF_calcR=TSF_calcQsplits[-1];
+    return TSF_calcF,TSF_calcL,TSF_calcR
+
+def TSF_Calc_FLRlazy(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。TSF_calcFは遅延評価。(TSFAPI)
+    TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
+    TSF_calcF=TSF_calcQsplits[0]
     if "~" in TSF_calcQsplits[-1]:
         TSF_calcLRsplits=TSF_calcQsplits[-1].split('~')
         TSF_calcL=TSF_calcLRsplits[0];  TSF_calcR=TSF_calcLRsplits[-1];
@@ -247,6 +241,7 @@ def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いて
 
 #"0123456789abcdef.pm$|":
 #M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
+#D~|
 def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合およびゼロ比較演算子系。(TSFAPI)
     TSF_calcA=TSF_calcQ
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
@@ -274,6 +269,28 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
     elif "N~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"N~")
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('n') else TSF_calcR)
+    elif "M~" in TSF_calcK:
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLRlazy(TSF_calcK,"M~")
+        TSF_calcS,TSF_calcG=TSF_Io_RPNzero(TSF_calcL),TSF_Io_RPNzero(TSF_calcR)
+        if TSF_calcS <= TSF_calcG:
+            TSF_calcS,TSF_calcG=TSF_calcS,TSF_calcG+1
+        else:
+            TSF_calcS,TSF_calcG=TSF_calcG,TSF_calcS+1
+        TSF_calcM="0"
+        for TSF_calcC in range(TSF_calcS,TSF_calcG,1): TSF_calcM="+".join([TSF_calcM,TSF_Calc_addition(TSF_calcF.replace("k",str(TSF_calcC)))])
+        TSF_calcA=TSF_Calc_addition(TSF_calcM)
+    elif "P~" in TSF_calcK:
+        TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLRlazy(TSF_calcK,"P~")
+        TSF_calcS,TSF_calcG=TSF_Io_RPNzero(TSF_calcL),TSF_Io_RPNzero(TSF_calcR)
+        if TSF_calcS <= TSF_calcG:
+            TSF_calcG+=1
+        else:
+            TSF_calcS,TSF_calcG=TSF_calcG,TSF_calcS+1
+        TSF_calcP="1"
+        for TSF_calcC in range(TSF_calcS,TSF_calcG,1): TSF_calcP="*".join([TSF_calcP,TSF_Calc_addition(TSF_calcF.replace("k",str(TSF_calcC)))])
+        TSF_calcA=TSF_Calc_addition(TSF_calcP)
+    elif "D~" in TSF_calcK:
+        pass
     else:
         TSF_calcA=TSF_Calc_addition(TSF_calcK)
     return TSF_calcA
@@ -468,6 +485,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "0|1N~True:~False:","n|0N~True:~False:",
         "2/3","2|3","2_3","3/2","3|2","3_2",
         "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
+        "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
         ]),'N')
 #    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)
