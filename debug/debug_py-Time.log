@@ -25,18 +25,18 @@ timesample:
 「{$TSFcounter@c}」→「{$TSFcounter1}」
 「@000y,@___y,@4y,@0y,@_y,@2y」→「2017,2017,2017,17,17,17」
 「@0m,@_m,@m」→「07, 7,7」
-「@wd」→「0」
-「@0dm,@_dm,@dm」→「03, 3,3」
-「@0h,@_h,@h」→「04, 4,4」
+「@wd」→「1」
+「@0dm,@_dm,@dm」→「18,18,18」
+「@0h,@_h,@h」→「00, 0,0」
 「@0m,@_m,@m」→「07, 7,7」
-「@0s,@_s,@s」→「17,17,17」
-「@00ls,@__ls,@ls」→「638,638,638」
-「@00000rs,@_____rs,@rs」→「638880,638880,638880」
-「@4y@0m@0dm@wdec@0h@0n@0s」→「20170703M041117」
+「@0s,@_s,@s」→「34,34,34」
+「@00ls,@__ls,@ls」→「979,979,979」
+「@00000rs,@_____rs,@rs」→「979344,979344,979344」
+「@4y@0m@0dm@wdec@0h@0n@0s」→「20170718T003234」
 「{$TSFcounter@c}」→「{$TSFcounter2}」
 -- TSF_Time.py viewthey --
 TSF_Tab-Separated-Forth:
-	timecount:	#!TSF_this	#!TSF_fin.	#TSF_fin.
+	timecount:	#!TSF_this	#!TSF_fin.
 timecount:
 	timejump:	timesample:	#!TSF_lenthe	0,1,[0]U	#!TSF_join[]	#!TSF_RPN	#!TSF_peekNthe	#!TSF_this	timecount:	#!TSF_this
 timejump:

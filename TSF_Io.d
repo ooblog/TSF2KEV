@@ -261,15 +261,12 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
         else if( count(TSF_RPNanswer,"e-") ){
             string[] TSF_RPNloge=TSF_RPNanswer.split("e-"); TSF_RPNloge[0]=TSF_RPNloge[0].replace(".","").replace("-","");
             size_t TSF_RPNlogeN=to!size_t(TSF_RPNloge[$-1])-TSF_RPNloge[0].length;
-//            string TSF_RPNlogeZ="00"; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
             string TSF_RPNlogeZ=""; foreach(size_t i;0..TSF_RPNlogeN){ TSF_RPNlogeZ~="0"; }
             TSF_RPNanswer=join([TSF_RPNstackL>=0?"0.":"-0,",TSF_RPNlogeZ,TSF_RPNloge[0]]);
         }
         else if( TSF_RPNstackL==to!long(TSF_RPNstackL) ){
             TSF_RPNanswer=to!string(to!long(TSF_RPNstackL));
         }
-
-
         if( TSF_RPNanswer!="0" ){
             TSF_RPNanswer=TSF_RPNanswer.front=='-'?TSF_RPNanswer.replace("-","m"):"p"~TSF_RPNanswer;
         }

@@ -11,7 +11,7 @@ import zipfile
 import base64
 import datetime
 import math
-import decimal
+#import decimal
 import struct
 #from collections import OrderedDict
 #from collections import deque
@@ -192,13 +192,11 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
             TSF_RPNanswer="".join(["" if TSF_RPNstackL >= 0 else "-",TSF_RPNloge[0],TSF_RPNlogeZ])
         elif "e-" in TSF_RPNanswer:
             TSF_RPNloge=TSF_RPNanswer.split("e-"); TSF_RPNloge[0]=TSF_RPNloge[0].replace(".","").replace("-","")
-#            TSF_RPNlogeN=int(TSF_RPNloge[-1])-len(TSF_RPNloge[0])+2
             TSF_RPNlogeN=int(TSF_RPNloge[-1])-len(TSF_RPNloge[0])
             TSF_RPNlogeZ='0'*TSF_RPNlogeN
             TSF_RPNanswer="".join(["0." if TSF_RPNstackL >= 0 else "-0.",TSF_RPNlogeZ,TSF_RPNloge[0]])
         elif TSF_RPNstackL == int(TSF_RPNstackL):
             TSF_RPNanswer=str(int(TSF_RPNstackL))
-
         if TSF_RPNanswer != "0":
             TSF_RPNanswer=TSF_RPNanswer.replace('-','m') if TSF_RPNanswer.startswith('-') else "".join(["p",TSF_RPNanswer])
     return TSF_RPNanswer

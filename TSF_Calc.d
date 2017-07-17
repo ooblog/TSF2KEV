@@ -353,6 +353,18 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
         TSF_calcA=TSF_Calc_addition(TSF_calcP);
     }
     else if( count(TSF_calcK,"D~") ){
+        auto TSF_calcFLR=TSF_Calc_FLRlazy(TSF_calcK,"D~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
+        TSF_calcF=TSF_Calc_addition(TSF_calcF);  if( count(TSF_calcF,"|")==0 ){ TSF_calcF=TSF_Calc_addition(TSF_calcF); }
+        string[] TSF_calcND=TSF_calcF.split('|');
+        string TSF_calcZ;  foreach(long i;0..TSF_Io_RPNzero(TSF_calcL)){ TSF_calcZ~="0"; }
+        TSF_calcA=TSF_Calc_addition("%s%s\\%s".format(TSF_calcND[0],TSF_calcZ,TSF_calcND[$-1])).replace("|1","");
+        string TSF_calcM=(TSF_calcA.front=='-')?"m":"p";
+        TSF_calcA=TSF_calcA.replace("-","");  
+        TSF_calcA=TSF_calcA.length>TSF_calcZ.length?TSF_calcA[0..$-TSF_calcZ.length]~"."~TSF_calcA[$-TSF_calcZ.length..$]:"."~TSF_calcA;
+        if( TSF_calcA.front=='.' ){ TSF_calcA=TSF_calcA.replace(".","0."); }
+        TSF_calcA=join([TSF_calcM,TSF_calcA]);
+        if( TSF_calcA=="p0.0" ){ TSF_calcA="0"; }
+        if( TSF_calcA=="p0.n|0" ){ TSF_calcA="n|0"; }
     }
     else{
         TSF_calcA=TSF_Calc_addition(TSF_calcK);
@@ -614,6 +626,8 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "2/3","2|3","2_3","3/2","3|2","3_2",
         "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
         "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
+        "1|3D~10","-1|3D~10","0|1D~10","1|0D~10","355|113D~10",
+        "1|9D~20",",(1|9)","1|90D~20",",(1|90)",
         ],"\t"),'N');
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
