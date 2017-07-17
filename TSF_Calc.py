@@ -294,13 +294,15 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
         TSF_calcF=TSF_Calc_addition(TSF_calcF)
         if not "|" in TSF_calcF: TSF_calcF=TSF_Calc_addition(TSF_calcF)
         TSF_calcND=TSF_calcF.split('|')
-        TSF_calcZRlen=TSF_Io_RPNzero(TSF_calcR); TSF_calcZR='0'*TSF_calcZRlen
+        TSF_calcZRlen=max(TSF_Io_RPNzero(TSF_calcR),0); TSF_calcZR='0'*TSF_calcZRlen
         TSF_calcA=TSF_Calc_addition("{0}{1}\\{2}".format(TSF_calcND[0],TSF_calcZR,TSF_calcND[-1])).replace("|1","")
         TSF_calcM="m" if TSF_calcA.startswith('-') else "p"
         TSF_calcA=TSF_calcA.replace("-","")
-        TSF_calcZLlen=max(len(TSF_calcZR)-len(TSF_calcA),0); TSF_calcZL='0'*TSF_calcZLlen
-        TSF_calcA=TSF_calcA[:-TSF_calcZRlen]+"."+TSF_calcA[-TSF_calcZRlen:]
-        if TSF_calcA.startswith('.'): TSF_calcA=TSF_calcA.replace(".","".join(["0.",TSF_calcZL]))
+        if TSF_calcZRlen > 0:
+            TSF_calcA=TSF_calcA[:-TSF_calcZRlen]+"."+TSF_calcA[-TSF_calcZRlen:]
+            if TSF_calcA.startswith('.'):
+                TSF_calcZLlen=max(TSF_calcZRlen-len(TSF_calcA)+1,0); TSF_calcZL='0'*TSF_calcZLlen
+                TSF_calcA=TSF_calcA.replace(".","".join(["0.",TSF_calcZL]))
         TSF_calcA="".join([TSF_calcM,TSF_calcA])
         if TSF_calcA == "p0.0": TSF_calcA="0"
         if TSF_calcA == "p0.n|0": TSF_calcA="n|0"
@@ -500,7 +502,8 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
         "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
         "1|3D~10","-1|3D~10","0|1D~10","1|0D~10","355|113D~10",
-        "1|9D~20",",(1|9)","1|90D~20",",(1|90)",
+        "1|9D~20",",(1|9)","1|90D~20",",(1|90)","1|900D~20",",(1|900)",
+        "12.34D~10","1234D~2","12.34D~0",
         ]),'N')
 #    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)

@@ -356,13 +356,18 @@ string TSF_Calc_function(string TSF_calcQ){    //#TSFdoc:分数電卓の和集�
         auto TSF_calcFLR=TSF_Calc_FLRlazy(TSF_calcK,"D~");  string TSF_calcF=TSF_calcFLR[0],TSF_calcL=TSF_calcFLR[1],TSF_calcR=TSF_calcFLR[2];
         TSF_calcF=TSF_Calc_addition(TSF_calcF);  if( count(TSF_calcF,"|")==0 ){ TSF_calcF=TSF_Calc_addition(TSF_calcF); }
         string[] TSF_calcND=TSF_calcF.split('|');
-        string TSF_calcZ;  foreach(long i;0..TSF_Io_RPNzero(TSF_calcL)){ TSF_calcZ~="0"; }
-        TSF_calcA=TSF_Calc_addition("%s%s\\%s".format(TSF_calcND[0],TSF_calcZ,TSF_calcND[$-1])).replace("|1","");
+        string TSF_calcZR; long TSF_calcZRlen=to!long(fmax(TSF_Io_RPNzero(TSF_calcR),0)); foreach(long i;0..TSF_calcZRlen){ TSF_calcZR~="0"; }
+        TSF_calcA=TSF_Calc_addition("%s%s\\%s".format(TSF_calcND[0],TSF_calcZR,TSF_calcND[$-1])).replace("|1","");
         string TSF_calcM=(TSF_calcA.front=='-')?"m":"p";
-        TSF_calcA=TSF_calcA.replace("-","");  
-        TSF_calcA=TSF_calcA.length>TSF_calcZ.length?TSF_calcA[0..$-TSF_calcZ.length]~"."~TSF_calcA[$-TSF_calcZ.length..$]:"."~TSF_calcA;
-        if( TSF_calcA.front=='.' ){ TSF_calcA=TSF_calcA.replace(".","0."); }
-        TSF_calcA=join([TSF_calcM,TSF_calcA]);
+        TSF_calcA=TSF_calcA.replace("-","");
+        if( TSF_calcZRlen>0 ){
+            TSF_calcA=TSF_calcA.length>to!size_t(TSF_calcZRlen)?TSF_calcA[0..$-to!size_t(TSF_calcZRlen)]~"."~TSF_calcA[$-to!size_t(TSF_calcZRlen)..$]:"."~TSF_calcA;
+            if( TSF_calcA.front=='.' ){
+                string TSF_calcZL; long TSF_calcZLlen=to!long(fmax(TSF_calcZRlen-TSF_calcA.length+1,0)); foreach(long i;0..TSF_calcZLlen){ TSF_calcZL~="0"; }
+                TSF_calcA=TSF_calcA.replace(".","0."~TSF_calcZL);
+            }
+        }
+        TSF_calcA=TSF_calcM~TSF_calcA;
         if( TSF_calcA=="p0.0" ){ TSF_calcA="0"; }
         if( TSF_calcA=="p0.n|0" ){ TSF_calcA="n|0"; }
     }
@@ -627,7 +632,8 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "無量大数",",無量大数","涅槃寂静",",涅槃寂静",
         "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
         "1|3D~10","-1|3D~10","0|1D~10","1|0D~10","355|113D~10",
-        "1|9D~20",",(1|9)","1|90D~20",",(1|90)",
+        "1|9D~20",",(1|9)","1|90D~20",",(1|90)","1|900D~20",",(1|900)",
+        "12.34D~10","1234D~2","12.34D~0",
         ],"\t"),'N');
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
