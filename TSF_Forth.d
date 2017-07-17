@@ -22,7 +22,7 @@ string TSF_Forth_1ststack(){    //#TSFdoc:最初のスタック名(TSFAPI)。
 }
 
 string TSF_Forth_branchID(){    //#TSFdoc:TSFブランチ名(TSFAPI)。
-    return "20170703M004636";
+    return "20170718T073839";
 }
 
 string TSF_Forth_grammarID(){    //#TSFdoc:TSF文法管理番号(TSFAPI)。

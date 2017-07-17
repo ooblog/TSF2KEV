@@ -91,16 +91,16 @@ ENV/
 # git clone github:ooblog/TSF2KEV.git
 # git status
 # git push github:ooblog/TSF2KEV.git master
-# git push github:ooblog/TSF2KEV.git 20170703M004636
+# git push github:ooblog/TSF2KEV.git 20170718T073839
 # git log
 # git ls-files
 # git commit -a -m ""
 # git reset --soft HEAD^
 # git branch
 # git checkout master
-# git checkout 20170703M004636
-# git merge 20170703M004636
-# git branch -d 20170703M004636
+# git checkout 20170718T073839
+# git merge 20170718T073839
+# git branch -d 20170718T073839
 TSF
 TSF.o
 TSF.obj
