@@ -34,6 +34,7 @@ if sys.version_info.major == 3:
     TSF_Io_urlliburlretrieve=urllib.request.urlretrieve
 
 TSF_maxint=2**(struct.Struct('i').size*8-1)-1;  TSF_minint=-TSF_maxint-1
+TSF_longint=long if sys.version_info.major == 2 else int
 
 TSF_libc=None
 if sys.platform.startswith("win"):
