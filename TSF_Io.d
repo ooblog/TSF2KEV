@@ -145,7 +145,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                 }
                 TSF_RPNnum="";
             }
-            if( count("!SCTsctREL",TSF_RPNope) ){
+            if( count("!SCTsctRELl",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackL=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -153,7 +153,18 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     TSF_RPNstackL=0.0;
                 }
                 switch( TSF_RPNope ){
-                    case '!':  default: TSF_RPNstack~=abs(TSF_RPNstackL);  break;
+                    case '!':  TSF_RPNstack~=abs(TSF_RPNstackL);  break;
+                    case 'S':  TSF_RPNstack~=sin(TSF_RPNstackL);  break;
+                    case 'C':  TSF_RPNstack~=cos(TSF_RPNstackL);  break;
+                    case 'T':  TSF_RPNstack~=tan(TSF_RPNstackL);  break;
+                    case 's':  TSF_RPNstack~=asin(TSF_RPNstackL);  break;
+                    case 'c':  TSF_RPNstack~=acos(TSF_RPNstackL);  break;
+                    case 't':  TSF_RPNstack~=atan(TSF_RPNstackL);  break;
+                    case 'R':  TSF_RPNstack~=sqrt(TSF_RPNstackL);  break;
+                    case 'E':  TSF_RPNstack~=log(TSF_RPNstackL);  break;
+                    case 'L':  TSF_RPNstack~=log10(TSF_RPNstackL);  break;
+                    case 'l':  TSF_RPNstack~=log2(TSF_RPNstackL);  break;
+                    default:  break;
                 }
             }
             else if( count("+-*/\\#%<>",TSF_RPNope) ){

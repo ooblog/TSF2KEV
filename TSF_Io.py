@@ -127,10 +127,30 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNanswer="n|0"
                     break;
                 TSF_RPNnum=""
-            if TSF_RPNope in "!SCTsctREL":
+            if TSF_RPNope in "!SCTsctRELl":
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "!":
                     TSF_RPNstack.append(abs(TSF_RPNstackL))
+                elif TSF_RPNope == "S":
+                    TSF_RPNstack.append(math.sin(TSF_RPNstackL))
+                elif TSF_RPNope == "C":
+                    TSF_RPNstack.append(math.cos(TSF_RPNstackL))
+                elif TSF_RPNope == "T":
+                    TSF_RPNstack.append(math.tan(TSF_RPNstackL))
+                elif TSF_RPNope == "s":
+                    TSF_RPNstack.append(math.asin(TSF_RPNstackL))
+                elif TSF_RPNope == "c":
+                    TSF_RPNstack.append(math.acos(TSF_RPNstackL))
+                elif TSF_RPNope == "t":
+                    TSF_RPNstack.append(math.atan(TSF_RPNstackL))
+                elif TSF_RPNope == "R":
+                    TSF_RPNstack.append(math.sqrt(TSF_RPNstackL))
+                elif TSF_RPNope == "E":
+                    TSF_RPNstack.append(math.log1p(TSF_RPNstackL))
+                elif TSF_RPNope == "L":
+                    TSF_RPNstack.append(math.log10(TSF_RPNstackL))
+                elif TSF_RPNope == "l":
+                    TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
             elif TSF_RPNope in "+-*/\\#%<>":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
