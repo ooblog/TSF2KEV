@@ -151,7 +151,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNstack.append(math.log10(TSF_RPNstackL))
                 elif TSF_RPNope == "l":
                     TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
-            elif TSF_RPNope in "+-*/\\#%<>":
+            elif TSF_RPNope in "+-*/\\#%<>AH":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "+":
@@ -187,6 +187,10 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNstack.append(min(TSF_RPNstackL,TSF_RPNstackR))
                 elif TSF_RPNope == "<":
                     TSF_RPNstack.append(max(TSF_RPNstackL,TSF_RPNstackR))
+                elif TSF_RPNope == "A":
+                    TSF_RPNstack.append(math.atan2(TSF_RPNstackL,TSF_RPNstackR))
+                elif TSF_RPNope == "H":
+                    TSF_RPNstack.append(math.hypot(TSF_RPNstackL,TSF_RPNstackR))
             elif TSF_RPNope in "ZzOoUu":
                 TSF_RPNstackF=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0

@@ -167,7 +167,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     default:  break;
                 }
             }
-            else if( count("+-*/\\#%<>",TSF_RPNope) ){
+            else if( count("+-*/\\#%<>AH",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -221,6 +221,8 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     case '%':  TSF_RPNstack~=TSF_RPNstackL+TSF_RPNstackL*TSF_RPNstackR/100.0;  break;
                     case '>':  TSF_RPNstack~=fmin(TSF_RPNstackL,TSF_RPNstackR);  break;
                     case '<':  TSF_RPNstack~=fmax(TSF_RPNstackL,TSF_RPNstackR);  break;
+                    case 'A':  TSF_RPNstack~=atan2(TSF_RPNstackL,TSF_RPNstackR);  break;
+                    case 'H':  TSF_RPNstack~=hypot(TSF_RPNstackL,TSF_RPNstackR);  break;
                     default:  break;
                 }
             }
