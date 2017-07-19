@@ -15,6 +15,8 @@ adverb:	F	N	C	M	V	A	Q	I	R	H	L
 pronoun:	this	that	the	they
 
 shufflestacks:
+#!	pushV:	pullV:	pokeV:	peekV:
+	peekV:
 	pushM:	pullM:	pokeM:	peekM:
 	pushC:	pullC:	pokeC:	peekC:
 	pushN:	pullN:	pokeN:	peekN:
@@ -39,5 +41,10 @@ peekM:	TSF_peekMthe	adverbclone:	3	#!TSF_peekMthe
 pokeM:	TSF_pokeMthe	$poke	adverbclone:	3	#!TSF_pokeMthe	$poke
 pullM:	TSF_pullMthe	adverbclone:	3	#!TSF_pullMthe
 pushM:	TSF_pushMthe	$push	adverbclone:	3	#!TSF_pushMthe	$push
+
+peekV:	TSF_peekVthe	adverbclone:	4	#!TSF_peekVthe
+pokeV:	TSF_pokeVthe	$poke	adverbclone:	4	#!TSF_pokeVthe	$poke
+pullV:	TSF_pullVthe	adverbclone:	4	#!TSF_pullVthe
+pushV:	TSF_pushVthe	$push	adverbclone:	4	#!TSF_pushVthe	$push
 
 

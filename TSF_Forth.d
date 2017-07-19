@@ -134,6 +134,22 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#!TSF_pushMthis":&TSF_Forth_pushMthis, "#実行中スタック囲択差込":&TSF_Forth_pushMthis,
         "#!TSF_pushMthat":&TSF_Forth_pushMthat, "#積込先スタック囲択差込":&TSF_Forth_pushMthat,
         "#!TSF_pushMthey":&TSF_Forth_pushMthey, "#スタック一覧囲択差込":&TSF_Forth_pushMthey,
+        "#!TSF_peekVthe":&TSF_Forth_peekVthe, "#指定スタック逆択読込":&TSF_Forth_peekVthe,
+        "#!TSF_peekVthis":&TSF_Forth_peekVthis, "#実行中スタック逆択読込":&TSF_Forth_peekVthis,
+        "#!TSF_peekVthat":&TSF_Forth_peekVthat, "#積込先スタック逆択読込":&TSF_Forth_peekVthat,
+        "#!TSF_peekVthey":&TSF_Forth_peekVthey, "#スタック一覧逆択読込":&TSF_Forth_peekVthey,
+//        "#!TSF_pokeVthe":&TSF_Forth_pokeVthe, "#指定スタック逆択上書":&TSF_Forth_pokeVthe,
+//        "#!TSF_pokeVthis":&TSF_Forth_pokeVthis, "#実行中スタック逆択上書":&TSF_Forth_pokeVthis,
+//        "#!TSF_pokeVthat":&TSF_Forth_pokeVthat, "#積込先スタック逆択上書":&TSF_Forth_pokeVthat,
+//        "#!TSF_pokeVthey":&TSF_Forth_pokeVthey, "#スタック一覧逆択上書":&TSF_Forth_pokeVthey,
+//        "#!TSF_pullVthe":&TSF_Forth_pullVthe, "#指定スタック逆択引抜":&TSF_Forth_pullVthe,
+//        "#!TSF_pullVthis":&TSF_Forth_pullVthis, "#実行中スタック逆択引抜":&TSF_Forth_pullVthis,
+//        "#!TSF_pullVthat":&TSF_Forth_pullVthat, "#積込先スタック逆択引抜":&TSF_Forth_pullVthat,
+//        "#!TSF_pullVthey":&TSF_Forth_pullVthey, "#スタック一覧逆択引抜":&TSF_Forth_pullVthey,
+//        "#!TSF_pushVthe":&TSF_Forth_pushVthe, "#指定スタック逆択差込":&TSF_Forth_pushVthe,
+//        "#!TSF_pushVthis":&TSF_Forth_pushVthis, "#実行中スタック逆択差込":&TSF_Forth_pushVthis,
+//        "#!TSF_pushVthat":&TSF_Forth_pushVthat, "#積込先スタック逆択差込":&TSF_Forth_pushVthat,
+//        "#!TSF_pushVthey":&TSF_Forth_pushVthey, "#スタック一覧逆択差込":&TSF_Forth_pushVthey,
         "#!TSF_swapBA":&TSF_Forth_swapBA, "#カードBA交換":&TSF_Forth_swapBA,
         "#!TSF_swapCA":&TSF_Forth_swapCA, "#カードCA交換":&TSF_Forth_swapCA,
         "#!TSF_swapCB":&TSF_Forth_swapCB, "#カードCB交換":&TSF_Forth_swapCB,
@@ -1010,6 +1026,30 @@ string TSF_Forth_pushMthey(){    //#TSFdoc:スタック一覧から囲択でカ�
     return "";
 }
 
+string TSF_Forth_peekVthe(){    //#TSFdoc:指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),TSF_peek,"",'V'));
+    return "";
+}
+
+string TSF_Forth_peekVthis(){    //#TSFdoc:実行中スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthis(),TSF_peek,"",'V'));
+    return "";
+}
+
+string TSF_Forth_peekVthat(){    //#TSFdoc:積込先スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthat(),TSF_peek,"",'V'));
+    return "";
+}
+
+string TSF_Forth_peekVthey(){    //#TSFdoc:スタック一覧から逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek("",TSF_peek,"",'V'));
+    return "";
+}
+
 
 string TSF_Forth_swapBA(){    //#TSFdoc:カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。
     string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();
@@ -1472,7 +1512,7 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_setTSF("adverb:",join(["F","N","C","M","V","A","Q","I","R","H","L"],"\t"),'O');
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
-        "pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
+        "peekV:","pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
     TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#!TSF_peekFthe"],"\t"),'O');
     TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#!TSF_pokeFthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#!TSF_pullFthe"],"\t"),'O');
@@ -1489,6 +1529,10 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_setTSF("pokeM:",join(["TSF_pokeMthe","$poke","adverbclone:","3","#!TSF_pokeMthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullM:",join(["TSF_pullMthe","adverbclone:","3","#!TSF_pullMthe"],"\t"),'O');
     TSF_Forth_setTSF("pushM:",join(["TSF_pushMthe","$push","adverbclone:","3","#!TSF_pushMthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekV:",join(["TSF_peekVthe","adverbclone:","4","#!TSF_peekVthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeV:",join(["TSF_pokeVthe","$poke","adverbclone:","4","#!TSF_pokeVthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullV:",join(["TSF_pullVthe","adverbclone:","4","#!TSF_pullVthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushV:",join(["TSF_pushVthe","$push","adverbclone:","4","#!TSF_pushVthe","$push"],"\t"),'O');
 
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);
