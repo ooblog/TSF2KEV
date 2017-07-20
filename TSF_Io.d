@@ -167,7 +167,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     default:  break;
                 }
             }
-            else if( count("+-*/\\#%<>AH",TSF_RPNope) ){
+            else if( count("+-*/\\#%<>AH^",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -223,6 +223,14 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     case '<':  TSF_RPNstack~=fmax(TSF_RPNstackL,TSF_RPNstackR);  break;
                     case 'A':  TSF_RPNstack~=atan2(TSF_RPNstackL,TSF_RPNstackR);  break;
                     case 'H':  TSF_RPNstack~=hypot(TSF_RPNstackL,TSF_RPNstackR);  break;
+                    case '^':
+                        if( (TSF_RPNstackL==0.0)&&(TSF_RPNstackR<=0.0) ){
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
+                        }
+                        else{
+                            TSF_RPNstack~=pow(TSF_RPNstackL,TSF_RPNstackR);
+                        }
+                    break;
                     default:  break;
                 }
             }
@@ -369,6 +377,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "456000000000000000000000000","-789000000000000000000000000",
         "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
         "0.0001","0.00001","0.000001",
+        "0,p1^","0,0^","0,m1^",
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }

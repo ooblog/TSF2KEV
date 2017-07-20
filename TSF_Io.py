@@ -151,7 +151,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNstack.append(math.log10(TSF_RPNstackL))
                 elif TSF_RPNope == "l":
                     TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
-            elif TSF_RPNope in "+-*/\\#%<>AH":
+            elif TSF_RPNope in "+-*/\\#%<>AH^":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "+":
@@ -191,6 +191,11 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNstack.append(math.atan2(TSF_RPNstackL,TSF_RPNstackR))
                 elif TSF_RPNope == "H":
                     TSF_RPNstack.append(math.hypot(TSF_RPNstackL,TSF_RPNstackR))
+                elif TSF_RPNope == "^":
+                    if TSF_RPNstackL == 0.0 and TSF_RPNstackR <= 0.0:
+                        TSF_RPNanswer="n|0";  break;
+                    else:
+                        TSF_RPNstack.append(pow(TSF_RPNstackL,TSF_RPNstackR))
             elif TSF_RPNope in "ZzOoUu":
                 TSF_RPNstackF=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
@@ -293,6 +298,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
         "456000000000000000000000000","-789000000000000000000000000",
         "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
         "0.0001","0.00001","0.000001",
+        "0,p1^","0,0^","0,m1^",
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))
