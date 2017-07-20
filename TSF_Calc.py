@@ -16,9 +16,6 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         "#!TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
         "#!TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
         "#!TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
-#        "#!TSF_bigdivdec":TSF_Calc_bigdivdec, "#分数の小数化":TSF_Calc_bigdivdec,
-#        "#!TSF_precision":TSF_Calc_precision, "#有効桁数":TSF_Calc_precision,
-#        "#!TSF_rounding":TSF_Calc_rounding, "#端数処理":TSF_Calc_rounding,
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -56,8 +53,6 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_CalcReg_rinmou=dict(zip(list(TSF_Calc_rinmoushi),TSF_Calc_rinmoureg))
     TSF_Calc_okusenyen="".join(["円",TSF_Calc_okusenman])
     TSF_Calc_rinmouyen="".join(["円割銭",TSF_Calc_rinmoushi])
-    global TSF_Calc_precisionMAX
-#    TSF_Calc_precisionMAX=100;   decimal.getcontext().prec=TSF_Calc_precisionMAX
     return TSF_cardsD,TSF_cardsO
 
 def TSF_Calc_calcsquarebrackets(TSF_calcQ,TSF_calcBL,TSF_calcBR):     #TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
@@ -82,16 +77,6 @@ def TSF_Calc_calcMinus():    #TSFdoc:分数計算する。符号pmを省略す�
 def TSF_Calc_calcJA():    #TSFdoc:分数計算(日本語表記)する。カード枚数+数式1枚[cardN…cardA←calc]ドローして1枚[N]リターン。
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")))
     return ""
-
-def TSF_Calc_bigdivdec():    #TSFdoc:分数を小数に変換する。RPN電卓よりも正確に計算する。
-    return ""
-
-#TSF_Calc_precisionMAX=100
-#def TSF_Calc_precision():    ##TSFdoc:電卓の有効桁数を変更する。1枚[precision]ドロー。
-#    global TSF_Calc_precisionMAX
-#    TSF_Calc_precisionMAX=min(max(TSF_Io_RPNzero(TSF_Forth_drawthe()),5),1000)
-#    decimal.getcontext().prec=TSF_Calc_precisionMAX
-#    return ""
 
 def TSF_Calc_bracketsJA(TSF_calcQ):    #TSFdoc:分数電卓の日本語処理。(TSFAPI)
     TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ)
@@ -247,7 +232,6 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
     TSF_calcK=TSF_calcQ.lstrip("(").rstrip(")")
     if "," in TSF_calcK:
         TSF_calcA=TSF_Io_RPN(TSF_calcK)
-#        print("TSF_calcA,TSF_calcK {0}'{1}".format(TSF_calcA,TSF_calcK))
     elif "Z~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLR(TSF_calcK,"Z~")
         TSF_calcA=TSF_Calc_addition(TSF_calcL if TSF_calcF.startswith('0') else TSF_calcR)
@@ -314,7 +298,6 @@ def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算�
     TSF_calcA=TSF_calcQ
     if len(TSF_calcA) > 0 and TSF_calcA.endswith(':'):
         return TSF_calcA
-#    TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(1)
     TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(1)
     TSF_calcQreplace=TSF_calcQ.replace("-+","+m").replace("+-","+m").replace("++","+p").replace("--","+p")
     TSF_calcQreplace=TSF_calcQreplace.replace("+","\t+").replace("-","\t-").replace("%","\t%")
@@ -325,30 +308,21 @@ def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算�
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
         TSF_calcRND=TSF_Calc_multiplication(TSF_calcQmulti.strip("+-%")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
-#        if decimal.Decimal(TSF_calcRD) == 0:
         if TSF_longint(TSF_calcRD) == 0:
             TSF_calcA="n|0"
-#            TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
             TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
             break
         elif TSF_calcO == "%":
-#            TSF_calcPN=TSF_calcLN*decimal.Decimal(TSF_calcRN)
-#            TSF_calcPD=TSF_calcLD*decimal.Decimal(TSF_calcRD)*decimal.Decimal(100)
             TSF_calcPN=TSF_calcLN*TSF_longint(TSF_calcRN)
             TSF_calcPD=TSF_calcLD*TSF_longint(TSF_calcRD)*TSF_longint(100)
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),str(TSF_calcPD)))
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),str(TSF_calcPD)))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+TSF_calcPN*TSF_calcG//TSF_calcPD
             TSF_calcLD=TSF_calcG
         elif TSF_calcO == "-":
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
-#            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD-decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD-TSF_longint(TSF_calcRN)*TSF_calcG//TSF_longint(TSF_calcRD)
             TSF_calcLD=TSF_calcG
         else:  # TSF_calcO == '+'
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
-#            TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD+TSF_longint(TSF_calcRN)*TSF_calcG//TSF_longint(TSF_calcRD)
             TSF_calcLD=TSF_calcG
@@ -356,7 +330,6 @@ def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算�
     return TSF_calcA
 
 def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
-#    TSF_calcLN,TSF_calcLD=decimal.Decimal(1),decimal.Decimal(1)
     TSF_calcLN,TSF_calcLD=TSF_longint(1),TSF_longint(1)
     TSF_calcA=TSF_calcQ
     TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<")
@@ -367,65 +340,61 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
         TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip("*/\\#<>")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
-#        if decimal.Decimal(TSF_calcRD) == 0:
         if TSF_longint(TSF_calcRD) == 0:
             TSF_calcA="n|0"
-#            TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
             TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
             break
         elif TSF_calcO == "/":
-#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
-#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
             TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
             TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
         elif TSF_calcO == "\\":
-#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRD)
-#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRN)
             TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
             TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
             TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
         elif TSF_calcO == '#':
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD
             TSF_calcLD=TSF_calcG
-#            TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcRM=TSF_longint(TSF_calcRN)*TSF_calcG//TSF_longint(TSF_calcRD)
-            if TSF_calcRM == 0:
-                TSF_calcA="n|0"
-#                TSF_calcLN,TSF_calcLD=decimal.Decimal(0),decimal.Decimal(0)
-                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
-                break
-            elif TSF_calcRM > 0:
-                TSF_calcLN=TSF_calcLN%TSF_calcRM
-            else:
-                if TSF_calcLN%abs(TSF_calcRM) != 0:
-                    TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM)
+            if TSF_calcRM > 0:
+                if TSF_calcLN >= 0.0:
+                    TSF_calcLN=abs(TSF_calcLN)%TSF_calcRM
                 else:
-                    TSF_calcLN=0
+                    TSF_calcLN=-(abs(TSF_calcLN)%TSF_calcRM)
+            elif TSF_calcRM < 0:
+                if TSF_calcLN >= 0.0:
+                    TSF_calcLN=abs(TSF_calcLN)%abs(TSF_calcRM)
+                else:
+                    TSF_calcLN=abs(TSF_calcRM)-abs(TSF_calcLN)%abs(TSF_calcRM)
+            else:
+                TSF_calcA="n|0"
+                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
+#            if TSF_calcRM == 0:
+#                TSF_calcA="n|0"
+#                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
+#                break
+#            elif TSF_calcRM > 0:
+#                TSF_calcLN=TSF_calcLN%TSF_calcRM
+#            else:
+#                if TSF_calcLN%abs(TSF_calcRM) != 0:
+#                    TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM)
+#                else:
+#                    TSF_calcLN=0
         elif TSF_calcO == '>':
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLM=TSF_calcLN*TSF_calcG//TSF_calcLD
-#            TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcRM=TSF_longint(TSF_calcRN)*TSF_calcG//TSF_longint(TSF_calcRD)
             if TSF_calcLM > TSF_calcRM:
-#                TSF_calcLN,TSF_calcLD=decimal.Decimal(TSF_calcRN),decimal.Decimal(TSF_calcRD)
                 TSF_calcLN,TSF_calcLD=TSF_longint(TSF_calcRN),TSF_longint(TSF_calcRD)
         elif TSF_calcO == '<':
-#            TSF_calcG=decimal.Decimal(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLM=TSF_calcLN*TSF_calcG//TSF_calcLD
-#            TSF_calcRM=decimal.Decimal(TSF_calcRN)*TSF_calcG//decimal.Decimal(TSF_calcRD)
             TSF_calcRM=TSF_longint(TSF_calcRN)*TSF_calcG//TSF_longint(TSF_calcRD)
             if TSF_calcLM < TSF_calcRM:
-#                TSF_calcLN,TSF_calcLD=decimal.Decimal(TSF_calcRN),decimal.Decimal(TSF_calcRD)
                 TSF_calcLN,TSF_calcLD=TSF_longint(TSF_calcRN),TSF_longint(TSF_calcRD)
         else:  # TSF_calcO == '*':
-#            TSF_calcLN=TSF_calcLN*decimal.Decimal(TSF_calcRN)
-#            TSF_calcLD=TSF_calcLD*decimal.Decimal(TSF_calcRD)
             TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRN)
             TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRD)
     TSF_calcA=TSF_Calc_bigtostr(str(TSF_calcLN),str(TSF_calcLD),(1 if TSF_calcLN < 0 else 0))
@@ -453,23 +422,6 @@ def TSF_Calc_fractalize(TSF_calcQ):    #TSFdoc:分数電卓なので小数を分
     return TSF_calcA
 
 def TSF_Calc_bigtostr(TSF_calcN,TSF_calcD,TSF_calcM):    #TSFdoc:計算結果を通分する。(TSFAPI)
-#    print("TSF_calcN,TSF_calcD,TSF_calcM {0},{1},{2}".format(TSF_calcN,TSF_calcD,TSF_calcM))
-#    if TSF_calcD != "":
-#        if TSF_calcN == "": TSF_calcN="0"
-#        try:
-#            TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
-#            if TSF_calcGbig!=0:
-#                TSF_calcNbig=decimal.Decimal(TSF_calcN)//TSF_calcGbig
-#                TSF_calcDbig=decimal.Decimal(TSF_calcD)//TSF_calcGbig
-#                TSF_calcNbig=-abs(TSF_calcNbig) if TSF_calcM%2 else abs(TSF_calcNbig)
-#                TSF_calcA="|".join([str(TSF_calcNbig),str(TSF_calcDbig)])
-#            else:
-#                TSF_calcA="n|0"
-#        except decimal.InvalidOperation:
-#            TSF_calcA="n|0"
-#    else:
-#        TSF_calcA="n|0"
-#    print("TSF_calcA {0}".format(TSF_calcA));
     if TSF_calcD != "":
         if TSF_calcN == "": TSF_calcN="0"
         try:
@@ -501,15 +453,6 @@ def TSF_Calc_GCM(TSF_calcN,TSF_calcD):    #TSFdoc:最大公約数の計算。(TS
         TSF_calcA="n|0"
     except ZeroDivisionError:
         TSF_calcA="n|0"
-#    try:
-#        TSF_calcMbig,TSF_calcNbig=abs(decimal.Decimal(TSF_calcN)),abs(decimal.Decimal(TSF_calcD))
-#        if TSF_calcMbig < TSF_calcNbig:
-#            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig
-#        while TSF_calcNbig > 0:
-#            TSF_calcMbig,TSF_calcNbig=TSF_calcNbig,TSF_calcMbig%TSF_calcNbig
-#        TSF_calcA=str(TSF_calcMbig)
-#    except decimal.InvalidOperation:
-#        TSF_calcA="n|0"
     return TSF_calcA
 
 def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSFdoc:最小公倍数の計算(TSFAPI)。
@@ -520,14 +463,6 @@ def TSF_Calc_LCM(TSF_calcN,TSF_calcD):    #TSFdoc:最小公倍数の計算(TSFAP
         TSF_calcA="n|0"
     except ZeroDivisionError:
         TSF_calcA="n|0"
-#    TSF_calcGbig=decimal.Decimal(TSF_Calc_GCM(TSF_calcN,TSF_calcD))
-#    if TSF_calcGbig!=0:
-#        try:
-#            TSF_calcA=str(abs(decimal.Decimal(TSF_calcN)*decimal.Decimal(TSF_calcD))//abs(TSF_calcGbig))
-#        except decimal.InvalidOperation:
-#            TSF_calcA="n|0"
-#    else:
-#        TSF_calcA="n|0"
     return TSF_calcA
 
 TSF_Initcalldebug=[TSF_Calc_Initcards]
@@ -553,6 +488,7 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "[calcpeekdata:8]",
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
         "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
+        "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
         "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6",
         "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3","100%p8",
         "100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",

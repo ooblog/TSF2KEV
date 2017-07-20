@@ -171,16 +171,28 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "#":
-                    try:
-                        if TSF_RPNstackR > 0:
-                            TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
+                    if TSF_RPNstackR > 0.0:
+                        if TSF_RPNstackL >= 0.0:
+                            TSF_RPNstack.append(abs(TSF_RPNstackL)%TSF_RPNstackR)
                         else:
-                            if TSF_RPNstackL%abs(TSF_RPNstackR) != 0:
-                                TSF_RPNstack.append(abs(TSF_RPNstackR)-TSF_RPNstackL%abs(TSF_RPNstackR))
-                            else:
-                                TSF_RPNstack.append(0.0)
-                    except ZeroDivisionError:
+                            TSF_RPNstack.append(-(abs(TSF_RPNstackL)%TSF_RPNstackR))
+                    elif TSF_RPNstackR < 0.0:
+                        if TSF_RPNstackL >= 0.0:
+                            TSF_RPNstack.append(abs(TSF_RPNstackL)%abs(TSF_RPNstackR))
+                        else:
+                            TSF_RPNstack.append(abs(TSF_RPNstackR)-abs(TSF_RPNstackL)%abs(TSF_RPNstackR))
+                    else:
                         TSF_RPNanswer="n|0";  break;
+#                    try:
+#                        if TSF_RPNstackR > 0:
+#                            TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
+#                        else:
+#                            if TSF_RPNstackL%abs(TSF_RPNstackR) != 0:
+#                                TSF_RPNstack.append(abs(TSF_RPNstackR)-TSF_RPNstackL%abs(TSF_RPNstackR))
+#                            else:
+#                                TSF_RPNstack.append(0.0)
+#                    except ZeroDivisionError:
+#                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "%":
                     TSF_RPNstack.append(TSF_RPNstackL+TSF_RPNstackL*TSF_RPNstackR/100.0)
                 elif TSF_RPNope == ">":
@@ -299,6 +311,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
         "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
         "0.0001","0.00001","0.000001",
         "0,p1^","0,0^","0,m1^",
+        "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))

@@ -201,6 +201,26 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                         }
                     break;
                     case '#':
+                        if( TSF_RPNstackR>0.0 ){
+                            if( TSF_RPNstackL>=0.0 ){
+                                TSF_RPNstack~=abs(TSF_RPNstackL)%TSF_RPNstackR;
+                            }
+                            else{
+                                TSF_RPNstack~=-abs(TSF_RPNstackL)%TSF_RPNstackR;
+                            }
+                        }
+                        else if( TSF_RPNstackR<0.0 ){
+                            if( TSF_RPNstackL>=0.0 ){
+                                TSF_RPNstack~=abs(TSF_RPNstackL)%abs(TSF_RPNstackR);
+                            }
+                            else{
+                                TSF_RPNstack~=abs(TSF_RPNstackR)-abs(TSF_RPNstackL)%abs(TSF_RPNstackR);
+                            }
+                        }
+                        else{
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
+                        }
+/*
                         if( TSF_RPNstackR!=0.0 ){
                             if( TSF_RPNstackR>0 ){
                                 TSF_RPNstack~=TSF_RPNstackL%TSF_RPNstackR;
@@ -217,6 +237,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                         else{
                             TSF_RPNanswer="n|0";  break opeexit_rpn;
                         }
+*/
                     break;
                     case '%':  TSF_RPNstack~=TSF_RPNstackL+TSF_RPNstackL*TSF_RPNstackR/100.0;  break;
                     case '>':  TSF_RPNstack~=fmin(TSF_RPNstackL,TSF_RPNstackR);  break;
@@ -378,6 +399,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "0.0000000000456","-0.0000000000789",",/10000000000000000000000000|1",
         "0.0001","0.00001","0.000001",
         "0,p1^","0,0^","0,m1^",
+        "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }

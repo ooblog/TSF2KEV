@@ -20,8 +20,6 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
         "#!TSF_calc":&TSF_Calc_calc, "#分数計算":&TSF_Calc_calc,
         "#!TSF_-calc":&TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":&TSF_Calc_calcMinus,
         "#!TSF_calcJA":&TSF_Calc_calcJA, "#分数計算(日本語)":&TSF_Calc_calcJA,
-//        "#!TSF_precision":&TSF_Calc_precision, "#有効桁数":&TSF_Calc_precision,
-//        "#!TSF_rounding":&TSF_Calc_rounding, "#端数処理":&TSF_Calc_rounding,
     ];
     foreach(string cardkey,string function() cardfunc;TSF_Forth_cards){
         if( cardkey !in TSF_cardsD ){
@@ -63,7 +61,6 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     }
     TSF_Calc_okusenyen=["円"]~TSF_Calc_okusenman;
     TSF_Calc_rinmouyen=["円","割","銭"]~TSF_Calc_rinmoushi;
-    TSF_Calc_precisionMAX=100;
 }
 
 string TSF_Calc_calcsquarebrackets(string TSF_calcQ,string TSF_calcBL,string TSF_calcBR){    //#TSFdoc:スタックからpeek(読込)ショートカット角括弧で連結する。(TSFAPI)
@@ -96,13 +93,6 @@ string TSF_Calc_calcJA(){    //#TSFdoc:分数計算する。カード枚数+数�
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_Calc_bracketsJA(TSF_Calc_calcsquarebrackets(TSF_Forth_drawthe(),"[","]")));
     return "";
 }
-
-long TSF_Calc_precisionMAX;
-string TSF_Calc_precision(){    //#TSFdoc:電卓の有効桁数を変更する。1枚[precision]ドロー。
-    TSF_Calc_precisionMAX=to!long(fmin(fmax(TSF_Io_RPNzero(TSF_Forth_drawthe()),5),1000));
-    return "";
-}
-
 
 string TSF_Calc_bracketsJA(string TSF_calcQ){    //#TSFdoc:分数電卓の日本語処理。(TSFAPI)
     string TSF_calcA=TSF_Calc_bracketsQQ(TSF_calcQ);
@@ -464,6 +454,32 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
                     TSF_calcLN=TSF_calcLN*TSF_calcG/TSF_calcLD;
                     TSF_calcLD=TSF_calcLD*TSF_calcG/TSF_calcLD;
                     BigInt TSF_calcRM=BigInt(TSF_calcRN)*TSF_calcG/BigInt(TSF_calcRD);
+                    if( TSF_calcRM>0 ){
+                        if( TSF_calcLN>=0 ){
+                            TSF_calcLN=abs(TSF_calcLN)%TSF_calcRM;
+                        }
+                        else{
+                            TSF_calcLN=-abs(TSF_calcLN)%TSF_calcRM;
+                        }
+                    }
+                    else if( TSF_calcRM<0 ){
+                        if( TSF_calcLN>=0 ){
+                            TSF_calcLN=abs(TSF_calcLN)%abs(TSF_calcRM);
+                        }
+                        else{
+                            TSF_calcLN=abs(TSF_calcRM)-abs(TSF_calcLN)%abs(TSF_calcRM);
+                        }
+                    }
+                    else{
+                        TSF_calcA="n|0";
+                        TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
+                        break opeexit_multiplication;
+                    }
+/*
+                    BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
+                    TSF_calcLN=TSF_calcLN*TSF_calcG/TSF_calcLD;
+                    TSF_calcLD=TSF_calcLD*TSF_calcG/TSF_calcLD;
+                    BigInt TSF_calcRM=BigInt(TSF_calcRN)*TSF_calcG/BigInt(TSF_calcRD);
                     if( BigInt(TSF_calcRM)==0 ){
                         TSF_calcA="n|0";
                         TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
@@ -480,6 +496,7 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
                             TSF_calcLN=0;
                         }
                     }
+*/
                 break;
                 case '>':
                     BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
@@ -620,6 +637,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "[calcpeekdata:8]",
         "4|6","3.5|0.05","5|6*m2|4","5|6/m2|4","5|6\\m2|4","5|6#p2|4","5|6#m2|4",
         "10#5","10#m5","10#7","10#m7","5#p4","5#m4","5,4#","5,m4#",
+        "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
         "5|6>2|3","2|3>5|6","5|6<2|3","2|3<5|6",
         "2+3","2-3","5|6+p2|3","5|6-p2|3","5|6+m2|3","5|6-m2|3","100%p8",
         "100%m8","100*(100+8)/100","100*(100-8)/100","100,8%",
@@ -641,7 +659,7 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
 }
 
 unittest {
-    TSF_Calc_debug(TSF_Io_argvs(["dmd","TSF_Calc.d"]));
+//    TSF_Calc_debug(TSF_Io_argvs(["dmd","TSF_Calc.d"]));
 }
 
 

@@ -57,3 +57,7 @@ TSF_debug_rpn:
 	0,p1^	0
 	0,0^	n|0
 	0,m1^	n|0
+	p3,p4#	p3
+	m3,p4#	m3
+	p3,m4#	p3
+	m3,m4#	p1
