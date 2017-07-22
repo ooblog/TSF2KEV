@@ -1,0 +1,48 @@
+#! /usr/bin/env TSF
+TSF_Tab-Separated-Forth:
+	PPPPpysetup:	#!TSF_this	#!TSF_fin.
+FNCMVAQIRHL:
+	F	N	C	M	V	A	Q	I	R	H	L
+選択:
+	表択	順択	周択	囲択	逆択	乱択	同択	含択	規択	似択	札択
+4th:
+	the	this	that	they
+peek_py:
+	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_Forth_drawthe(),TSF_peek,"",'{FNCMVAQIRHL}'))
+	    return ""
+poke_py:
+	def TSF_Forth_pokeNthe():    #TSFdoc:指定スタックからカードを{選択}で上書。3枚[poke,the,peek]ドロー。
+	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+	    TSF_the=TSF_Forth_drawthe()
+	    TSF_Forth_poke(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
+	    return ""
+pull_py:
+	def TSF_Forth_pullNthe():    #TSFdoc:指定スタックから{選択}でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_Forth_drawthe(),TSF_peek,"",'{FNCMVAQIRHL}'))
+	    return ""
+push_py:
+	def TSF_Forth_pushNthe():    #TSFdoc:指定スタックからカードを{選択}で差込。3枚[poke,the,peek]ドロー。
+	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+	    TSF_the=TSF_Forth_drawthe()
+	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
+	    return ""
+PPPP_pycall:
+	peek_py:	poke_py:	pull_py:	push_py:
+PPPPpysetup:
+	-1	defcount:	#!TSF_pokeFthe
+	PPPPpy:	#!TSF_this
+PPPPpy:
+	defcount:	#!TSF_peekFthe	[0],1+	#!TSF_join[]	#!TSF_RPN	defcount:	#!TSF_pokeFthe
+	PPPPclone:	PPPP_pycall:	[defcount:0]	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
+	PPPPclone:	defstr:	defword:	#!TSF_replacesQSN
+	PPPPclone:	#!TSF_argvsthe	#!TSF_echoN		#!TSF_echo
+	[defcount:0]-4+1z~PPPPpy:~#!exit:	#!TSF_calc	#!TSF_this
+defstr:
+	{FNCMVAQIRHL}	{4th}	{選択}
+defword:
+	F	the	順択
+defcount:
+	-1

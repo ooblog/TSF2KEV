@@ -405,7 +405,7 @@ def TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc
             if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_peek];
         elif TSF_FNCMVAQIRHL == 'C':
             if 0 < TSF_cardsL:
-                TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else abs(TSF_cardsL)-(abs(TSF_peek)%abs(TSF_cardsL))]
+                TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)]
         elif TSF_FNCMVAQIRHL == 'M':
             if 0 < TSF_cardsL:
                 TSF_Plist+=[min(max(TSF_peek,0),TSF_cardsL-1)]

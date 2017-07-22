@@ -491,7 +491,7 @@ long[] TSF_Forth_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char T
         switch( TSF_FNCMVAQIRHL ){
             case 'F':  if( 0<TSF_cardsL ){ TSF_Plist~=[TSF_cardsL-1]; }  break;
             case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:abs(TSF_cardsL)-(abs(TSF_peek)%abs(TSF_cardsL)))]; }  break;
+            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>=0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))]; }  break;
             case 'M':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))]; }  break;
             case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
             case 'A':  if( 0<TSF_cardsL ){ TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)]; }   break;
@@ -526,7 +526,7 @@ long[] TSF_Forth_cardsFNCMVA(string TSF_the,long TSF_peek,string TSF_seek,char T
         switch( TSF_FNCMVAQIRHL ){
             case 'F':  if( 0<TSF_cardsL ){ TSF_Plist~=[TSF_cardsL-1]; }  break;
             case 'N':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_peek]; }   break;
-            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))]; }  break;
+            case 'C':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(TSF_peek>=0?TSF_peek%TSF_cardsL:TSF_cardsL-(abs(TSF_peek)%TSF_cardsL))]; }  break;
             case 'M':  if( 0<TSF_cardsL ){ TSF_Plist~=[to!long(fmin(fmax(TSF_peek,0),TSF_cardsL-1))]; }  break;
             case 'V':  if( (0<=TSF_peek)&&(TSF_peek<TSF_cardsL) ){ TSF_Plist~=[TSF_cardsL-1-TSF_peek]; }   break;
             case 'A':  if( 0<TSF_cardsL ){ TSF_Plist~=[uniform(0,TSF_cardsL,TSF_PPPP_Random)]; }   break;
