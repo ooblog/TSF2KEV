@@ -122,10 +122,10 @@ def TSF_Forth_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:ワードを初期化
         "#!TSF_peekVthis":TSF_Forth_peekVthis, "#実行中スタック逆択読込":TSF_Forth_peekVthis,
         "#!TSF_peekVthat":TSF_Forth_peekVthat, "#積込先スタック逆択読込":TSF_Forth_peekVthat,
         "#!TSF_peekVthey":TSF_Forth_peekVthey, "#スタック一覧逆択読込":TSF_Forth_peekVthey,
-#        "#!TSF_pokeVthe":TSF_Forth_pokeVthe, "#指定スタック逆択上書":TSF_Forth_pokeVthe,
-#        "#!TSF_pokeVthis":TSF_Forth_pokeVthis, "#実行中スタック逆択上書":TSF_Forth_pokeVthis,
-#        "#!TSF_pokeVthat":TSF_Forth_pokeVthat, "#積込先スタック逆択上書":TSF_Forth_pokeVthat,
-#        "#!TSF_pokeVthey":TSF_Forth_pokeVthey, "#スタック一覧逆択上書":TSF_Forth_pokeVthey,
+        "#!TSF_pokeVthe":TSF_Forth_pokeVthe, "#指定スタック逆択上書":TSF_Forth_pokeVthe,
+        "#!TSF_pokeVthis":TSF_Forth_pokeVthis, "#実行中スタック逆択上書":TSF_Forth_pokeVthis,
+        "#!TSF_pokeVthat":TSF_Forth_pokeVthat, "#積込先スタック逆択上書":TSF_Forth_pokeVthat,
+        "#!TSF_pokeVthey":TSF_Forth_pokeVthey, "#スタック一覧逆択上書":TSF_Forth_pokeVthey,
 #        "#!TSF_pullVthe":TSF_Forth_pullVthe, "#指定スタック逆択引抜":TSF_Forth_pullVthe,
 #        "#!TSF_pullVthis":TSF_Forth_pullVthis, "#実行中スタック逆択引抜":TSF_Forth_pullVthis,
 #        "#!TSF_pullVthat":TSF_Forth_pullVthat, "#積込先スタック逆択引抜":TSF_Forth_pullVthat,
@@ -405,7 +405,7 @@ def TSF_Forth_cardsFNCMVA(TSF_the,TSF_peek,TSF_seek,TSF_FNCMVAQIRHL):    #TSFdoc
             if 0 <= TSF_peek < TSF_cardsL: TSF_Plist+=[TSF_peek];
         elif TSF_FNCMVAQIRHL == 'C':
             if 0 < TSF_cardsL:
-                TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else TSF_cardsL-(abs(TSF_peek)%TSF_cardsL)]
+                TSF_Plist+=[TSF_peek%TSF_cardsL if TSF_peek >=0 else abs(TSF_cardsL)-(abs(TSF_peek)%abs(TSF_cardsL))]
         elif TSF_FNCMVAQIRHL == 'M':
             if 0 < TSF_cardsL:
                 TSF_Plist+=[min(max(TSF_peek,0),TSF_cardsL-1)]
@@ -876,6 +876,27 @@ def TSF_Forth_peekVthey():    #TSFdoc:スタック一覧から逆択でカード
     TSF_Forth_returnFNCMVA(TSF_Forth_peek("",TSF_peek,"",'V'))
     return ""
 
+def TSF_Forth_pokeVthe():    #TSFdoc:指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_the=TSF_Forth_drawthe()
+    TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pokeVthis():    #TSFdoc:実行中スタックから逆択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_poke(TSF_Forth_drawthis(),TSF_peek,"",'V',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pokeVthat():    #TSFdoc:積込先スタックから逆択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_poke(TSF_Forth_drawthat(),TSF_peek,"",'V',TSF_Forth_drawthe())
+    return ""
+
+def TSF_Forth_pokeVthey():    #TSFdoc:スタック一覧から逆択でカードを上書。2枚[poke,peek]ドロー。
+    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe())
+    TSF_Forth_poke("",TSF_peek,"",'V',TSF_Forth_drawthe())
+    return ""
+
 
 def TSF_Forth_swapBA():    #TSFdoc:カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。
     TSF_swapA=TSF_Forth_drawthe();  TSF_swapB=TSF_Forth_drawthe();
@@ -1229,7 +1250,7 @@ def TSF_Forth_debug(TSF_sysargvs):    #TSFdoc:「TSF_Forth」単体テスト風�
     TSF_Forth_setTSF("adverb:","\t".join(["F","N","C","M","V","A","Q","I","R","H","L"]),'O')
     TSF_Forth_setTSF("pronoun:","\t".join(["this","that","the","they"]),'O')
     TSF_Forth_setTSF("shufflestacks:","\t".join([
-        "peekV:","pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
+        "pokeV:","peekV:","pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"]),'T')
     TSF_Forth_setTSF("peekF:","\t".join(["TSF_peekFthe","adverbclone:","#!TSF_peekFthe"]),'O')
     TSF_Forth_setTSF("pokeF:","\t".join(["TSF_pokeFthe","$poke","adverbclone:","#!TSF_pokeFthe","$poke"]),'O')
     TSF_Forth_setTSF("pullF:","\t".join(["TSF_pullFthe","adverbclone:","#!TSF_pullFthe"]),'O')
