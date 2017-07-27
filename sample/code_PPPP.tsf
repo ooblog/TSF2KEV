@@ -18,47 +18,63 @@ drawth:
 cardfunc_py:
 	        "#!TSF_{pppp}{FNCMVAQIRHL}{4th}":TSF_Forth_{pppp}{FNCMVAQIRHL}{4th}, "#{スタック}{選択}{移動}":TSF_Forth_{pppp}{FNCMVAQIRHL}{4th},
 peekN_py:
-	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'))
 	    return ""
 pokeN_py:
-	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で上書。3枚[poke,the,peek]ドロー。
+	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_poke(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 pullN_py:
-	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'))
 	    return ""
 pushN_py:
-	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で差込。3枚[poke,the,peek]ドロー。
+	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
+ドローpeekN:
+	2枚[the,peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。
+ドローpokeN:
+	3枚[poke,the,peek]ドロー。	2枚[poke,peek]ドロー。	2枚[poke,peek]ドロー。	2枚[poke,peek]ドロー。
+ドローpullN:
+	2枚[the,peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。
+ドローpushN:
+	3枚[push,the,peek]ドロー。	2枚[push,peek]ドロー。	2枚[push,peek]ドロー。	2枚[push,peek]ドロー。
 PPPPN_pycall:
 	peekN_py:	pokeN_py:	pullN_py:	pushN_py:
 peekA_py:
-	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。1枚[the]ドローして1枚[peek]リターン。
+	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekA}
 	    TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'{FNCMVAQIRHL}'))
 	    return ""
 pokeA_py:
-	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを表択で上書。2枚[poke,the]ドロー。
+	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを表択で上書。{ドローpokeA}
 	    TSF_the={drawth}
 	    TSF_Forth_poke(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 pullA_py:
-	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullA}
 	    TSF_the={drawth}
-	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'F'))
+	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'{FNCMVAQIRHL}'))
 	    return ""
 pushA_py:
-	def TSF_Forth_pushFthey():    #TSFdoc:スタック一覧から表択でカードを差込。2枚[push,the]ドロー。
+	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:スタック一覧から表択でカードを差込。{ドローpushA}
 	    TSF_the={drawth}
-	    TSF_Forth_push(TSF_the,-1,"",'F',TSF_Forth_drawthe())
+	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
+ドローpeekA:
+	1枚[the]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。
+ドローpokeA:
+	2枚[poke,the,peek]ドロー。	2枚[poke,peek]ドロー。	2枚[poke,peek]ドロー。	2枚[poke,peek]ドロー。
+ドローpullA:
+	1枚[the]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。
+ドローpushA:
+	2枚[push,the]ドロー。	1枚[push]ドロー。	1枚[push]ドロー。	1枚[push]ドロー。
 PPPPA_pycall:
 	peekA_py:	pokeA_py:	pullA_py:	pushA_py:
 PPPPF_pycall:
@@ -80,10 +96,17 @@ Initcards_py:
 	[defcount:0]-[defcountmax:0]+1z~Initcards_py:~#!exit:	#!TSF_calc	#!TSF_this
 Forth_py:
 	defcall:	#!TSF_this
-#!	clone:	PPPPN_pycall:	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
-#!	[defcount:0]\16-5Z~ForthA_py:~ForthN_py:	#!TSF_calc	#!TSF_this
 	clone:	[defcount:0]\16-5Z~PPPPA_pycall:~PPPPN_pycall:	#!TSF_calc	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
 	clone:	defstr:	defword:	#!TSF_replacesQSN
+	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
+	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
+	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
+	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
+	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
+	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
+	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
+	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
+	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
 	clone:	#!TSF_argvsthe	#!TSF_echoN
 	../debug/code_PPPP_py.txt	clone:	#!TSF_writetext
 	[defcount:0]-[defcountmax:0]+1z~Forth_py:~#!exit:	#!TSF_calc	#!TSF_this
@@ -100,7 +123,12 @@ defstr:
 	{pppp}	{FNCMVAQIRHL}	{4th}	{スタック}	{選択}	{移動}	{drawth}
 defword:
 	peek	F	the	指定スタック	順択	読込	TSF_Forth_drawthe()
+defdrawstr:
+	{ドローpeekN}	{ドローpokeN}	{ドローpullN}	{ドローpushN}	{ドローpeekA}	{ドローpokeA}	{ドローpullA}	{ドローpushA}
+defdrawword:
+	2枚[the,peek]ドローして1枚[card]リターン。	3枚[poke,the,peek]ドロー。	2枚[the,peek]ドローして1枚[card]リターン。	3枚[push,the,peek]ドロー。
+	1枚[the]ドローして1枚[card]リターン。	2枚[poke,the]ドロー。	1枚[the]ドローして1枚[card]リターン。	2枚[push,the]ドロー。
 defcount:
-	-1
+	m1
 defcountmax:
 	4*4*6
