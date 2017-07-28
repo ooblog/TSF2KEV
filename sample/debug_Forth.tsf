@@ -15,8 +15,7 @@ adverb:	F	N	C	M	V	A	Q	I	R	H	L
 pronoun:	this	that	the	they
 
 shufflestacks:
-#!	pushV:	pullV:	pokeV:	peekV:
-	peekV:
+	pushV:	pullV:	pokeV:	peekV:
 	pushM:	pullM:	pokeM:	peekM:
 	pushC:	pullC:	pokeC:	peekC:
 	pushN:	pullN:	pokeN:	peekN:

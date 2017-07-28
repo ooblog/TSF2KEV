@@ -40,7 +40,7 @@ pushN_py:
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 peekN_d:
-	string TSF_Forth_peekNthe(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
+	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
 	    return "";
@@ -52,13 +52,13 @@ pokeN_d:
 	    return "";
 	}
 pullN_d:
-	string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
+	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pushN_d:
-	string TSF_Forth_pushNthe(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
+	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
@@ -73,6 +73,8 @@ pushN_d:
 	3枚[push,the,peek]ドロー。	2枚[push,peek]ドロー。	2枚[push,peek]ドロー。	2枚[push,peek]ドロー。
 PPPPN_pycall:
 	peekN_py:	pokeN_py:	pullN_py:	pushN_py:
+PPPPN_dcall:
+	peekN_d:	pokeN_d:	pullN_d:	pushN_d:
 peekA_py:
 	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekA}
 	    TSF_the={drawth}
@@ -93,6 +95,30 @@ pushA_py:
 	    TSF_the={drawth}
 	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
+peekA_d:
+	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekA}
+	    string TSF_the={drawth};
+	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'{FNCMVAQIRHL}'));
+	    return "";
+	}
+pokeA_d:
+	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeA}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_poke(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
+	    return "";
+	}
+pullA_d:
+	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullA}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'{FNCMVAQIRHL}'));
+	    return "";
+	}
+pushA_d:
+	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushA}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
+	    return "";
+	}
 ドローpeekA:
 	1枚[the]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。	0枚[]ドローして1枚[card]リターン。
 ドローpokeA:
@@ -103,8 +129,8 @@ pushA_py:
 	2枚[push,the]ドロー。	1枚[push]ドロー。	1枚[push]ドロー。	1枚[push]ドロー。
 PPPPA_pycall:
 	peekA_py:	pokeA_py:	pullA_py:	pushA_py:
-PPPPF_pycall:
-	peekF_py:	pokeF_py:	pullF_py:	pushF_py:
+PPPPA_dcall:
+	peekA_d:	pokeA_d:	pullA_d:	pushA_d:
 setup_py:
 	../debug/code_PPPP_py.txt	#!newtext:	#!TSF_savetext
 	m1	#!TSF_calc	defcount:	#!TSF_pokeFthe
@@ -124,16 +150,6 @@ Forth_py:
 	defcall:	#!TSF_this
 	clone:	[defcount:0]\16-5Z~PPPPA_pycall:~PPPPN_pycall:	#!TSF_calc	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
 	defdrawcall:	#!TSF_this
-#!	clone:	defstr:	defword:	#!TSF_replacesQSN
-#!	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
-#!	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
-#!	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
-#!	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
-#!	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
-#!	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
-#!	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
-#!	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
-#!	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
 	clone:	#!TSF_argvsthe	#!TSF_echoN
 	../debug/code_PPPP_py.txt	clone:	#!TSF_writetext
 	[defcount:0]-[defcountmax:0]+1z~Forth_py:~#!exit:	#!TSF_calc	#!TSF_this
@@ -142,9 +158,9 @@ setup_d:
 	m1	#!TSF_calc	defcount:	#!TSF_pokeFthe
 	4*4*6	#!TSF_calc	defcountmax:	#!TSF_pokeFthe
 	Initcards_d:	#!TSF_this
-#!	4*4-1	#!TSF_calc	defcount:	#!TSF_pokeFthe
-#!	4*4*6	#!TSF_calc	defcountmax:	#!TSF_pokeFthe
-#!	Forth_d:	#!TSF_this
+	4*4-1	#!TSF_calc	defcount:	#!TSF_pokeFthe
+	4*4*6	#!TSF_calc	defcountmax:	#!TSF_pokeFthe
+	Forth_d:	#!TSF_this
 Initcards_d:
 	defcall:	#!TSF_this
 	clone:	cardfunc_d:	#!TSF_clonethe
@@ -156,16 +172,6 @@ Forth_d:
 	defcall:	#!TSF_this
 	clone:	[defcount:0]\16-5Z~PPPPA_dcall:~PPPPN_dcall:	#!TSF_calc	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
 	defdrawcall:	#!TSF_this
-#!	clone:	defstr:	defword:	#!TSF_replacesQSN
-#!	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
-#!	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
-#!	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
-#!	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
-#!	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
-#!	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
-#!	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
-#!	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
-#!	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
 	clone:	#!TSF_argvsthe	#!TSF_echoN
 	../debug/code_PPPP_d.txt	clone:	#!TSF_writetext
 	[defcount:0]-[defcountmax:0]+1z~Forth_d:~#!exit:	#!TSF_calc	#!TSF_this
