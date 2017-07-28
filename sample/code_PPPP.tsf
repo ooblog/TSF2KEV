@@ -1,6 +1,6 @@
 #! /usr/bin/env TSF
 TSF_Tab-Separated-Forth:
-	setup_py:	#!TSF_this	#!TSF_fin.
+	setup_py:	#!TSF_this	setup_d:	#!TSF_this	#!TSF_fin.
 pppp:
 	peek	poke	pull	push
 移動:
@@ -17,6 +17,8 @@ drawth:
 	TSF_Forth_drawthe()	TSF_Forth_drawthis()	TSF_Forth_drawthat()	""
 cardfunc_py:
 	        "#!TSF_{pppp}{FNCMVAQIRHL}{4th}":TSF_Forth_{pppp}{FNCMVAQIRHL}{4th}, "#{スタック}{選択}{移動}":TSF_Forth_{pppp}{FNCMVAQIRHL}{4th},
+cardfunc_d:
+	        "#!TSF_{pppp}{FNCMVAQIRHL}{4th}":&TSF_Forth_{pppp}{FNCMVAQIRHL}{4th}, "#{スタック}{選択}{移動}":&TSF_Forth_{pppp}{FNCMVAQIRHL}{4th},
 peekN_py:
 	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
@@ -37,6 +39,30 @@ pushN_py:
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
+peekN_d:
+	string TSF_Forth_peekNthe(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
+	    return "";
+	}
+pokeN_d:
+	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeN}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_poke(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
+	    return "";
+	}
+pullN_d:
+	string TSF_Forth_pullNthe(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
+	    return "";
+	}
+pushN_d:
+	string TSF_Forth_pushNthe(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
+	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
+	    return "";
+	}
 ドローpeekN:
 	2枚[the,peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。	1枚[peek]ドローして1枚[card]リターン。
 ドローpokeN:
@@ -97,19 +123,52 @@ Initcards_py:
 Forth_py:
 	defcall:	#!TSF_this
 	clone:	[defcount:0]\16-5Z~PPPPA_pycall:~PPPPN_pycall:	#!TSF_calc	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
-	clone:	defstr:	defword:	#!TSF_replacesQSN
-	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
-	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
-	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
-	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
-	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
-	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
-	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
-	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
-	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
+	defdrawcall:	#!TSF_this
+#!	clone:	defstr:	defword:	#!TSF_replacesQSN
+#!	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
+#!	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
+#!	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
+#!	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
+#!	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
+#!	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
+#!	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
+#!	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
+#!	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
 	clone:	#!TSF_argvsthe	#!TSF_echoN
 	../debug/code_PPPP_py.txt	clone:	#!TSF_writetext
 	[defcount:0]-[defcountmax:0]+1z~Forth_py:~#!exit:	#!TSF_calc	#!TSF_this
+setup_d:
+	../debug/code_PPPP_d.txt	#!newtext:	#!TSF_savetext
+	m1	#!TSF_calc	defcount:	#!TSF_pokeFthe
+	4*4*6	#!TSF_calc	defcountmax:	#!TSF_pokeFthe
+	Initcards_d:	#!TSF_this
+#!	4*4-1	#!TSF_calc	defcount:	#!TSF_pokeFthe
+#!	4*4*6	#!TSF_calc	defcountmax:	#!TSF_pokeFthe
+#!	Forth_d:	#!TSF_this
+Initcards_d:
+	defcall:	#!TSF_this
+	clone:	cardfunc_d:	#!TSF_clonethe
+	clone:	defstr:	defword:	#!TSF_replacesQSN
+	clone:	#!TSF_argvsthe	#!TSF_echoN
+	../debug/code_PPPP_d.txt	clone:	#!TSF_writetext
+	[defcount:0]-[defcountmax:0]+1z~Initcards_d:~#!exit:	#!TSF_calc	#!TSF_this
+Forth_d:
+	defcall:	#!TSF_this
+	clone:	[defcount:0]\16-5Z~PPPPA_dcall:~PPPPN_dcall:	#!TSF_calc	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	#!TSF_clonethe
+	defdrawcall:	#!TSF_this
+#!	clone:	defstr:	defword:	#!TSF_replacesQSN
+#!	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
+#!	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
+#!	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
+#!	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
+#!	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
+#!	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
+#!	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
+#!	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
+#!	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
+	clone:	#!TSF_argvsthe	#!TSF_echoN
+	../debug/code_PPPP_d.txt	clone:	#!TSF_writetext
+	[defcount:0]-[defcountmax:0]+1z~Forth_d:~#!exit:	#!TSF_calc	#!TSF_this
 defcall:
 	[defcount:0],1+	#!TSF_calc	defcount:	#!TSF_pokeFthe
 	pppp:	[defcount:0],4\	#!TSF_calc	#!TSF_peekCthe	defword:	0	#!TSF_pokeNthe
@@ -123,6 +182,17 @@ defstr:
 	{pppp}	{FNCMVAQIRHL}	{4th}	{スタック}	{選択}	{移動}	{drawth}
 defword:
 	peek	F	the	指定スタック	順択	読込	TSF_Forth_drawthe()
+defdrawcall:
+	clone:	defstr:	defword:	#!TSF_replacesQSN
+	ドローpeekN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	0	#!TSF_pokeNthe
+	ドローpokeN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	1	#!TSF_pokeNthe
+	ドローpullN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	2	#!TSF_pokeNthe
+	ドローpushN:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	3	#!TSF_pokeNthe
+	ドローpeekA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	4	#!TSF_pokeNthe
+	ドローpokeA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	5	#!TSF_pokeNthe
+	ドローpullA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	6	#!TSF_pokeNthe
+	ドローpushA:	,[defcount:0]	#!TSF_calc	#!TSF_peekCthe	defdrawword:	7	#!TSF_pokeNthe
+	clone:	defdrawstr:	defdrawword:	#!TSF_replacesQSN
 defdrawstr:
 	{ドローpeekN}	{ドローpokeN}	{ドローpullN}	{ドローpushN}	{ドローpeekA}	{ドローpokeA}	{ドローpullA}	{ドローpushA}
 defdrawword:
