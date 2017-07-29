@@ -95,9 +95,10 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
     TSF_RPNnum,TSF_RPNminus="",0
     TSF_RPNstack=[]
     TSF_RPNseq="".join([TSF_RPN.lstrip(","),"  "])
-    if TSF_RPNseq[0]=="-":  TSF_RPNseq="".join(["m",TSF_RPNseq[1:]])
-    elif TSF_RPNseq[0]=="/":  TSF_RPNseq="".join(["1|",TSF_RPNseq[1:]])
+    if TSF_RPNseq[0]=="+":  TSF_RPNseq="".join(["p",TSF_RPNseq[1:]])
+    elif TSF_RPNseq[0]=="-":  TSF_RPNseq="".join(["m",TSF_RPNseq[1:]])
     elif TSF_RPNseq[0]=="*":  TSF_RPNseq=TSF_RPNseq[1:]
+    elif TSF_RPNseq[0]=="/":  TSF_RPNseq="".join(["1|",TSF_RPNseq[1:]])
     if TSF_RPNseq[0:2] in ["U+","0x"]:  TSF_RPNseq="".join(["$",TSF_RPNseq[2:]])
     for TSF_RPNope in TSF_RPNseq:
         if TSF_RPNope in "0123456789abcdef.pm$|":
@@ -183,16 +184,6 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                             TSF_RPNstack.append(abs(TSF_RPNstackR)-abs(TSF_RPNstackL)%abs(TSF_RPNstackR))
                     else:
                         TSF_RPNanswer="n|0";  break;
-#                    try:
-#                        if TSF_RPNstackR > 0:
-#                            TSF_RPNstack.append(TSF_RPNstackL%TSF_RPNstackR)
-#                        else:
-#                            if TSF_RPNstackL%abs(TSF_RPNstackR) != 0:
-#                                TSF_RPNstack.append(abs(TSF_RPNstackR)-TSF_RPNstackL%abs(TSF_RPNstackR))
-#                            else:
-#                                TSF_RPNstack.append(0.0)
-#                    except ZeroDivisionError:
-#                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "%":
                     TSF_RPNstack.append(TSF_RPNstackL+TSF_RPNstackL*TSF_RPNstackR/100.0)
                 elif TSF_RPNope == ">":

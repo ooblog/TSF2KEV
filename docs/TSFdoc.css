@@ -52,6 +52,7 @@ section,aside,article{
   margin-top: 1rem;
   border: 2px black solid;
   padding: 1rem;
+  padding-left: 2rem;
 }
 input.yonmoji_entry{
   border: solid 1px orange;
@@ -91,6 +92,15 @@ input.yonmoji_entry:focus{
  .sidepages li{
   margin-left: 0rem;
   list-style-type: none;
+  display: inline-block;
+ }
+ .modpages{
+  padding: 0rem;
+  text-align: center;
+  border: 1px gray solid;
+ }
+ .modpages li{
+  margin-left: 1rem;
   display: inline-block;
  }
  article > div{
@@ -156,12 +166,12 @@ dd{
  dl.inputstroke > dd{
   margin-left: 15rem;
  }
-h1{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem; }
-h2{ font-size: 1.5rem; margin: 1rem 0.5rem 0.5rem; }
-h3{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem; }
-h4{ font-size: 1.3rem; margin: 1rem 0.5rem 0.5rem; }
-h5{ font-size: 1.2rem; margin: 1rem 0.5rem 0.5rem; }
-h6{ font-size: 1.1rem; margin: 1rem 0.5rem 0.5rem; }
+h1{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h2{ font-size: 1.5rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h3{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h4{ font-size: 1.3rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h5{ font-size: 1.2rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h6{ font-size: 1.1rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
 
 /*
 #! -- Copyright (c) 2017 ooblog --
