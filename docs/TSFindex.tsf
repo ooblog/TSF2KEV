@@ -38,7 +38,7 @@ regexD_reg:
 	^(?!def).+$	^\n	def 	@NL	^@dddt	$	\)\{
 	@DLDT	:[ /]+#[a-zA-Z]+:	@dddt
 regexD_txt:
-	def	def	def	def	def	def	def
+	def void	def long[]	def long	def real[]	def real	def string[]	def string
 			@NL@DLDT	@dddt{?NL}		@dddt	):
 	   <dl><dt>	</dt><dd>	</dd></dl>
 regex_none:
