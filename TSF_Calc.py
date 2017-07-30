@@ -271,14 +271,6 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
                 if not "|" in TSF_calcF: TSF_calcF=TSF_Calc_addition(TSF_calcF)
                 TSF_calcM="*".join([TSF_Calc_addition(TSF_calcF),str(TSF_calcG-TSF_calcS)])
             TSF_calcA=TSF_Calc_addition(TSF_calcM)
-#        if "k" in TSF_calcF:
-#            for TSF_calcC in range(TSF_calcS,TSF_calcG,1): TSF_calcM="+".join([TSF_calcM,TSF_Calc_addition(TSF_calcF.replace("k",str(TSF_calcC)))])
-#        else:
-#            TSF_Calc_addition(TSF_calcF)
-#            if not "|" in TSF_calcF: TSF_calcF=TSF_Calc_addition(TSF_calcF)
-#            if ":" in TSF_calcF: TSF_calcF="0|0"
-#            TSF_calcM="*".join([TSF_Calc_addition(TSF_calcF),str(TSF_calcG-TSF_calcS)])
-#        TSF_calcA=TSF_Calc_addition(TSF_calcM)
     elif "P~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLRlazy(TSF_calcK,"P~")
         TSF_calcS,TSF_calcG=TSF_Io_RPNzero(TSF_calcL),TSF_Io_RPNzero(TSF_calcR)
@@ -298,15 +290,6 @@ def TSF_Calc_function(TSF_calcQ):    #TSFdoc:分数電卓の和集合積集合�
                 TSF_calcL,TSF_calcR=TSF_calcF.split("|")[0],TSF_calcF.split("|")[-1]
                 TSF_calcP="|".join([str(pow(TSF_longint(TSF_calcL),TSF_calcG-TSF_calcS)),str(pow(TSF_longint(TSF_calcR),TSF_calcG-TSF_calcS))])
             TSF_calcA=TSF_Calc_addition(TSF_calcP)
-#        if "k" in TSF_calcF:
-#            for TSF_calcC in range(TSF_calcS,TSF_calcG,1): TSF_calcP="*".join([TSF_calcP,TSF_Calc_addition(TSF_calcF.replace("k",str(TSF_calcC)))])
-#        else:
-#            TSF_Calc_addition(TSF_calcF)
-#            if not "|" in TSF_calcF: TSF_calcF=TSF_Calc_addition(TSF_calcF)
-#            if ":" in TSF_calcF: TSF_calcF="0|0"
-#            TSF_calcL,TSF_calcR=TSF_calcF.split("|")[0],TSF_calcF.split("|")[-1]
-#            TSF_calcP="|".join([str(pow(TSF_longint(TSF_calcL),TSF_calcG-TSF_calcS)),str(pow(TSF_longint(TSF_calcR),TSF_calcG-TSF_calcS))])
-#        TSF_calcA=TSF_Calc_addition(TSF_calcP)
     elif "D~" in TSF_calcK:
         TSF_calcF,TSF_calcL,TSF_calcR=TSF_Calc_FLRlazy(TSF_calcK,"D~")
         TSF_calcF=TSF_Calc_addition(TSF_calcF)

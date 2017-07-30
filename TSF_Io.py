@@ -88,8 +88,6 @@ def TSF_Io_ESCdecode(TSF_text):    #TSFdoc:「&tab;」を「\t」に戻す。(TS
     TSF_text=TSF_text.replace("&tab;","\t").replace("&amp;","&")
     return TSF_text
 
-#"0123456789abcdef.pm$|":
-#M,P,Atan2,atan,SinCosTan,RootE,Log,Pi,^,Gg
 def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易的に小数で処理するので不正確。ゼロ除算も「n|0」とテキストで返す。(TSFAPI)
     TSF_RPNanswer=""
     TSF_RPNnum,TSF_RPNminus="",0
@@ -128,7 +126,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     TSF_RPNanswer="n|0"
                     break;
                 TSF_RPNnum=""
-            if TSF_RPNope in "!SCTsctRELl":
+            if TSF_RPNope in "!SCTsrtRELl":
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "!":
                     TSF_RPNstack.append(abs(TSF_RPNstackL))
@@ -139,19 +137,38 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                 elif TSF_RPNope == "T":
                     TSF_RPNstack.append(math.tan(TSF_RPNstackL))
                 elif TSF_RPNope == "s":
-                    TSF_RPNstack.append(math.asin(TSF_RPNstackL))
-                elif TSF_RPNope == "c":
-                    TSF_RPNstack.append(math.acos(TSF_RPNstackL))
+                    if -1.0 <= TSF_RPNstackL <= 1.0:
+                        TSF_RPNstack.append(math.asin(TSF_RPNstackL))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
+#                elif TSF_RPNope == "c":
+                elif TSF_RPNope == "r":
+                    if -1.0 <= TSF_RPNstackL <= 1.0:
+                        TSF_RPNstack.append(math.acos(TSF_RPNstackL))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "t":
                     TSF_RPNstack.append(math.atan(TSF_RPNstackL))
                 elif TSF_RPNope == "R":
-                    TSF_RPNstack.append(math.sqrt(TSF_RPNstackL))
+                    if 0 <= TSF_RPNstackL:
+                        TSF_RPNstack.append(math.sqrt(TSF_RPNstackL))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "E":
-                    TSF_RPNstack.append(math.log1p(TSF_RPNstackL))
+                    if 0 < TSF_RPNstackL:
+                        TSF_RPNstack.append(math.log(TSF_RPNstackL))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "L":
-                    TSF_RPNstack.append(math.log10(TSF_RPNstackL))
+                    if 0 < TSF_RPNstackL:
+                        TSF_RPNstack.append(math.log10(TSF_RPNstackL))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "l":
-                    TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
+                    if 0 < TSF_RPNstackL:
+                        TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
+                    else:
+                        TSF_RPNanswer="n|0";  break;
             elif TSF_RPNope in "+-*/\\#%<>AH^":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
