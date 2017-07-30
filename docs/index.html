@@ -22,7 +22,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170730U102111(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170731M082535(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
@@ -415,15 +415,24 @@
  <section>
   <h2 id="api-rpn">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</h2>
   <p>
-  RPN電卓は「TSF --RPN "1,2+"」のようにコマンド上から試す事ができます。<br>
-  RPNでない方の電卓は「TSF --calc "1+2"」と詳細は「TSF_Calc(calc.html)」で説明予定です。<br>
-  calc電卓内でもコンマ「,」が含まれる式はRPN電卓で処理されます。<br>
+   RPN電卓は「TSF --RPN "1,2+"」のようにコマンド上から試す事ができます。<br>
+   RPNでない方の電卓は「TSF --calc "1+2"」と詳細は「TSF_Calc(calc.html)」で説明予定です。<br>
   「#!TSF_echoN」など数値が要求されるカードでも構文チェックでRPN電卓の処理が行われます。<br>
   </p>
+  <p>
+   RPNは分数も浮動小数に変換して計算するので丸め誤差が発生します。指数表示は0で補完され、指数化されない小数は10桁表示です。<br>
+   「12345679*9」が「p111111111|1」になるっていうネタですら「12345679,9*」で計算すると「p111111000」(12345679自体がが浮動小数で1.23457e+07)になります(Python版だと逆に「p111111111」と計算できてしまう)。<br>
+   計算精度が必要な場合calc電卓が必要になります(calc電卓内でもコンマ「,」が含まれる式はRPNで処理されます)。<br>
+  </p>
   <dl><dt>
-   数値「0」「1」「2」「3」「4」「5」「6」「7」「8」「9」と数値区切り「,」
+   数値(10進数)「0」「1」「2」「3」「4」「5」「6」「7」「8」「9」と数値区切り「,」
   </dt><dd>
    数値はコンマで区切ります。演算子と数値の間にコンマは無用です。<br>
+  </dd></dl>
+  <dl><dt>
+   16進数「$」「U+」「0x」「a」「b」「c」「d」「e」「f」
+  </dt><dd>
+   数値の頭に「$」がある場合16進数とみなします。式の冒頭でのみ「U+」「0x」を受け付けます。<br>
   </dd></dl>
   <dl><dt>
    符号「p」「m」
@@ -433,20 +442,14 @@
   <dl><dt>
    分数「|」と小数「.」
   </dt><dd>
-   TSFでは演算子「/」と分数「|」は区別します(RPNでは分数は割り算ではなく小数扱いと思ってください)。<br>
-   「1|2」は「0.5」になります。分数「|」はそれ自体が数値なので小数化は四則演算より優先されます。<br>
-   RPNでは分数は浮動小数で計算されます。例外としてゼロ除算発生の場合分母ゼロ「n|0」を返します。<br>
-   RPNは浮動小数なので丸め誤差が発生します。calcなら分数計算なので誤差を減らせます。<br>
-  </dd></dl>
-  <dl><dt>
-   16進数「$」「U+」「0x」「a」「b」「c」「d」「e」「f」
-  </dt><dd>
-   数値の頭に「$」がある場合16進数とみなします。式の冒頭でのみ「U+」「0x」が使えます。<br>
+   TSFでは演算子「/」と分数「|」は区別します(TSFでは分数は割り算ではなく数値扱い)。<br>
+   分数「|」はそれ自体が数値なのでRPNでは「1|2」は「0.5」で計算します。分数の小数化は四則演算より優先されます。<br>
+   ゼロ除算発生の場合分母ゼロ「n|0」を返します。<br>
   </dd></dl>
   <dl><dt>
    四則演算「+」「-」「*」「/」
   </dt><dd>
-   RPNには足し算「+」引き算「-」掛け算「*」割り算「/」などに優先順位がありません。ただし分数「|」はそれ自体が数値なのである意味優先順位的です。<br>
+   RPNには足し算「+」引き算「-」掛け算「*」割り算「/」などに優先順位がありません。<br>
    calcで「1+2」と計算する場合は「1,2+」の様に記述します。「1+2+3」なら「1,2+3+」です。<br>
    式の冒頭で「+」「-」が使われた場合「p」「m」符号とみなします。「/」は分数「1|」とみなします。<br>
    0で割り算すると分母ゼロ「n|0」を返します。<br>
@@ -525,6 +528,12 @@
   </dt><dd>
    Ａ．TSFには中置記法や括弧が使用可能なcalcがあります。一般的なForthの演算子ワード「+」「-」「*」「/」ようなカードは存在しません。<br>
    　速度優勢で小数計算を用いるRPN、精度優先で桁数制限の無い分数計算を用いるcalc。状況に応じて「電卓」を使い分ける二刀流です。<br>
+  </dd></dl>
+  <dl><dt>
+   Ｑ．TSFで作ったプログラムを実行ファイルにできますか？<br>
+  </dt><dd>
+   Ａ．例えば「<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh" title="TSF2KEV/TSF_DMDcompile.sh at master · ooblog/TSF2KEV">TSF_DMDcompile.sh</a>」に「<a href="https://github.com/ooblog/TSF2KEV/blob/master/trans_quine.d" title="TSF2KEV/trans_quine.d at master · ooblog/TSF2KEV">trans_quine.d</a>」(「<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_quine.tsf" title="TSF2KEV/sample_quine.tsf at master · ooblog/TSF2KEV">sample_quine.tsf</a>」をD言語に変換)を渡すと「TSF」バイナリの代わりに「trans_quine」バイナリが作られます。<br>
+   　TSFを一旦D言語に変換する形でTSFの実行バイナリが作れます(但しtrans_quineはD言語なのでD言語のソースを出力します)。<br>
   </dd></dl>
  </section>
  <aside class="modpages"><nav>

@@ -28,7 +28,7 @@ commands & samples:
   --dlang       TSF to D
   --RPN         decimal RPN calculator "1,3/m1|2-"-> 0.8333... 
   --calc        fraction calculator "1/3-m1|2"-> p5|6
-  --calender    "@4y@0m@0dm@wdec@0h@0n@0s"-> 20170730U095437
+  --calender    "@4y@0m@0dm@wdec@0h@0n@0s"-> 20170731M082336
   --helloworld  "Hello world  #!TSF_echo" sample
   --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample
   --99bear      99 Bottles of Beer 9 Bottles sample

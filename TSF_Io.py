@@ -184,6 +184,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "\\":
+#math.ceil(x),math.floor(x)
                     try:
                         TSF_RPNstack.append(float(TSF_RPNstackL//TSF_RPNstackR))
                     except ZeroDivisionError:
@@ -247,6 +248,8 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
             TSF_RPNanswer="".join(["0." if TSF_RPNstackL >= 0 else "-0.",TSF_RPNlogeZ,TSF_RPNloge[0]])
         elif TSF_RPNstackL == int(TSF_RPNstackL):
             TSF_RPNanswer=str(int(TSF_RPNstackL))
+        else:
+            TSF_RPNanswer="{0:.10f}".format(TSF_RPNstackL).rstrip('0')
         if TSF_RPNanswer != "0":
             TSF_RPNanswer=TSF_RPNanswer.replace('-','m') if TSF_RPNanswer.startswith('-') else "".join(["p",TSF_RPNanswer])
     return TSF_RPNanswer
@@ -320,6 +323,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
         "0.0001","0.00001","0.000001",
         "0,p1^","0,0^","0,m1^",
         "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
+        "355,113/","3.141592653589793238462643383279502884197169399375"
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))
