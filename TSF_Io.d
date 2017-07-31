@@ -235,18 +235,28 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                         }
                     break;
                     case '\\':
-//#math.ceil(x),math.floor(x)
                         if( TSF_RPNstackR!=0.0 ){
-                            TSF_RPNstack~=to!real(to!long(TSF_RPNstackL/TSF_RPNstackR));
+                            TSF_RPNstackF=TSF_RPNstackL/TSF_RPNstackR;
+                            if( TSF_RPNstackF>=0.0 ){
+                                TSF_RPNstack~=to!real(floor(abs(TSF_RPNstackF)));
+                            }
+                            else{
+                                TSF_RPNstack~=-to!real(floor(abs(TSF_RPNstackF)));
+                            }
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit_rpn;
                         }
                     break;
                     case '_':
-//#math.ceil(x),math.floor(x)
                         if( TSF_RPNstackR!=0.0 ){
-                            TSF_RPNstack~=to!real(TSF_RPNstackL/TSF_RPNstackR);
+                            TSF_RPNstackF=TSF_RPNstackL/TSF_RPNstackR;
+                            if( TSF_RPNstackF>=0.0 ){
+                                TSF_RPNstack~=to!real(ceil(abs(TSF_RPNstackF)));
+                            }
+                            else{
+                                TSF_RPNstack~=-to!real(ceil(abs(TSF_RPNstackF)));
+                            }
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit_rpn;
@@ -309,12 +319,12 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     TSF_RPNstackL=0.0;
                 }
                 switch( TSF_RPNope ){
-                    case 'Z':  TSF_RPNstack~=TSF_RPNstackF==0?TSF_RPNstackL:TSF_RPNstackR;  break;
-                    case 'z':  TSF_RPNstack~=TSF_RPNstackF!=0?TSF_RPNstackL:TSF_RPNstackR;  break;
-                    case 'O':  TSF_RPNstack~=TSF_RPNstackF>=0?TSF_RPNstackL:TSF_RPNstackR;  break;
-                    case 'o':  TSF_RPNstack~=TSF_RPNstackF>0?TSF_RPNstackL:TSF_RPNstackR;  break;
-                    case 'U':  TSF_RPNstack~=TSF_RPNstackF<=0?TSF_RPNstackL:TSF_RPNstackR;  break;
-                    case 'u':  TSF_RPNstack~=TSF_RPNstackF<0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'Z':  TSF_RPNstack~=TSF_RPNstackF==0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'z':  TSF_RPNstack~=TSF_RPNstackF!=0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'O':  TSF_RPNstack~=TSF_RPNstackF>=0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'o':  TSF_RPNstack~=TSF_RPNstackF>0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'U':  TSF_RPNstack~=TSF_RPNstackF<=0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
+                    case 'u':  TSF_RPNstack~=TSF_RPNstackF<0.0?TSF_RPNstackL:TSF_RPNstackR;  break;
                     default:  break;
                 }
             }
@@ -437,7 +447,8 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "0.0001","0.00001","0.000001",
         "0,p1^","0,0^","0,m1^",
         "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
-        "355,113/","3.141592653589793238462643383279502884197169399375"
+        "355,113/","3.141592653589793238462643383279502884197169399375",
+        "p3.14,1\\","m3.14,1\\","p3.14,1_","m3.14,1_",
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }
@@ -447,7 +458,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
 
 
 unittest {
-    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
+//    TSF_Io_debug(TSF_Io_argvs(["TSFd_Io.d"]));
 }
 
 
