@@ -209,7 +209,7 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                     default:  break;
                 }
             }
-            else if( count("+-*/\\#%<>AH^",TSF_RPNope) ){
+            else if( count("+-*/\\_#%<>AH^",TSF_RPNope) ){
                 if( TSF_RPNstack.length ){
                     TSF_RPNstackR=TSF_RPNstack.back; TSF_RPNstack.popBack();
                 }
@@ -235,8 +235,18 @@ string TSF_Io_RPN(string TSF_RPN){    //#TSFdoc:逆ポーランド電卓。分�
                         }
                     break;
                     case '\\':
+//#math.ceil(x),math.floor(x)
                         if( TSF_RPNstackR!=0.0 ){
                             TSF_RPNstack~=to!real(to!long(TSF_RPNstackL/TSF_RPNstackR));
+                        }
+                        else{
+                            TSF_RPNanswer="n|0";  break opeexit_rpn;
+                        }
+                    break;
+                    case '_':
+//#math.ceil(x),math.floor(x)
+                        if( TSF_RPNstackR!=0.0 ){
+                            TSF_RPNstack~=to!real(TSF_RPNstackL/TSF_RPNstackR);
                         }
                         else{
                             TSF_RPNanswer="n|0";  break opeexit_rpn;

@@ -169,7 +169,7 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                         TSF_RPNstack.append(math.log(TSF_RPNstackL,2))
                     else:
                         TSF_RPNanswer="n|0";  break;
-            elif TSF_RPNope in "+-*/\\#%<>AH^":
+            elif TSF_RPNope in "+-*/\\_#%<>AH^":
                 TSF_RPNstackR=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 TSF_RPNstackL=TSF_RPNstack.pop() if len(TSF_RPNstack) > 0 else 0.0
                 if TSF_RPNope == "+":
@@ -184,9 +184,16 @@ def TSF_Io_RPN(TSF_RPN):    #TSFdoc:逆ポーランド電卓。分数は簡易�
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "\\":
-#math.ceil(x),math.floor(x)
+#math.ceil(x),math.floor(x)/\_;
                     try:
                         TSF_RPNstack.append(float(TSF_RPNstackL//TSF_RPNstackR))
+                    except ZeroDivisionError:
+                        TSF_RPNanswer="n|0";  break;
+                elif TSF_RPNope == "_":
+#math.ceil(x),math.floor(x)/\_;
+                    print("math.ceil(x),")
+                    try:
+                        TSF_RPNstack.append(float(TSF_RPNstackL/TSF_RPNstackR))
                     except ZeroDivisionError:
                         TSF_RPNanswer="n|0";  break;
                 elif TSF_RPNope == "#":

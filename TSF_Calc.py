@@ -16,6 +16,7 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
         "#!TSF_calc":TSF_Calc_calc, "#分数計算":TSF_Calc_calc,
         "#!TSF_-calc":TSF_Calc_calcMinus, "#分数計算(符号マイナスのみ)":TSF_Calc_calcMinus,
         "#!TSF_calcJA":TSF_Calc_calcJA, "#分数計算(日本語)":TSF_Calc_calcJA,
+#端数処理:四捨五入,五捨五超入,五捨六入,偶数丸め
     }
     for cardkey,cardfunc in TSF_Forth_cards.items():
         if not cardkey in TSF_cardsD:
@@ -30,13 +31,15 @@ def TSF_Calc_Initcards(TSF_cardsD,TSF_cardsO):    #TSFdoc:関数カードに文�
     TSF_Calc_opeword={"恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",
         "模糊":"模","逡巡":"逡","須臾":"須","瞬息":"瞬","弾指":"弾","刹那":"刹","六徳":"徳","虚空":"空","清浄":"清","阿頼耶":"耶","阿摩羅":"摩","涅槃寂静":"涅",
         "円周率":"π","2π":"θ","円周":"θ","ネイピア数":"ｅ","ルート":"√","プラス":"p","マイナス":"m","絶対値":"!",
-        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":"_",
+#        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":"_",
+        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":";",
     }
     TSF_Calc_opechar={"１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0",
         "一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","〇":"0",
         "壱":"1","弐":"2","参":"3","肆":"4","伍":"5","陸":"6","漆":"7","捌":"8","玖":"9","零":"0",
         "絶":"p","負":"m","分":"_","点":".","円":".","圓":".","陌":"百","佰":"百","阡":"千","仟":"千","萬":"万","仙":"銭","秭":"𥝱",
-        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＃":"#","％":"%","＾":"^","｜":"|","＿":"_",
+#        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＃":"#","％":"%","＾":"^","｜":"|","＿":"_",
+        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＿":"_","＃":"#","％":"%","＾":"^","｜":"|","；":";",
         "加":"+","減":"-","乗":"*","除":"/","捨":"\\","余":"#","比":"%","税":"%","冪":"^","分":"_",
         "足":"+","引":"-","掛":"*","割":"/","和":"+","差":"-","積":"*","商":"/","足":"+","引":"-","掛":"*","割":"/",
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
@@ -205,7 +208,6 @@ def TSF_Calc_bracketsQQM(TSF_calcQ):    #TSFdoc:分数電卓のPM符号省略。
 
 def TSF_Calc_FLR(TSF_calcQ,TSF_calcO):    #三項演算子と「~」を用いてタプルに分割。TSF_calcFは事前計算。(TSFAPI)
     TSF_calcQsplits=TSF_calcQ.split(TSF_calcO)
-#    TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]).replace("-","m"));
     TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]))
     if "~" in TSF_calcQsplits[-1]:
         TSF_calcLRsplits=TSF_calcQsplits[-1].split('~')
@@ -349,11 +351,12 @@ def TSF_Calc_addition(TSF_calcQ):    #TSFdoc:分数電卓の足し算引き算�
 def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     TSF_calcLN,TSF_calcLD=TSF_longint(1),TSF_longint(1)
     TSF_calcA=TSF_calcQ
-    TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<")
+#    TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<")
+    TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("_","\t_").replace("#","\t#").replace(">","\t>").replace("<","\t<")
     TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t')
     for TSF_calcQmulti in TSF_calcQsplits:
         TSF_calcO=" "
-        for TSF_calcOpe in "*/\\#<>":
+        for TSF_calcOpe in "*/\\_#<>":
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
         TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip("*/\\#<>")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
@@ -369,6 +372,12 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
             TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
             TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+        elif TSF_calcO == "_":
+            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
+            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+#            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
             TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
         elif TSF_calcO == '#':
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
@@ -388,17 +397,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
             else:
                 TSF_calcA="n|0"
                 TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
-#            if TSF_calcRM == 0:
-#                TSF_calcA="n|0"
-#                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
-#                break
-#            elif TSF_calcRM > 0:
-#                TSF_calcLN=TSF_calcLN%TSF_calcRM
-#            else:
-#                if TSF_calcLN%abs(TSF_calcRM) != 0:
-#                    TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM)
-#                else:
-#                    TSF_calcLN=0
+                break
         elif TSF_calcO == '>':
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLM=TSF_calcLN*TSF_calcG//TSF_calcLD
@@ -419,8 +418,12 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
 
 def TSF_Calc_fractalize(TSF_calcQ):    #TSFdoc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     TSF_calcA=TSF_calcQ
-    if "_" in TSF_calcA:
-        TSF_calcND=TSF_calcA.split("_")
+#    if "_" in TSF_calcA:
+#        TSF_calcND=TSF_calcA.split("_")
+#        TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1]
+#        TSF_calcA="|".join([TSF_calcDstr,TSF_calcNstr])
+    if ";" in TSF_calcA:
+        TSF_calcND=TSF_calcA.split(";")
         TSF_calcNstr,TSF_calcDstr=TSF_calcND[0],TSF_calcND[-1]
         TSF_calcA="|".join([TSF_calcDstr,TSF_calcNstr])
     TSF_calcA=TSF_calcA if "|" in TSF_calcA else "|".join([TSF_calcA,"1"])

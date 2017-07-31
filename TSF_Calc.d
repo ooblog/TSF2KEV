@@ -34,13 +34,15 @@ void TSF_Calc_Initcards(ref string function()[string] TSF_cardsD,ref string[] TS
     TSF_Calc_opeword=["恒河沙":"恒","阿僧祇":"阿","那由他":"那","不可思議":"思","無量大数":"量","無限":"∞",
         "模糊":"模","逡巡":"逡","須臾":"須","瞬息":"瞬","弾指":"弾","刹那":"刹","六徳":"徳","虚空":"空","清浄":"清","阿頼耶":"耶","阿摩羅":"摩","涅槃寂静":"涅",
         "円周率":"π","2π":"θ","円周":"θ","ネイピア数":"ｅ","ルート":"√","プラス":"p","マイナス":"m","絶対値":"!",
-        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":"_",
+//        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":"_",
+        "足す":"足","引く":"引","掛ける":"掛","割る":"割","分の":";",
     ];
     TSF_Calc_opechar=["１":"1","２":"2","３":"3","４":"4","５":"5","６":"6","７":"7","８":"8","９":"9","０":"0",
         "一":"1","二":"2","三":"3","四":"4","五":"5","六":"6","七":"7","八":"8","九":"9","〇":"0",
         "壱":"1","弐":"2","参":"3","肆":"4","伍":"5","陸":"6","漆":"7","捌":"8","玖":"9","零":"0",
         "絶":"p","負":"m","分":"_","点":".","円":".","圓":".","陌":"百","佰":"百","阡":"千","仟":"千","萬":"万","仙":"銭","秭":"𥝱",
-        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＃":"#","％":"%","＾":"^","｜":"|","＿":"_",
+//        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＃":"#","％":"%","＾":"^","｜":"|","＿":"_",
+        "＋":"+","－":"-","×":"*","÷":"/","／":"/","＼":"\\","＿":"_","＃":"#","％":"%","＾":"^","｜":"|","；":";",
         "加":"+","減":"-","乗":"*","除":"/","捨":"\\","余":"#","比":"%","税":"%","冪":"^","分":"_",
         "足":"+","引":"-","掛":"*","割":"/","和":"+","差":"-","積":"*","商":"/","足":"+","引":"-","掛":"*","割":"/",
         "π":"y","周":"Y","θ":"Y","底":"e","ｅ":"e","常":"L","進":"l","対":"E","√":"R","根":"R",
@@ -261,7 +263,6 @@ string TSF_Calc_bracketsQQM(string TSF_calcQ){    //#TSFdoc:分数電卓のPM符
 auto TSF_Calc_FLR(string TSF_calcQ,string TSF_calcO){    //#三項演算子と「~」を用いてタプルに分割。TSF_calcFは事前計算。(TSFAPI)
     string TSF_calcF,TSF_calcL,TSF_calcR;
     string[] TSF_calcQsplits=TSF_calcQ.split(TSF_calcO);
-//    TSF_calcF=TSF_Io_RPN(replace(TSF_Calc_addition(TSF_calcQsplits[0]),"-","m"));
     TSF_calcF=TSF_Io_RPN(TSF_Calc_addition(TSF_calcQsplits[0]));
     if( count(TSF_calcQsplits[$-1],'~') ){
         string[] TSF_calcLRsplits=TSF_calcQsplits[$-1].split('~');
@@ -442,14 +443,15 @@ string TSF_Calc_addition(string TSF_calcQ){    //#TSFdoc:分数電卓の足し�
 string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の掛け算割り算等。公倍数公約数、最大値最小値も扱う。(TSFAPI)
     BigInt TSF_calcLN=BigInt(1),TSF_calcLD=BigInt(1);
     string TSF_calcA=TSF_calcQ;
-    string TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<");
+//    string TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("#","\t#").replace(">","\t>").replace("<","\t<");
+    string TSF_calcQreplace=TSF_calcQ.replace("*","\t*").replace("/","\t/").replace("\\","\t\\").replace("_","\t_").replace("#","\t#").replace(">","\t>").replace("<","\t<");
     string[] TSF_calcQsplits=TSF_calcQreplace.strip('\t').split('\t');
     if( TSF_calcQsplits.length==0 ){ TSF_calcQsplits.length=1; TSF_calcQsplits[0]=""; }
     char TSF_calcO;
     string TSF_calcRN,TSF_calcRD;
     opeexit_multiplication: foreach(string TSF_calcQmulti;TSF_calcQsplits){
         TSF_calcO=' ';
-        foreach(char TSF_calcOpe;"*/\\#<>"){
+        foreach(char TSF_calcOpe;"*/\\_#<>"){
             TSF_calcO=count(TSF_calcQmulti,TSF_calcOpe)?TSF_calcOpe:TSF_calcO;
         }
         string[] TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip('*').strip('/').strip('\\').strip('#').strip('<').strip('>')).split('|');
@@ -470,6 +472,14 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
+                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                break;
+                case '_':
+                    TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
+                    TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+                    if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
+//                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+//Unsigned!T absUnsign(T)(T x)
                     TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
                 break;
                 case '#':
@@ -498,28 +508,6 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
                         TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
                         break opeexit_multiplication;
                     }
-/*
-                    BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
-                    TSF_calcLN=TSF_calcLN*TSF_calcG/TSF_calcLD;
-                    TSF_calcLD=TSF_calcLD*TSF_calcG/TSF_calcLD;
-                    BigInt TSF_calcRM=BigInt(TSF_calcRN)*TSF_calcG/BigInt(TSF_calcRD);
-                    if( BigInt(TSF_calcRM)==0 ){
-                        TSF_calcA="n|0";
-                        TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
-                        break opeexit_multiplication;
-                    }
-                    else if( TSF_calcRM>0 ){
-                        TSF_calcLN=TSF_calcLN%TSF_calcRM;
-                    }
-                    else{
-                        if( TSF_calcLN%abs(TSF_calcRM)!=0 ){
-                            TSF_calcLN=abs(TSF_calcRM)-TSF_calcLN%abs(TSF_calcRM);
-                        }
-                        else{
-                            TSF_calcLN=0;
-                        }
-                    }
-*/
                 break;
                 case '>':
                     BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
@@ -551,8 +539,13 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
 string TSF_Calc_fractalize(string TSF_calcQ){    //#TSFdoc:分数電卓なので小数を分数に。ついでに平方根や三角関数も。0で割る、もしくは桁が限界越えたときなどは「n|0」を返す。(TSFAPI)
     string TSF_calcA=TSF_calcQ;
     string[] TSF_calcND;  string TSF_calcNstr,TSF_calcDstr;
-    if( count(TSF_calcA,'_') ){
-        TSF_calcND=TSF_calcA.split("_");
+//    if( count(TSF_calcA,'_') ){
+//        TSF_calcND=TSF_calcA.split("_");
+//        TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr=TSF_calcND[$-1];
+//        TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"|");
+//    }
+    if( count(TSF_calcA,';') ){
+        TSF_calcND=TSF_calcA.split(";");
         TSF_calcNstr=TSF_calcND[0]; TSF_calcDstr=TSF_calcND[$-1];
         TSF_calcA=join([TSF_calcDstr,TSF_calcNstr],"|");
     }
