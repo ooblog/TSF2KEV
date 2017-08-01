@@ -336,7 +336,7 @@ def TSF_Io_debug(TSF_argvs):    #TSFdoc:「TSF/TSF_io.py」単体テスト風デ
         "0,p1^","0,0^","0,m1^",
         "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
         "355,113/","3.141592653589793238462643383279502884197169399375",
-        "p3.14,1\\","m3.14,1\\","p3.14,1_","m3.14,1_",
+        "p3.14,1\\","m3.14,1\\","p3.14,1_","m3.14,1_","p3,1\\","m3,1\\","p3,1_","m3,1_",
     ]:
         TSF_debug_log=TSF_Io_printlog("\t{0}\t{1}".format(debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log)
     print("--- fin. > {0} ---".format(TSF_debug_savefilename))

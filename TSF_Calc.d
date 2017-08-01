@@ -469,18 +469,47 @@ string TSF_Calc_multiplication(string TSF_calcQ){    //#TSFdoc:分数電卓の�
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
                 break;
                 case '\\':
+//                    TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
+//                    TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+//                    if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
+//                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+                    if( TSF_calcLD==0 ){
+                        TSF_calcA="n|0";
+                        TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
+                        break;
+                    }
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
-                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                    if( TSF_calcLN>=0 ){
+                        TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                    }
+                    else{
+                        TSF_calcLN=-(abs(TSF_calcLN)/TSF_calcLD);  TSF_calcLD=1;
+                    }
                 break;
                 case '_':
+//                    TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
+//                    TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+//                    if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
+//                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
                     TSF_calcLN=TSF_calcLN*BigInt(TSF_calcRD);
                     TSF_calcLD=TSF_calcLD*BigInt(TSF_calcRN);
+                    if( TSF_calcLD==0 ){
+                        TSF_calcA="n|0";
+                        TSF_calcLN=BigInt(0); TSF_calcLD=BigInt(0);
+                        break;
+                    }
                     if( TSF_calcLD<0 ){ TSF_calcLN=-TSF_calcLN; TSF_calcLD=-TSF_calcLD; }
-//                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
-//Unsigned!T absUnsign(T)(T x)
-                    TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                    BigInt TSF_calcRM=TSF_calcLN%TSF_calcLD;
+                    if( TSF_calcLN>=0 ){
+                        TSF_calcLN=TSF_calcLN/TSF_calcLD;  TSF_calcLD=1;
+                        if( TSF_calcRM!=0 ){ TSF_calcLN++; }
+                    }
+                    else{
+                        TSF_calcLN=-(abs(TSF_calcLN)/TSF_calcLD);  TSF_calcLD=1;
+                        if( TSF_calcRM!=0 ){ TSF_calcLN--; }
+                    }
                 break;
                 case '#':
                     BigInt TSF_calcG=BigInt(TSF_Calc_LCM(to!string(TSF_calcLD),TSF_calcRD));
@@ -667,7 +696,8 @@ void TSF_Calc_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Calc」単体テ
         "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
         "1|3D~10","-1|3D~10","0|1D~10","1|0D~10","355|113D~10",
         "1|9D~20",",(1|9)","1|90D~20",",(1|90)","1|900D~20",",(1|900)",
-        "12.34D~10","1234D~2","12.34D~0",
+        "12.34D~10","1234D~2","12.34D~0","355/113D~10",
+        "p3.14\\1","m3.14\\1","p3.14_1","m3.14_1","p3\\1","m3\\1","p3_1","m3_1",
         ],"\t"),'N');
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);

@@ -448,7 +448,7 @@ void TSF_Io_debug(string[] TSF_argvs){    //#TSFdoc:「TSF/TSF_io.d」単体テ�
         "0,p1^","0,0^","0,m1^",
         "p3,p4#","m3,p4#","p3,m4#","m3,m4#",
         "355,113/","3.141592653589793238462643383279502884197169399375",
-        "p3.14,1\\","m3.14,1\\","p3.14,1_","m3.14,1_",
+        "p3.14,1\\","m3.14,1\\","p3.14,1_","m3.14,1_","p3,1\\","m3,1\\","p3,1_","m3,1_",
     ]){
         TSF_debug_log=TSF_Io_printlog(format("\t%s\t%s",debug_rpn,TSF_Io_RPN(debug_rpn)),TSF_debug_log);
     }

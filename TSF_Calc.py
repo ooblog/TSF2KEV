@@ -358,7 +358,7 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
         TSF_calcO=" "
         for TSF_calcOpe in "*/\\_#<>":
             TSF_calcO=TSF_calcOpe if TSF_calcOpe in TSF_calcQmulti else TSF_calcO
-        TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip("*/\\#<>")).split('|')
+        TSF_calcRND=TSF_Calc_fractalize(TSF_calcQmulti.strip("*/\\_#<>")).split('|')
         TSF_calcRN,TSF_calcRD=TSF_calcRND[0],TSF_calcRND[-1];
         if TSF_longint(TSF_calcRD) == 0:
             TSF_calcA="n|0"
@@ -369,16 +369,40 @@ def TSF_Calc_multiplication(TSF_calcQ):    #TSFdoc:分数電卓の掛け算割�
             TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
             if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
         elif TSF_calcO == "\\":
-            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
-            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
-            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
-            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
-        elif TSF_calcO == "_":
-            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
-            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
-            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+#            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
+#            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
+#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
 #            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
-            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
+            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
+            if TSF_calcLD == 0:
+                TSF_calcA="n|0"
+                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
+                break
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+            if TSF_calcLN >= 0:
+                TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+            else:
+                TSF_calcLN,TSF_calcLD=-(abs(TSF_calcLN)//TSF_calcLD),1
+        elif TSF_calcO == "_":
+#            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
+#            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
+#            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+#            TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+            TSF_calcLN=TSF_calcLN*TSF_longint(TSF_calcRD)
+            TSF_calcLD=TSF_calcLD*TSF_longint(TSF_calcRN)
+            if TSF_calcLD == 0:
+                TSF_calcA="n|0"
+                TSF_calcLN,TSF_calcLD=TSF_longint(0),TSF_longint(0)
+                break
+            if TSF_calcLD < 0: TSF_calcLN,TSF_calcLD=-TSF_calcLN,-TSF_calcLD
+            TSF_calcRM=TSF_calcLN%TSF_calcLD
+            if TSF_calcLN >= 0:
+                TSF_calcLN,TSF_calcLD=TSF_calcLN//TSF_calcLD,1
+                if TSF_calcRM != 0:  TSF_calcLN+=1
+            else:
+                TSF_calcLN,TSF_calcLD=-(abs(TSF_calcLN)//TSF_calcLD),1
+                if TSF_calcRM != 0:  TSF_calcLN-=1
         elif TSF_calcO == '#':
             TSF_calcG=TSF_longint(TSF_Calc_LCM(str(TSF_calcLD),TSF_calcRD))
             TSF_calcLN=TSF_calcLN*TSF_calcG//TSF_calcLD
@@ -522,7 +546,8 @@ def TSF_Calc_debug(TSF_sysargvs):    #TSFdoc:「TSF_Calc」単体テスト風デ
         "1M~1~10","kM~1~10","1P~1~10","kP~1~10",
         "1|3D~10","-1|3D~10","0|1D~10","1|0D~10","355|113D~10",
         "1|9D~20",",(1|9)","1|90D~20",",(1|90)","1|900D~20",",(1|900)",
-        "12.34D~10","1234D~2","12.34D~0",
+        "12.34D~10","1234D~2","12.34D~0","355/113D~10",
+        "p3.14\\1","m3.14\\1","p3.14_1","m3.14_1","p3\\1","m3\\1","p3_1","m3_1",
         ]),'N')
 #    TSF_debug_log=TSF_Forth_samplerun(__file__,True,TSF_debug_log)
     TSF_debug_log=TSF_Forth_samplerun(__file__,False,TSF_debug_log)

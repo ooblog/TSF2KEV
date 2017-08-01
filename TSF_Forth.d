@@ -1597,7 +1597,7 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
 }
 
 unittest {
-    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
+//    TSF_Forth_debug(TSF_Io_argvs(["dmd","TSF_Forth.d"]));
 }
 
 
