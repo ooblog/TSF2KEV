@@ -2,10 +2,12 @@
 TSF_Tab-Separated-Forth:
 	../docs/TSFindex.tsf	../sample/TSFdoc.tsf	2	#!TSF_runagainN	#!TSF_fin.
 TSFdocs_files:
-	../docs/index.html	../docs/404.html	../docs/TSFdoc.html	../docs/KEV2.html
+	../docs/index.html	../docs/forth.html	../docs/404.html	../docs/TSFdoc.html	../docs/KEV2.html
 TSFdocs_basedocs:
-	index_html:	404_html:	TSFdoc_html:	KEV2_html:
+	index_html:	forth_html:	404_html:	TSFdoc_html:	KEV2_html:
 index_html:
+	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
+forth_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 404_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
@@ -14,11 +16,13 @@ TSFdoc_html:
 KEV2_html:
 	{?TSFhtmlheader}{?TSFbodyheader}{?TSFasidenav}{?TSFsections}{?TSFbodyfooter}{?TSFhtmlfooter}
 TSFdocs_imports:
-	../TSF.d	../TSF_Io.d
+	../TSF.d	../TSF_Io.d	../TSF_Forth.d
 {@TSF_main}
 	../TSF.d
 {@TSF_Io}
 	../TSF_Io.d
+{@TSF_Forth}
+	../TSF_Forth.d
 TSFimport_ext:
 	.py	.d
 TSFimport_regex:
@@ -50,7 +54,7 @@ TSFdocs_tags:
 	{?TSFapi01RPN}	{?TSFapi01title}	{?TSFapi00title}
 	{?TSFgrammar09title}	{?TSFgrammar08title}	{?TSFgrammar07title}	{?TSFgrammar06title}	{?TSFgrammar05title}	{?TSFgrammar04title}	{?TSFgrammar03title}	{?TSFgrammar02title}	{?TSFgrammar01title}	{?TSFgrammar00title}
 	{?TSFpages}
-	{?TSFicon}	{?TSFfaq00title}	{?TSFaddress00title}
+	{?TSFicon}	{?TSFfaq00forth}	{?TSFfaq00title}	{?TSFaddress00title}
 	{?TSFlicense03title}	{?TSFlicense02title}	{?TSFlicense02}	{?TSFlicense01title}	{?TSFlicense00title}	{?TSFlicense00}
 	{?TSFhtmlheader}	{?TSFbodyheader}	{?TSFasidenav}	{?TSFsections}	{?TSFbodyfooter}	{?TSFhtmlfooter}
 {?TSFhtmlheader}
@@ -87,7 +91,7 @@ TSFdocs_tags:
 	   version(branch):20170718T073839{?MODIFY}(執筆途中です)<br>
 	  </p>
 {?TSFsections}
-	{$TSFsection_index}	{$TSFsection_404}	{$TSFsection_TSFdoc}	{$TSFsection_KEV2}
+	{$TSFsection_index}	{$TSFsection_forth}	{$TSFsection_404}	{$TSFsection_TSFdoc}	{$TSFsection_KEV2}
 {$TSFsection_index}
 	  <ul>
 	   <li><a href="#License-0" title="{?TSFlicense00title}">{?TSFlicense00title}</a></li>
@@ -122,13 +126,13 @@ TSFdocs_tags:
 	   <li>⑨-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
 	   <li>⑨-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
 	   <li><a href="#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
+	   <li><a href="forth.html#faq-1" title="{?TSFfaq00forth}">{?TSFfaq00forth}</a></li>
 	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
 	  </ul>
-	  <p>
-	   TSFの解説、目次上はひとまとめですが実際にはモジュール毎に複数ページへ分割してます(分割予定)。<br>
-	  </p>
-	  {?TSFpages}
 	 </section>
+	 <aside class="modpages"><nav>
+	  {?TSFpages}
+	 </nav></aside>
 	{?TSFlicense00}
 	  <p>
 	   ※D言語もしくはPythonがインストールされているものとします(Linuxの場合Python2系が最初から入ってる場合があります)。<br>
@@ -545,7 +549,7 @@ TSFdocs_tags:
 	 </nav></aside>
 	
 {?TSFpages}
-	{$TSFpages_index}
+	{$TSFpages_index}	{$TSFpages_404}
 {$TSFpages_index}
 	  <ul class="modpages_li">
 #!	   <li><a href="index.html">TSF+TSF_Io(index.html)</a></li>
@@ -556,13 +560,64 @@ TSFdocs_tags:
 #!	   <li><a href="match.html">TSF_Match(match.html)</a></li>
 #!	   <li><a href="trance.html">TSF_Trans(trance.html)</a></li>
 	   <li>TSF+TSF_Io(index.html)</li>
-	   <li>TSF_Forth(forth.html)</li>
+	   <li><a href="forth.html">TSF_Forth(forth.html)</a></li>
 	   <li>TSF_Calc(calc.html)</li>
 	   <li>TSF_Time(time.html)</li>
-	   <li>TSF_Time(urlpath.html)</li>
+	   <li>TSF_Urlpath(urlpath.html)</li>
 	   <li>TSF_Match(match.html)</li>
 	   <li>TSF_Trans(trance.html)</li>
 	  </ul>
+{$TSFpages_404}
+	  <ul class="modpages_li">
+	   <li><a href="index.html">TSF+TSF_Io(index.html)</a></li>
+	   <li>TSF_Forth(forth.html)</li>
+	   <li>TSF_Calc(calc.html)</li>
+	   <li>TSF_Time(time.html)</li>
+	   <li>TSF_Urlpath(urlpath.html)</li>
+	   <li>TSF_Match(match.html)</li>
+	   <li>TSF_Trans(trance.html)</li>
+	  </ul>
+{$TSFsection_forth}
+	  <ul>
+	   <li><a href="index.html#License-0" title="{?TSFlicense00title}">{?TSFlicense00title}</a></li>
+	   <li><a href="index.html#License-1" title="{?TSFlicense01title}">{?TSFlicense01title}</a></li>
+	   <li><a href="index.html#License-2" title="{?TSFlicense02title}">{?TSFlicense02title}</a></li>
+	   <li><a href="index.html#License-3" title="{?TSFlicense03title}">{?TSFlicense03title}</a></li>
+	   <li><a href="index.html#grammar-0" title="{?TSFgrammar00title}">{?TSFgrammar00title}</a></li>
+	   <li><a href="index.html#grammar-1" title="{?TSFgrammar01title}">{?TSFgrammar01title}</a></li>
+	   <li><a href="index.html#grammar-2" title="{?TSFgrammar02title}">{?TSFgrammar02title}</a></li>
+	   <li><a href="index.html#grammar-3" title="{?TSFgrammar03title}">{?TSFgrammar03title}</a></li>
+	   <li><a href="index.html#grammar-4" title="{?TSFgrammar04title}">{?TSFgrammar04title}</a></li>
+	   <li><a href="index.html#grammar-5" title="{?TSFgrammar05title}">{?TSFgrammar05title}</a></li>
+	   <li><a href="index.html#grammar-6" title="{?TSFgrammar06title}">{?TSFgrammar06title}</a></li>
+	   <li><a href="index.html#grammar-7" title="{?TSFgrammar07title}">{?TSFgrammar07title}</a></li>
+	   <li><a href="index.html#grammar-8" title="{?TSFgrammar08title}">{?TSFgrammar08title}</a></li>
+	   <li><a href="index.html#grammar-9" title="{?TSFgrammar09title}">{?TSFgrammar09title}</a></li>
+	   <li><a href="index.html#api-0" title="{?TSFapi00title}">{?TSFapi00title}</a></li>
+	   <li><a href="index.html#api-1" title="{?TSFapi01title}">{?TSFapi01title}</a></li>
+	   <li><a href="index.html#api-rpn" title="{?TSFapi01RPN}">{?TSFapi01RPN}</a></li>
+	   <li>④-0．「TSF_Forth.d」「TSF_Forth.py」の#関数カード一覧。</li>
+	   <li>④-1．「TSF_Forth.d」「TSF_Forth.py」のAPI一覧。</li>
+	   <li>⑤-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
+	   <li>⑤-1．「TSF_Calc.d」「TSF_Calc.py」のAPI一覧。</li>
+	   <li>⑤-2．「TSF_Time.d」「TSF_Time.py」の電卓フォーマットの解説。</li>
+	   <li>⑥-0．「TSF_Time.d」「TSF_Time.py」の#関数カード一覧。</li>
+	   <li>⑥-1．「TSF_Time.d」「TSF_Time.py」のAPI一覧。</li>
+	   <li>⑥-2．「TSF_Time.d」「TSF_Time.py」の日時フォーマットの解説。</li>
+	   <li>⑦-0．「TSF_Urlpath.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+	   <li>⑦-1．「TSF_Urlpath.d」「TSF_Urlpath.py」のAPI一覧。</li>
+	   <li>⑧-0．「TSF_Match.d」「TSF_Match.py」の#関数カード一覧。</li>
+	   <li>⑧-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
+	   <li>⑨-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+	   <li>⑨-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
+	   <li><a href="index.html#faq-0" title="{?TSFfaq00title}">{?TSFfaq00title}</a></li>
+	   <li><a href="#faq-1" title="{?TSFfaq00forth}">{?TSFfaq00forth}</a></li>
+	   <li><a href="#address-0" title="{?TSFaddress00title}">{?TSFaddress00title}</a></li>
+	  </ul>
+	 </section>
+	 <aside class="modpages"><nav>
+	  {?TSFpages}
+	 </nav></aside>
 {$TSFsection_404}
 	  <ul>
 	   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV">{$TITLE_index}</a></li>
@@ -716,7 +771,7 @@ TSFdocs_tags:
 	
 	</body></html>
 {?TITLE}
-	{$TITLE_index}	{$TITLE_404}	{$TITLE_TSFdoc}	{$TITLE_KEV2}
+	{$TITLE_index}	{$TITLE_index}	{$TITLE_404}	{$TITLE_TSFdoc}	{$TITLE_KEV2}
 {$TITLE_index}
 	「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。
 {$TITLE_404}
@@ -734,17 +789,21 @@ TSFdocs_tags:
 {$TSFicon_KEV2}
 	<img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2">
 {?TSFaddress00title}
-	{$TSFaddress00_index}		{$TSFaddress00_TSFdoc}	{$TSFaddress00_KEV2}
+	{$TSFaddress00_index}	{$TSFaddress00_index}	{$TSFaddress00_404}	{$TSFaddress00_TSFdoc}	{$TSFaddress00_KEV2}
 {$TSFaddress00_index}
 	⑪-0．作者について、例えば連絡先。
+{$TSFaddress00_404}
+	作者について、例えば連絡先。
 {$TSFaddress00_TSFdoc}
 	③-0．作者について、例えば連絡先。
 {$TSFaddress00_KEV2}
 	④-0．作者について、例えば連絡先。
 {?TSFfaq00title}
-	{$TSFfaq00_index}	{}	{$TSFfaq00_TSFdoc}	{$TSFfaq00_KEV2}
+	{$TSFfaq00_index}	{$TSFfaq00_index}	{}	{$TSFfaq00_TSFdoc}	{$TSFfaq00_KEV2}
 {$TSFfaq00_index}
-	⑩-0．「TSF」のＦＡＱ。
+	⑩-0．「TSF」とIoモジュールのＦＡＱ。
+{?TSFfaq00forth}
+	⑩-1．ForthモジュールのＦＡＱ。
 {$TSFfaq00_TSFdoc}
 	②-0．「TSFdoc」のＦＡＱ。
 {$TSFfaq00_KEV2}

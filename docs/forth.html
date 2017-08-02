@@ -1,0 +1,91 @@
+<html lang="ja"><head>
+ <meta charset="UTF-8" />
+ <title>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</title>
+ <link rel="stylesheet" type="text/css" href="TSFdoc.css" />
+ <link rel="icon" type="image/png" href="TSF2KEV_icon.png" />
+</head><body>
+ <header><nav>
+  <div class="yonmoji_root"><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">約四<br /></a><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">文字</a></div>
+  <span> &#62; <a href="https://ooblog.github.io/TSF.html" title="TSV - 「約四文字」(http://ooblog.github.io/)">TSF</a> &#62; <mark class="applogo"></mark></span> <span class="yonmoji_sitemap"><a href="https://ooblog.github.io/404.html" title="404 - 「約四文字」(http://ooblog.github.io/)">「約四文字」のsitemap(404)</a></span>
+  <br class="yonmoji_both" />
+ </div></header>
+ <aside class="sidepages"><nav>
+  <ul>
+   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV"></a></li>
+   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="TSFdoc"></a></li>
+   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2"></a></li>
+  </ul>
+  <p>
+   <a href="404.html" title="404">「TSF2KEV」のsitemap(404)</a>
+  </p>
+ </nav></aside>
+ <section class="mainpages">
+  <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
+  <p>
+   version(branch):20170718T073839	modify:20170802W230447(執筆途中です)<br>
+  </p>  <ul>
+   <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
+   <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
+   <li><a href="#License-2" title="⓪-2．インストール/アンインストール＆セットアップ">⓪-2．インストール/アンインストール＆セットアップ</a></li>
+   <li><a href="#License-3" title="⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン</a></li>
+   <li><a href="index.html#grammar-0" title="①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。">①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。</a></li>
+   <li><a href="index.html#grammar-1" title="①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。">①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。</a></li>
+   <li><a href="index.html#grammar-2" title="①-2．TSFには型どころか代入したり束縛したりするような変数自体が存在しません。スコープもありません。">①-2．TSFには型どころか代入したり束縛したりするような変数自体が存在しません。スコープもありません。</a></li>
+   <li><a href="index.html#grammar-3" title="①-3．TSFには関数の返り値やreturn文が存在しません。return用にタプルを用意するなどの概念もありません。">①-3．TSFには関数の返り値やreturn文が存在しません。return用にタプルを用意するなどの概念もありません。</a></li>
+   <li><a href="index.html#grammar-4" title="①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します。">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します。</a></li>
+   <li><a href="index.html#grammar-5" title="①-5．TSFにはfor文やwhile文が無いので再帰がループです。">①-5．TSFにはfor文やwhile文が無いので再帰がループです。</a></li>
+   <li><a href="index.html#grammar-6" title="①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。</a></li>
+   <li><a href="index.html#grammar-7" title="①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて。">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて。</a></li>
+   <li><a href="index.html#grammar-8" title="①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて。">①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて。</a></li>
+   <li><a href="index.html#grammar-9" title="①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。">①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。</a></li>
+   <li><a href="index.html#api-0" title="②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。">②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。</a></li>
+   <li><a href="index.html#api-1" title="③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。">③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。</a></li>
+   <li><a href="index.html#api-rpn" title="③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</a></li>
+   <li>④-0．「TSF_Forth.d」「TSF_Forth.py」の#関数カード一覧。</li>
+   <li>④-1．「TSF_Forth.d」「TSF_Forth.py」のAPI一覧。</li>
+   <li>⑤-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
+   <li>⑤-1．「TSF_Calc.d」「TSF_Calc.py」のAPI一覧。</li>
+   <li>⑤-2．「TSF_Time.d」「TSF_Time.py」の電卓フォーマットの解説。</li>
+   <li>⑥-0．「TSF_Time.d」「TSF_Time.py」の#関数カード一覧。</li>
+   <li>⑥-1．「TSF_Time.d」「TSF_Time.py」のAPI一覧。</li>
+   <li>⑥-2．「TSF_Time.d」「TSF_Time.py」の日時フォーマットの解説。</li>
+   <li>⑦-0．「TSF_Urlpath.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+   <li>⑦-1．「TSF_Urlpath.d」「TSF_Urlpath.py」のAPI一覧。</li>
+   <li>⑧-0．「TSF_Match.d」「TSF_Match.py」の#関数カード一覧。</li>
+   <li>⑧-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
+   <li>⑨-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
+   <li>⑨-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
+   <li><a href="index.html#faq-0" title="⑩-0．「TSF」とIoモジュールのＦＡＱ。">⑩-0．「TSF」とIoモジュールのＦＡＱ。</a></li>
+   <li><a href="#faq-1" title="⑩-1．ForthモジュールのＦＡＱ。">⑩-1．ForthモジュールのＦＡＱ。</a></li>
+   <li><a href="#address-0" title="⑪-0．作者について、例えば連絡先。">⑪-0．作者について、例えば連絡先。</a></li>
+  </ul>
+ </section>
+ <aside class="modpages"><nav>
+    <ul class="modpages_li">
+   <li><a href="index.html">TSF+TSF_Io(index.html)</a></li>
+   <li>TSF_Forth(forth.html)</li>
+   <li>TSF_Calc(calc.html)</li>
+   <li>TSF_Time(time.html)</li>
+   <li>TSF_Urlpath(urlpath.html)</li>
+   <li>TSF_Match(match.html)</li>
+   <li>TSF_Trans(trance.html)</li>
+  </ul>
+ </nav></aside><section>
+ <h2 id="address-0">⑪-0．作者について、例えば連絡先。</h2>
+ <p>
+  更新情報はGitHubやブログを確認してください。<br>
+ </p>
+ <dl><dt>ooblog/TSF2KEV(GitHub)</dt><dd><a href="https://github.com/ooblog/TSF2KEV" title="ooblog/TSF2KEV(GitHub)">https://github.com/ooblog/TSF2KEV</a></dd></dl>
+ <dl><dt>[TSF] - 大風呂ダ敷</dt><dd><a href="http://d.hatena.ne.jp/ooblog/searchdiary?word=*[TSF]" title="[TSF] - 大風呂ダ敷">http://d.hatena.ne.jp/ooblog/searchdiary?word=*[TSF]</a></dd></dl>
+ <dl><dt>[kanedit] - 大風呂ダ敷</dt><dd><a href="http://d.hatena.ne.jp/ooblog/searchdiary?word=*[kanedit]" title="[kanedit] - 大風呂ダ敷">http://d.hatena.ne.jp/ooblog/searchdiary?word=*[kanedit]</a></dd></dl>
+</section>
+
+<div class="gotop"><a href="#top">↑Top</a></div>
+<footer>
+ <p>site generator "<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/TSFdoc.tsf" title="TSF2KEV/TSFdoc.tsf at master · ooblog/TSF2KEV">TSFdoc.tsf</a>" repository：<a href="https://github.com/ooblog/TSF2KEV" title="ooblog/TSF2KEV: プログラミング言語「TSF_Tab-Separated-Forth」開発中。">https://github.com/ooblog/TSF2KEV</a></p>
+ <p class="ooblog">
+  #! -- Copyright (c) 2017 ooblog --<br>
+  #! License: MIT　<a href="https://github.com/ooblog/TSF2KEV/blob/master/LICENSE" title="TSF2KEV/LICENSE at master · ooblog/TSF2KEV">https://github.com/ooblog/TSF2KEV/blob/master/LICENSE</a><br>
+ </p>
+</footer>
+</body></html>
