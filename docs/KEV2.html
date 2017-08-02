@@ -6,23 +6,20 @@
 </head><body>
  <header><nav>
   <div class="yonmoji_root"><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">約四<br /></a><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">文字</a></div>
-  <span> &#62; <a href="https://ooblog.github.io/TSF.html" title="TSV - 「約四文字」(http://ooblog.github.io/)">TSF</a> &#62; <mark class="applogo"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2"></mark></span> <span class="yonmoji_sitemap"><a href="https://ooblog.github.io/404.html" title="404 - 「約四文字」(http://ooblog.github.io/)">「約四文字」のsitemap(404)</a></span>
+  <span> &#62; <a href="https://ooblog.github.io/TSF.html" title="TSV - 「約四文字」(http://ooblog.github.io/)">TSF</a> &#62; <mark class="applogo"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="「KEV」はVimスクリプトでできてる漢字直接入力です(単漢字検索含む)。"></mark></span> <span class="yonmoji_sitemap"><a href="404.html" title="TSF2KEVサイトマップ(404)">TSF2KEVサイトマップ(404)</a></span>
   <br class="yonmoji_both" />
  </div></header>
  <aside class="sidepages"><nav>
   <ul>
-   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV"></a></li>
-   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="TSFdoc"></a></li>
-   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2"></a></li>
+   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。"></a></li>
+   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="「TSFdoc」は「TSF2KEV」を用いたドキュメントジェネレーターです。"></a></li>
+   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="「KEV」はVimスクリプトでできてる漢字直接入力です(単漢字検索含む)。"></a></li>
   </ul>
-  <p>
-   <a href="404.html" title="404">「TSF2KEV」のsitemap(404)</a>
-  </p>
  </nav></aside>
  <section class="mainpages">
   <h1>「KEV」はVimスクリプトでできてる漢字直接入力です(単漢字検索含む)。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170802W230447(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170803R013926(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
@@ -34,7 +31,7 @@
    <li>②-0．漢字配列の解説。</li>
    <li>②-1．都道府県国名などの字引。</li>
    <li>③-0．「KEV2」のＦＡＱ。</li>
-   <li><a href="#address-0" title="④-0．作者について、例えば連絡先。">④-0．作者について、例えば連絡先。</a></li>
+   <li><a href="#address-0" title="④-0．作者について、例えば連絡先">④-0．作者について、例えば連絡先</a></li>
   </ul>
  </section>
  <section>
@@ -45,7 +42,7 @@
    <dl><dt>MITライセンスを1行1行読んでいく | プログラミング | POSTD</dt><dd><a href="http://postd.cc/mit-license-line-by-line/" title="MITライセンスを1行1行読んでいく | プログラミング | POSTD">http://postd.cc/mit-license-line-by-line/</a></dd></dl>
  </section>
  <section>
-  <h2 id="License-0">⓪-1．動作環境</h2>
+  <h2 id="License-1">⓪-1．動作環境</h2>
   <p>
   「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および<br>
   「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。<br> 
@@ -71,7 +68,7 @@
    <pre><code>
    syntax on
    au BufRead,BufNewFile *.tsf set filetype=tsf
-   autocmd BufNewFile,BufRead *.tsf nnoremap &lt;F5&gt; :!TSF %&lt;CR&gt;
+   autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
    command KEV2tsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
    </code></pre>
   <p>
@@ -89,7 +86,7 @@
    辞書の内容が正しい事なんて保証されないので注意。謝罪も賠償も配慮も便宜も忖度もありません。<br>
   </p>
  </section><section>
- <h2 id="address-0">④-0．作者について、例えば連絡先。</h2>
+ <h2 id="address-0">④-0．作者について、例えば連絡先</h2>
  <p>
   更新情報はGitHubやブログを確認してください。<br>
  </p>

@@ -6,43 +6,39 @@
 </head><body>
  <header><nav>
   <div class="yonmoji_root"><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">約四<br /></a><a href="https://ooblog.github.io/" rel="publisher" title="「約四文字」(http://ooblog.github.io/)">文字</a></div>
-  <span> &#62; <a href="https://ooblog.github.io/TSF.html" title="TSV - 「約四文字」(http://ooblog.github.io/)">TSF</a> &#62; <mark class="applogo"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV"></mark></span> <span class="yonmoji_sitemap"><a href="https://ooblog.github.io/404.html" title="404 - 「約四文字」(http://ooblog.github.io/)">「約四文字」のsitemap(404)</a></span>
+  <span> &#62; <a href="https://ooblog.github.io/TSF.html" title="TSV - 「約四文字」(http://ooblog.github.io/)">TSF</a> &#62; <mark class="applogo"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。"></mark></span> <span class="yonmoji_sitemap"><a href="404.html" title="TSF2KEVサイトマップ(404)">TSF2KEVサイトマップ(404)</a></span>
   <br class="yonmoji_both" />
  </div></header>
  <aside class="sidepages"><nav>
   <ul>
-   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="TSF2KEV"></a></li>
-   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="TSFdoc"></a></li>
-   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="KEV2"></a></li>
+   <li><a href="index.html"><img src="TSF2KEV_icon.png" width="48" height="48" alt="TSF2KEV" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。"></a></li>
+   <li><a href="TSFdoc.html"><img src="TSFdoc_icon.png" width="48" height="48" alt="TSFdoc" title="「TSFdoc」は「TSF2KEV」を用いたドキュメントジェネレーターです。"></a></li>
+   <li><a href="KEV2.html"><img src="KEV2_icon.png" width="48" height="48" alt="KEV2" title="「KEV」はVimスクリプトでできてる漢字直接入力です(単漢字検索含む)。"></a></li>
   </ul>
-  <p>
-   <a href="404.html" title="404">「TSF2KEV」のsitemap(404)</a>
-  </p>
  </nav></aside>
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170802W230447(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170803R013926(執筆途中です)<br>
   </p>  <ul>
-   <li><a href="#License-0" title="⓪-0．ライセンスの解説など">⓪-0．ライセンスの解説など</a></li>
-   <li><a href="#License-1" title="⓪-1．動作環境">⓪-1．動作環境</a></li>
-   <li><a href="#License-2" title="⓪-2．インストール/アンインストール＆セットアップ">⓪-2．インストール/アンインストール＆セットアップ</a></li>
-   <li><a href="#License-3" title="⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン</a></li>
-   <li><a href="#grammar-0" title="①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。">①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。</a></li>
-   <li><a href="#grammar-1" title="①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。">①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。</a></li>
-   <li><a href="#grammar-2" title="①-2．TSFには型どころか代入したり束縛したりするような変数自体が存在しません。スコープもありません。">①-2．TSFには型どころか代入したり束縛したりするような変数自体が存在しません。スコープもありません。</a></li>
-   <li><a href="#grammar-3" title="①-3．TSFには関数の返り値やreturn文が存在しません。return用にタプルを用意するなどの概念もありません。">①-3．TSFには関数の返り値やreturn文が存在しません。return用にタプルを用意するなどの概念もありません。</a></li>
-   <li><a href="#grammar-4" title="①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します。">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します。</a></li>
-   <li><a href="#grammar-5" title="①-5．TSFにはfor文やwhile文が無いので再帰がループです。">①-5．TSFにはfor文やwhile文が無いので再帰がループです。</a></li>
-   <li><a href="#grammar-6" title="①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。</a></li>
-   <li><a href="#grammar-7" title="①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて。">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて。</a></li>
-   <li><a href="#grammar-8" title="①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて。">①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて。</a></li>
-   <li><a href="#grammar-9" title="①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。">①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。</a></li>
-   <li><a href="#api-0" title="②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。">②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。</a></li>
-   <li><a href="#api-1" title="③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。">③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。</a></li>
-   <li><a href="#api-rpn" title="③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</a></li>
-   <li>④-0．「TSF_Forth.d」「TSF_Forth.py」の#関数カード一覧。</li>
-   <li>④-1．「TSF_Forth.d」「TSF_Forth.py」のAPI一覧。</li>
+   <li><a href="#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
+   <li><a href="#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
+   <li><a href="#License-2" title="⓪-2．インストール/アンインストール＆セットアップ(index.html)">⓪-2．インストール/アンインストール＆セットアップ(index.html)</a></li>
+   <li><a href="#License-3" title="⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン(index.html)">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン(index.html)</a></li>
+   <li><a href="#grammar-0" title="①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など(index.html)">①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など(index.html)</a></li>
+   <li><a href="#grammar-1" title="①-1．TSF構文には括弧が存在しません。式というか電卓では括弧が使えます(index.html)">①-1．TSF構文には括弧が存在しません。式というか電卓では括弧が使えます(index.html)</a></li>
+   <li><a href="#grammar-2" title="①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)">①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)</a></li>
+   <li><a href="#grammar-3" title="①-3．TSFには関数の返り値やreturn用タプル構造体を用意するなどの概念もありません(index.html)">①-3．TSFには関数の返り値やreturn用タプル構造体を用意するなどの概念もありません(index.html)</a></li>
+   <li><a href="#grammar-4" title="①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)</a></li>
+   <li><a href="#grammar-5" title="①-5．TSFにはfor文やwhile文が無いので再帰がループです(index.html)">①-5．TSFにはfor文やwhile文が無いので再帰がループです(index.html)</a></li>
+   <li><a href="#grammar-6" title="①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)</a></li>
+   <li><a href="#grammar-7" title="①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて(index.html)">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて(index.html)</a></li>
+   <li><a href="#grammar-8" title="①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて(index.html)">①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて(index.html)</a></li>
+   <li><a href="#grammar-9" title="①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて(index.html)">①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて(index.html)</a></li>
+   <li><a href="#‎shell-0" title="②-0．「TSF.d」「TSF.py」の関数一覧(index.html)">②-0．「TSF.d」「TSF.py」の関数一覧(index.html)</a></li>
+   <li><a href="#Io-0" title="③-0．「TSF_Io.d」「TSF_Io.py」の関数一覧(index.html)">③-0．「TSF_Io.d」「TSF_Io.py」の関数一覧(index.html)</a></li>
+   <li><a href="#Io-1" title="③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説(index.html)">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説(index.html)</a></li>
+   <li><a href="forth.html#forth-0" title="④-0．「TSF_Forth.d」「TSF_Forth.py」の関数一覧(forth.html)">④-0．「TSF_Forth.d」「TSF_Forth.py」の関数一覧(forth.html)</a></li>
    <li>⑤-0．「TSF_Calc.d」「TSF_Calc.py」の#関数カード一覧。</li>
    <li>⑤-1．「TSF_Calc.d」「TSF_Calc.py」のAPI一覧。</li>
    <li>⑤-2．「TSF_Time.d」「TSF_Time.py」の電卓フォーマットの解説。</li>
@@ -55,31 +51,20 @@
    <li>⑧-1．「TSF_Match.d」「TSF_Match.py」のAPI一覧。</li>
    <li>⑨-0．「TSF_Trans.d」「TSF_Urlpath.py」の#関数カード一覧。</li>
    <li>⑨-1．「TSF_Trans.d」「TSF_Urlpath.py」のAPI一覧。</li>
-   <li><a href="#faq-0" title="⑩-0．「TSF」とIoモジュールのＦＡＱ。">⑩-0．「TSF」とIoモジュールのＦＡＱ。</a></li>
-   <li><a href="forth.html#faq-1" title="⑩-1．ForthモジュールのＦＡＱ。">⑩-1．ForthモジュールのＦＡＱ。</a></li>
-   <li><a href="#address-0" title="⑪-0．作者について、例えば連絡先。">⑪-0．作者について、例えば連絡先。</a></li>
+   <li><a href="#faq-0" title="⑩-0．「TSF」とIoモジュールのＦＡＱ(index.html)">⑩-0．「TSF」とIoモジュールのＦＡＱ(index.html)</a></li>
+   <li><a href="forth.html#faq-1" title="⑩-1．ForthモジュールのＦＡＱ(forth.html)">⑩-1．ForthモジュールのＦＡＱ(forth.html)</a></li>
+   <li><a href="#address-0" title="⑪-0．作者について、例えば連絡先">⑪-0．作者について、例えば連絡先</a></li>
   </ul>
  </section>
- <aside class="modpages"><nav>
-    <ul class="modpages_li">
-   <li>TSF+TSF_Io(index.html)</li>
-   <li><a href="forth.html">TSF_Forth(forth.html)</a></li>
-   <li>TSF_Calc(calc.html)</li>
-   <li>TSF_Time(time.html)</li>
-   <li>TSF_Urlpath(urlpath.html)</li>
-   <li>TSF_Match(match.html)</li>
-   <li>TSF_Trans(trance.html)</li>
-  </ul>
- </nav></aside>
  <section>
-  <h2 id="License-0">⓪-0．ライセンスの解説など</h2>
+  <h2 id="License-0">⓪-0．ライセンスの解説など(index.html)</h2>
    <p>※「MIT License」準拠。<br></p>
    <dl><dt>MIT License - Choose a License</dt><dd><a href="http://choosealicense.com/licenses/mit/" title="MIT License - Choose a License">http://choosealicense.com/licenses/mit/</a></dd></dl>
    <dl><dt>licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN</dt><dd><a href="https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license" title="licenses/MIT_license - Open Source Group Japan Wiki - Open Source Group Japan - OSDN">https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license</a></dd></dl>
    <dl><dt>MITライセンスを1行1行読んでいく | プログラミング | POSTD</dt><dd><a href="http://postd.cc/mit-license-line-by-line/" title="MITライセンスを1行1行読んでいく | プログラミング | POSTD">http://postd.cc/mit-license-line-by-line/</a></dd></dl>
  </section>
  <section>
-  <h2 id="License-0">⓪-1．動作環境</h2>
+  <h2 id="License-1">⓪-1．動作環境(index.html)</h2>
   <p>
   「Tahrpup6.0.5,Python2.7.6,dmd2.074.0,vim.gtk7.4.52(vim-gtk)」および<br>
   「Wine1.7.18,Python3.4.4,dmd2.074.0,gvim8.0.134(KaoriYa)」で開発中。<br> 
@@ -96,7 +81,7 @@
   <dl><dt>Portable Wine</dt><dd><a href="http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html" title="Portable Wine">http://shinobar.server-on.net/puppy/opt/wine-portable-HELP_ja.html</a></dd></dl>
  </section>
  <section>
-  <h2 id="License-2">⓪-2．インストール/アンインストール＆セットアップ</h2>
+  <h2 id="License-2">⓪-2．インストール/アンインストール＆セットアップ(index.html)</h2>
    <p>
     gitでリポジトリ「https://github.com/ooblog/TSF2KEV.git」を「Clone」するか、<br>
     「https://github.com/ooblog/TSF2KEV/archive/master.zip」を「Download ZIP」して展開すると、<br>
@@ -110,7 +95,7 @@
    <pre><code>
    syntax on
    au BufRead,BufNewFile *.tsf set filetype=tsf
-   autocmd BufNewFile,BufRead *.tsf nnoremap &lt;F5&gt; :!TSF %&lt;CR&gt;
+   autocmd BufNewFile,BufRead *.tsf nnoremap {?&lt}F5{?&gt} :!TSF %{?&lt}CR{?&gt}
    command KEV2tsf  :source &#126;/TSF2KEV/KEV2/kanedit.vim
    </code></pre>
   <p>
@@ -130,7 +115,7 @@
   <dl><dt>シバン (Unix) - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)" title="シバン (Unix) - Wikipedia">https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)</a></dd></dl>
  </section>
  <section>
-  <h2 id="License-3">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン</h2>
+  <h2 id="License-3">⓪-3．その他現在わかっている不具合や今後の課題などソフト使用の補足ガイドライン(index.html)</h2>
   <p>
    未実装の#関数カードや#関数カード内の未実装な機能などが存在します。<br>
   </p>
@@ -144,7 +129,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-0">①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など。</h2>
+  <h2 id="grammar-0">①-0．TSFとForthとの差異(ワードをカードと呼ぶ)など(index.html)</h2>
   <p>
    <img src="cardimg/TSF176x250.png" width="176" height="250" class="TSFcard" alt="「TSF_Tab-Separated-Forth」カードサイズロゴ" title="「TSF_Tab-Separated-Forth」カードサイズロゴ">
    ForthやTSVのおさらいはwikipediaなどを軽く参考にしてください。<br>
@@ -169,7 +154,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-1">①-1．TSF構文には括弧が存在しません(式では括弧が使えます)。</h2>
+  <h2 id="grammar-1">①-1．TSF構文には括弧が存在しません。式というか電卓では括弧が使えます(index.html)</h2>
   <p>
    <img src="cardimg/TSFcard_shebang.png" width="176" height="250" class="TSFcard" alt="「#! /usr/bin/env TSF」カード" title="「#! /usr/bin/env TSF」カード">
    TSF構文で用いる記号はタブ文字「\t」による区切りと「#!」によるコメント(もしくは#!関数カード)と、スタック名末尾(もしくは一部カードに付与するラベル)の「:」ぐらいです。
@@ -195,7 +180,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-2">①-2．TSFには型どころか代入したり束縛したりするような変数自体が存在しません。スコープもありません。</h2>
+  <h2 id="grammar-2">①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)</h2>
   <p>
    TSFは文字列リストを格納する連想配列(デッキ)でメモリを管理する形になるので、整数も小数も分数もbool値も文字列(カード)になります。<br>
    #!関数カード(「#!TSF_calc」「#!TSF_RPN」など)の演算結果をthatスタックに積み上げるそれを変数に代入と呼ぶかは微妙です。<br>
@@ -208,7 +193,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-3">①-3．TSFには関数の返り値やreturn文が存在しません。return用にタプルを用意するなどの概念もありません。</h2>
+  <h2 id="grammar-3">①-3．TSFには関数の返り値やreturn用タプル構造体を用意するなどの概念もありません(index.html)</h2>
   <p>
    複数の値を受けとるために構造体やタプル型やクラスなどを用意する必要はありません。変数が存在しないように関数にも帰り値が存在しません。<br>
    #関数カードやスタックは値を文字列カードとしてthatスタックに積む(場合がある)だけです(便宜上「リターン」と呼称します)。<br>
@@ -216,7 +201,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-4">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します。</h2>
+  <h2 id="grammar-4">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)</h2>
   <p>
    TSFの実装ミスか何かでD言語やPythonレベルのエラーは起こりうると思いますが、TSFの#関数カード自体にエラーコードの概念は基本的にはありません。<br>
    例えば「#!TSF_readtext」でファイルの読込に失敗しても、文字列長0のファイルを読み込んだ扱いになります。<br>
@@ -229,7 +214,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-5">①-5．TSFにはfor文やwhile文が無いので再帰がループです。</h2>
+  <h2 id="grammar-5">①-5．TSFにはfor文やwhile文が無いので再帰がループです(index.html)</h2>
   <p>
    thisスタック(実行中)のスタック自身を呼ぶ場合はコールスタックに積まずに再度実行されるので、末尾再帰ループとなります。<br>
    同様にコールスタックに存在するスタック名を呼び出すとその階層までのスタック名が破棄されます(同名スタックはコールスタックに積まない)のでループとなります。<br>
@@ -237,7 +222,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-6">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います。</h2>
+  <h2 id="grammar-6">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)</h2>
   <p>
   単純な分岐なら「0Z~True:~False: #!TSF_calc #!TSF_this」のような感じで「#!TSF_calc」の比較演算子の計算結果にスタック名を選択する荒技があります(「#!TSF_RPN」では使用不可)。<br>
   case文の真似をする場合「switch cases: funcs: #!TSF_casesQON #!TSF_this」のような感じで「#!TSF_casesQON」などを用いてスタック名を選択する方法もあります。<br>
@@ -245,7 +230,7 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-7">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて。</h2>
+  <h2 id="grammar-7">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて(index.html)</h2>
   <dl><dt>thisスタック(実行中スタック)</dt>
   <dd>
    「this」は実行中のスタック。#関数カードであればthatスタックからカードを「ドロー(積み下ろし)」してthatスタックに「リターン(積み上げ)」したりする。<br>
@@ -270,7 +255,7 @@
   </dd></dl>
  </section>
  <section>
-  <h2 id="grammar-8">①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて。</h2>
+  <h2 id="grammar-8">①-8．カードシャッフル動詞4つの「p」peek,poke,pull,pushとドロー＆リターンについて(index.html)</h2>
   <p>
    スタック操作は『4つの「p」』と『4つの「th」』を組み合わせた動作が基本になります (正確にはppppと4thの間に「副詞」が入りますが副詞説明は次項)。<br>
   <p>
@@ -300,7 +285,7 @@
   </dd></dl>
  </section>
  <section>
-  <h2 id="grammar-9">①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて。</h2>
+  <h2 id="grammar-9">①-9．カード選択位置の副詞「FNCMVAQIRHL」と数量詞「SDO」ついて(index.html)</h2>
   <p>
    ppppと4thの間に入る「副詞」で操作するカードの位置を指示します(未実装な副詞仕様のつもりで説明します)。<br>
    pppp以外でもreplaces、alias、casesなどの動詞で同じような副詞が登場。<br>
@@ -375,9 +360,9 @@
   </dd></dl>
  </section>
  <section>
-  <h2 id="api-0">②-0．「TSF.d」「TSF.py」のAPI一覧(コマンド一覧含む)。</h2>
+  <h2 id="‎shell-0">②-0．「TSF.d」「TSF.py」の関数一覧(index.html)</h2>
   <p>
-   TSFコマンドのシェル部分です。TSFファイルを読み込んで実行するか内蔵の各種サンプルを実行する事ができます。<br>
+   TSFのコマンドシェル部分です。TSFファイルを読み込んで実行するか内蔵の各種サンプルを実行する事ができます。<br>
    またTSFファイルをD言語やPythonに変換(インタプリタを呼び出す形)する事も可能です。<br>
   </p>
    <dl><dt>void TSF_sample_help()</dt><dd>「sample_help.tsf」コマンド版「TSF --help」。<br>ファイル名などのパラメーターが無い場合にもコマンド一覧が表示される。<br></dd></dl>
@@ -394,7 +379,7 @@
    <dl><dt>void main(string[] sys_argvs)</dt><dd>D言語のmain関数。ここでは「TSF --dlang」「TSF --python」コマンドの解説。<br>「TSF --dlang helloworld.d helloworld.d」「TSF --python helloworld.tsf helloworld.py」のようにTSFをD言語やPythonに変換した風(インタプリタを呼び出す形)にすることができる。<br>D言語の場合「TSF_DMDcompile.sh helloworld.d」で実行バイナリも作成可能。<br></dd></dl>
  </section>
  <section>
-  <h2 id="api-1">③-0．「TSF_Io.d」「TSF_Io.py」のAPI一覧。</h2>
+  <h2 id="Io-0">③-0．「TSF_Io.d」「TSF_Io.py」の関数一覧(index.html)</h2>
   <p>
    TSFインタプリンタ以前の実装言語毎にprintf/writelnといった文字出力の仕様差(特にPythonの2と3)を吸収するモジュールです。<br>
    ファイル読み書きやコマンド受付などの文字コード処理やRPN電卓(テキストの数値変換)も用意してます。<br>
@@ -413,7 +398,7 @@
    <dl><dt>void TSF_Io_debug(string[] TSF_argvs)</dt><dd>「TSF/TSF_io.d」単体テスト風デバッグ関数。</dd></dl>
  </section>
  <section>
-  <h2 id="api-rpn">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説。</h2>
+  <h2 id="Io-1">③-1．「TSF_Io.d」「TSF_Io.py」のRPN電卓の解説(index.html)</h2>
   <p>
    RPN電卓は「TSF --RPN "1,2+"」のようにコマンド上から試す事ができます。<br>
    RPNでない方の電卓は「TSF --calc "1+2"」と詳細は「TSF_Calc(calc.html)」で説明予定です。<br>
@@ -510,7 +495,7 @@
   </dd></dl>
  </section>
  <section>
-  <h2 id="faq-0">⑩-0．「TSF」とIoモジュールのＦＡＱ。</h2>
+  <h2 id="faq-0">⑩-0．「TSF」とIoモジュールのＦＡＱ(index.html)</h2>
   <dl><dt>
    Ｑ．タブ追加してインデント調整したら動かなくなったり暴走したりするんですけど？<br>
   </dt><dd>
@@ -551,7 +536,7 @@
   </ul>
  </nav></aside>
 <section>
- <h2 id="address-0">⑪-0．作者について、例えば連絡先。</h2>
+ <h2 id="address-0">⑪-0．作者について、例えば連絡先</h2>
  <p>
   更新情報はGitHubやブログを確認してください。<br>
  </p>
