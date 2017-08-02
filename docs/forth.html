@@ -19,7 +19,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170803R013926(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170803R053146(執筆途中です)<br>
   </p>  <ul>
    <li><a href="index.html#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
    <li><a href="index.html#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
@@ -59,7 +59,8 @@
  <section>
   <h2 id="forth-0">④-0．「TSF_Forth.d」「TSF_Forth.py」の関数一覧(forth.html)</h2>
   <p>
-   「TSF_Forth.d」「TSF_Forth.py」の#!関数カード一覧。<br>
+  TSFインタプリンタ実行モジュールです。<br>
+  テキストファイル操作やRPN電卓などTSF_Io関連と、PPPPスタック操作が中心です。<br>
   </p>
    <dl><dt>string TSF_Forth_1ststack()</dt><dd>最初のスタック名(TSFAPI)。</dd></dl>
    <dl><dt>string TSF_Forth_branchID()</dt><dd>TSFブランチ名(TSFAPI)。</dd></dl>
@@ -192,12 +193,12 @@
    <dl><dt>string TSF_Forth_swapCA()</dt><dd>カードAとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardB,cardC]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_swapCB()</dt><dd>カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardC,cardA]リターン</dd></dl>
    <dl><dt>string TSF_Forth_swapAA()</dt><dd>カードAをカードCの位置に沈下してカードBCを浮上。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardC,cardB]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_swapCC():    //#カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_swapCC()</dt><dd>カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。</dd></dl>
    <dl><dt>void TSF_Forth_clone(string TSF_clone,string TSF_the)</dt><dd>スタックを複製する。(TSFAPI)</dd></dl>
-   <dl><dt>string TSF_Forth_clonethe():    //#TSF_doc:指定スタックを複製する。2枚[clone,the]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_clonethis():    //#TSF_doc:実行中スタックを複製する。2枚[clone]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_clonethat():    //TSF_doc:積込先スタックを複製する。2枚[clone]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_clonethey():    //スタック名一覧を複製する。2枚[clone]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_clonethe()</dt><dd>指定スタックを複製する。2枚[clone,the]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_clonethis()</dt><dd>実行中スタックを複製する。2枚[clone]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_clonethat()</dt><dd>積込先スタックを複製する。2枚[clone]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_clonethey()</dt><dd>スタック名一覧を複製する。2枚[clone]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_readtext()</dt><dd>ファイル名のスタックにテキストを読み込む。1枚[path]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_mergethe()</dt><dd>テキストをTSFとして読み込む。1枚[merge]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_publishthe()</dt><dd>指定スタックをテキスト化。2枚[path,the]ドロー。</dd></dl>

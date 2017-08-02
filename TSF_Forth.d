@@ -1132,7 +1132,7 @@ string TSF_Forth_swapAA(){    //#TSFdoc:カードAをカードCの位置に沈�
     return "";
 }
 
-string TSF_Forth_swapCC(){    //#カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。
+string TSF_Forth_swapCC(){    //#TSFdoc:カードCをカードAの位置に浮上してカードBCを沈下。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardA,cardC]リターン。
     string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();  string TSF_swapC=TSF_Forth_drawthe();
     TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapB);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapA);  TSF_Forth_return(TSF_Forth_drawthat(),TSF_swapC);
     return "";
@@ -1150,23 +1150,23 @@ void TSF_Forth_clone(string TSF_clone,string TSF_the){    //#TSFdoc:スタック
     }
 }
 
-string TSF_Forth_clonethe(){    //#TSF_doc:指定スタックを複製する。2枚[clone,the]ドロー。
+string TSF_Forth_clonethe(){    //#TSFdoc:指定スタックを複製する。2枚[clone,the]ドロー。
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_the);
     return "";
 }
 
-string TSF_Forth_clonethis(){    //#TSF_doc:実行中スタックを複製する。2枚[clone]ドロー。
+string TSF_Forth_clonethis(){    //#TSFdoc:実行中スタックを複製する。2枚[clone]ドロー。
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthis());
     return "";
 }
 
-string TSF_Forth_clonethat(){    //TSF_doc:積込先スタックを複製する。2枚[clone]ドロー。
+string TSF_Forth_clonethat(){    //#TSFdoc:積込先スタックを複製する。2枚[clone]ドロー。
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthat());
     return "";
 }
 
-string TSF_Forth_clonethey(){    //スタック名一覧を複製する。2枚[clone]ドロー。
+string TSF_Forth_clonethey(){    //#TSFdoc:スタック名一覧を複製する。2枚[clone]ドロー。
     TSF_stackD[TSF_Forth_drawthe()]=TSF_stackO.dup;
     return "";
 }

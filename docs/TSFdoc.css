@@ -53,6 +53,7 @@ section,aside,article{
   border: 2px black solid;
   padding: 1rem;
   padding-left: 2rem;
+  padding-right: 2rem;
 }
 input.yonmoji_entry{
   border: solid 1px orange;
@@ -167,6 +168,7 @@ dd{
   margin-left: 15rem;
  }
 h1{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
+h1.yakuyon{ font-size: 1.6rem; margin: 1rem 0.5rem 0.5rem;  margin-left: 0.5rem; }
 h2{ font-size: 1.5rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
 h3{ font-size: 1.4rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }
 h4{ font-size: 1.3rem; margin: 1rem 0.5rem 0.5rem;  margin-left: -1rem; }

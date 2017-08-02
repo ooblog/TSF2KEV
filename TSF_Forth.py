@@ -953,20 +953,20 @@ def TSF_Forth_clone(TSF_clone,TSF_the):    #TSFdoc:スタックを複製する�
     else:
         TSF_stackD[TSF_clone]=[]
 
-def TSF_Forth_clonethe():    #TSF_doc:指定スタックを複製する。2枚[clone,the]ドロー。
+def TSF_Forth_clonethe():    #TSFdoc:指定スタックを複製する。2枚[clone,the]ドロー。
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_the)
     return ""
 
-def TSF_Forth_clonethis():    #TSF_doc:実行中スタックを複製する。2枚[clone]ドロー。
+def TSF_Forth_clonethis():    #TSFdoc:実行中スタックを複製する。2枚[clone]ドロー。
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthis())
     return ""
 
-def TSF_Forth_clonethat():    #TSF_doc:積込先スタックを複製する。2枚[clone]ドロー。
+def TSF_Forth_clonethat():    #TSFdoc:積込先スタックを複製する。2枚[clone]ドロー。
     TSF_Forth_clone(TSF_Forth_drawthe(),TSF_Forth_drawthat())
     return ""
 
-def TSF_Forth_clonethey():    #TSF_doc:スタック名一覧を複製する。2枚[clone]ドロー。
+def TSF_Forth_clonethey():    #TSFdoc:スタック名一覧を複製する。2枚[clone]ドロー。
     TSF_stackD[TSF_Forth_drawthe()]=[TSF_card for TSF_card in TSF_stackO]
     return ""
 

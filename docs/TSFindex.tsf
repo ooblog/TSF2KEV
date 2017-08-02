@@ -615,7 +615,8 @@ TSFdocs_tags:
 	 <section>
 	  <h2 id="forth-0">{?TSFforth00title}</h2>
 	  <p>
-	   「TSF_Forth.d」「TSF_Forth.py」の#!関数カード一覧。<br>
+	  TSFインタプリンタ実行モジュールです。<br>
+	  テキストファイル操作やRPN電卓などTSF_Io関連と、PPPPスタック操作が中心です。<br>
 	  </p>{@TSF_Forth}
 	 </section>
 	 <section>
