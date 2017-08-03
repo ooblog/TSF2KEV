@@ -30,12 +30,12 @@ regexPython_txt:
 regex_D:
 	regexD_reg:	regexD_txt:	#!TSF_replacesRSN
 regexD_reg:
-	^void	^long\x5b\x5d	^long	^real\x5b\x5d	^real	^string\x5b\x5d	^string
-	^(?!def).+$	^\n	def 	@NL	^@dddt	$	\)\{
+	^void	^long\[\]	^long	^real\[\]	^real	^string\[\]	^string
+	^(?!def).+$	^(?!.*(\)\{)).*$	^\n	def 	@NL	^@dddt	$	\)\{
 	@DLDT	:[ /]+#[a-zA-Z]+:	@dddt
 regexD_txt:
 	def void	def long[]	def long	def real[]	def real	def string[]	def string
-			@NL@DLDT	@dddt{?NL}		@dddt	):
+				@NL@DLDT	@dddt{?NL}		@dddt	):
 	   <dl><dt>	</dt><dd>	</dd></dl>
 regex_none:
 	#!TSF_pullFthat

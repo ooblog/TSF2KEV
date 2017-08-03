@@ -19,7 +19,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170803R053146(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170804F005019(執筆途中です)<br>
   </p>  <ul>
    <li><a href="index.html#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
    <li><a href="index.html#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
@@ -68,7 +68,6 @@
    <dl><dt>string TSF_Forth_foolangID()</dt><dd>TSF実装言語(TSFAPI)。</dd></dl>
    <dl><dt>void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO)</dt><dd>関数カードに基本的な命令を追加する。(TSFAPI)</dd></dl>
    <dl><dt>string TSF_Forth_fin()</dt><dd>TSF終了時のオプションを指定する。0枚[]ドロー。</dd></dl>
-   <dl><dt>string[] TSF_runagainN=[""];</dd></dl>
    <dl><dt>string TSF_Forth_runagain()</dt><dd>TSFを終了せず、次のTSFを読み込んで実行。1枚[tsf]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_runagainN()</dt><dd>TSFを終了せず、次のTSFを読み込んでパラメータも付けて実行。カード枚数+1枚[cardN…cardA,N]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_countmax()</dt><dd>TSFスタックのカード数え上げ枚数の上限を指定。1枚[errmsg]ドロー。</dd></dl>
@@ -211,20 +210,11 @@
    <dl><dt>string TSF_Forth_grammar()</dt><dd>TSFの文法管理番号を確認する。0枚[]ドローして1枚[lang]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_foolang()</dt><dd>TSFの実装言語を確認する。0枚[]ドローして1枚[lang]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_mainfile()</dt><dd>TSFの実装ファイルを確認する。0枚[]ドローして1枚[lang]リターン。</dd></dl>
-   <dl><dt>string[] TSF_mainandargvs=null;</dd></dl>
-   <dl><dt>string function()[string] TSF_cardD=null;</dd></dl>
-   <dl><dt>string[] [string] TSF_stackD=null;</dd></dl>
-   <dl><dt>long[string] TSF_callptrD=null;</dd></dl>
-   <dl><dt>string[] TSF_cardO=[],TSF_stackO=[],TSF_styleO=[],TSF_callptrO=[];</dd></dl>
-   <dl><dt>string TSF_stackthis=TSF_Forth_1ststack(),TSF_stackthat=TSF_Forth_1ststack();</dd></dl>
-   <dl><dt>long TSF_cardscount=0;</dd></dl>
    <dl><dt>void TSF_Forth_initTSF(string[] TSF_sysargvs,void function(ref string function()[string],ref string[])[] TSF_addcalls)</dt><dd>スタックやカードなどをまとめて初期化する(TSFAPI)。</dd></dl>
-   <dl><dt>string[] TSF_importlist=null;</dd></dl>
    <dl><dt>string[] TSF_Forth_importlist(...)</dt><dd>モジュール一覧を管理する(TSFAPI)。</dd></dl>
    <dl><dt>void TSF_Forth_setTSF(string TSF_the, ...)</dt><dd>スタックやカードなどをまとめて初期化する(TSFAPI)。</dd></dl>
    <dl><dt>string TSF_Forth_loadtext(string TSF_the,string TSF_path)</dt><dd>スタックにテキストファイルを読み込む。(TSFAPI)</dd></dl>
    <dl><dt>void TSF_Forth_merge(string TSF_path,string[] TSF_ESCstack=[], ...)</dt><dd>スタック内のテキストをTSFとして読み込む。(TSFAPI)</dd></dl>
-   <dl><dt>long TSF_Forth_stackMAX=256;</dd></dl>
    <dl><dt>string TSF_Forth_run(...)</dt><dd>TSFデッキを走らせる。</dd></dl>
    <dl><dt>string TSF_Forth_view(string TSF_the,bool TSF_view_io, ...)</dt><dd>スタックの内容をテキスト表示(TSFAPI)。</dd></dl>
    <dl><dt>string TSF_Forth_draw(string TSF_the)</dt><dd>スタックから1枚ドロー。(TSFAPI)</dd></dl>
@@ -233,12 +223,10 @@
    <dl><dt>string TSF_Forth_drawthat(...)</dt><dd>thatスタックの取得(thatから0枚ドロー)。(TSFAPI)</dd></dl>
    <dl><dt>void TSF_Forth_return(string TSF_the,string TSF_card)</dt><dd>theスタックに1枚リターン。(TSFAPI)</dd></dl>
    <dl><dt>string[] TSF_Forth_mainandargvs(...)</dt><dd>argvsの取得。(TSFAPI)</dd></dl>
-   <dl><dt>string TSF_mainfilepath="";</dd></dl>
    <dl><dt>string TSF_Forth_mainfilepath(...)</dt><dd>実行ファイル名を設定・取得(TSFAPI)。</dd></dl>
    <dl><dt>string[] [string] TSF_Forth_stackD()</dt><dd>TSF_stackDの取得。(TSFAPI)</dd></dl>
    <dl><dt>string[] TSF_Forth_stackO(...)</dt><dd>TSF_stackOの取得。(TSFAPI)</dd></dl>
    <dl><dt>string TSF_Forth_samplerun(...)</dt><dd>TSF実行。ソース表示やログ保存機能付き。</dd></dl>
-   <dl><dt>void function(ref string function()[string],ref string[])[] TSF_Initcalldebug=[&TSF_Forth_Initcards];</dd></dl>
    <dl><dt>void TSF_Forth_debug(string[] TSF_sysargvs)</dt><dd>「TSF_Forth」単体テスト風デバッグ。</dd></dl>
  </section>
  <section>
