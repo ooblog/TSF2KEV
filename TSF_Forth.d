@@ -33,7 +33,7 @@ string TSF_Forth_foolangID(){    //#TSFdoc:TSF実装言語(TSFAPI)。
     return "D-lang";
 }
 
-Random TSF_PPPP_Random;
+Mt19937 TSF_PPPP_Random;
 void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] TSF_cardsO){    //#TSFdoc:関数カードに基本的な命令を追加する。(TSFAPI)
     TSF_Forth_importlist("TSF_Forth");
     string function()[string] TSF_Forth_cards=[
@@ -150,6 +150,22 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         "#!TSF_pushVthis":&TSF_Forth_pushVthis, "#実行中スタック逆択差込":&TSF_Forth_pushVthis,
         "#!TSF_pushVthat":&TSF_Forth_pushVthat, "#積込先スタック逆択差込":&TSF_Forth_pushVthat,
         "#!TSF_pushVthey":&TSF_Forth_pushVthey, "#スタック一覧逆択差込":&TSF_Forth_pushVthey,
+        "#!TSF_peekAthe":&TSF_Forth_peekAthe, "#指定スタック乱択読込":&TSF_Forth_peekAthe,
+        "#!TSF_peekAthis":&TSF_Forth_peekAthis, "#実行中スタック乱択読込":&TSF_Forth_peekAthis,
+        "#!TSF_peekAthat":&TSF_Forth_peekAthat, "#積込先スタック乱択読込":&TSF_Forth_peekAthat,
+        "#!TSF_peekAthey":&TSF_Forth_peekAthey, "#スタック一覧乱択読込":&TSF_Forth_peekAthey,
+        "#!TSF_pokeAthe":&TSF_Forth_pokeAthe, "#指定スタック乱択上書":&TSF_Forth_pokeAthe,
+        "#!TSF_pokeAthis":&TSF_Forth_pokeAthis, "#実行中スタック乱択上書":&TSF_Forth_pokeAthis,
+        "#!TSF_pokeAthat":&TSF_Forth_pokeAthat, "#積込先スタック乱択上書":&TSF_Forth_pokeAthat,
+        "#!TSF_pokeAthey":&TSF_Forth_pokeAthey, "#スタック一覧乱択上書":&TSF_Forth_pokeAthey,
+        "#!TSF_pullAthe":&TSF_Forth_pullAthe, "#指定スタック乱択引抜":&TSF_Forth_pullAthe,
+        "#!TSF_pullAthis":&TSF_Forth_pullAthis, "#実行中スタック乱択引抜":&TSF_Forth_pullAthis,
+        "#!TSF_pullAthat":&TSF_Forth_pullAthat, "#積込先スタック乱択引抜":&TSF_Forth_pullAthat,
+        "#!TSF_pullAthey":&TSF_Forth_pullAthey, "#スタック一覧乱択引抜":&TSF_Forth_pullAthey,
+        "#!TSF_pushAthe":&TSF_Forth_pushAthe, "#指定スタック乱択差込":&TSF_Forth_pushAthe,
+        "#!TSF_pushAthis":&TSF_Forth_pushAthis, "#実行中スタック乱択差込":&TSF_Forth_pushAthis,
+        "#!TSF_pushAthat":&TSF_Forth_pushAthat, "#積込先スタック乱択差込":&TSF_Forth_pushAthat,
+        "#!TSF_pushAthey":&TSF_Forth_pushAthey, "#スタック一覧乱択差込":&TSF_Forth_pushAthey,
         "#!TSF_swapBA":&TSF_Forth_swapBA, "#カードBA交換":&TSF_Forth_swapBA,
         "#!TSF_swapCA":&TSF_Forth_swapCA, "#カードCA交換":&TSF_Forth_swapCA,
         "#!TSF_swapCB":&TSF_Forth_swapCB, "#カードCB交換":&TSF_Forth_swapCB,
@@ -176,7 +192,8 @@ void TSF_Forth_Initcards(ref string function()[string] TSF_cardsD,ref string[] T
         if( cardkey !in TSF_cardsD ){
             TSF_cardsD[cardkey]=cardfunc; TSF_cardsO~=[cardkey];
         }
-    } 
+    }
+    TSF_PPPP_Random.seed(unpredictableSeed());
 }
 
 string TSF_Forth_fin(){    //#TSFdoc:TSF終了時のオプションを指定する。0枚[]ドロー。
@@ -1107,6 +1124,87 @@ string TSF_Forth_pushVthey(){    //#TSFdoc:指定スタックからカードを�
     return "";
 }
 
+string TSF_Forth_peekAthe(){    //#TSFdoc:指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_peekAthis(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthis();
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_peekAthat(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthat();
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_peekAthey(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+    string TSF_the="";
+    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_pokeAthe(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pokeAthis(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+    string TSF_the=TSF_Forth_drawthis();
+    TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pokeAthat(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+    string TSF_the=TSF_Forth_drawthat();
+    TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pokeAthey(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+    string TSF_the="";
+    TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pullAthe(){    //#TSFdoc:指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_pullAthis(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthis();
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_pullAthat(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+    string TSF_the=TSF_Forth_drawthat();
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_pullAthey(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+    string TSF_the="";
+    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
+    return "";
+}
+string TSF_Forth_pushAthe(){    //#TSFdoc:指定スタックからカードを乱択で差込。2枚[push,the]ドロー。
+    string TSF_the=TSF_Forth_drawthe();
+    TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pushAthis(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+    string TSF_the=TSF_Forth_drawthis();
+    TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pushAthat(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+    string TSF_the=TSF_Forth_drawthat();
+    TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+string TSF_Forth_pushAthey(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+    string TSF_the="";
+    TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
+    return "";
+}
+
 
 string TSF_Forth_swapBA(){    //#TSFdoc:カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。
     string TSF_swapA=TSF_Forth_drawthe();  string TSF_swapB=TSF_Forth_drawthe();
@@ -1569,7 +1667,7 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_setTSF("adverb:",join(["F","N","C","M","V","A","Q","I","R","H","L"],"\t"),'O');
     TSF_Forth_setTSF("pronoun:",join(["this","that","the","they"],"\t"),'O');
     TSF_Forth_setTSF("shufflestacks:",join([
-        "pushV:","pullV:","pokeV:","peekV:","pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
+        "pushA:","pullA:","pokeA:","peekA:","pushV:","pullV:","pokeV:","peekV:","pushM:","pullM:","pokeM:","peekM:","pushC:","pullC:","pokeC:","peekC:","pushN:","pullN:","pokeN:","peekN:","pushF:","pullF:","pokeF:","peekF:"],"\t"),'T');
     TSF_Forth_setTSF("peekF:",join(["TSF_peekFthe","adverbclone:","#!TSF_peekFthe"],"\t"),'O');
     TSF_Forth_setTSF("pokeF:",join(["TSF_pokeFthe","$poke","adverbclone:","#!TSF_pokeFthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullF:",join(["TSF_pullFthe","adverbclone:","#!TSF_pullFthe"],"\t"),'O');
@@ -1590,6 +1688,10 @@ void TSF_Forth_debug(string[] TSF_sysargvs){    //#TSFdoc:「TSF_Forth」単体�
     TSF_Forth_setTSF("pokeV:",join(["TSF_pokeVthe","$poke","adverbclone:","4","#!TSF_pokeVthe","$poke"],"\t"),'O');
     TSF_Forth_setTSF("pullV:",join(["TSF_pullVthe","adverbclone:","4","#!TSF_pullVthe"],"\t"),'O');
     TSF_Forth_setTSF("pushV:",join(["TSF_pushVthe","$push","adverbclone:","4","#!TSF_pushVthe","$push"],"\t"),'O');
+    TSF_Forth_setTSF("peekA:",join(["TSF_peekAthe","adverbclone:","#!TSF_peekAthe"],"\t"),'O');
+    TSF_Forth_setTSF("pokeA:",join(["TSF_pokeAthe","$poke","adverbclone:","#!TSF_pokeAthe","$poke"],"\t"),'O');
+    TSF_Forth_setTSF("pullA:",join(["TSF_pullAthe","adverbclone:","#!TSF_pullAthe"],"\t"),'O');
+    TSF_Forth_setTSF("pushA:",join(["TSF_pushAthe","$push","adverbclone:","#!TSF_pushAthe","$push"],"\t"),'O');
 
 //    TSF_debug_log=TSF_Forth_samplerun(__FILE__,true,TSF_debug_log);
     TSF_debug_log=TSF_Forth_samplerun(__FILE__,false,TSF_debug_log);

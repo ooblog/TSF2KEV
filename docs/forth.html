@@ -19,7 +19,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170804F005019(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170804F053753(執筆途中です)<br>
   </p>  <ul>
    <li><a href="index.html#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
    <li><a href="index.html#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
@@ -188,6 +188,22 @@
    <dl><dt>string TSF_Forth_pushVthis()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_pushVthat()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_pushVthey()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_peekAthe()</dt><dd>指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekAthis()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekAthat()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekAthey()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthe()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthis()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthat()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthey()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pullAthe()</dt><dd>指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullAthis()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullAthat()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullAthey()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pushAthe()</dt><dd>指定スタックからカードを乱択で差込。2枚[push,the]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushAthis()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushAthat()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushAthey()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_swapBA()</dt><dd>カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_swapCA()</dt><dd>カードAとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardB,cardC]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_swapCB()</dt><dd>カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardC,cardA]リターン</dd></dl>
@@ -232,10 +248,15 @@
  <section>
   <h2 id="faq-1">⑩-1．ForthモジュールのＦＡＱ(forth.html)</h2>
   <dl><dt>
-   Ｑ．関数一覧に関数じゃない行も混じってる気が。<br>
+   Ｑ．同じような関数(PeekPokePullPush系統)はまとめられないのですか？<br>
   </dt><dd>
-   Ａ．「docs/TSFindex.tsf」のインポート正規表現修正で対応予定。<br>
+   Ａ．同じようでいて違う関数なので大量発生してます。特に「F」系統でドローしないリターンされない系の例外が存在します。<br>
+  </dd></dl>
+  <dl><dt>
+   Ｑ．D言語ならmixin使えばいいので「code_PPPP.tsf」いらなくない説。<br>
   </dt><dd>
+   Ａ．D言語じゃない言語ではコンパイル時ソース生成ができない場合があるので別途ソースコード生成プログラムは必要。<br>
+  </dd></dl>
  </section>
  <aside class="modpages"><nav>
     <ul class="modpages_li">

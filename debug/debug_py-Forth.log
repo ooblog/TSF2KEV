@@ -9,7 +9,7 @@ verb:	peek	poke	push	pull
 adverb:	F	N	C	M	V	A	Q	I	R	H	L
 pronoun:	this	that	the	they
 shufflestacks:
-	pushV:	pullV:	pokeV:	peekV:	pushM:	pullM:	pokeM:	peekM:	pushC:	pullC:	pokeC:	peekC:	pushN:	pullN:	pokeN:	peekN:	pushF:	pullF:	pokeF:	peekF:
+	pushA:	pullA:	pokeA:	peekA:	pushV:	pullV:	pokeV:	peekV:	pushM:	pullM:	pokeM:	peekM:	pushC:	pullC:	pokeC:	peekC:	pushN:	pullN:	pokeN:	peekN:	pushF:	pullF:	pokeF:	peekF:
 peekF:	TSF_peekFthe	adverbclone:	#!TSF_peekFthe
 pokeF:	TSF_pokeFthe	$poke	adverbclone:	#!TSF_pokeFthe	$poke
 pullF:	TSF_pullFthe	adverbclone:	#!TSF_pullFthe
@@ -30,6 +30,10 @@ peekV:	TSF_peekVthe	adverbclone:	4	#!TSF_peekVthe
 pokeV:	TSF_pokeVthe	$poke	adverbclone:	4	#!TSF_pokeVthe	$poke
 pullV:	TSF_pullVthe	adverbclone:	4	#!TSF_pullVthe
 pushV:	TSF_pushVthe	$push	adverbclone:	4	#!TSF_pushVthe	$push
+peekA:	TSF_peekAthe	adverbclone:	#!TSF_peekAthe
+pokeA:	TSF_pokeAthe	$poke	adverbclone:	#!TSF_pokeAthe	$poke
+pullA:	TSF_pullAthe	adverbclone:	#!TSF_pullAthe
+pushA:	TSF_pushAthe	$push	adverbclone:	#!TSF_pushAthe	$push
 -- TSF_Forth.py run --
 「#TSF_peekFthe」「L」「F N C M V A Q I R H L」
 「#TSF_pokeFthe」「$poke」「F N C M V A Q I R H $poke」
@@ -51,3 +55,7 @@ pushV:	TSF_pushVthe	$push	adverbclone:	4	#!TSF_pushVthe	$push
 「#TSF_pokeVthe」「$poke」「F N C M V A $poke I R H L」
 「#TSF_pullVthe」「Q」「F N C M V A I R H L」
 「#TSF_pushVthe」「$push」「F N C M V A $push Q I R H L」
+「#TSF_peekAthe」「I」「F N C M V A Q I R H L」
+「#TSF_pokeAthe」「$poke」「F N $poke M V A Q I R H L」
+「#TSF_pullAthe」「H」「F N C M V A Q I R L」
+「#TSF_pushAthe」「$push」「F N C M V A Q I R $push H L」

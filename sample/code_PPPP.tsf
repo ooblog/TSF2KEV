@@ -103,19 +103,19 @@ peekA_d:
 	}
 pokeA_d:
 	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeA}
-	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    string TSF_the={drawth};
 	    TSF_Forth_poke(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
 	}
 pullA_d:
 	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullA}
-	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pushA_d:
 	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushA}
-	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
+	    string TSF_the={drawth};
 	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
 	}

@@ -622,10 +622,15 @@ TSFdocs_tags:
 	 <section>
 	  <h2 id="faq-1">{?TSFfaq01forth}</h2>
 	  <dl><dt>
-	   Ｑ．関数一覧に関数じゃない行も混じってる気が。<br>
+	   Ｑ．同じような関数(PeekPokePullPush系統)はまとめられないのですか？<br>
 	  </dt><dd>
-	   Ａ．「docs/TSFindex.tsf」のインポート正規表現修正で対応予定。<br>
+	   Ａ．同じようでいて違う関数なので大量発生してます。特に「F」系統でドローしないリターンされない系の例外が存在します。<br>
+	  </dd></dl>
+	  <dl><dt>
+	   Ｑ．D言語ならmixin使えばいいので「code_PPPP.tsf」いらなくない説。<br>
 	  </dt><dd>
+	   Ａ．D言語じゃない言語ではコンパイル時ソース生成ができない場合があるので別途ソースコード生成プログラムは必要。<br>
+	  </dd></dl>
 	 </section>
 	 <aside class="modpages"><nav>
 	  {?TSFpages}
