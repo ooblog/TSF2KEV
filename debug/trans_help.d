@@ -32,6 +32,7 @@ void main(string[] sys_argvs){
         "  --calender    \"@4y@0m@0dm@wdec@0h@0n@0s\"-> {calender}",
         "  --helloworld  \"Hello world  #!TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample"],"\t"),'N');
     TSF_Forth_setTSF("replace:",join([

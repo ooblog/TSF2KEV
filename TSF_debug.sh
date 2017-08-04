@@ -34,6 +34,10 @@ echo "--fizzbuzz"
 ./TSF.py --fizzbuzz > debug/debug_py-fizzbuzz.log
 ./TSF.d --fizzbuzz > debug/debug_d-fizzbuzz.log 
 
+echo "--zundoko"
+./TSF.py --zundoko > debug/debug_py-zundoko.log
+./TSF.d --zundoko > debug/debug_d-zundoko.log 
+
 echo "--99beer"
 ./TSF.py --99beer 99 > debug/debug_py-99beer.log
 ./TSF.d --99beer 99 > debug/debug_d-99beer.log 

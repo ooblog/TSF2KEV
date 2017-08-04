@@ -32,6 +32,7 @@ def TSF_sample_help():    #TSFdoc:「sample_help.tsf」コマンド版「TSF --h
         "  --calender    \"@4y@0m@0dm@wdec@0h@0n@0s\"-> {calender}",
         "  --helloworld  \"Hello world  #!TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
         ]),'N')
@@ -177,6 +178,25 @@ def TSF_sample_FizzBuzz():    #TSFdoc:「sample_fizzbuzz.tsf」コマンド版�
         "0","Fizz","Buzz","Fizz&Buzz"]),'T')
     TSF_Forth_samplerun("TSF_sample_FizzBuzz")
 
+def TSF_sample_zundoko():    #TSFdoc:「sample_zundoko.tsf」コマンド版「TSF --zundoko [4]」。<br>「zun zun zun zun doko」になるまで「zun」と「doko」をランダム表示。<br>
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
+        "#!TSF_argvs","#!TSF_pullFthat","ZDcount:","0","#!TSF_pokeNthe","ZDreset:","#!TSF_this","#!TSF_fin.","4"]),'T')
+    TSF_Forth_setTSF("ZDreset:","\t".join([
+        "0","ZDcount:","#!TSF_pokeFthe","ZunDoko:","#!TSF_this"]),'T')
+    TSF_Forth_setTSF("ZunDoko:","\t".join([
+        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#exit:","#!TSF_calc","#!TSF_this"]),'T')
+    TSF_Forth_setTSF("ZDjump:","\t".join([
+        "Zun:","Doko:"]),'T')
+    TSF_Forth_setTSF("Zun:","\t".join([
+        "Zun","#!TSF_echo","[ZDcount:1],1+","#!TSF_calc","ZDcount:","#!TSF_pokeFthe"]),'T')
+    TSF_Forth_setTSF("Doko:","\t".join([
+        "Doko","#!TSF_echo","[ZDcount:0]-[ZDcount:1]Z~VeronCho:~ZDreset:","#!TSF_calc","#!TSF_this"]),'T')
+    TSF_Forth_setTSF("VeronCho:","\t".join([
+        "VeronCho","#!TSF_echo","-1","ZDcount:","0","#!TSF_pokeNthe"]),'T')
+    TSF_Forth_setTSF("ZDcount:","\t".join([
+        "4","0"]),'T')
+    TSF_Forth_samplerun("TSF_sample_zundoko")
+
 def TSF_sample_99beer():    #TSFdoc:「sample_99beer.tsf」コマンド版「TSF --99bear [9]」。<br>99 Bottles of Beer(http://99-bottles-of-beer.net/lyrics.html)を出力する。長いので初期値は9に設定。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:","\t".join([
         "#!TSF_argvs","#!TSF_pullFthat","bottlessetup:","#!TSF_this","#!TSF_fin.","9"]),'T')
@@ -265,6 +285,8 @@ elif TSF_bootcommand in ["--calender","--time","--date"]:
     TSF_sample_calender()
 elif TSF_bootcommand in ["--fizz","--buzz","--fizzbuzz","--FizzBuzz"]:
     TSF_sample_FizzBuzz()
+elif TSF_bootcommand in ["--zun","--doko","--zundoko"]:
+    TSF_sample_zundoko()
 elif TSF_bootcommand in ["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"]:
     TSF_sample_99beer()
 elif TSF_bootcommand in ["--quine","--Quine"]:

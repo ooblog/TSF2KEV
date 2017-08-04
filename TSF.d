@@ -35,6 +35,7 @@ void TSF_sample_help(){    //#TSFdoc:「sample_help.tsf」コマンド版「TSF 
         "  --calender    \"@4y@0m@0dm@wdec@0h@0n@0s\"-> {calender}",
         "  --helloworld  \"Hello world  #!TSF_echo\" sample",
         "  --fizzbuzz    Fizz(#3) Buzz(#5) Fizz&Buzz(#15) sample",
+        "  --zundoko     Zun Zun Zun Zun Doko VeronCho sample",
         "  --99bear      99 Bottles of Beer 9 Bottles sample",
         "  --quine       quine (TSF,Python,D... selfsource) sample",
         ],"\t"),'N');
@@ -186,6 +187,26 @@ void TSF_sample_FizzBuzz(){    //#TSFdoc:「sample_fizzbuzz.tsf」コマンド�
     TSF_Forth_samplerun("TSF_sample_FizzBuzz");
 }
 
+void TSF_sample_zundoko(){    //#TSFdoc:「sample_zundoko.tsf」コマンド版「TSF --zundoko [4]」。<br>「zun zun zun zun doko」になるまで「zun」と「doko」をランダム表示。<br>
+    TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
+        "#!TSF_argvs","#!TSF_pullFthat","ZDcount:","0","#!TSF_pokeNthe","ZDreset:","#!TSF_this","#!TSF_fin.","4"],"\t"),'T');
+    TSF_Forth_setTSF("ZDreset:",join([
+        "0","ZDcount:","#!TSF_pokeFthe","ZunDoko:","#!TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("ZunDoko:",join([
+        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#exit:","#!TSF_calc","#!TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("ZDjump:",join([
+        "Zun:","Doko:"],"\t"),'T');
+    TSF_Forth_setTSF("Zun:",join([
+        "Zun","#!TSF_echo","[ZDcount:1],1+","#!TSF_calc","ZDcount:","#!TSF_pokeFthe"],"\t"),'T');
+    TSF_Forth_setTSF("Doko:",join([
+        "Doko","#!TSF_echo","[ZDcount:0]-[ZDcount:1]Z~VeronCho:~ZDreset:","#!TSF_calc","#!TSF_this"],"\t"),'T');
+    TSF_Forth_setTSF("VeronCho:",join([
+        "VeronCho","#!TSF_echo","-1","ZDcount:","0","#!TSF_pokeNthe"],"\t"),'T');
+    TSF_Forth_setTSF("ZDcount:",join([
+        "4","0"],"\t"),'T');
+    TSF_Forth_samplerun("TSF_sample_FizzBuzz");
+}
+
 void TSF_sample_99beer(){    //#TSFdoc:「sample_99beer.tsf」コマンド版「TSF --99bear [9]」。<br>99 Bottles of Beer(http://99-bottles-of-beer.net/lyrics.html)を出力する。長いので初期値は9に設定。
     TSF_Forth_setTSF("TSF_Tab-Separated-Forth:",join([
         "#!TSF_argvs","#!TSF_pullFthat","bottlessetup:","#!TSF_this","#!TSF_fin.","9"],"\t"),'T');
@@ -293,6 +314,9 @@ void main(string[] sys_argvs){    //#TSFdoc:D言語のmain関数。ここでは�
     }
     else if( count(["--fizz","--buzz","--fizzbuzz","--FizzBuzz"],TSF_bootcommand) ){
         TSF_sample_FizzBuzz();
+    }
+    else if( count(["--zun","--doko","--zundoko"],TSF_bootcommand) ){
+        TSF_sample_zundoko();
     }
     else if( count(["--99beer","--9beer","--beer99","--beer9","--beer","--99","--9"],TSF_bootcommand) ){
         TSF_sample_99beer();
