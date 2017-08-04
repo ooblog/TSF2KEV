@@ -184,7 +184,7 @@ def TSF_sample_zundoko():    #TSFdoc:「sample_zundoko.tsf」コマンド版「T
     TSF_Forth_setTSF("ZDreset:","\t".join([
         "0","ZDcount:","#!TSF_pokeFthe","ZunDoko:","#!TSF_this"]),'T')
     TSF_Forth_setTSF("ZunDoko:","\t".join([
-        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#exit:","#!TSF_calc","#!TSF_this"]),'T')
+        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#!exit:","#!TSF_calc","#!TSF_this"]),'T')
     TSF_Forth_setTSF("ZDjump:","\t".join([
         "Zun:","Doko:"]),'T')
     TSF_Forth_setTSF("Zun:","\t".join([

@@ -193,7 +193,7 @@ void TSF_sample_zundoko(){    //#TSFdoc:「sample_zundoko.tsf」コマンド版�
     TSF_Forth_setTSF("ZDreset:",join([
         "0","ZDcount:","#!TSF_pokeFthe","ZunDoko:","#!TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("ZunDoko:",join([
-        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#exit:","#!TSF_calc","#!TSF_this"],"\t"),'T');
+        "ZDjump:","#!TSF_peekAthe","#!TSF_this","[ZDcount:0]O~ZunDoko:~#!exit:","#!TSF_calc","#!TSF_this"],"\t"),'T');
     TSF_Forth_setTSF("ZDjump:",join([
         "Zun:","Doko:"],"\t"),'T');
     TSF_Forth_setTSF("Zun:",join([

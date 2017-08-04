@@ -4,7 +4,7 @@ TSF_Tab-Separated-Forth:
 ZDreset:
 	0	ZDcount:	#!TSF_pokeFthe	ZunDoko:	#!TSF_this
 ZunDoko:
-	ZDjump:	#!TSF_peekAthe	#!TSF_this	[ZDcount:0]O~ZunDoko:~#exit:	#!TSF_calc	#!TSF_this
+	ZDjump:	#!TSF_peekAthe	#!TSF_this	[ZDcount:0]O~ZunDoko:~#!exit:	#!TSF_calc	#!TSF_this
 ZDjump:
 	Zun:	Doko:
 Zun:
@@ -16,25 +16,7 @@ VeronCho:
 ZDcount:
 	4	0
 -- TSF_sample_zundoko run --
-Zun
 Doko
-Zun
-Doko
-Doko
-Zun
-Doko
-Zun
-Doko
-Doko
-Zun
-Zun
-Zun
-Doko
-Doko
-Doko
-Zun
-Zun
-Zun
 Doko
 Zun
 Doko
@@ -42,57 +24,6 @@ Doko
 Zun
 Doko
 Zun
-Doko
-Zun
-Doko
-Doko
-Zun
-Zun
-Doko
-Zun
-Zun
-Doko
-Zun
-Doko
-Doko
-Doko
-Zun
-Zun
-Zun
-Doko
-Doko
-Doko
-Doko
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Doko
-Zun
-Zun
-Zun
-Zun
-Zun
-Zun
-Doko
-Zun
-Zun
-Doko
-Doko
-Doko
-Zun
-Doko
-Doko
-Doko
-Zun
-Doko
-Doko
 Zun
 Doko
 Doko

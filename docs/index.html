@@ -19,7 +19,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170804F053753(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170805S081542(執筆途中です)<br>
   </p>  <ul>
    <li><a href="#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
    <li><a href="#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
@@ -29,7 +29,7 @@
    <li><a href="#grammar-1" title="①-1．TSF構文には括弧が存在しません。式というか電卓では括弧が使えます(index.html)">①-1．TSF構文には括弧が存在しません。式というか電卓では括弧が使えます(index.html)</a></li>
    <li><a href="#grammar-2" title="①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)">①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)</a></li>
    <li><a href="#grammar-3" title="①-3．TSFには関数の返り値やreturn用タプル構造体を用意するなどの概念もありません(index.html)">①-3．TSFには関数の返り値やreturn用タプル構造体を用意するなどの概念もありません(index.html)</a></li>
-   <li><a href="#grammar-4" title="①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)</a></li>
+   <li><a href="#grammar-4" title="①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は分母ゼロ「n|0」が発生します(index.html)">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は分母ゼロ「n|0」が発生します(index.html)</a></li>
    <li><a href="#grammar-5" title="①-5．TSFにはfor文やwhile文が無いので再帰がループです(index.html)">①-5．TSFにはfor文やwhile文が無いので再帰がループです(index.html)</a></li>
    <li><a href="#grammar-6" title="①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)</a></li>
    <li><a href="#grammar-7" title="①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて(index.html)">①-7．スタック代名詞4つの「th」this,that,the,theyとハウリングについて(index.html)</a></li>
@@ -182,7 +182,7 @@
  <section>
   <h2 id="grammar-2">①-2．TSFには型どころか代入や束縛するような変数自体が存在しません。スコープもありません(index.html)</h2>
   <p>
-   TSFは文字列リストを格納する連想配列(デッキ)でメモリを管理する形になるので、整数も小数も分数もbool値も文字列(カード)になります。<br>
+   TSFは文字列リストを格納する連想配列(デッキ)で管理する形になるので、整数も小数も分数も分母ゼロ「n|0」も文字列(カード)になります。<br>
    #!関数カード(「#!TSF_calc」「#!TSF_RPN」など)の演算結果をthatスタックに積み上げるそれを変数に代入と呼ぶかは微妙です。<br>
    「#!TSF_calc」でスタックをリスト(配列)に見立てる場合には「#!TSF_join[]」を経由せずに式に組み込む事は可能です。<br>
   </p>
@@ -201,16 +201,23 @@
   </p>
  </section>
  <section>
-  <h2 id="grammar-4">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は「n|0」が発生します(index.html)</h2>
+  <h2 id="grammar-4">①-4．TSFにはtry/catch文が存在しません。ゼロで割った場合などの時は分母ゼロ「n|0」が発生します(index.html)</h2>
   <p>
    TSFの実装ミスか何かでD言語やPythonレベルのエラーは起こりうると思いますが、TSFの#関数カード自体にエラーコードの概念は基本的にはありません。<br>
    例えば「#!TSF_readtext」でファイルの読込に失敗しても、文字列長0のファイルを読み込んだ扱いになります。<br>
-   「#!TSF_calc」や「#!TSF_RPN」でゼロで割るような事が発生した場合、「n|0」が「リターン」されるだけです。「n|0」の解釈は#関数カード毎の判断によります。<br>
-   例えば「n|0」を「#!TSF_echoN」に渡す場合、0行出力の扱いになりますが、「n|0」をゼロとみなしてるのではなく「数値ではない」と判断された流れです。<br>
-   thisスタックを数え終わるまたはスタック破棄および「#!TSF_countmax」で指定した上限(初期値256)などのオーバーフロー発生は単にスタックの終了扱いになるのでスタックを抜けます。<br>
-   存在しないスタックへの「#!TSF_this」例えば「#!exit: #!TSF_this」を行った場合もオーバーフロー発生ですが、飛び先ではなく現在のそタックでオーバーフロー、すなわちスタックの終了扱いになります。<br>
-   存在しないスタックのpeekや0枚スタックへのpullその他「ドロー」などのアンダーフローでも長さ0の文字列を受けとるだけでエラーは回避されるはずです。<br>
-   つまり、プログラムが止まるような構文エラーや演算エラーそのものが発生しない以上、catchする事ができないのでcatch構文もありません。<br>
+  </p>
+  <p>
+   「#!TSF_calc」や「#!TSF_RPN」でゼロで割るような事が発生した場合、分母ゼロ「n|0」が「リターン」されるだけです。<br>
+   分母ゼロ「n|0」を例えば「#!TSF_echoN」に渡す場合、0行出力の扱いになりますが、「n|0」をゼロとみなしてるのではなく「数値ではない」と判断された流れです。<br>
+   分母ゼロ「n|0」がどう解釈されるかは#!関数カード毎の判断、関数が何をするのかによります。<br>
+  </p>
+  <p>
+   存在しないスタックへの「#!TSF_this」例えば「#!exit: #!TSF_this」を行った場合やthisスタックオーバーフローはスタック終了で抜ける扱いになります。<br>
+   存在しないスタックへのpeekや0枚スタックへのpullその他thatスタックが空の状態でドローなどでアンダーフロー発生でも長さ0の文字列を受けとるだけです。<br>
+   存在しないスタックへのpokeやpushも何もしませんが例外的にFpushだけはスタックを新規生成してカードを格納します。<br>
+  </p>
+  <p>
+   つまり、プログラムが止まるような構文エラーや演算エラーそのものを想定しない以上、catchする事ができないのでcatch構文もありません。<br>
   </p>
  </section>
  <section>
@@ -224,7 +231,11 @@
  <section>
   <h2 id="grammar-6">①-6．TSFにはif/else文やswitch/case文が無いので分岐は式(比較演算子)などを用います(index.html)</h2>
   <p>
-  単純な分岐なら「0Z~True:~False: #!TSF_calc #!TSF_this」のような感じで「#!TSF_calc」の比較演算子の計算結果にスタック名を選択する荒技があります(「#!TSF_RPN」では使用不可)。<br>
+  単純な分岐なら「2-1Z~True:~False: #!TSF_calc #!TSF_this」のような感じで「#!TSF_calc」の比較演算子の計算結果にスタック名を選択する荒技があります(「#!TSF_RPN」では式中でのスタック名は使用不可)。<br>
+  TSFには等号・不等号の演算子は存在しません(等号と紛らわしい代入演算子も存在しません)。<br>
+  「2=1~True:~False:」(2と1は等しいか否か)ではなく「2-1Z~True:~False:」(2引く1はゼロか否か)であることに留意してください。
+  </p>
+  <p>
   case文の真似をする場合「switch cases: funcs: #!TSF_casesQON #!TSF_this」のような感じで「#!TSF_casesQON」などを用いてスタック名を選択する方法もあります。<br>
   他にも「funcs: [cases:0] #!TSF_calc #!TSF_peekMthe #!TSF_this」のような感じでpeek系の関数を用いてスタック名を選択する方法もあります。<br>
   </p>
@@ -374,6 +385,7 @@
    <dl><dt>void TSF_sample_calcJA()</dt><dd>「sample_calc.tsf」コマンド版「TSF --calc [一割る三引くマイナス二分の一]」。<br>中置記法による括弧を用いる電卓。結果は漢数字(〇一二三四五六七八九の表示はアラビア数字も用いる)。<br></dd></dl>
    <dl><dt>void TSF_sample_calender()</dt><dd>「sample_calender.tsf」コマンド版「TSF --calender」。<br>現在時刻を「@4y@0m@0dm@wdec@0h@0n@0s」形式で表示(@wdecは曜日MTWRFSU表記)。<br></dd></dl>
    <dl><dt>void TSF_sample_FizzBuzz()</dt><dd>「sample_fizzbuzz.tsf」コマンド版「TSF --fizzbuzz [20]」。初期値は20。<br>3の倍数の時はFizz、5の倍数の時はBuzzを表示する。<br></dd></dl>
+   <dl><dt>void TSF_sample_zundoko()</dt><dd>「sample_zundoko.tsf」コマンド版「TSF --zundoko [4]」。<br>「zun zun zun zun doko」になるまで「zun」と「doko」をランダム表示。<br></dd></dl>
    <dl><dt>void TSF_sample_99beer()</dt><dd>「sample_99beer.tsf」コマンド版「TSF --99bear [9]」。<br>99 Bottles of Beer(http://99-bottles-of-beer.net/lyrics.html)を出力する。長いので初期値は9に設定。</dd></dl>
    <dl><dt>void TSF_sample_quine()</dt><dd>「sample_quine.tsf」コマンド版「TSF --quine」。<br>「sample_quine.tsf」は「sample_quine.tsf」自身を出力する。<br>同様に「trans_quine.d」の時は「trans_quine.d」、「trans_quine.py」の時は「trans_quine.py」を出力する。<br>コマンド「TSF --quine」時も「sample_quine.tsf」を出力。<br></dd></dl>
    <dl><dt>void main(string[] sys_argvs)</dt><dd>D言語のmain関数。ここでは「TSF --dlang」「TSF --python」コマンドの解説。<br>「TSF --dlang helloworld.d helloworld.d」「TSF --python helloworld.tsf helloworld.py」のようにTSFをD言語やPythonに変換した風(インタプリタを呼び出す形)にすることができる。<br>D言語の場合「TSF_DMDcompile.sh helloworld.d」で実行バイナリも作成可能。<br></dd></dl>
@@ -516,6 +528,15 @@
   </dt><dd>
    Ａ．TSFには中置記法や括弧が使用可能なcalcがあります。一般的なForthの演算子ワード「+」「-」「*」「/」ようなカードは存在しません。<br>
    　速度優勢で小数計算を用いるRPN、精度優先で桁数制限の無い分数計算を用いるcalc。状況に応じて「電卓」を使い分ける二刀流です。<br>
+  </dd></dl>
+  <dl><dt>
+   Ｑ．0の0乗も0に何を掛けても0なのだから0ではないのか？<br>
+   Ｑ．0の0乗であっても0乗は常に1ではないのか？<br>
+  </dt><dd>
+   Ａ．0の0乗はゼロ除算0÷0だから分母ゼロ「n|0」です。少なくともTSFでは0で割る計算は分母ゼロ「n|0」です。<br>
+   　例えばx<sup>2</sup>－x<sup>2</sup>は(x＋x)(x－x)やx(x-x)に因数分解できる。<br>
+   　式(x＋x)(x－x)=x(x-x)の両辺を(x-x)で割ると(x＋x)=xすなわち2x=1x。両辺を再度xで割ると2=1。<br>
+   　極限が1になるとか言われてもプログラミングで2-1と1-1が同じになるような理屈は困るわけです。<br>
   </dd></dl>
   <dl><dt>
    Ｑ．TSFで作ったプログラムを実行ファイルにできますか？<br>
