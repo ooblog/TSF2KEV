@@ -1,0 +1,16 @@
+TSF_Tab-Separated-Forth:
+	#!TSF_argvs	#!TSF_pullFthat	ZDcount:	0	#!TSF_pokeNthe	ZDreset:	#!TSF_this	#!TSF_fin.	4
+ZDreset:
+	0	ZDcount:	#!TSF_pokeFthe	ZunDoko:	#!TSF_this
+ZunDoko:
+	ZDjump:	#!TSF_peekAthe	#!TSF_this	[ZDcount:0]O~ZunDoko:~#exit:	#!TSF_calc	#!TSF_this
+ZDjump:
+	Zun:	Doko:
+Zun:
+	Zun	#!TSF_echo	[ZDcount:1],1+	#!TSF_calc	ZDcount:	#!TSF_pokeFthe
+Doko:
+	Doko	#!TSF_echo	[ZDcount:0]-[ZDcount:1]Z~VeronCho:~ZDreset:	#!TSF_calc	#!TSF_this
+VeronCho:
+	VeronCho	#!TSF_echo	-1	ZDcount:	0	#!TSF_pokeNthe
+ZDcount:
+	4	0
