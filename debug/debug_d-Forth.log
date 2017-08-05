@@ -55,7 +55,7 @@ pushA:	TSF_pushAthe	$push	adverbclone:	#!TSF_pushAthe	$push
 「#TSF_pokeVthe」「$poke」「F N C M V A $poke I R H L」
 「#TSF_pullVthe」「Q」「F N C M V A I R H L」
 「#TSF_pushVthe」「$push」「F N C M V A $push Q I R H L」
-「#TSF_peekAthe」「L」「F N C M V A Q I R H L」
-「#TSF_pokeAthe」「$poke」「F $poke C M V A Q I R H L」
-「#TSF_pullAthe」「V」「F N C M A Q I R H L」
-「#TSF_pushAthe」「$push」「F N C M V A Q I $push R H L」
+「#TSF_peekAthe」「Q」「F N C M V A Q I R H L」
+「#TSF_pokeAthe」「$poke」「F N C M V A Q $poke R H L」
+「#TSF_pullAthe」「R」「F N C M V A Q I H L」
+「#TSF_pushAthe」「$push」「F N C M V $push A Q I R H L」

@@ -20,45 +20,45 @@ cardfunc_py:
 cardfunc_d:
 	        "#!TSF_{pppp}{FNCMVAQIRHL}{4th}":&TSF_Forth_{pppp}{FNCMVAQIRHL}{4th}, "#{スタック}{選択}{移動}":&TSF_Forth_{pppp}{FNCMVAQIRHL}{4th},
 peekN_py:
-	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
+	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを読込。{ドローpeekN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'))
 	    return ""
 pokeN_py:
-	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeN}
+	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で上書。{ドローpokeN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_poke(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 pullN_py:
-	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
+	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを引抜。{ドローpullN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'))
 	    return ""
 pushN_py:
-	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
+	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で差込。{ドローpushN}
 	    TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the={drawth}
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 peekN_d:
-	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekN}
+	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを読込。{ドローpeekN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pokeN_d:
-	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeN}
+	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で上書。{ドローpokeN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_poke(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
 	}
 pullN_d:
-	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullN}
+	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを引抜。{ドローpullN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pushN_d:
-	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushN}
+	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で差込。{ドローpushN}
 	    long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the={drawth};
 	    TSF_Forth_push(TSF_the,TSF_peek,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
@@ -76,45 +76,45 @@ PPPPN_pycall:
 PPPPN_dcall:
 	peekN_d:	pokeN_d:	pullN_d:	pushN_d:
 peekA_py:
-	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekA}
+	def TSF_Forth_peek{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを読込。{ドローpeekA}<br>
 	    TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'{FNCMVAQIRHL}'))
 	    return ""
 pokeA_py:
-	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックからカードを表択で上書。{ドローpokeA}
+	def TSF_Forth_poke{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で上書。{ドローpokeA}<br>
 	    TSF_the={drawth}
 	    TSF_Forth_poke(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 pullA_py:
-	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullA}
+	def TSF_Forth_pull{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを引抜。{ドローpullA}<br>
 	    TSF_the={drawth}
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'{FNCMVAQIRHL}'))
 	    return ""
 pushA_py:
-	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:スタック一覧から表択でカードを差込。{ドローpushA}
+	def TSF_Forth_push{FNCMVAQIRHL}{4th}():    #TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で差込。{ドローpushA}<br>
 	    TSF_the={drawth}
 	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe())
 	    return ""
 peekA_d:
-	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを読込。{ドローpeekA}
+	string TSF_Forth_peek{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを読込。{ドローpeekA}<br>
 	    string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pokeA_d:
-	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で上書。{ドローpokeA}
+	string TSF_Forth_poke{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で上書。{ドローpokeA}<br>
 	    string TSF_the={drawth};
 	    TSF_Forth_poke(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";
 	}
 pullA_d:
-	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックから{選択}でカードを引抜。{ドローpullA}
+	string TSF_Forth_pull{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}から{選択}でカードを引抜。{ドローpullA}<br>
 	    string TSF_the={drawth};
 	    TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'{FNCMVAQIRHL}'));
 	    return "";
 	}
 pushA_d:
-	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:指定スタックからカードを{選択}で差込。{ドローpushA}
+	string TSF_Forth_push{FNCMVAQIRHL}{4th}(){    //#TSFdoc:「#!TSF_{pppp}{FNCMVAQIRHL}{4th}」{スタック}からカードを{選択}で差込。{ドローpushA}<br>
 	    string TSF_the={drawth};
 	    TSF_Forth_push(TSF_the,-1,"",'{FNCMVAQIRHL}',TSF_Forth_drawthe());
 	    return "";

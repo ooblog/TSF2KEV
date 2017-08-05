@@ -1043,163 +1043,163 @@ string TSF_Forth_pushMthey(){    //#TSFdoc:スタック一覧から囲択でカ�
     return "";
 }
 
-string TSF_Forth_peekVthe(){    //#TSFdoc:指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekVthe(){    //#TSFdoc:「#!TSF_peekVthe」指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_peekVthis(){    //#TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekVthis(){    //#TSFdoc:「#!TSF_peekVthis」実行中スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_peekVthat(){    //#TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekVthat(){    //#TSFdoc:「#!TSF_peekVthat」積込先スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_peekVthey(){    //#TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_peekVthey(){    //#TSFdoc:「#!TSF_peekVthey」スタック一覧から逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the="";
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_pokeVthe(){    //#TSFdoc:指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。
+string TSF_Forth_pokeVthe(){    //#TSFdoc:「#!TSF_pokeVthe」指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeVthis(){    //#TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeVthis(){    //#TSFdoc:「#!TSF_pokeVthis」実行中スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeVthat(){    //#TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeVthat(){    //#TSFdoc:「#!TSF_pokeVthat」積込先スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeVthey(){    //#TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeVthey(){    //#TSFdoc:「#!TSF_pokeVthey」スタック一覧からカードを逆択で上書。2枚[poke,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the="";
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pullVthe(){    //#TSFdoc:指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+string TSF_Forth_pullVthe(){    //#TSFdoc:「#!TSF_pullVthe」指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_pullVthis(){    //#TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_pullVthis(){    //#TSFdoc:「#!TSF_pullVthis」実行中スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_pullVthat(){    //#TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_pullVthat(){    //#TSFdoc:「#!TSF_pullVthat」積込先スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_pullVthey(){    //#TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+string TSF_Forth_pullVthey(){    //#TSFdoc:「#!TSF_pullVthey」スタック一覧から逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the="";
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'));
     return "";
 }
-string TSF_Forth_pushVthe(){    //#TSFdoc:指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。
+string TSF_Forth_pushVthe(){    //#TSFdoc:「#!TSF_pushVthe」指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushVthis(){    //#TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+string TSF_Forth_pushVthis(){    //#TSFdoc:「#!TSF_pushVthis」実行中スタックからカードを逆択で差込。2枚[push,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushVthat(){    //#TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+string TSF_Forth_pushVthat(){    //#TSFdoc:「#!TSF_pushVthat」積込先スタックからカードを逆択で差込。2枚[push,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushVthey(){    //#TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+string TSF_Forth_pushVthey(){    //#TSFdoc:「#!TSF_pushVthey」スタック一覧からカードを逆択で差込。2枚[push,peek]ドロー。
     long TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  string TSF_the="";
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe());
     return "";
 }
 
-string TSF_Forth_peekAthe(){    //#TSFdoc:指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。
+string TSF_Forth_peekAthe(){    //#TSFdoc:「#!TSF_peekAthe」指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_peekAthis(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekAthis(){    //#TSFdoc:「#!TSF_peekAthis」実行中スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_peekAthat(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekAthat(){    //#TSFdoc:「#!TSF_peekAthat」積込先スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_peekAthey(){    //#TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_peekAthey(){    //#TSFdoc:「#!TSF_peekAthey」スタック一覧から乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the="";
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_pokeAthe(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。
+string TSF_Forth_pokeAthe(){    //#TSFdoc:「#!TSF_pokeAthe」指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。<br>
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeAthis(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeAthis(){    //#TSFdoc:「#!TSF_pokeAthis」実行中スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeAthat(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeAthat(){    //#TSFdoc:「#!TSF_pokeAthat」積込先スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pokeAthey(){    //#TSFdoc:指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。
+string TSF_Forth_pokeAthey(){    //#TSFdoc:「#!TSF_pokeAthey」スタック一覧からカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     string TSF_the="";
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pullAthe(){    //#TSFdoc:指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
+string TSF_Forth_pullAthe(){    //#TSFdoc:「#!TSF_pullAthe」指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_pullAthis(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_pullAthis(){    //#TSFdoc:「#!TSF_pullAthis」実行中スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_pullAthat(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_pullAthat(){    //#TSFdoc:「#!TSF_pullAthat」積込先スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_pullAthey(){    //#TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+string TSF_Forth_pullAthey(){    //#TSFdoc:「#!TSF_pullAthey」スタック一覧から乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     string TSF_the="";
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'));
     return "";
 }
-string TSF_Forth_pushAthe(){    //#TSFdoc:指定スタックからカードを乱択で差込。2枚[push,the]ドロー。
+string TSF_Forth_pushAthe(){    //#TSFdoc:「#!TSF_pushAthe」指定スタックからカードを乱択で差込。2枚[push,the]ドロー。<br>
     string TSF_the=TSF_Forth_drawthe();
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushAthis(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+string TSF_Forth_pushAthis(){    //#TSFdoc:「#!TSF_pushAthis」実行中スタックからカードを乱択で差込。1枚[push]ドロー。<br>
     string TSF_the=TSF_Forth_drawthis();
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushAthat(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+string TSF_Forth_pushAthat(){    //#TSFdoc:「#!TSF_pushAthat」積込先スタックからカードを乱択で差込。1枚[push]ドロー。<br>
     string TSF_the=TSF_Forth_drawthat();
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";
 }
-string TSF_Forth_pushAthey(){    //#TSFdoc:指定スタックからカードを乱択で差込。1枚[push]ドロー。
+string TSF_Forth_pushAthey(){    //#TSFdoc:「#!TSF_pushAthey」スタック一覧からカードを乱択で差込。1枚[push]ドロー。<br>
     string TSF_the="";
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe());
     return "";

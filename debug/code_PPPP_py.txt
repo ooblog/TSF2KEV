@@ -94,323 +94,323 @@
         "#!TSF_pushAthis":TSF_Forth_pushAthis, "#実行中スタック乱択差込":TSF_Forth_pushAthis,
         "#!TSF_pushAthat":TSF_Forth_pushAthat, "#積込先スタック乱択差込":TSF_Forth_pushAthat,
         "#!TSF_pushAthey":TSF_Forth_pushAthey, "#スタック一覧乱択差込":TSF_Forth_pushAthey,
-def TSF_Forth_peekNthe():    #TSFdoc:指定スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekNthe():    #TSFdoc:「#!TSF_peekNthe」指定スタックから順択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_peekNthis():    #TSFdoc:指定スタックから順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekNthis():    #TSFdoc:「#!TSF_peekNthis」実行中スタックから順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_peekNthat():    #TSFdoc:指定スタックから順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekNthat():    #TSFdoc:「#!TSF_peekNthat」積込先スタックから順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_peekNthey():    #TSFdoc:指定スタックから順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekNthey():    #TSFdoc:「#!TSF_peekNthey」スタック一覧から順択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_pokeNthe():    #TSFdoc:指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
+def TSF_Forth_pokeNthe():    #TSFdoc:「#!TSF_pokeNthe」指定スタックからカードを順択で上書。3枚[poke,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeNthis():    #TSFdoc:指定スタックからカードを順択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeNthis():    #TSFdoc:「#!TSF_pokeNthis」実行中スタックからカードを順択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeNthat():    #TSFdoc:指定スタックからカードを順択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeNthat():    #TSFdoc:「#!TSF_pokeNthat」積込先スタックからカードを順択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeNthey():    #TSFdoc:指定スタックからカードを順択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeNthey():    #TSFdoc:「#!TSF_pokeNthey」スタック一覧からカードを順択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_poke(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pullNthe():    #TSFdoc:指定スタックから順択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthe():    #TSFdoc:「#!TSF_pullNthe」指定スタックから順択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_pullNthis():    #TSFdoc:指定スタックから順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthis():    #TSFdoc:「#!TSF_pullNthis」実行中スタックから順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_pullNthat():    #TSFdoc:指定スタックから順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthat():    #TSFdoc:「#!TSF_pullNthat」積込先スタックから順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_pullNthey():    #TSFdoc:指定スタックから順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullNthey():    #TSFdoc:「#!TSF_pullNthey」スタック一覧から順択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'N'))
     return ""
-def TSF_Forth_pushNthe():    #TSFdoc:指定スタックからカードを順択で差込。3枚[push,the,peek]ドロー。
+def TSF_Forth_pushNthe():    #TSFdoc:「#!TSF_pushNthe」指定スタックからカードを順択で差込。3枚[push,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushNthis():    #TSFdoc:指定スタックからカードを順択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushNthis():    #TSFdoc:「#!TSF_pushNthis」実行中スタックからカードを順択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushNthat():    #TSFdoc:指定スタックからカードを順択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushNthat():    #TSFdoc:「#!TSF_pushNthat」積込先スタックからカードを順択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushNthey():    #TSFdoc:指定スタックからカードを順択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushNthey():    #TSFdoc:「#!TSF_pushNthey」スタック一覧からカードを順択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_push(TSF_the,TSF_peek,"",'N',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_peekCthe():    #TSFdoc:指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekCthe():    #TSFdoc:「#!TSF_peekCthe」指定スタックから周択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_peekCthis():    #TSFdoc:指定スタックから周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekCthis():    #TSFdoc:「#!TSF_peekCthis」実行中スタックから周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_peekCthat():    #TSFdoc:指定スタックから周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekCthat():    #TSFdoc:「#!TSF_peekCthat」積込先スタックから周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_peekCthey():    #TSFdoc:指定スタックから周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekCthey():    #TSFdoc:「#!TSF_peekCthey」スタック一覧から周択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_pokeCthe():    #TSFdoc:指定スタックからカードを周択で上書。3枚[poke,the,peek]ドロー。
+def TSF_Forth_pokeCthe():    #TSFdoc:「#!TSF_pokeCthe」指定スタックからカードを周択で上書。3枚[poke,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeCthis():    #TSFdoc:指定スタックからカードを周択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeCthis():    #TSFdoc:「#!TSF_pokeCthis」実行中スタックからカードを周択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeCthat():    #TSFdoc:指定スタックからカードを周択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeCthat():    #TSFdoc:「#!TSF_pokeCthat」積込先スタックからカードを周択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeCthey():    #TSFdoc:指定スタックからカードを周択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeCthey():    #TSFdoc:「#!TSF_pokeCthey」スタック一覧からカードを周択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_poke(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pullCthe():    #TSFdoc:指定スタックから周択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullCthe():    #TSFdoc:「#!TSF_pullCthe」指定スタックから周択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_pullCthis():    #TSFdoc:指定スタックから周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullCthis():    #TSFdoc:「#!TSF_pullCthis」実行中スタックから周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_pullCthat():    #TSFdoc:指定スタックから周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullCthat():    #TSFdoc:「#!TSF_pullCthat」積込先スタックから周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_pullCthey():    #TSFdoc:指定スタックから周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullCthey():    #TSFdoc:「#!TSF_pullCthey」スタック一覧から周択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'C'))
     return ""
-def TSF_Forth_pushCthe():    #TSFdoc:指定スタックからカードを周択で差込。3枚[push,the,peek]ドロー。
+def TSF_Forth_pushCthe():    #TSFdoc:「#!TSF_pushCthe」指定スタックからカードを周択で差込。3枚[push,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_push(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushCthis():    #TSFdoc:指定スタックからカードを周択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushCthis():    #TSFdoc:「#!TSF_pushCthis」実行中スタックからカードを周択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_push(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushCthat():    #TSFdoc:指定スタックからカードを周択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushCthat():    #TSFdoc:「#!TSF_pushCthat」積込先スタックからカードを周択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_push(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushCthey():    #TSFdoc:指定スタックからカードを周択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushCthey():    #TSFdoc:「#!TSF_pushCthey」スタック一覧からカードを周択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_push(TSF_the,TSF_peek,"",'C',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_peekMthe():    #TSFdoc:指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekMthe():    #TSFdoc:「#!TSF_peekMthe」指定スタックから囲択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_peekMthis():    #TSFdoc:指定スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekMthis():    #TSFdoc:「#!TSF_peekMthis」実行中スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_peekMthat():    #TSFdoc:指定スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekMthat():    #TSFdoc:「#!TSF_peekMthat」積込先スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_peekMthey():    #TSFdoc:指定スタックから囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekMthey():    #TSFdoc:「#!TSF_peekMthey」スタック一覧から囲択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_pokeMthe():    #TSFdoc:指定スタックからカードを囲択で上書。3枚[poke,the,peek]ドロー。
+def TSF_Forth_pokeMthe():    #TSFdoc:「#!TSF_pokeMthe」指定スタックからカードを囲択で上書。3枚[poke,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeMthis():    #TSFdoc:指定スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeMthis():    #TSFdoc:「#!TSF_pokeMthis」実行中スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeMthat():    #TSFdoc:指定スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeMthat():    #TSFdoc:「#!TSF_pokeMthat」積込先スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeMthey():    #TSFdoc:指定スタックからカードを囲択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeMthey():    #TSFdoc:「#!TSF_pokeMthey」スタック一覧からカードを囲択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_poke(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pullMthe():    #TSFdoc:指定スタックから囲択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullMthe():    #TSFdoc:「#!TSF_pullMthe」指定スタックから囲択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_pullMthis():    #TSFdoc:指定スタックから囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullMthis():    #TSFdoc:「#!TSF_pullMthis」実行中スタックから囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_pullMthat():    #TSFdoc:指定スタックから囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullMthat():    #TSFdoc:「#!TSF_pullMthat」積込先スタックから囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_pullMthey():    #TSFdoc:指定スタックから囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullMthey():    #TSFdoc:「#!TSF_pullMthey」スタック一覧から囲択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'M'))
     return ""
-def TSF_Forth_pushMthe():    #TSFdoc:指定スタックからカードを囲択で差込。3枚[push,the,peek]ドロー。
+def TSF_Forth_pushMthe():    #TSFdoc:「#!TSF_pushMthe」指定スタックからカードを囲択で差込。3枚[push,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_push(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushMthis():    #TSFdoc:指定スタックからカードを囲択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushMthis():    #TSFdoc:「#!TSF_pushMthis」実行中スタックからカードを囲択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_push(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushMthat():    #TSFdoc:指定スタックからカードを囲択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushMthat():    #TSFdoc:「#!TSF_pushMthat」積込先スタックからカードを囲択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_push(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushMthey():    #TSFdoc:指定スタックからカードを囲択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushMthey():    #TSFdoc:「#!TSF_pushMthey」スタック一覧からカードを囲択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_push(TSF_the,TSF_peek,"",'M',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_peekVthe():    #TSFdoc:指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekVthe():    #TSFdoc:「#!TSF_peekVthe」指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_peekVthis():    #TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekVthis():    #TSFdoc:「#!TSF_peekVthis」実行中スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_peekVthat():    #TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekVthat():    #TSFdoc:「#!TSF_peekVthat」積込先スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_peekVthey():    #TSFdoc:指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_peekVthey():    #TSFdoc:「#!TSF_peekVthey」スタック一覧から逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_pokeVthe():    #TSFdoc:指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。
+def TSF_Forth_pokeVthe():    #TSFdoc:「#!TSF_pokeVthe」指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeVthis():    #TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeVthis():    #TSFdoc:「#!TSF_pokeVthis」実行中スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeVthat():    #TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeVthat():    #TSFdoc:「#!TSF_pokeVthat」積込先スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeVthey():    #TSFdoc:指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeVthey():    #TSFdoc:「#!TSF_pokeVthey」スタック一覧からカードを逆択で上書。2枚[poke,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_poke(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pullVthe():    #TSFdoc:指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullVthe():    #TSFdoc:「#!TSF_pullVthe」指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_pullVthis():    #TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullVthis():    #TSFdoc:「#!TSF_pullVthis」実行中スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_pullVthat():    #TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullVthat():    #TSFdoc:「#!TSF_pullVthat」積込先スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_pullVthey():    #TSFdoc:指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
+def TSF_Forth_pullVthey():    #TSFdoc:「#!TSF_pullVthey」スタック一覧から逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,TSF_peek,"",'V'))
     return ""
-def TSF_Forth_pushVthe():    #TSFdoc:指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。
+def TSF_Forth_pushVthe():    #TSFdoc:「#!TSF_pushVthe」指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthe()
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushVthis():    #TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushVthis():    #TSFdoc:「#!TSF_pushVthis」実行中スタックからカードを逆択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthis()
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushVthat():    #TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushVthat():    #TSFdoc:「#!TSF_pushVthat」積込先スタックからカードを逆択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=TSF_Forth_drawthat()
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushVthey():    #TSFdoc:指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。
+def TSF_Forth_pushVthey():    #TSFdoc:「#!TSF_pushVthey」スタック一覧からカードを逆択で差込。2枚[push,peek]ドロー。
     TSF_peek=TSF_Io_RPNzero(TSF_Forth_drawthe());  TSF_the=""
     TSF_Forth_push(TSF_the,TSF_peek,"",'V',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_peekAthe():    #TSFdoc:指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。
+def TSF_Forth_peekAthe():    #TSFdoc:「#!TSF_peekAthe」指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_peekAthis():    #TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_peekAthis():    #TSFdoc:「#!TSF_peekAthis」実行中スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_peekAthat():    #TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_peekAthat():    #TSFdoc:「#!TSF_peekAthat」積込先スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_peekAthey():    #TSFdoc:指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_peekAthey():    #TSFdoc:「#!TSF_peekAthey」スタック一覧から乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_peek(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_pokeAthe():    #TSFdoc:指定スタックからカードを表択で上書。2枚[poke,the,peek]ドロー。
+def TSF_Forth_pokeAthe():    #TSFdoc:「#!TSF_pokeAthe」指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。<br>
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeAthis():    #TSFdoc:指定スタックからカードを表択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeAthis():    #TSFdoc:「#!TSF_pokeAthis」実行中スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     TSF_the=TSF_Forth_drawthis()
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeAthat():    #TSFdoc:指定スタックからカードを表択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeAthat():    #TSFdoc:「#!TSF_pokeAthat」積込先スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     TSF_the=TSF_Forth_drawthat()
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pokeAthey():    #TSFdoc:指定スタックからカードを表択で上書。2枚[poke,peek]ドロー。
+def TSF_Forth_pokeAthey():    #TSFdoc:「#!TSF_pokeAthey」スタック一覧からカードを乱択で上書。2枚[poke,peek]ドロー。<br>
     TSF_the=""
     TSF_Forth_poke(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pullAthe():    #TSFdoc:指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。
+def TSF_Forth_pullAthe():    #TSFdoc:「#!TSF_pullAthe」指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_pullAthis():    #TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_pullAthis():    #TSFdoc:「#!TSF_pullAthis」実行中スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthis()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_pullAthat():    #TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_pullAthat():    #TSFdoc:「#!TSF_pullAthat」積込先スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=TSF_Forth_drawthat()
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_pullAthey():    #TSFdoc:指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。
+def TSF_Forth_pullAthey():    #TSFdoc:「#!TSF_pullAthey」スタック一覧から乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br>
     TSF_the=""
     TSF_Forth_returnFNCMVA(TSF_Forth_pull(TSF_the,-1,"",'A'))
     return ""
-def TSF_Forth_pushAthe():    #TSFdoc:スタック一覧から表択でカードを差込。2枚[push,the]ドロー。
+def TSF_Forth_pushAthe():    #TSFdoc:「#!TSF_pushAthe」指定スタックからカードを乱択で差込。2枚[push,the]ドロー。<br>
     TSF_the=TSF_Forth_drawthe()
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushAthis():    #TSFdoc:スタック一覧から表択でカードを差込。1枚[push]ドロー。
+def TSF_Forth_pushAthis():    #TSFdoc:「#!TSF_pushAthis」実行中スタックからカードを乱択で差込。1枚[push]ドロー。<br>
     TSF_the=TSF_Forth_drawthis()
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushAthat():    #TSFdoc:スタック一覧から表択でカードを差込。1枚[push]ドロー。
+def TSF_Forth_pushAthat():    #TSFdoc:「#!TSF_pushAthat」積込先スタックからカードを乱択で差込。1枚[push]ドロー。<br>
     TSF_the=TSF_Forth_drawthat()
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""
-def TSF_Forth_pushAthey():    #TSFdoc:スタック一覧から表択でカードを差込。1枚[push]ドロー。
+def TSF_Forth_pushAthey():    #TSFdoc:「#!TSF_pushAthey」スタック一覧からカードを乱択で差込。1枚[push]ドロー。<br>
     TSF_the=""
     TSF_Forth_push(TSF_the,-1,"",'A',TSF_Forth_drawthe())
     return ""

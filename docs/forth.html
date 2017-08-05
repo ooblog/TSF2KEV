@@ -19,7 +19,7 @@
  <section class="mainpages">
   <h1>「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。</h1>
   <p>
-   version(branch):20170718T073839	modify:20170805S081542(執筆途中です)<br>
+   version(branch):20170718T073839	modify:20170805S091506(執筆途中です)<br>
   </p>  <ul>
    <li><a href="index.html#License-0" title="⓪-0．ライセンスの解説など(index.html)">⓪-0．ライセンスの解説など(index.html)</a></li>
    <li><a href="index.html#License-1" title="⓪-1．動作環境(index.html)">⓪-1．動作環境(index.html)</a></li>
@@ -172,38 +172,38 @@
    <dl><dt>string TSF_Forth_pushMthis()</dt><dd>実行中スタックから囲択でカードを差込。2枚[poke,peek]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_pushMthat()</dt><dd>積込先スタックから囲択でカードを差込。2枚[poke,peek]ドロー。</dd></dl>
    <dl><dt>string TSF_Forth_pushMthey()</dt><dd>スタック一覧から囲択でカードを差込。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_peekVthe()</dt><dd>指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekVthis()</dt><dd>指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekVthat()</dt><dd>指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekVthey()</dt><dd>指定スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeVthe()</dt><dd>指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeVthis()</dt><dd>指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeVthat()</dt><dd>指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeVthey()</dt><dd>指定スタックからカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pullVthe()</dt><dd>指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullVthis()</dt><dd>指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullVthat()</dt><dd>指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullVthey()</dt><dd>指定スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pushVthe()</dt><dd>指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushVthis()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushVthat()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushVthey()</dt><dd>指定スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_peekAthe()</dt><dd>指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekAthis()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekAthat()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_peekAthey()</dt><dd>指定スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeAthe()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeAthis()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeAthat()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pokeAthey()</dt><dd>指定スタックからカードを乱択で上書。2枚[poke,peek]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pullAthe()</dt><dd>指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullAthis()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullAthat()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pullAthey()</dt><dd>指定スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。</dd></dl>
-   <dl><dt>string TSF_Forth_pushAthe()</dt><dd>指定スタックからカードを乱択で差込。2枚[push,the]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushAthis()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushAthat()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
-   <dl><dt>string TSF_Forth_pushAthey()</dt><dd>指定スタックからカードを乱択で差込。1枚[push]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_peekVthe()</dt><dd>「#!TSF_peekVthe」指定スタックから逆択でカードを読込。2枚[the,peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekVthis()</dt><dd>「#!TSF_peekVthis」実行中スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekVthat()</dt><dd>「#!TSF_peekVthat」積込先スタックから逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_peekVthey()</dt><dd>「#!TSF_peekVthey」スタック一覧から逆択でカードを読込。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeVthe()</dt><dd>「#!TSF_pokeVthe」指定スタックからカードを逆択で上書。3枚[poke,the,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeVthis()</dt><dd>「#!TSF_pokeVthis」実行中スタックからカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeVthat()</dt><dd>「#!TSF_pokeVthat」積込先スタックからカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pokeVthey()</dt><dd>「#!TSF_pokeVthey」スタック一覧からカードを逆択で上書。2枚[poke,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pullVthe()</dt><dd>「#!TSF_pullVthe」指定スタックから逆択でカードを引抜。2枚[the,peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullVthis()</dt><dd>「#!TSF_pullVthis」実行中スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullVthat()</dt><dd>「#!TSF_pullVthat」積込先スタックから逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pullVthey()</dt><dd>「#!TSF_pullVthey」スタック一覧から逆択でカードを引抜。1枚[peek]ドローして1枚[card]リターン。</dd></dl>
+   <dl><dt>string TSF_Forth_pushVthe()</dt><dd>「#!TSF_pushVthe」指定スタックからカードを逆択で差込。3枚[push,the,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushVthis()</dt><dd>「#!TSF_pushVthis」実行中スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushVthat()</dt><dd>「#!TSF_pushVthat」積込先スタックからカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_pushVthey()</dt><dd>「#!TSF_pushVthey」スタック一覧からカードを逆択で差込。2枚[push,peek]ドロー。</dd></dl>
+   <dl><dt>string TSF_Forth_peekAthe()</dt><dd>「#!TSF_peekAthe」指定スタックから乱択でカードを読込。1枚[the]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_peekAthis()</dt><dd>「#!TSF_peekAthis」実行中スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_peekAthat()</dt><dd>「#!TSF_peekAthat」積込先スタックから乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_peekAthey()</dt><dd>「#!TSF_peekAthey」スタック一覧から乱択でカードを読込。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthe()</dt><dd>「#!TSF_pokeAthe」指定スタックからカードを乱択で上書。2枚[poke,the,peek]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthis()</dt><dd>「#!TSF_pokeAthis」実行中スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthat()</dt><dd>「#!TSF_pokeAthat」積込先スタックからカードを乱択で上書。2枚[poke,peek]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pokeAthey()</dt><dd>「#!TSF_pokeAthey」スタック一覧からカードを乱択で上書。2枚[poke,peek]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pullAthe()</dt><dd>「#!TSF_pullAthe」指定スタックから乱択でカードを引抜。1枚[the]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pullAthis()</dt><dd>「#!TSF_pullAthis」実行中スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pullAthat()</dt><dd>「#!TSF_pullAthat」積込先スタックから乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pullAthey()</dt><dd>「#!TSF_pullAthey」スタック一覧から乱択でカードを引抜。0枚[]ドローして1枚[card]リターン。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pushAthe()</dt><dd>「#!TSF_pushAthe」指定スタックからカードを乱択で差込。2枚[push,the]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pushAthis()</dt><dd>「#!TSF_pushAthis」実行中スタックからカードを乱択で差込。1枚[push]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pushAthat()</dt><dd>「#!TSF_pushAthat」積込先スタックからカードを乱択で差込。1枚[push]ドロー。<br></dd></dl>
+   <dl><dt>string TSF_Forth_pushAthey()</dt><dd>「#!TSF_pushAthey」スタック一覧からカードを乱択で差込。1枚[push]ドロー。<br></dd></dl>
    <dl><dt>string TSF_Forth_swapBA()</dt><dd>カードAとカードBを交換する。2枚[cardB,cardA]ドローして2枚[cardA,cardB]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_swapCA()</dt><dd>カードAとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardA,cardB,cardC]リターン。</dd></dl>
    <dl><dt>string TSF_Forth_swapCB()</dt><dd>カードBとカードCを交換する。3枚[cardC,cardB,cardA]ドローして3枚[cardB,cardC,cardA]リターン</dd></dl>
