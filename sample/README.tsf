@@ -59,6 +59,9 @@ TSFdocs_tags:
 	{$TSFreadmebody}
 {$TSFreadmebody}
 	{?H1}プログラミング言語「TSF_Tab-Separated-Forth」開発中。{?/H1}
+	{?P}
+	ver3開発中(https://github.com/ooblog/TSF3KEV)につきver2の仕様は古くなります。<br>
+	{?/P}
 	{?H2}TSF超ザックリ説明。{?/H2}
 	{?P}
 	TSFはForth風インタプリタです。CSV→TSV→TSF。{?BR}
