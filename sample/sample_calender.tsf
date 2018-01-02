@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	#!TSF_argvs	#!TSF_pullFthat	calender:	#!TSF_this	#!TSF_fin.	@4y@0m@0dm@wdec@0h@0n@0s
 calender:

@@ -105,6 +105,10 @@ TSF
 TSF.o
 TSF.obj
 TSF.exe
+TSF2
+TSF2.o
+TSF2.obj
+TSF2.exe
 cardsize/
 debug/trans_about.d
 debug/trans_about.py

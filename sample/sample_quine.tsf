@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	quine_echo:	#!TSF_this	#!TSF_fin.
 quine_echo:

@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	#!TSF_nowdaytime	timecount:	#!TSF_this	#!TSF_fin.
 timecount:

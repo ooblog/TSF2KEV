@@ -148,10 +148,10 @@ TSFdocs_tags:
 	   D言語の環境が用意できる場合「<a href="https://github.com/ooblog/TSF2KEV/blob/master/TSF_DMDcompile.sh" title="TSF2KEV/TSF_DMDcompile.sh at master · ooblog/TSF2KEV">TSF_DMDcompile.sh</a>」のように「TSF」の実行バイナリがコンパイルできます。<br>
 	  </p>
 	   {?CODE}
-	   dmd TSF.d TSF_Io.d TSF_Forth.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
+	   dmd TSF2.d TSF_Io.d TSF_Forth.d TSF_Calc.d TSF_Time.d TSF_Urlpath.d TSF_Match.d TSF_Trans.d
 	   {?/CODE}
 	  <p>
-	   実行バイナリ「TSF」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「~/my-applications/bin」など)にコピーすると「*.tsf」が実行できるようになるはずです。<br>
+	   実行バイナリ「TSF2」を環境変数「$PATH」が通るフォルダ(例えばPuppyLinuxの場合「~/my-applications/bin」など)にコピーすると「*.tsf」が実行できるようになるはずです。<br>
 	  </p>
 	  <dl><dt>env - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/Env" title="env - Wikipedia">https://ja.wikipedia.org/wiki/Env</a></dd></dl>
 	  <dl><dt>シバン (Unix) - Wikipedia</dt><dd><a href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)" title="シバン (Unix) - Wikipedia">https://ja.wikipedia.org/wiki/%E3%82%B7%E3%83%90%E3%83%B3_(Unix)</a></dd></dl>

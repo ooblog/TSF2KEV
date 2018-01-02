@@ -15,12 +15,12 @@ TSFはForth風インタプリタです。CSV→TSV→TSF。
 
 ## TSF言語の簡易説明「sample_aboutTSF.tsf」。
 
-「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」自体もTSFで書かれてるので、文中数式を「TSF sample/sample_aboutTSF.tsf」で動作確認したり、  
-D言語やPythonに変換して「./TSF.d --about」「./TSF.py --about」のように内蔵コマンド化もできます。  
+「[sample_aboutTSF.tsf](https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf "TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV")」自体もTSFで書かれてるので、「TSF sample/sample_aboutTSF.tsf」で動作確認したり、  
+D言語やPythonに変換して「./TSF2.d --about」「./TSF2.py --about」のように内蔵コマンド化もできます。  
 TSF言語の詳細説明はHTML版のドキュメント「[TSF2KEV(https://ooblog.github.io/TSF2KEV/)](https://ooblog.github.io/TSF2KEV/ "「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。")」で執筆中。  
 
 
-    #! /usr/bin/env TSF    
+    #! /usr/bin/env TSF2    
     TSF_Tab-Separated-Forth:    
     	echoTSF:	#!TSF_this	#!TSF_fin.    
     echoTSF:    

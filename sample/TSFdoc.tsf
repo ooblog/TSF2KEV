@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	#!TSF_argvs	#!TSF_pullFthat	#!TSF_peekFthat	#!TSF_existfile	[0]Z~TSFdocs_help:~TSFdocs_merge:	#!TSF_join[]	#!TSF_calc	#!TSF_this	#!TSF_fin.	README.tsf
 TSFdocs_help:

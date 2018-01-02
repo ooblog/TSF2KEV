@@ -19,12 +19,12 @@ TSFはForth風インタプリタです。CSV→TSV→TSF。<br />
 </p>
 <h2>TSF言語の簡易説明「sample_aboutTSF.tsf」。</h2>
 <p>
-「<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf" title="TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV">sample_aboutTSF.tsf</a>」自体もTSFで書かれてるので、文中数式を「TSF sample/sample_aboutTSF.tsf」で動作確認したり、<br />
-D言語やPythonに変換して「./TSF.d --about」「./TSF.py --about」のように内蔵コマンド化もできます。<br />
+「<a href="https://github.com/ooblog/TSF2KEV/blob/master/sample/sample_aboutTSF.tsf" title="TSF2KEV/sample_aboutTSF.tsf at master ooblog/TSF2KEV">sample_aboutTSF.tsf</a>」自体もTSFで書かれてるので、「TSF sample/sample_aboutTSF.tsf」で動作確認したり、<br />
+D言語やPythonに変換して「./TSF2.d --about」「./TSF2.py --about」のように内蔵コマンド化もできます。<br />
 TSF言語の詳細説明はHTML版のドキュメント「<a href="https://ooblog.github.io/TSF2KEV/" title="「TSF2KEV」はプログラミング言語「TSF_Tab-Separated-Forth」のD言語とPythonによる実装です。">TSF2KEV(https://ooblog.github.io/TSF2KEV/)</a>」で執筆中。<br />
 </p>
 <pre><code>
-    #! /usr/bin/env TSF    
+    #! /usr/bin/env TSF2    
     TSF_Tab-Separated-Forth:    
     	echoTSF:	#!TSF_this	#!TSF_fin.    
     echoTSF:    

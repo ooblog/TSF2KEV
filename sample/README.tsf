@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	TSFdoc.tsf	#!TSF_runagain	#!TSF_fin.
 TSFdocs_files:
@@ -75,8 +75,8 @@ TSFdocs_tags:
 	{?/P}
 	{?H2}TSF言語の簡易説明「sample_aboutTSF.tsf」。{?/H2}
 	{?P}
-	「{?A_aboutTSF}」自体もTSFで書かれてるので、文中数式を「TSF sample/sample_aboutTSF.tsf」で動作確認したり、{?BR}
-	D言語やPythonに変換して「./TSF.d --about」「./TSF.py --about」のように内蔵コマンド化もできます。{?BR}
+	「{?A_aboutTSF}」自体もTSFで書かれてるので、「TSF sample/sample_aboutTSF.tsf」で動作確認したり、{?BR}
+	D言語やPythonに変換して「./TSF2.d --about」「./TSF2.py --about」のように内蔵コマンド化もできます。{?BR}
 	TSF言語の詳細説明はHTML版のドキュメント「{?A_TSF2KEV}」で執筆中。{?BR}
 	{?/P}
 	{?CODE}

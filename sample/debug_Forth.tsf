@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	shuffleclone:	#!TSF_this	#!TSF_fin.
 shuffleclone:

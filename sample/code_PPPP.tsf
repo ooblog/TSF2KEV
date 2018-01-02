@@ -1,4 +1,4 @@
-#! /usr/bin/env TSF
+#! /usr/bin/env TSF2
 TSF_Tab-Separated-Forth:
 	setup_py:	#!TSF_this	setup_d:	#!TSF_this	#!TSF_fin.
 pppp:
