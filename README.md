@@ -1,4 +1,4 @@
-# プログラミング言語「TSF_Tab-Separated-Forth」開発中。
+# プログラミング言語「TSF_Tab-Separated-Forth」ver2。
 
 ver3開発中「[https://github.com/ooblog/TSF3KEV](https://github.com/ooblog/TSF3KEV)」につきver2の仕様は古くなります。<br>
 
